@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUsersTable extends Migration
+class CreateGazettesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,13 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('gazettes', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestampTz('email_verified_at')->nullable();
-            $table->string('password');
-            $table->tinyInteger('role');
-            $table->integer('designation');
-            $table->integer('organization');
-            $table->rememberToken();
+            $table->string('title');
+            $table->string('g_number');
+            $table->date('g_date');
+            $table->json('organizations');
+            $table->text('content');
             $table->timestampsTz(); //time stamp with timezone in UTC
             $table->tinyInteger('status');
             $table->softDeletesTz('deleted_at', 0);
@@ -36,6 +33,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('gazettes');
     }
 }
