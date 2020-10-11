@@ -15,7 +15,17 @@ class CreateSpeciesInformationTable extends Migration
     {
         Schema::create('species_information', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->string('type'); //flora/ fauna
+            $table->string('title');
+            $table->string('scientefic_name');
+            $table->json('habitats');
+            $table->json('taxa');
+            $table->json('photos');
+            $table->text('description');
+            $table->integer('created_by_user_id');
+            $table->timestampsTz(); //time stamp with timezone in UTC
+            $table->integer('status_id'); // ref process_item_statuses
+            $table->softDeletesTz('deleted_at', 0);
         });
     }
 

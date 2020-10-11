@@ -15,7 +15,19 @@ class CreateEnvironmentRestorationsTable extends Migration
     {
         Schema::create('environment_restorations', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->string('title');
+            $table->integer('er_activity');
+            $table->integer('eco_system');
+            $table->integer('organization'); 
+            $table->integer('created_by_user_id');
+            $table->json('species');
+            /*
+                {[species_id, count, remarks, amendments, amended_by, amended_on]}
+            */
+            $table->timestampTz('approval_at'); //null-pending, approved/ rejected time
+            $table->timestampsTz(); //time stamp with timezone in UTC
+            $table->tinyInteger('status');
+            $table->softDeletesTz('deleted_at', 0);
         });
     }
 

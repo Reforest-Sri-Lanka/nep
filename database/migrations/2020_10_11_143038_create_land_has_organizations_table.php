@@ -15,7 +15,11 @@ class CreateLandHasOrganizationsTable extends Migration
     {
         Schema::create('land_has_organizations', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->integer('land_parcel_id');
+            $table->integer('organization_id');
+            $table->timestampsTz(); //time stamp with timezone in UTC
+            $table->tinyInteger('status');
+            $table->softDeletesTz('deleted_at', 0);
         });
     }
 

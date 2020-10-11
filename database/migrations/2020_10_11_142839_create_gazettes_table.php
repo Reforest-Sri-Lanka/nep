@@ -16,10 +16,12 @@ class CreateGazettesTable extends Migration
         Schema::create('gazettes', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('g_number');
-            $table->date('g_date');
+            $table->string('gazette_number');
+            $table->date('gazetted_date');
+            $table->date('degazetted_date');
             $table->json('organizations');
             $table->text('content');
+            $table->integer('created_by_user_id');
             $table->timestampsTz(); //time stamp with timezone in UTC
             $table->tinyInteger('status');
             $table->softDeletesTz('deleted_at', 0);

@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->tinyInteger('role');
             $table->integer('designation');
             $table->integer('organization');
+            $table->integer('created_by_user_id');
             $table->rememberToken();
             $table->timestampsTz(); //time stamp with timezone in UTC
             $table->tinyInteger('status');

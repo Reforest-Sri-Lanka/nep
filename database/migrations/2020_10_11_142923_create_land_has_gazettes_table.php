@@ -15,7 +15,11 @@ class CreateLandHasGazettesTable extends Migration
     {
         Schema::create('land_has_gazettes', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->integer('gazette_id');
+            $table->integer('land_id');
+            $table->timestampsTz(); //time stamp with timezone in UTC
+            $table->tinyInteger('status');
+            $table->softDeletesTz('deleted_at', 0);
         });
     }
 

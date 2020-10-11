@@ -15,7 +15,12 @@ class CreateProcessItemProgressTable extends Migration
     {
         Schema::create('process_item_progress', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->integer('process_item_id');
+            $table->string('remark');
+            $table->integer('created_by_user_id');
+            $table->timestampsTz(); //time stamp with timezone in UTC
+            $table->integer('status_id'); // ref process_item_statuses
+            $table->softDeletesTz('deleted_at', 0);
         });
     }
 

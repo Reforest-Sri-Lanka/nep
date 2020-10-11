@@ -19,6 +19,7 @@ class CreateLandParcelsTable extends Migration
             $table->json('governing_organizations');
             $table->json('logs');
             $table->json('polygon');
+            $table->integer('created_by_user_id');
             $table->tinyInteger('protected_area');
             $table->timestampsTz(); //time stamp with timezone in UTC
             $table->tinyInteger('status');
