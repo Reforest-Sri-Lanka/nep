@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RoleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,4 +16,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-})->middleware(['auth']);
+});
+
+Route::get('/home', function () {
+    //dd(\Illuminate\Support\Facades\Auth::user());
+    return view('home');
+})->middleware(['auth', 'verified']);
+
+Route::get('/roles', [RoleController::class, 'fetchAllRoles']);
+Route::get('/arole', [RoleController::class, 'fetchARole']);
