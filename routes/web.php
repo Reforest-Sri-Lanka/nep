@@ -23,5 +23,5 @@ Route::get('/home', function () {
     return view('home');
 })->middleware(['auth', 'verified']);
 
-Route::get('/roles', [RoleController::class, 'fetchAllRoles']);
-Route::get('/arole', [RoleController::class, 'fetchARole']);
+//Route::get('/roles', [RoleController::class, 'fetchAllRoles']);
+//Route::get('/arole', [RoleController::class, 'fetchARole']);
