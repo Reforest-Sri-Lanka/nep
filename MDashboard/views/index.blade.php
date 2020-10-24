@@ -1,0 +1,1 @@
+return view(dashboard::index);

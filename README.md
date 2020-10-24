@@ -7,6 +7,9 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
+## About National Envrionment Platform - NEP
+
+
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
@@ -21,17 +24,21 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
 
 Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
 
 ## Plugins
-composer require laravel/fortify : version ^1.6 for laravel/fortify (https://github.com/laravel/fortify)
+composer require laravel/fortify : version ^1.6 for laravel/fortify
+composer require laravel/tinker:  https://laravel.com/docs/8.x/artisan
 
 ## ERD
 Database stucture: https://drive.google.com/file/d/1AKkhn6Un0e-PPttXFus3_7ES2K4iu8Bn
+
+## QuickStart
+Pull the code
+Set DB connection in config.database.php
+Run: php artisan migrate
+Run: php artisan migrate:refresh --seed
+
+After adding a new class you can : composer dump-autoload
 
 ## Contributing
 
@@ -43,8 +50,10 @@ In order to ensure that the Laravel community is welcoming to all, please review
 
 ## Security Vulnerabilities
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+If you discover a security vulnerability within NEP send an email to [info@reforestsrilanka.com](mailto:info@reforestsrilanka.com). All security vulnerabilities will be promptly addressed.
 
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+NEP is Licensed is pending. 
