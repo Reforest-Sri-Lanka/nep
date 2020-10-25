@@ -1,5 +1,3 @@
 <?php
 
-Route::get('/', fn() => response());
-
-?>
+Route::get('/', fn() => view('dashboard::index'));

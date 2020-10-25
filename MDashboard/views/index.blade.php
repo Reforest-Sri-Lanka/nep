@@ -1,1 +1,1 @@
-return view(dashboard::index);
+foo

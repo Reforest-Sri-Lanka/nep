@@ -177,8 +177,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\FortifyServiceProvider::class,
-        MDashboard\Providers\RouteServiceProvider::class,
-
+        Dashboard\Providers\RouteServiceProvider::class,
+        Dashboard\Providers\DashboardServiceProvider::class,
     ],
 
     /*
