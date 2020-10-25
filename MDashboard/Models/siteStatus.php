@@ -1,7 +1,7 @@
 <?php
-namespace MDashboard\Models;
+namespace Dashboard\Models;
 
-class siteStatus{
+class SiteStatus{
     public function foo(){
         return 'foo';
     }
