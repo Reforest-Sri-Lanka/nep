@@ -1,6 +1,6 @@
 <?php
 
-namespace Dashboard\Providers;
+namespace Admin\Providers;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
@@ -42,8 +42,8 @@ class RouteServiceProvider extends ServiceProvider
                 ->group(base_path('routes/api.php')); */
 
             Route::middleware('web')
-                ->prefix('dashboard')
-                ->group(base_path('routes/dashboard.php'));
+                ->prefix('admin')
+                ->group(base_path('modules/Admin/routes/admin.php'));
         });
     }
 
