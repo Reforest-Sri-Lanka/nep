@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Dark Home</title>
+  <title>Home</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -16,7 +16,7 @@
   </style>
 </head>
 
-<body class="bg-secondary">
+<body>
 
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
 <!-- Brand/logo -->
@@ -54,38 +54,25 @@
           <a class="nav-link" href="#">Contact Us</a>
         </li>
         </ul>
-        <ul class="navbar-nav ml-auto">
-            <!-- Authentication Links -->
-            @guest
-                <li class="nav-item">
-                    <a class="nav-link text-light" href="{{ route('login') }}">{{ __('Login') }}</a>
-                </li>
-                @if (Route::has('register'))
-                    <li class="nav-item">
-                        <a class="nav-link text-light" href="{{ route('register') }}">{{ __('Register') }}</a>
-                    </li>
-                @endif
+        @if (Route::has('login'))
+        <ul class="navbar-nav">
+            <li class="nav-item">
+            @auth
+                <a class="nav-link" href="{{ url('/test3') }}">Home</a>
+            </li>
+            <li class="nav-item">
             @else
-                <li class="nav-item dropdown">
-                    <a id="navbarDropdown" class="nav-link dropdown-toggle text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                        {{ Auth::user()->name }}
-                    </a>
-
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{{ route('logout') }}"
-                            onclick="event.preventDefault();
-                                          document.getElementById('logout-form').submit();">
-                            {{ __('Logout') }}
-                        </a>
-
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                            @csrf
-                        </form>
-                    </div>
-                </li>
-            @endguest
-        </ul> 
-      </nav>
+                
+                <a class="nav-link" href="{{ route('login') }}">Login</a>
+            </li>
+            @if (Route::has('register'))
+                <a class="nav-link" href="{{ route('register') }}">Register</a>
+            @endif
+          @endif
+        </ul>
+        @endif
+    </div>
+</nav>
 
 <br>
 
@@ -123,32 +110,32 @@
     <div class="col-7 bg-light border bg-light border-secondary rounded-lg ml-3 mr-2">
       <h5 class="p-2">Blogs</h5><br>
       <div class="card-columns">
-        <div class="card" style="background-color:#99A3A4">
+        <div class="card bg-secondary">
           <div class="card-body text-center">
             <p class="card-text">Some text <br> inside the <br> first card</p>
           </div>
         </div>
-        <div class="card" style="background-color:#99A3A4">
+        <div class="card bg-secondary">
           <div class="card-body text-center">
             <p class="card-text">Some text <br> inside the <br> second card</p>
           </div>
         </div>
-        <div class="card" style="background-color:#99A3A4">
+        <div class="card bg-secondary">
           <div class="card-body text-center">
             <p class="card-text">Some text <br> inside the <br> third card</p>
           </div>
         </div>
-        <div class="card" style="background-color:#99A3A4">
+        <div class="card bg-secondary">
           <div class="card-body text-center">
             <p class="card-text">Some text <br> inside the <br> fourth card</p>
           </div>
         </div>
-        <div class="card" style="background-color:#99A3A4">
+        <div class="card bg-secondary">
           <div class="card-body text-center">
             <p class="card-text">Some text <br> inside the <br> fifth card</p>
           </div>
         </div>
-        <div class="card" style="background-color:#99A3A4">
+        <div class="card bg-secondary">
           <div class="card-body text-center">
             <p class="card-text">Some text <br> inside the <br> sixth card</p>
           </div>

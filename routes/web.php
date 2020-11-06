@@ -18,10 +18,27 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/lighthome', function () {
+    return view('test2');
+});
+
+Route::get('/dash', function () {
+    return view('test3');
+});
+
 Route::get('/home', function () {
     //dd(\Illuminate\Support\Facades\Auth::user());
-    return view('home');
+    return view('test/dashboard');
 })->middleware(['auth', 'verified']);
+
+
+Route::get('/admin', function(){
+    return view('test/adminHome');
+});
+
+Route::get('/general', function(){
+    return view('test/mainview');
+});
 
 //Route::get('/roles', [RoleController::class, 'fetchAllRoles']);
 //Route::get('/arole', [RoleController::class, 'fetchARole']);
