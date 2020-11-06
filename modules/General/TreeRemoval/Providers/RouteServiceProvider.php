@@ -44,7 +44,7 @@ class RouteServiceProvider extends ServiceProvider
 
             Route::middleware('web')
                 ->prefix('tree-removal')
-                ->group(base_path('modules/TreeRemoval/routes/treeRemoval.php'));
+                ->group(base_path('modules/General/TreeRemoval/routes/treeRemoval.php'));
         });
     }
 

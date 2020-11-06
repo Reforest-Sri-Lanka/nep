@@ -43,7 +43,7 @@
             "Database\\Seeders\\": "database/seeders/",
             "Dashboard\\": "MDashboard/",
             "Admin\\": "modules/Admin",
-            "TreeRemoval\\": "modules/TreeRemoval"
+            "TreeRemoval\\": "modules/General/TreeRemoval"
         }
     },
     "autoload-dev": {

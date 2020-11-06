@@ -23,6 +23,6 @@ class TreeRemovalServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->loadViewsFrom(base_path('modules/TreeRemoval/views'), 'treeRemoval');
+        $this->loadViewsFrom(base_path('modules/General/TreeRemoval/views'), 'treeRemoval');
     }
 }
