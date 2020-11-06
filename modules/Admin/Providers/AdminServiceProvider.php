@@ -1,10 +1,10 @@
 <?php
 
-namespace Dashboard\Providers;
+namespace Admin\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
-class DashboardServiceProvider extends ServiceProvider
+class AdminServiceProvider extends ServiceProvider
 {
     /**
      * Register any application services.
@@ -23,6 +23,6 @@ class DashboardServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->loadViewsFrom(base_path('MDashboard/views'), 'dashboard');
+        $this->loadViewsFrom(base_path('modules/Admin/views'), 'admin');
     }
 }
