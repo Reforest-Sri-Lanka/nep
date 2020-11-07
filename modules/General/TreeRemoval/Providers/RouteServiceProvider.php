@@ -1,11 +1,14 @@
 <?php
 
-namespace Dashboard\Providers;
+namespace TreeRemoval\Providers;
+
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Blade;
+use TreeRemoval\View\Components\TestTree;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -35,6 +38,7 @@ class RouteServiceProvider extends ServiceProvider
     public function boot()
     {
 
+        Blade::component('test-new', TestTree::class);
         $this->routes(function () {
         /*    Route::prefix('api')
                 ->middleware('api')
@@ -42,8 +46,8 @@ class RouteServiceProvider extends ServiceProvider
                 ->group(base_path('routes/api.php')); */
 
             Route::middleware('web')
-                ->prefix('dashboard')
-                ->group(base_path('routes/dashboard.php'));
+                ->prefix('tree-removal')
+                ->group(base_path('modules/General/TreeRemoval/routes/treeRemoval.php'));
         });
     }
 
