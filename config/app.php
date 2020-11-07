@@ -177,8 +177,10 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\FortifyServiceProvider::class,
-        Dashboard\Providers\RouteServiceProvider::class,
-        Dashboard\Providers\DashboardServiceProvider::class,
+        Admin\Providers\RouteServiceProvider::class,
+        Admin\Providers\AdminServiceProvider::class,
+        TreeRemoval\Providers\RouteServiceProvider::class,
+        TreeRemoval\Providers\TreeRemovalServiceProvider::class,
     ],
 
     /*
