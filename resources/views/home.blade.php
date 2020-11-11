@@ -3,6 +3,7 @@
 <head>
   <title>Dark Dashboard</title>
   <meta charset="utf-8">
+  <script src="{!!url('/js/jquery.min.js')!!}"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -85,7 +86,7 @@
                 <a class="nav-link text-light font-italic p-2" href="/general">General Module</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-light font-italic p-2" href="/admin">User Management</a>
+                <a class="nav-link text-light font-italic p-2" href="/admin/index">User Management</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link text-light font-italic p-2" href="#">Environment Module</a>
