@@ -2,7 +2,8 @@
 
 @section('cont')
 
-<kbd><a href="/admin/index" class="text-white font-weight-bolder"><i class="fas fa-chevron-left"></i></i> BACK</a></kbd>
+<kbd><a href="/user/index" class="text-white font-weight-bolder"><i class="fas fa-chevron-left"></i></i> BACK</a></kbd>
+
 <div class="container">
     <h2 style="text-align:center;" class="text-dark">Details of {{$user->name}}</h2><hr>
     <div class="row justify-content-md-center border p-4 bg-white">
@@ -29,7 +30,7 @@
                     @if($user->role == NULL)
                         <input type="text" class="form-control" placeholder="Unassigned" readonly>
                     @else
-                        <input type="text" class="form-control" placeholder="{{$user->role}}" readonly>
+                        <input type="text" class="form-control" placeholder="{{$user->role->title}}" readonly>
                     @endif
                 </div>
 
@@ -40,7 +41,7 @@
                     @if($user->organization == NULL)
                         <input type="text" class="form-control" placeholder="Unassigned" readonly>
                     @else
-                        <input type="text" class="form-control" placeholder="{{$user->organization}}" readonly>
+                        <input type="text" class="form-control" placeholder="{{$user->organization->title}}" readonly>
                     @endif
                 </div>
 
@@ -51,7 +52,7 @@
                     @if($user->designation == NULL)
                         <input type="text" class="form-control" placeholder="Unassigned" readonly>
                     @else
-                        <input type="text" class="form-control" placeholder="{{$user->designation}}" readonly>
+                        <input type="text" class="form-control" placeholder="{{$user->designation->designation}}" readonly>
                     @endif
                 </div>
 

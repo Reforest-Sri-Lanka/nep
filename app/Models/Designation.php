@@ -5,13 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Role extends Model
+class Designation extends Model
 {
     use HasFactory;
-
-    //protected $table = "roles";
-
-    // A user has one role and a role can belong to many users.
+    
+    // A user has one designation and a designation can belong to many users.
     public function users(){
         return $this->hasMany('App\Models\User');
     }

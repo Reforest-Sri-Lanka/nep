@@ -11,7 +11,8 @@ class Organization extends Model
 
     //protected $table = "Organizations";
 
-    // public function users(){
-    //     return $this->hasMany('App\Models\User');
-    // }
+    // A user belongs to one organization and an organization has many users.
+    public function users(){
+        return $this->hasMany('App\Models\User');
+    }
 }

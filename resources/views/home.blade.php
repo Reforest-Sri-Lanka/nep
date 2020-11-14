@@ -31,7 +31,7 @@
             <i class="fas fa-bell mr-1"> <span class="badge badge-light">4</span>        |</i>
         </a>
 
-        <a href="#" class="text-secondary">
+        <a href="user/passwordReset" class="text-secondary">
             <i class="fas fa-cog mr-1">          |</i>
         </a>
 
@@ -86,7 +86,7 @@
                 <a class="nav-link text-light font-italic p-2" href="/general">General Module</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-light font-italic p-2" href="/admin/index">User Management</a>
+                <a class="nav-link text-light font-italic p-2" href="/user/index">User Management</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link text-light font-italic p-2" href="#">Environment Module</a>

@@ -2,55 +2,68 @@
 
 namespace Admin\Http\Controllers;
 use App\Models\User;
-
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
-
-    public function index()
-    {
-        $users = User::all();
-        return view('admin::adminHome', compact('users'));
-    }
-
-    public function create()
-    {
-        return view('admin::create');
-    }
-
-    public function more($id)
+    
+    // Deletes selected record from the admin Home view.
+    public function destroy($id)     
     {
         $user = User::find($id);
-        return view('admin::more', compact('user'));
+        $user->delete();
+        return redirect('/user/index')->with('message', 'User Successfully Deleted');
     }
 
-    public function edit($id)
+    // Open the view to be able to change the selected user's privileges (roles and module access)
+    public function changePrivilege($id)          
     {
-        dd($id);
         $user = User::find($id);
-        return view('admin::edit', [
+        return view('admin::admin.privilege', [
             'user' => $user,
         ]);
     }
 
-    public function update(Request $request, $id)      //to update the data via edit
+    // Privileges changed will be saved to the db using this function.
+    public function savePrivilege(Request $request, $id)
     {
         $user = User::find($id);
         $user->update([
-            'name' => $request->name,
-            'email' => $request->email,
-            'designation' => $request->designation,
-            'organization' => $request->organization,
+            'role_id' => $request->role,
         ]);
-        return redirect('/admin/index')->with('message', 'User Updated Successfully');
+        return redirect('/user/index')->with('message', 'Privilege Updated Successfully');
     }
 
-    public function destroy($id)            //to delete a record
+    // When user clicks on the Activate users button in admin Home, this function
+    // will open the selfRegistered view.
+    public function showSelfRegistered()           
+    {
+        $users = User::where('status', 0)->get();   //get only records where the status = 0 = self registered users.
+        return view('admin::admin.selfRegistered', [
+            'users' => $users,
+        ]);
+    }
+
+    // Opens the view to activate users (Activate button in the selfRegistered view)
+    public function showActivate($id)    
     {
         $user = User::find($id);
-        $user->delete();
-        return redirect('/admin/index')->with('message', 'User Successfully Deleted');
+        return view('admin::admin.activate', [
+            'user' => $user,
+        ]);
+    }
+
+    // Activates the user by saving the new data to the database and setting the user status to 1.
+    public function activate(Request $request, $id)     
+    {
+        $user = User::find($id);
+        $user->update([
+            'status' => $request->status,
+            'role_id' => $request->role,
+            'designation_id' => $request->designation,
+            'organization_id' => $request->organization,
+        ]);
+        return redirect('/admin/showSelfRegistered')->with('message', 'User Activated Successfully');
     }
 
 }
