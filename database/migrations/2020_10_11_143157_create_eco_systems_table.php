@@ -15,7 +15,8 @@ class CreateEcoSystemsTable extends Migration
     {
         Schema::create('eco_systems', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
+            $table->string('ecosystem_type');
+            $table->text('description');
             $table->integer('created_by_user_id');
             $table->timestampsTz(); //time stamp with timezone in UTC
             $table->tinyInteger('status');

@@ -18,18 +18,22 @@ class CreateTreeRemovalRequestsTable extends Migration
             $table->integer('created_by_user_id');
             $table->string('description');
             $table->json('images');
-            $table->string('province');
-            $table->string('district');
-            $table->string('gs_division');
+            $table->integer('province');
+            $table->integer('district');
+            $table->integer('gs_division');
             $table->double('land_size', 12,4);
             $table->string('land_size_unit');
             $table->json('special_approval')->nullable();// 1: EIA 2:SEA, 
-            $table->integer('no_of_fauna_species');
-            $table->json('fauna');
+            $table->integer('no_of_trees');
+            $table->integer('no_of_tree_species');
+            $table->integer('no_of_mammal_species');
+            $table->integer('no_of_amphibian_species');
+            $table->integer('no_of_reptile_species');
+            $table->integer('no_of_avian_species');
+            $table->text('species_special_notes');
             $table->integer('no_of_flora_species');
-            $table->json('flora');
-            $table->string('land_parcel_id');
-            $table->json('location');
+            $table->integer('land_parcel_id');
+            $table->json('tree_locations');
             $table->timestampsTz(); //time stamp with timezone in UTC
             $table->tinyInteger('status');
             $table->softDeletesTz('deleted_at', 0);

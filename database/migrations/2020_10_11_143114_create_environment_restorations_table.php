@@ -24,7 +24,8 @@ class CreateEnvironmentRestorationsTable extends Migration
             /*
                 {[species_id, count, remarks, amendments, amended_by, amended_on]}
             */
-            $table->timestampTz('approval_at'); //null-pending, approved/ rejected time
+            $table->timestampTz('approval_at')->nullable(); //null-pending, approved/ rejected time
+            $table->integer('land_parcel_id');
             $table->timestampsTz(); //time stamp with timezone in UTC
             $table->tinyInteger('status');
             $table->softDeletesTz('deleted_at', 0);

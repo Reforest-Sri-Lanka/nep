@@ -2,9 +2,6 @@
 
 use DevelopmentProject\Http\Controllers\DevelopmentProjectController;
 
-Route::get('/home', [DevelopmentProjectController::class, 'home']);
+Route::get('/home', [DevelopmentProjectController::class, 'home'])->name('developmentproject.home');
 
-
-Route::get('/test', function(){
-    return view('developmentProject::index');
-});
+Route::get('/check', [DevelopmentProjectController::class, 'test']);

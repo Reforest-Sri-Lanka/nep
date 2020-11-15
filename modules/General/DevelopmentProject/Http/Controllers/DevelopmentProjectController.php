@@ -11,7 +11,6 @@ class DevelopmentProjectController extends Controller
         $name = 'Yashod';
         return view('developmentProject::home', compact('name'));
     }
-
     public function test()
     {
         return view('developmentProject::index');

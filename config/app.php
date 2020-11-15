@@ -181,6 +181,8 @@ return [
         Admin\Providers\AdminServiceProvider::class,
         TreeRemoval\Providers\RouteServiceProvider::class,
         TreeRemoval\Providers\TreeRemovalServiceProvider::class,
+        DevelopmentProject\Providers\RouteServiceProvider::class,
+        DevelopmentProject\Providers\DevelopmentProjectServiceProvider::class,
     ],
 
     /*

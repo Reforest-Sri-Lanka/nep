@@ -37,6 +37,7 @@ class RouteServiceProvider extends ServiceProvider
     public function boot()
     {
 
+        //Blade::component('test-new', TestTree::class);
         $this->routes(function () {
         /*    Route::prefix('api')
                 ->middleware('api')
@@ -44,7 +45,7 @@ class RouteServiceProvider extends ServiceProvider
                 ->group(base_path('routes/api.php')); */
 
             Route::middleware('web')
-                ->prefix('development')
+                ->prefix('dev-project')
                 ->group(base_path('modules/General/DevelopmentProject/routes/developmentProject.php'));
         });
     }

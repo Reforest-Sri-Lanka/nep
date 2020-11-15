@@ -15,6 +15,7 @@ class CreateProcessItemsTable extends Migration
     {
         Schema::create('process_items', function (Blueprint $table) {
             $table->id();
+            $table->integer('form_type');
             $table->integer('form_id');
             $table->integer('created_by_user_id');
             $table->integer('requst_organization'); //ref organizations
