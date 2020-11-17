@@ -1,7 +1,10 @@
 @extends('home')
 
 @section('cont')
-<h3 class="p-3 display-4">General Module</h3>
+<h3 class="p-3 display-4" style="display:inline">General Module</h3>
+<span>
+    <h3 class="text-center bg-success text-light">{{session('message')}}</h3>
+</span>
 <hr>
 <div class="row justify-content-center">
     <div class="col-md-3">
@@ -20,11 +23,11 @@
     <div class="col-md-3">
         <div class="card bg-dark text-light">
             <div class="card-header text-center">
-                <a class="nav-link text-light font-italic p-2" href="#">Development project </a>
+                <a class="nav-link text-light font-italic p-2" href="/dev-project/openAssign">Development project </a>
             </div>
             <div class="card-body text-center text-light">
                 <p class="card-text p-2">Quick links</p>
-                <a class="nav-link text-light font-italic p-2" href="#">Application form</a>
+                <a class="nav-link text-light font-italic p-2" href="/dev-project/applicationForm">Application form</a>
                 <a class="nav-link text-light font-italic p-2" href="#">Check status</a>
             </div>
         </div>

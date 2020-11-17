@@ -58,4 +58,13 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
 NEP is Licensed is pending. 
 
-## non essential change
+## To run the program
+
+1. Download the repository
+2. Run composer install
+3. Run composer du
+4. Set up the database in the .env file
+5. Set up mailtrap.io in the .env file
+6. run php artisan:migrate
+7. run php artisan:serve
+8. On the browser of your choice go to localhost:8000

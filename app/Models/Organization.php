@@ -8,9 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Organization extends Model
 {
     use HasFactory;
-
-    //protected $table = "Organizations";
-
+    
     // A user belongs to one organization and an organization has many users.
     public function users(){
         return $this->hasMany('App\Models\User');

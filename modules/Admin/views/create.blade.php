@@ -93,9 +93,11 @@
                 @if (Auth::user()->role_id == 3 ||Auth::user()->role_id == 4)
                 <input type="hidden" class="form-control" name="organization" value="{{Auth::user()->organization_id}}">
                 @endif
+
                 <input type="hidden" class="form-control" name="created_by" value="{{Auth::user()->id}}">
 
                 <div style="float:right;">
+                
                 <!-- Status value of 1 will be sent to activate the user as soon as s/he is created by admin/HoO or Manager -->
                     <button type="submit" name="status" value="1" class="btn btn-primary">Create</button>
                 </div>

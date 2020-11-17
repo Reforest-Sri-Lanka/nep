@@ -2,7 +2,9 @@
 
 @section('cont')
 <h3 class="p-3 display-4" style="display:inline">Activate Users</h3>
-<input type="text" style=" float: right; padding: 6px; margin-top: 20px; margin-right: 16px;border: none;font-size: 17px;" placeholder="Search..." size="30">
+<input type="text" 
+    style=" float: right; padding: 6px; margin-top: 20px; margin-right: 16px;border: none;font-size: 17px;" 
+    placeholder="Search..." size="30">
 <hr>
 <div class="flex row border-secondary rounded-lg ml-3">
     <span>
@@ -50,8 +52,10 @@
                 <td>Active</td>
                 @break;
                 @endswitch
+
                 <!-- Opens the more view -->
                 <td><a href="/user/more/{{$user->id}}" class="btn btn-outline-info" role="button">...</a></td>
+
                 <!-- opens the activate view -->
                 <td><a href="/admin/showActivate/{{$user->id}}" class="btn btn-outline-success" role="button">Activate</a></td>
             </tr>

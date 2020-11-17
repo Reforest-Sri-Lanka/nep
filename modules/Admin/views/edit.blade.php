@@ -4,11 +4,13 @@
 
 <kbd><a href="/user/index" class="text-white font-weight-bolder"><i class="fas fa-chevron-left"></i></i> BACK</a></kbd>
 <div class="container">
+    
     <!-- If user status is 0 -> Not activated then prevent access to the edit view -->
     @if($user->status == 0)
     <div class="container p-3 my-3 bg-primary text-white">
         <h2>This user is not activated. Please activate the user prior to editing details.</h2>
     </div>
+
     @else
     <h2 style="text-align:center;" class="text-dark">Edit {{$user->name}}</h2>
     <hr>

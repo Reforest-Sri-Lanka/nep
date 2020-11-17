@@ -51,7 +51,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'password' => "password",
     ];
 
-    // The inverse of the relationships in the Role, Organization, Designation models.
+    // The inverse of the relationships in the Role, Organisation, Designation models.
     public function organization()
     {
         return $this->belongsTo('App\Models\Organization');

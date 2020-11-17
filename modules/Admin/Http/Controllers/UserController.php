@@ -150,5 +150,4 @@ class UserController extends Controller
         } else
             return redirect('/user/index')->with('danger', 'Current Password is Incorrect'); // Else show that old password is incorrect
     }
-
 }

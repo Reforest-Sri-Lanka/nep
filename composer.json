@@ -44,7 +44,8 @@
             "Dashboard\\": "MDashboard/",
             "Admin\\": "modules/Admin",
             "TreeRemoval\\": "modules/General/TreeRemoval",
-            "DevelopmentProject\\": "modules/General/DevelopmentProject"
+            "DevelopmentProject\\": "modules/General/DevelopmentProject",
+            "ApprovalItem\\": "modules/General/ApprovalItem"
         }
     },
     "autoload-dev": {

@@ -31,7 +31,7 @@
             <i class="fas fa-bell mr-1"> <span class="badge badge-light">4</span>        |</i>
         </a>
 
-        <a href="user/passwordReset" class="text-secondary">
+        <a href="admin/passwordReset" class="text-secondary">
             <i class="fas fa-cog mr-1">          |</i>
         </a>
 
@@ -101,7 +101,7 @@
                 <a class="nav-link text-light font-italic p-2" href="#">Update Map</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-light font-italic p-2" href="#">Requests</a>
+                <a class="nav-link text-light font-italic p-2" href="/approval-item/showRequests">Requests</a>
             </li>
             </ul>
             </nav>
