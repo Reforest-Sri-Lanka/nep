@@ -20,6 +20,10 @@ class User extends Authenticatable implements MustVerifyEmail
         'name',
         'email',
         'password',
+        'organization_id',
+        'designation_id',
+        'role_id',
+        'status',
     ];
 
     /**
@@ -42,15 +46,24 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     protected $attributes = [
-        'role' => 0,
-        'designation' => 0,
-        'organization' => 0,
         'created_by_user_id' => 0,
-        'status' => 0
-
+        'status' => 0,
+        'password' => "password",
     ];
 
-    public function roles(){
-        return $this->belongsToMany('App\Role');
+    // The inverse of the relationships in the Role, Organisation, Designation models.
+    public function organization()
+    {
+        return $this->belongsTo('App\Models\Organization');
+    }
+
+    public function role()
+    {
+        return $this->belongsTo('App\Models\Role');
+    }
+
+    public function designation()
+    {
+        return $this->belongsTo('App\Models\Designation');
     }
 }

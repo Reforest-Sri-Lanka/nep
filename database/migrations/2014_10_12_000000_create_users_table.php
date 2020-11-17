@@ -19,14 +19,19 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->timestampTz('email_verified_at')->nullable();
             $table->string('password');
-            $table->tinyInteger('role');
-            $table->integer('designation');
-            $table->integer('organization');
             $table->integer('created_by_user_id');
             $table->rememberToken();
             $table->timestampsTz(); //time stamp with timezone in UTC
             $table->tinyInteger('status');
             $table->softDeletesTz('deleted_at', 0);
+
+            // Connecting the user to the roles, organizations and designation tables
+            $table->unsignedBigInteger('role_id')->nullable();            
+            $table->unsignedBigInteger('organization_id')->nullable();
+            $table->unsignedBigInteger('designation_id')->nullable();
+            $table->foreign('designation_id')->references('id')->on('designations')->onDelete('cascade');
+            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
+            $table->foreign('organization_id')->references('id')->on('organizations')->onDelete('cascade');
         });
     }
 

@@ -19,9 +19,22 @@ Route::get('/', function () {
 });
 
 Route::get('/home', function () {
-    //dd(\Illuminate\Support\Facades\Auth::user());
-    return view('home');
+    return view('test/dashboard');
 })->middleware(['auth', 'verified']);
+
+//Route::get('/admin', 'AdministratorController@index');
+
+Route::get('/general', function(){
+    return view('test/mainview');
+});
+
+
 
 //Route::get('/roles', [RoleController::class, 'fetchAllRoles']);
 //Route::get('/arole', [RoleController::class, 'fetchARole']);
+// Route::get('/lighthome', function () {
+//     return view('test2');
+// });
+// Route::get('/dash', function () {
+//     return view('test3');
+// });

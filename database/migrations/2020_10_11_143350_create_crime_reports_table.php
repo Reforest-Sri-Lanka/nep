@@ -15,11 +15,11 @@ class CreateCrimeReportsTable extends Migration
     {
         Schema::create('crime_reports', function (Blueprint $table) {
             $table->id();
-            $table->tinyInteger('crime_type');
+            $table->integer('crime_type');
             $table->tinyInteger('action_taken');
             $table->json('photos');
             $table->json('logs');
-            $table->json('polygon');
+            $table->integer('land_parcel_id');
             $table->text('description');
             $table->integer('created_by_user_id');
             $table->timestampsTz(); //time stamp with timezone in UTC
