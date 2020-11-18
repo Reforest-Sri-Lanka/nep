@@ -1,6 +1,6 @@
 <?php
 
-namespace DevelopmentProject\Providers;
+namespace EnvironmentRestoration\Providers;
 
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
@@ -45,8 +45,8 @@ class RouteServiceProvider extends ServiceProvider
                 ->group(base_path('routes/api.php')); */
 
             Route::middleware('web')
-                ->prefix('dev-project')
-                ->group(base_path('modules/General/DevelopmentProject/routes/developmentProject.php'));
+                ->prefix('env-restoration')
+                ->group(base_path('modules/General/EnvironmentRestoration/routes/environmentRestoration.php'));
         });
     }
 

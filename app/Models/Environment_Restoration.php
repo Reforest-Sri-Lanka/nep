@@ -58,7 +58,7 @@ class Environment_Restoration extends Model
         return $this->belongsTo('App\Models\Organization');
     }
 
-    public function ecosystem()
+    public function eco_system()
     {
         return $this->belongsTo('App\Models\Ecosystem');
     }

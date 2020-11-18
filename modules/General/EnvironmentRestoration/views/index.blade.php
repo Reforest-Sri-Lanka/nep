@@ -13,7 +13,7 @@
     </span>
     <span>
 	<a href="/envRestoration/envRestorationMyIndex" class="btn btn-info mr-4" role="button">View My Projects</a>
-        <a href="/envRestoration/create" class="btn btn-info mr-4" role="button">Add New Project</a>
+        <a href="/env-restoration/create" class="btn btn-info mr-4" role="button">Add New Project</a>
     </span>
 
     <table class="table table-dark table-striped border-secondary rounded-lg mr-4">
@@ -34,16 +34,16 @@
                 <td>{{$restoration->id}}</td>
                 <td>{{$restoration->title}}</td>
 
-                @if($restoration->er_activity == NULL)
+                @if($restoration->environment_restoration_activity == NULL)
                 <td>Unassigned</td>
                 @else
-                <td>{{$restoration->er_activity->title}}</td>
+                <td>{{$restoration->environment_restoration_activity->title}}</td>
                 @endif
 
-                @if($restoration->ecosystem == NULL)
+                @if($restoration->eco_system == NULL)
                 <td>Unassigned</td>
                 @else
-		        <td>{{$restoration->ecosystem->title}}</td>
+		        <td>{{$restoration->eco_system->title}}</td>
                 @endif
 
                 @if($restoration->organization == NULL)
@@ -61,7 +61,7 @@
                 @break;
                 @endswitch
 
-                <td class="text-center"><a href="/envRestoration/show/{{$restoration->id}}" class="btn btn-outline-info" role="button">...</a></td>
+                <td class="text-center"><a href="/env-restoration/show/{{$restoration->id}}" class="btn btn-outline-info" role="button">...</a></td>
             </tr>
             @endforeach
         </tbody>

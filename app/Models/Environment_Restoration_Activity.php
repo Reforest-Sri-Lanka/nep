@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Environment_Restoration_Activity extends Model
 {
     use HasFactory;
-    // protected $table = "environment_restoration_activities";
+    protected $table = "environment_restoration_activities";
     
     public function environment_restorations(){
         return $this->hasMany('App\Models\Environment_Restoration');

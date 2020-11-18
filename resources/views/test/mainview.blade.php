@@ -39,8 +39,8 @@
             </div>
             <div class="card-body text-center text-light">
                 <p class="card-text p-2">Quick links</p>
-                <a class="nav-link text-light font-italic p-2" href="/dashboard/complaint">Register new project</a>
-                <a class="nav-link text-light font-italic p-2" href="#">Check for reforest details</a>
+                <a class="nav-link text-light font-italic p-2" href="/env-restoration/envRestorationCreate">Register new project</a>
+                <a class="nav-link text-light font-italic p-2" href="/env-restoration/index">Check for reforest details</a>
             </div>
         </div>
     </div>

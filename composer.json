@@ -45,6 +45,7 @@
             "Admin\\": "modules/Admin",
             "TreeRemoval\\": "modules/General/TreeRemoval",
             "DevelopmentProject\\": "modules/General/DevelopmentProject",
+            "EnvironmentRestoration\\": "modules/General/EnvironmentRestoration",
             "ApprovalItem\\": "modules/General/ApprovalItem"
         }
     },

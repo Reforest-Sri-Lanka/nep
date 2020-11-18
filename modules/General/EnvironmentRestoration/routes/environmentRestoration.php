@@ -2,16 +2,15 @@
 
 use EnvironmentRestoration\Http\Controllers\EnvironmentRestorationController;
 
-Route::get('/envRestoration/index', 'EnvironmentRestorationController@index');
 
-Route::get('/envRestoration/show/{id}', 'Modules\General\EnvironmentRestoration\Http\Controllers\EnvironmentRestorationController@show');
+Route::get('/index', [EnvironmentRestorationController::class, 'index']);
 
-Route::get('/envRestoration/edit/{id}', 'Modules\General\EnvironmentRestoration\Http\Controllers\EnvironmentRestorationController@edit');
+Route::get('/show/{id}', [EnvironmentRestorationController::class, 'show']);
 
-Route::patch('/envRestoration/update/{id}', 'Modules\General\EnvironmentRestoration\Http\Controllers\EnvironmentRestorationController@update');
+/* Route::get('/envRestoration/edit/{id}', 'Modules\General\EnvironmentRestoration\Http\Controllers\EnvironmentRestorationController@edit');
 
-Route::get('/envRestoration/create', function () {
-         return view('envRestoration/envRestorationCreate');
-     });
+Route::patch('/envRestoration/update/{id}', 'Modules\General\EnvironmentRestoration\Http\Controllers\EnvironmentRestorationController@update'); */
 
-Route::post('/envRestoration/store', 'App\Http\Controllers\envRestorationController@store'); 
+Route::get('/create', [EnvironmentRestorationController::class, 'create']);
+
+Route::post('/store', [EnvironmentRestorationController::class, 'store']); 

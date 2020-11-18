@@ -1,6 +1,6 @@
 <?php
 
-namespace DevelopmentProject\Http\Controllers;
+namespace EnvironmentRestoration\Http\Controllers;
 
 use Illuminate\Routing\Controller as BaseController;
 

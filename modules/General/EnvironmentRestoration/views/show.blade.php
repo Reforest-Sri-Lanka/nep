@@ -19,24 +19,24 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text">Restoration Type</span>
                     </div>
-                    <input type="text" class="form-control" placeholder="{{$restoration->environment_restoration_activities->title}}" readonly>
+                    <input type="text" class="form-control" placeholder="{{$restoration->environment_restoration_activity->title}}" readonly>
                 </div>
 
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text">Eco-System</span>
                     </div>
-                        <input type="text" class="form-control" placeholder="{{$restoration->eco_systems->title}}" readonly>
+                        <input type="text" class="form-control" placeholder="{{$restoration->eco_system->title}}" readonly>
                 </div>
 
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text">Organization</span>
                     </div>
-                    @if($user->organization == NULL)
+                    @if($restoration->organization == NULL)
                         <input type="text" class="form-control" placeholder="Unassigned" readonly>
                     @else
-                        <input type="text" class="form-control" placeholder="{{$user->organization->title}}" readonly>
+                        <input type="text" class="form-control" placeholder="{{$restoration->organization->title}}" readonly>
                     @endif
                 </div>
 
@@ -45,7 +45,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text">Status</span>
                     </div>
-                    @switch($user->status)
+                    @switch($restoration->status)
                     @case('1')
                     <input type="text" class="form-control" placeholder="Pending" readonly>
                     @break;
