@@ -5,15 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Organization extends Model
+class EnvironmentRestorationActivity extends Model
 {
     use HasFactory;
-    
-    // A user belongs to one organization and an organization has many users.
-    public function users(){
-        return $this->hasMany('App\Models\User');
-    }
 
+    // protected $table = "environment_restoration_activities";
+    
     public function environment_restorations(){
         return $this->hasMany('App\Models\EnvironmentRestoration');
     }
