@@ -15,6 +15,6 @@ class Organization extends Model
     }
 
     public function environment_restorations(){
-        return $this->hasMany('App\Models\EnvironmentRestoration');
+        return $this->hasMany('App\Models\Environment_Restoration');
     }
 }

@@ -2,15 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 
-class EnvironmentRestoration extends Model
+class Environment_Restoration extends Model
 {
-    use HasFactory, Notifiable;
+    use HasFactory;
 
     protected $table = "environment_restorations";
 
@@ -73,11 +70,11 @@ class EnvironmentRestoration extends Model
 
     public function environment_restoration_activity()
     {
-        return $this->belongsTo('App\Models\EnvironmentRestorationActivity');
+        return $this->belongsTo('App\Models\Environment_Restoration_Activity');
     }
 
     public function environment_restoration_species()
     {
-        return $this->hasMany('App\Models\EnvironmentRestorationSpecies');
+        return $this->hasMany('App\Models\Environment_Restoration_Species');
     }
 }

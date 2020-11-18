@@ -28,4 +28,14 @@ class Environment_Restoration_Species extends Model
         'created_by_user_id' => 0,
         'status' => 0,
     ];
+
+    public function environment_restorations(){
+        return $this->belongsTo('App\Models\Environment_Restoration');
+    }
+
+    public function species_information(){
+        return $this->belongsTo('App\Models\Species_Information');
+    }
+
+
 }

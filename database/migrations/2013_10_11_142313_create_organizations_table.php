@@ -18,7 +18,7 @@ class CreateOrganizationsTable extends Migration
             $table->string('title');
             $table->string('city');
             $table->string('country');
-            $table->integer('type');
+            $table->string('type');
             $table->text('description');
             $table->timestampsTz(); //time stamp with timezone in UTC
             $table->tinyInteger('status');
