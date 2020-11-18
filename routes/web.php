@@ -29,22 +29,22 @@ Route::get('/home', function () {
     return view('test/mainview');
 }); */
 
-Route::get('/general', [Crime_reportController::class, 'general']);
-Route::post('/crimecreate', [Crime_reportController::class, 'create']);
-Route::get('/crimehome', [Crime_reportController::class, 'index2']);
+
+Route::post('/crimecreate', [Crime_reportController::class, 'create_crime_report']);
+Route::get('/crimehome', [Crime_reportController::class, 'crime_module_access_controller']);
 
 Route::get('/newcrime', fn() => view('general.logComplaint'));
-Route::get('/general', [Crime_reportController::class, 'general']);
+Route::get('/general', [Crime_reportController::class, 'general_view_display']);
 
-Route::get('/trackcrime', [Crime_reportController::class, 'track']);
-Route::get('/assigncheck', [Crime_reportController::class, 'track2']);
-Route::get('/crimeadmin', [Crime_reportController::class, 'admin']);
-Route::get('/assign/{id}',[Crime_reportController::class, 'show']);
-Route::get('/check/{id}',[Crime_reportController::class, 'show2']);
+Route::get('/trackcrime', [Crime_reportController::class, 'track_user_crime_reports']);
+Route::get('/assigncheck', [Crime_reportController::class, 'track_assigned_process_items']);
+Route::get('/crimeadmin', [Crime_reportController::class, 'display_all_new_process_items']);
+Route::get('/assign/{id}',[Crime_reportController::class, 'load_crimeAssign']);
+Route::get('/check/{id}',[Crime_reportController::class, 'load_crimeInvestigate']);
 
-Route::get('/searchauth', [Crime_reportController::class, 'searchauth']);
-Route::post('/assignauth', [Crime_reportController::class, 'assignauth']);
-Route::post('/treecutcreate', [Crime_reportController::class, 'create2']);
+Route::get('/searchauth', [Crime_reportController::class, 'search_specific_authorities']);
+Route::post('/assignauth', [Crime_reportController::class, 'assign_authorities_crimereport']);
+Route::post('/treecutcreate', [Crime_reportController::class, 'create_tree_removal_request']);
 Route::get('/newtreecut',fn() => view('general.treecutting.treecut'));
 
 

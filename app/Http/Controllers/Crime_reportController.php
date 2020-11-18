@@ -11,28 +11,11 @@ use App\Models\tree_removal_request;
 class Crime_reportController extends Controller
 {
     //
-    public function index()
-    {
     
-        $Crime_report = new Crime_report;
-
-    }
 //
-    public function crimehome()
-    {
-    
-        $Check = "{{ Auth::user()->role }}";
-        if ($Check=='5'){
-            return view('general.crimeChome');
-        }
-        else{
-            return view('welcome');
-        }
-        
+   
 
-    }
-
-    public function assignauth(Request $request)
+    public function assign_authorities_crimereport(Request $request)
     {
         $request -> validate([
             'organization' => 'required|not_in:0',
@@ -42,8 +25,10 @@ class Crime_reportController extends Controller
             'comment'=>'required',
         ]);
         $id=$request['crimeid'];
+        $type="4";
         $Crime = Crime_report::where('id',$id)->update(['status' => '1']);
-        $Process_item =new Process_item;
+        $Process_item = Process_item::where('form_id',$id)->where('form_type',$id)->update(['status' => '1']);
+    
         $Process_item->Created_by_user_id = $request['create_by'];
         $Process_item->activity_organization = $request['organization'];
         $Process_item->activity_user_id = $request['authority_id'];
@@ -56,27 +41,24 @@ class Crime_reportController extends Controller
         return redirect('/crimehome')->with('message', 'Authority assigned Successfully');
         
     }
-    public function show($id) {
+    public function load_crimeAssign($id) {
         
         $Process_item =Process_item::find($id);
         if($Process_item->form_type == '4'){
             $crime = Crime_report::find($Process_item->form_id);
         }
-
-        
-        
         $Users =User::all()->where('role',1);
         return view('general.crimeAssign',['crime' => $crime],['Users' => $Users],);
     }
 
-    public function show2($id) {
+    public function load_crimeInvestigate($id) {
         
         $crime = Crime_report::find($id);
         $Users =User::all()->where('role',1);
         return view('general.crimeInvestigate',['crime' => $crime],['Users' => $Users],);
     }
 
-    public function general()
+    public function general_view_display()
     {
         
         //$org=Auth::user()->organization_id;
@@ -96,21 +78,21 @@ class Crime_reportController extends Controller
         
     }
 
-    public function track(Request $request)
+    public function track_user_crime_reports(Request $request)
     {
         $id=$request['create_by'];
         $Crimes = Crime_report::all()->where('created_by_user_id',$id)->toArray();
         return view('general.trackCrime',compact('Crimes'));
     }
 
-    public function track2(Request $request)
+    public function track_assigned_process_items(Request $request)
     {
         $id = Auth::user()->id;
         $Process_items = Process_item::all()->where('activity_user_id',$id)->toArray();
         return view('general.managerlist',compact('Process_items'));
     }
 
-    public function admin()
+    public function display_all_new_process_items()
     {
        
         //$Crimes = Crime_report::all()->where('status',0)->toArray();
@@ -121,7 +103,7 @@ class Crime_reportController extends Controller
     }
 
 
-    public function create(Request $request)
+    public function create_crime_report(Request $request)
     {
             
         $request -> validate([
@@ -167,7 +149,7 @@ class Crime_reportController extends Controller
         return redirect('/crimehome')->with('message', 'Crime report logged Successfully');
     }
 
-    public function create2(Request $request)
+    public function create_tree_removal_request(Request $request)
     {
             
         $request -> validate([
@@ -202,7 +184,7 @@ class Crime_reportController extends Controller
         return redirect('/crimehome')->with('message', 'Crime report logged Successfully');
     }
 
-    public function searchauth(Request $request){
+    public function search_specific_authorities(Request $request){
 
         $request -> validate([
             'organization1' => 'required|not_in:0',
@@ -217,7 +199,7 @@ class Crime_reportController extends Controller
         
     }
 
-    public function index2()                  //show all records for index
+    public function crime_module_access_controller()                  //show all records for index
     {
         $role = Auth::user()->role_id;
 
@@ -240,4 +222,7 @@ class Crime_reportController extends Controller
             return view('unauthorized');
         }
     }
+
+   
+    
 }
