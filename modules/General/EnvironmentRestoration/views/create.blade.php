@@ -2,7 +2,7 @@
 
 @section('cont')
 
-<kbd><a href="/env-restoration/create" class="text-white font-weight-bolder"><i class="fas fa-chevron-left"></i></i> BACK</a></kbd>
+<kbd><a href="/env-restoration/index" class="text-white font-weight-bolder"><i class="fas fa-chevron-left"></i></i> BACK</a></kbd>
 <div class="container">
     <h2 style="text-align:center;" class="text-dark">Add New Environment Restoration Project</h2>
     <hr>
@@ -140,7 +140,7 @@ $(document).ready(function(){
   count--;
   $(this).closest("tr").remove();
  });
-
+ //window.location.href="index.php?count";
 
 });
 </script>

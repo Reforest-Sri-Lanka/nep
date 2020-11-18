@@ -1,18 +1,18 @@
 @extends('home')
 
 @section('cont')
+<kbd><a href="/env-restoration/index" class="text-white font-weight-bolder"><i class="fas fa-chevron-left"></i></i> BACK</a></kbd>
 <h3 class="p-3 display-4" style="display:inline">Environment Restoration Module</h3>
 <input type="text" style=" float: right; padding: 6px; margin-top: 20px; margin-right: 16px;border: none;font-size: 17px;" placeholder="Search..." size="30">
 <hr>
 <div class="flex row border-secondary rounded-lg ml-3 justify-content-between">
     <span>
-        <h5 class="p-3">Environment Restoration Projects</h5>
+        <h5 class="p-3">My Environment Restoration Projects</h5>
     </span>
     <span>
         <h3 class="text-center bg-success text-light">{{session('message')}}</h3>
     </span>
     <span>
-	<a href="/env-restoration/myIndex" class="btn btn-info mr-4" role="button">View My Projects</a>
         <a href="/env-restoration/create" class="btn btn-info mr-4" role="button">Add New Project</a>
     </span>
 

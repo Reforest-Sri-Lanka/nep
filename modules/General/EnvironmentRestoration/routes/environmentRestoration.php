@@ -4,6 +4,7 @@ use EnvironmentRestoration\Http\Controllers\EnvironmentRestorationController;
 
 
 Route::get('/index', [EnvironmentRestorationController::class, 'index']);
+Route::get('/myIndex', [EnvironmentRestorationController::class, 'myIndex']);
 
 Route::get('/show/{id}', [EnvironmentRestorationController::class, 'show']);
 

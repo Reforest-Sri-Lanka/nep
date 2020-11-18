@@ -6,15 +6,26 @@ use App\Models\Environment_Restoration_Activity;
 use App\Models\Environment_Restoration_Species;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Hash;
-use App\Http\Controllers\Auth;
+// use App\Http\Controllers\Auth;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\UserRequest;
 
 class EnvironmentRestorationController extends Controller
 {
+    
     public function index()
     {
         $restorations = Environment_Restoration::all();       //show all records for index
         return view('environmentRestoration::index', [
+            'restorations' => $restorations,
+        ]);
+    }
+
+    public function myIndex()
+    {
+        $userID = Auth::user()->id;
+        $restorations = Environment_Restoration::where('created_by_user_id','=', $userID)->get();       //show all records for index
+        return view('environmentRestoration::myIndex', [
             'restorations' => $restorations,
         ]);
     }
@@ -67,9 +78,9 @@ class EnvironmentRestorationController extends Controller
         $restoration->status = request('status');
 
         $restoration->save();
-
+        //$count=$_GET["count"];
         $restorespecies = new Environment_Restoration_Species();
-        
+        //for ($i=0;$i<$count;$i++) {
             $restorespecies->environment_restoration_id = $restoration->id;
             $restorespecies->species_id = request('species_id');
             $restorespecies->quantity = request('quantity');
@@ -79,7 +90,7 @@ class EnvironmentRestorationController extends Controller
             $restorespecies->status = request('status_species');
 
             $restorespecies->save();
-        
+        //}
         return redirect('/env-restoration/index')->with('message','New Environment Restoration Project Successfully Created');
         
     }

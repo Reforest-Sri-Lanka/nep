@@ -35,11 +35,11 @@
     <div class="col-md-3">
         <div class="card bg-dark text-light">
             <div class="card-header text-center">
-                <a class="nav-link text-light font-italic p-2" href="#">Reforest Project</a>
+                <a class="nav-link text-light font-italic p-2" href="/env-restoration/index">Reforest Project</a>
             </div>
             <div class="card-body text-center text-light">
                 <p class="card-text p-2">Quick links</p>
-                <a class="nav-link text-light font-italic p-2" href="/env-restoration/envRestorationCreate">Register new project</a>
+                <a class="nav-link text-light font-italic p-2" href="/env-restoration/create">Register new project</a>
                 <a class="nav-link text-light font-italic p-2" href="/env-restoration/index">Check for reforest details</a>
             </div>
         </div>
