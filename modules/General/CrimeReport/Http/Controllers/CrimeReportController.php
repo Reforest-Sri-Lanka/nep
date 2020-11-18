@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace CrimeReport\Http\Controllers;
+
+
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -8,14 +10,10 @@ use App\Models\Crime_report;
 use App\Models\User;
 use App\Models\Process_item;
 use App\Models\tree_removal_request;
-class Crime_reportController extends Controller
-{
-    //
-    
-//
-   
 
-    public function assign_authorities_crimereport(Request $request)
+class CrimeReportController extends Controller
+{
+     public function assign_authorities_crimereport(Request $request)
     {
         $request -> validate([
             'organization' => 'required|not_in:0',
@@ -38,7 +36,7 @@ class Crime_reportController extends Controller
         $Process_item->status = "0";
         $Process_item->remark = $request['comment'];
         $Process_item->save();
-        return redirect('/crimehome')->with('message', 'Authority assigned Successfully');
+        return redirect('/crime-report/crimehome')->with('message', 'Authority assigned Successfully');
         
     }
     public function load_crimeAssign($id) {
@@ -48,48 +46,30 @@ class Crime_reportController extends Controller
             $crime = Crime_report::find($Process_item->form_id);
         }
         $Users =User::all()->where('role',1);
-        return view('general.crimeAssign',['crime' => $crime],['Users' => $Users],);
+        return view('crimeReport::crimeAssign',['crime' => $crime],['Users' => $Users],);
     }
 
     public function load_crimeInvestigate($id) {
         
         $crime = Crime_report::find($id);
         $Users =User::all()->where('role',1);
-        return view('general.crimeInvestigate',['crime' => $crime],['Users' => $Users],);
+        return view('crimeReport::crimeInvestigate',['crime' => $crime],['Users' => $Users],);
     }
 
-    public function general_view_display()
-    {
-        
-        //$org=Auth::user()->organization_id;
-        $org=2;
-        $role = Auth::user()->role_id;
-        if ($role == 1 || $role == 2 || $role == NULL ){
-            return view('unauthorized')->with('message', 'Admins are not allowed access to general module');
-        }
-        if ($role == 3 || $role == 4){
-            $Process_items = Process_item::all()->where('activity_organization',$org)->toArray();
-            return view('general.generalM',compact('Process_items'));
-        }
-        else{
-            $Process_items = Process_item::all()->where('created_by_user_id',$id)->toArray();
-            return view('general.generalM',compact('Process_items'));
-        }
-        
-    }
+    
 
     public function track_user_crime_reports(Request $request)
     {
         $id=$request['create_by'];
         $Crimes = Crime_report::all()->where('created_by_user_id',$id)->toArray();
-        return view('general.trackCrime',compact('Crimes'));
+        return view('crimeReport::trackCrime',compact('Crimes'));
     }
 
     public function track_assigned_process_items(Request $request)
     {
         $id = Auth::user()->id;
         $Process_items = Process_item::all()->where('activity_user_id',$id)->toArray();
-        return view('general.managerlist',compact('Process_items'));
+        return view('crimeReport::managerlist',compact('Process_items'));
     }
 
     public function display_all_new_process_items()
@@ -97,7 +77,7 @@ class Crime_reportController extends Controller
        
         //$Crimes = Crime_report::all()->where('status',0)->toArray();
         $Process_Items = Process_item::all()->where('status',0)->toArray();
-        return view('general.crimeAhome',compact('Process_Items'));
+        return view('crimeReport::crimeAhome',compact('Process_Items'));
         
 
     }
@@ -146,10 +126,10 @@ class Crime_reportController extends Controller
         $Process_item->remark = "to be made yet";
         $Process_item->save();
 
-        return redirect('/crimehome')->with('message', 'Crime report logged Successfully');
+        return redirect('/crime_report/crimehome')->with('message', 'Crime report logged Successfully');
     }
 
-    public function create_tree_removal_request(Request $request)
+    /* public function create_tree_removal_request(Request $request)
     {
             
         $request -> validate([
@@ -182,7 +162,7 @@ class Crime_reportController extends Controller
         $Process_item->save();
 
         return redirect('/crimehome')->with('message', 'Crime report logged Successfully');
-    }
+    } */
 
     public function search_specific_authorities(Request $request){
 
@@ -194,7 +174,7 @@ class Crime_reportController extends Controller
         $id=$request['crimeid'];
         $Users = User::all()->where('organization_id',$request['organization1'])->where('role_id',$request['role']);
         $crime = Crime_report::find($id);
-        return view('general.crimeAssign',['crime' => $crime],['Users'=>$Users,
+        return view('crimeReport::crimeAssign',['crime' => $crime],['Users'=>$Users,
         ]);
         
     }
@@ -205,17 +185,17 @@ class Crime_reportController extends Controller
 
         if ($role == 1 || $role == 2) {         //Admin  
             $users = User::where('role_id', '>' , 1)->orWhereNull('role_id',)->get();      
-            return view('general.crimeAdmin', [
+            return view('crimeReport::crimeAdmin', [
                 'users' => $users,
             ]);
         } else if ($role == 3|| $role == 4|| $role == 5) {                //HoO  Manager and staff  
             $users = User::where('role_id', '>' , 2)->orWhereNull('role_id')->get();
-            return view('general.crimeManager', [
+            return view('crimeReport::crimeManager', [
                 'users' => $users,
             ]);
         } else if ($role == 6) {            //citizen
             $users = User::where('role_id', '>' , 3)->orWhereNull('role_id')->get();
-            return view('general.crimeChome', [
+            return view('crimeReport::crimeChome', [
                 'users' => $users,
             ]);
         }else if ($role == NULL){            //other
@@ -223,6 +203,4 @@ class Crime_reportController extends Controller
         }
     }
 
-   
-    
 }

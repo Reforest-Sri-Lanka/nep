@@ -1,10 +1,7 @@
 @extends('home')
 
 @section('cont')
-<h3 class="p-3 display-4" style="display:inline">General Module</h3>
-<span>
-    <h3 class="text-center bg-success text-light">{{session('message')}}</h3>
-</span>
+<h3 class="p-3 display-4">General Module</h3>
 <hr>
 <div class="row justify-content-center">
     <div class="col-md-3">
@@ -15,15 +12,15 @@
             </div>
             <div class="card-body text-center text-light">
                 <p class="card-text p-2">Quick links</p>
-                <a class="nav-link text-light font-italic p-2" href="/newtreecut">Application form</a>
+                <a class="nav-link text-light font-italic p-2" href="3">Application form</a>
                 <a class="nav-link text-light font-italic p-2" href="#">Check status</a>
             </div>
         </div>
     </div>
     <div class="col-md-3">
         <div class="card bg-dark text-light">
-            <div class="card-header text-center">
-                <a class="nav-link text-light font-italic p-2" href="/dev-project/openAssign">Development project </a>
+        <div class="card-header text-center">
+                <a class="nav-link text-light font-italic p-2" href="/dev-project/home">Development project </a>
             </div>
             <div class="card-body text-center text-light">
                 <p class="card-text p-2">Quick links</p>
@@ -51,7 +48,7 @@
             </div>
             <div class="card-body text-center text-light">
                 <p class="card-text p-2">Quick links</p>
-                <a class="nav-link text-light font-italic p-2" href="/newcrime">Make a complaint</a>
+                <a class="nav-link text-light font-italic p-2" href="/crime-report/newcrime">Make a complaint</a>
                 <a class="nav-link text-light font-italic p-2" href="#">Check status</a>
             </div>
         </div>
@@ -60,15 +57,14 @@
 </div>
 <hr>
 <div class="row border-secondary rounded-lg ml-3">
-    <h5 class="p-3">To be assigned to staff</h5>
+    <h5 class="p-3">My requests</h5>
     <table class="table table-dark table-striped mr-4">
         <thead>
             <tr>
                 <th>Category</th>
                 <th>Date Submitted</th>
-                <th>Requested_by</th>
-                <th>remark</th>
-                <th>Check and assign</th>
+                <th>Status</th>
+                <th>More details</th>
             </tr>
         </thead>
         <tbody>
@@ -87,8 +83,19 @@
                 <td>Crime Report</td>
             @endswitch
                 <td>{{$row['created_at']}}</td>
-                <td>{{$row['requst_organization']}}</td>
-                <td>{{$row['remark']}}</td>
+            @switch($row['status'])
+            @case('0')
+                <td>Submitted</td>
+            @break;
+            @case('1')
+                <td>assigned</td>
+            @break;
+            @case('2')
+                <td>Investigated</td>
+            @break;
+            @case('3')
+                <td>Action taken</td>
+            @endswitch
                 <td><a href="#" class="text-muted">Go to request</a></td>
             </tr>
             @endforeach

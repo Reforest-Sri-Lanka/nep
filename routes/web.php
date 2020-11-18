@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
-use App\Http\Controllers\Crime_reportController;
+//use App\Http\Controllers\Crime_reportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,7 +30,7 @@ Route::get('/home', function () {
 }); */
 
 
-Route::post('/crimecreate', [Crime_reportController::class, 'create_crime_report']);
+/* Route::post('/crimecreate', [Crime_reportController::class, 'create_crime_report']);
 Route::get('/crimehome', [Crime_reportController::class, 'crime_module_access_controller']);
 
 Route::get('/newcrime', fn() => view('general.logComplaint'));
@@ -45,7 +45,7 @@ Route::get('/check/{id}',[Crime_reportController::class, 'load_crimeInvestigate'
 Route::get('/searchauth', [Crime_reportController::class, 'search_specific_authorities']);
 Route::post('/assignauth', [Crime_reportController::class, 'assign_authorities_crimereport']);
 Route::post('/treecutcreate', [Crime_reportController::class, 'create_tree_removal_request']);
-Route::get('/newtreecut',fn() => view('general.treecutting.treecut'));
+Route::get('/newtreecut',fn() => view('general.treecutting.treecut')); */
 
 
 //Route::get('/roles', [RoleController::class, 'fetchAllRoles']);
