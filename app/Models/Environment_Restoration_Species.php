@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Environment_Restoration_Species extends Model
 {
     use HasFactory;
-
+    protected $table = "environment_restoration_species";
     protected $fillable = [
         'environment_restoration_activity_id',
         'species_information_id',

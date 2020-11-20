@@ -133,7 +133,7 @@
 </div>
 
 </body>
-@yield('loop')
+<!-- @yield('loop') -->
 </html>
 
 

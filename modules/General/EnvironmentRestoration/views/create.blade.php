@@ -44,6 +44,8 @@
 
                 </div>
 
+                <!-- MAP MODULE WOULD COME HERE -->
+
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text">Land Parcel</span>
@@ -52,6 +54,8 @@
                 </div>
 
                 <br/>
+
+                <!-- creating the species table followed by ajax script to add and remove species in the table -->
 
                 <div class="table-responsive">
                     <h5> Species </h5>
@@ -66,82 +70,99 @@
                                 <th >Dimensions</th>
                                 <th>Remarks</th>
                                 <th></th>
-                                <!-- <input type="hidden" class="form-control" name="environment_restoration_id" value="{{Auth::user()->environment_restoration_id}}"> -->
                                 <input type="hidden" class="form-control" name="status_species" value="1">
+                                
+                                <script>
+                                    $(document).ready(function(){
+                                        var count = 1;
+                                        dynamic_species(count);
+                                        function dynamic_species(number)
+                                        {
+                                            html = '<tr>';
+                                                html += '<input type="hidden" name="environment_restoration_id[]" class="form-control" value="" />';
+                                                html += '<input type="hidden" name="statusSpecies[]" class="form-control" value="1" />'; 
+                                                html += '<td><select name="species_id[]" class="custom-select"><option selected>Select Species</option><option value="1">treespeciesname1</option><option value="2">treespeciesname2</option><option value="3">treespeciesname3 </option><option value="4">treespeciesname4</option></select></td>';
+                                                html += '<td><input type="text" name="quantity[]" class="form-control" /></td>';
+                                                html += '<td><input type="text" name="height[]" class="form-control" /></td>';
+                                                html += '<td><input type="text" name="dimension[]" class="form-control" /></td>';
+                                                html += '<td><input type="text" name="remark[]" class="form-control" /></td>';
 
+                                            if(number > 1)
+                                            {
+                                                html += '<td><button type="button" name="remove" id="" class="btn btn-danger remove">Remove Species</button></td></tr>';
+                                                $('tbody').append(html);
+                                            }
+                                            else
+                                            {   
+                                                html += '<td><button type="button" name="add" id="add" class="btn btn-success">Add Species</button></td></tr>';
+                                                $('tbody').html(html);
+                                            }
+                                        }
+
+                                        $(document).on('click', '#add', function(){
+                                        count++;
+                                        dynamic_species(count);
+                                        });
+
+                                        $(document).on('click', '.remove', function(){
+                                        count--;
+                                        $(this).closest("tr").remove();
+                                        });
+                                        
+                                        $('#dynamic_species').on('submit', function(event){
+                                            event.preventDefault();
+                                            $.ajax({
+                                                url:'{{ route("store.dynamic-species") }}',
+                                                method:'post',
+                                                data:$(this).serialize(),
+                                                dataType:'json',
+                                                beforeSend:function(){
+                                                    $('#save').attr('disabled','disabled');
+                                                },
+                                                success:function(data)
+                                                {
+                                                    if(data.error)
+                                                    {
+                                                        var error_html = '';
+                                                        for(var count = 0; count < data.error.length; count++)
+                                                        {
+                                                            error_html += '<p>'+data.error[count]+'</p>';
+                                                        }
+                                                        $('#result').html('<div class="alert alert-danger">'+error_html+'</div>');
+                                                    }
+                                                    else
+                                                    {
+                                                        dynamic_field(1);
+                                                        $('#result').html('<div class="alert alert-success">'+data.success+'</div>');
+                                                    }
+                                                    $('#save').attr('disabled', false);
+                                                }
+                                            })
+                                        });
+
+
+
+                                    });
+                                </script>
                             </tr>
                         </thead>
                         <tbody>
 
                         </tbody>
-                       <!--  <tfoot>
-                            <tr>
-                                <td colspan="2" align="right">&nbsp;</td>
-                                <td>
-                                    @csrf
-                                    <input type="submit" name="save" id="save" class="btn btn-primary" value="Save" />
-                                </td>
-                            </tr>
-                        </tfoot> -->
                     </table>
-                     </form>
                 </div>
                 
-                
+                <input type="hidden" class="form-control" name="status" value="1">
                 <input type="hidden" class="form-control" name="organization" value="{{Auth::user()->organization_id}}">
                 <input type="hidden" class="form-control" name="created_by" value="{{Auth::user()->id}}">
                 
                 <div style="float:right;">
-                    <button type="submit" name="status" value="1" class="btn btn-primary">Create</button>
+                    @csrf
+                    <button type="submit" name="save" id="save" value="1" class="btn btn-primary">Create</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
 
-@endsection
-
-@section('loop')
-<!-- Ajax loop for environment Restoration form for species -->
-<script>
-$(document).ready(function(){
-
- var count = 1;
-
- dynamic_field(count);
-
- function dynamic_field(number)
- {
-  html = '<tr>';
-        html += '<td><select name="species_id" class="custom-select"><option selected>Select Species</option><option value="1">treespeciesname1</option><option value="2">treespeciesname2</option><option value="3">treespeciesname3 </option><option value="4">treespeciesname4</option></select></td>';
-        html += '<td><input type="text" name="quantity" class="form-control" /></td>';
-        html += '<td><input type="text" name="height" class="form-control" /></td>';
-        html += '<td><input type="text" name="dimension" class="form-control" /></td>';
-        html += '<td><input type="text" name="remark" class="form-control" /></td>';
-
-        if(number > 1)
-        {
-            html += '<td><button type="button" name="remove" id="" class="btn btn-danger remove">Remove Species</button></td></tr>';
-            $('tbody').append(html);
-        }
-        else
-        {   
-            html += '<td><button type="button" name="add" id="add" class="btn btn-success">Add Species</button></td></tr>';
-            $('tbody').html(html);
-        }
- }
-
- $(document).on('click', '#add', function(){
-  count++;
-  dynamic_field(count);
- });
-
- $(document).on('click', '.remove', function(){
-  count--;
-  $(this).closest("tr").remove();
- });
- //window.location.href="index.php?count";
-
-});
-</script>
 @endsection

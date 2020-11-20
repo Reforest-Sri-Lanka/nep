@@ -14,4 +14,6 @@ Route::patch('/envRestoration/update/{id}', 'Modules\General\EnvironmentRestorat
 
 Route::get('/create', [EnvironmentRestorationController::class, 'create']);
 
-Route::post('/store', [EnvironmentRestorationController::class, 'store']); 
+Route::post('/store', [EnvironmentRestorationController::class, 'store'])->name('store.dynamic-species'); ; 
+
+// Route::post('/store/dynamic-species', [EnvironmentRestorationController::class, 'store'])->name('store.dynamic-species'); 

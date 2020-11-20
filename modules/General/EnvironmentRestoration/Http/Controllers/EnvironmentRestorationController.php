@@ -5,6 +5,7 @@ use App\Models\Environment_Restoration;
 use App\Models\Environment_Restoration_Activity;
 use App\Models\Environment_Restoration_Species;
 use Illuminate\Http\Request;
+use Validator;
 use App\Http\Controllers\Hash;
 // use App\Http\Controllers\Auth;
 use Illuminate\Support\Facades\Auth;
@@ -40,9 +41,12 @@ class EnvironmentRestorationController extends Controller
 
     public function show($id)           //show one record for moreinfo button
     {
-        $restoration = Environment_Restoration::find($id);                
+        $restoration = Environment_Restoration::find($id);
+        // $species = Environment_Restoration_Species::find($restoration->id); 
+        $species = Environment_Restoration_Species::where('environment_restoration_id','=',($restoration->id))->get();              
         return view('environmentRestoration::show', [
             'restoration' => $restoration,
+            'species' => $species,
         ]);
     }
 
@@ -65,7 +69,7 @@ class EnvironmentRestorationController extends Controller
     } */
 
 
-    public function store()
+    public function store(Request $request)
     {
         $restoration = new Environment_Restoration();
         $restoration->title = request('title');
@@ -73,25 +77,53 @@ class EnvironmentRestorationController extends Controller
         $restoration->organization_id = request('organization');
         $restoration->eco_system_id = request('ecosystem');
         $restoration->land_parcel_id = request('land_parcel_id');
-        //$restoration->species = request('species');
         $restoration->created_by_user_id = request('created_by');
         $restoration->status = request('status');
 
         $restoration->save();
-        //$count=$_GET["count"];
-        $restorespecies = new Environment_Restoration_Species();
-        //for ($i=0;$i<$count;$i++) {
-            $restorespecies->environment_restoration_id = $restoration->id;
-            $restorespecies->species_id = request('species_id');
-            $restorespecies->quantity = request('quantity');
-            $restorespecies->height = request('height');
-            $restorespecies->dimensions = request('dimension');
-            $restorespecies->remarks = request('remark');
-            $restorespecies->status = request('status_species');
+        $latest = Environment_Restoration::latest()->first();
+        $newres = $latest->id;
+        //Adding to Environment Restoration Species Table using ajax
+                $rules = array(
+                //'environment_restoration_id.*'  => 'required',
+                'statusSpecies.*'  => 'required',
+                'species_id.*'  => 'required',
+                'quantity.*'  => 'required',
+                'height.*'  => 'required',
+                'dimension.*'  => 'required',
+                'remark.*'  => 'required'
+            );
+            $error = Validator::make($request->all(), $rules);
+            if($error->fails())
+            {
+                return response()->json([
+                    'error'  => $error->errors()->all()
+                ]);
+            }
 
-            $restorespecies->save();
-        //}
-        return redirect('/env-restoration/index')->with('message','New Environment Restoration Project Successfully Created');
+            //$environment_restoration_id = $request->environment_restoration_id;
+            $statusSpecies = $request->statusSpecies;
+            $species_id = $request->species_id;
+            $quantity = $request->quantity;
+            $height = $request->height;
+            $dimension = $request->dimension;
+            $remark = $request->remark;
+            for($count = 0; $count < count($species_id); $count++)
+            {
+            $data = array(
+                'environment_restoration_id' => $newres,
+                'status' => $statusSpecies[$count],
+                'species_id'  => $species_id[$count],
+                'quantity'  => $quantity[$count],
+                'height'  => $height[$count],
+                'dimensions'  => $dimension[$count],
+                'remarks'  => $remark[$count],
+            );
+            $insert_data[] = $data; 
+            }
+
+            Environment_Restoration_Species::insert($insert_data);
+            return redirect('/env-restoration/index')->with('message','New Environment Restoration Project Successfully Created');
         
     }
 }

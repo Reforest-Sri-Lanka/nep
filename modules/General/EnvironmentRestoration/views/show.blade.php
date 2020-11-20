@@ -57,15 +57,29 @@
                 <div class="form-check border-secondary rounded-lg" style="background-color:#ebeef0">
                     <label class="mt-2"> Plant Species Grown </label>
                     <hr>
-                    <fieldset disabled>
+                    <ul class="list-unstyled">
+                        @foreach($species->species_id as $species_id)
+                            @switch($species_id)
+                                @case(1)
+                                    <li class="ml-5">SpeciesName 1</li>
+                                    @break
+                                @case(2)
+                                    <li class="ml-5">SpeciesName 2</li>
+                                    @break
+                                @case(3)
+                                    <li class="ml-5">SpeciesName 3</li>
+                                    @break
+                            @endswitch
+                        @endforeach
+                    </ul>
+                </div>
+                <!-- <fieldset disabled>
                         <input type="checkbox" name="species[]" value="AHeterophyllus" checked><label class="ml-2" checked />	Artocarpus heterophyllus</label> <br>
                         <input type="checkbox" name="species[]" value="AChampden" checked><label class="ml-2" checked />	Artocarpus champeden</label> <br>
                         <input type="checkbox" name="species[]" value="Mfragrans"><label class="ml-2">Myristica fragrans</label> <br>
                         <input type="checkbox" name="species[]" value="CIndica"><label class="ml-2">	Clausena indica</label> <br>
                         <input type="checkbox" name="species[]" value="Ccommune"><label class="ml-2">Canarium commune</label> <br>
-                    </fieldset>
-                </div>
-                
+                    </fieldset> -->
 
                
             </form>

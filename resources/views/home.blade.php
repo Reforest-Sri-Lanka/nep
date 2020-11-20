@@ -134,5 +134,4 @@
 </div>
 
 </body>
-@yield('loop')
 </html>

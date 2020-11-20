@@ -58,7 +58,6 @@
                 @break;
                 @case('3')
                 <td>Completed</td>
-                @break;
                 @endswitch
 
                 <td class="text-center"><a href="/env-restoration/show/{{$restoration->id}}" class="btn btn-outline-info" role="button">...</a></td>
