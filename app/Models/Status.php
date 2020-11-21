@@ -22,4 +22,8 @@ class Status extends Model
     public function tree_removal_requests(){
         return $this->hasMany('App\Models\Tree_Removal_Request');
     }
+
+    public function Crime_Reports(){
+        return $this->hasMany('App\Models\Crime_Report');
+    }
 }
