@@ -179,6 +179,8 @@ return [
         App\Providers\FortifyServiceProvider::class,
         Admin\Providers\RouteServiceProvider::class,
         Admin\Providers\AdminServiceProvider::class,
+        General\Providers\RouteServiceProvider::class,
+        General\Providers\GeneralServiceProvider::class,
         TreeRemoval\Providers\RouteServiceProvider::class,
         TreeRemoval\Providers\TreeRemovalServiceProvider::class,
         DevelopmentProject\Providers\RouteServiceProvider::class,
@@ -187,6 +189,8 @@ return [
         EnvironmentRestoration\Providers\EnvironmentRestorationServiceProvider::class,
         ApprovalItem\Providers\RouteServiceProvider::class,
         ApprovalItem\Providers\ApprovalItemServiceProvider::class,
+        CrimeReport\Providers\RouteServiceProvider::class,
+        CrimeReport\Providers\CrimeReportServiceProvider::class,
     ],
 
     /*

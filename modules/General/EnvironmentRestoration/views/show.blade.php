@@ -58,8 +58,8 @@
                     <label class="mt-2"> Plant Species Grown </label>
                     <hr>
                     <ul class="list-unstyled">
-                        @foreach($species->species_id as $species_id)
-                            @switch($species_id)
+                        @foreach($species as $species_id)
+                            @switch($species_id->species_id)
                                 @case(1)
                                     <li class="ml-5">SpeciesName 1</li>
                                     @break
