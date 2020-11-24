@@ -37,7 +37,14 @@ class Crime_report extends Model
     
 
     
-    public function roles(){
-        return $this->belongsToMany('App\User');
+
+    public function Crime_type()
+    {
+        return $this->belongsTo('App\Models\Crime_type');
+    }
+
+    public function Status()
+    {
+        return $this->belongsTo('App\Models\Status');
     }
 }
