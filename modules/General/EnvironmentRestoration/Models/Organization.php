@@ -8,13 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Organization extends Model
 {
     use HasFactory;
-    
-    // A user belongs to one organization and an organization has many users.
+
+    //protected $table = "Organizations";
+
     public function users(){
         return $this->hasMany('App\Models\User');
-    }
-
-    public function environment_restorations(){
-        return $this->hasMany('App\Models\Environment_Restoration');
     }
 }

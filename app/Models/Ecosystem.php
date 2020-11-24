@@ -5,15 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Organization extends Model
+class Ecosystem extends Model
 {
     use HasFactory;
-    
-    // A user belongs to one organization and an organization has many users.
-    public function users(){
-        return $this->hasMany('App\Models\User');
-    }
-
+    protected $table = "eco_systems";
     public function environment_restorations(){
         return $this->hasMany('App\Models\Environment_Restoration');
     }
