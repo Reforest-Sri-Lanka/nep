@@ -14,7 +14,7 @@
     </div>
     <hr>
      <div class='row justify-content-center'> 
-     <form action="\crimecreate" method="post">
+     <form action="\crime-report\crimecreate" method="post">
       @csrf
                        <h6>Crime type</h6>
                        <div class="input-group mb-3">
@@ -31,6 +31,10 @@
                                     <strong>{{ $message }}</strong>
                                 </div>
                             @enderror
+                        </div>
+                        <div class="form-group">
+                            <h6>Photos</h6>
+                            <input type="file" id="images" name="images[]">
                         </div>
                        </br>
                        <h6>Description</h6>
