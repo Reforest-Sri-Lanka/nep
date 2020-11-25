@@ -9,8 +9,9 @@ use CrimeReport\Http\Controllers\CrimeReportController;
 Route::post('/crimecreate', [CrimeReportController::class, 'create_crime_report']);
 Route::get('/crimehome', [CrimeReportController::class, 'crime_module_access_controller']);
 
-Route::get('/newcrime', fn() => view('CrimeReport::logComplaint'));
-Route::get('/general', [CrimeReportController::class, 'general_view_display']);
+//Route::get('/newcrime', fn() => view('crime-report::logComplaint')); 
+Route::get('/newcrime',[CrimeReportController::class, 'crime_report_form_display']);
+//Route::get('/general', [CrimeReportController::class, 'general_view_display']);
 
 Route::get('/trackcrime', [CrimeReportController::class, 'track_user_crime_reports']);
 Route::get('/assigncheck', [CrimeReportController::class, 'track_assigned_process_items']);

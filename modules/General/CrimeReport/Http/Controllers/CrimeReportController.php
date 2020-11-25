@@ -56,6 +56,11 @@ class CrimeReportController extends Controller
         return view('crimeReport::crimeInvestigate',['crime' => $crime],['Users' => $Users],);
     }
 
+    public function crime_report_form_display() {
+
+        return view('crimeReport::logComplaint');
+    }
+
     
 
     public function track_user_crime_reports(Request $request)
@@ -93,13 +98,17 @@ class CrimeReportController extends Controller
             'confirm' => 'required',
             'create_by'=>'required',
         ]);
+
+        
         
         $Crime_report = new Crime_report;
         $Crime_report->Created_by_user_id = $request['create_by'];
         $Crime_report->crime_type = $request['crime_type'];
         $Crime_report->description = $request['description'];
-        $Crime_report->polygon = $request['location'];
+        $Crime_report->photos = "{}";
+        $Crime_report->logs = "{}";
         $Crime_report->action_taken = "0";
+        $Crime_report->land_parcel_id = "1"; //add relationship later
         $Crime_report->status = "0";
         $Crime_report->save();
 
@@ -109,9 +118,10 @@ class CrimeReportController extends Controller
         $Process_item =new Process_item;
         $Process_item->Created_by_user_id = $request['create_by'];
         $Process_item->activity_organization = "0";
+        $Process_item->activity_organization = "0";
         $Process_item->activity_user_id = "0";
         $Process_item->form_id =  $id;
-        $Process_item->form_type = "4";
+        $Process_item->form_type_id = "4";
         if ($crime_type == 1 ){
             $Process_item->requst_organization = "2";
         }
@@ -122,11 +132,11 @@ class CrimeReportController extends Controller
             $Process_item->requst_organization = "3";
         }
         
-        $Process_item->status = "0";
+        $Process_item->status_id = "1";
         $Process_item->remark = "to be made yet";
         $Process_item->save();
 
-        return redirect('/crime_report/crimehome')->with('message', 'Crime report logged Successfully');
+        return redirect('/crime-report/crimehome')->with('message', 'Crime report logged Successfully'); 
     }
 
     /* public function create_tree_removal_request(Request $request)

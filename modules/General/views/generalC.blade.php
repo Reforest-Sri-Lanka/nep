@@ -96,7 +96,7 @@
             @case('3')
                 <td>Action taken</td>
             @endswitch
-                <td><a href="#" class="text-muted">Go to request</a></td>
+                <td><a href="/approval-item/showRequests" class="text-muted">view more details</a></td>
             </tr>
             @endforeach
         </tbody>
