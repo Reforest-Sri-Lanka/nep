@@ -185,6 +185,8 @@ return [
         TreeRemoval\Providers\TreeRemovalServiceProvider::class,
         DevelopmentProject\Providers\RouteServiceProvider::class,
         DevelopmentProject\Providers\DevelopmentProjectServiceProvider::class,
+        EnvironmentRestoration\Providers\RouteServiceProvider::class,
+        EnvironmentRestoration\Providers\EnvironmentRestorationServiceProvider::class,
         ApprovalItem\Providers\RouteServiceProvider::class,
         ApprovalItem\Providers\ApprovalItemServiceProvider::class,
         CrimeReport\Providers\RouteServiceProvider::class,
