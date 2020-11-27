@@ -30,8 +30,6 @@
                     <td>{{$crime->created_at}}</td>
                     <td>{{$crime->action_taken}}</td>
                     <td>{{$crime->status}}</td>
-                    <!-- <td><a href='/edit/{{ $crime->id }}' class="btn btn-outline-warning" role="button" >Edit</a></td>
-                    <td><a href="#" class="btn btn-outline-danger" role="button">Disable</a></td> -->
                 </tr>
             </tbody>
         </table>
