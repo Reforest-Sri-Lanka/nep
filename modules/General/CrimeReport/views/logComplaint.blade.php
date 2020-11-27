@@ -8,7 +8,6 @@
             <strong>{{ "You need to be be logged in first" }}</strong>
         </div>
     @enderror
-
     <h2>Report a crime</h2>
     </br>
     </div>
@@ -24,8 +23,6 @@
                                 <option value="2">Illegal tree transportation</option>
                                 <option value="1">Environment polution</option>
                             </select>
-            
-        
                             @error('crime_type')
                                 <div class="alert">                                   
                                     <strong>{{ $message }}</strong>
