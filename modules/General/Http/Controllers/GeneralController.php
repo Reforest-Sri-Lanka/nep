@@ -45,7 +45,6 @@ class GeneralController extends Controller
             return view('unauthorized')->with('message', 'Admins are not allowed access to general module');
         }
     }
-
     
     public function showRequests()
     {
@@ -56,8 +55,7 @@ class GeneralController extends Controller
     }
 	
 	public function general_module_access_control()
-    {
-        
+    {        
         $organization=Auth::user()->organization_id;
         $noOrganization=2;
         $role = Auth::user()->role_id;
@@ -84,8 +82,6 @@ class GeneralController extends Controller
         }
         else{
             return view('unauthorized')->with('message', 'Admins are not allowed access to general module');
-        }
-
-        
+        }       
     }
 }
