@@ -35,11 +35,11 @@ class CrimeReportController extends Controller
         $Process_item->status = "0";
         $Process_item->remark = $request['comment'];
         $Process_item->save();
-        return redirect('/crime-report/crimehome')->with('message', 'Authority assigned Successfully');
-        
+        return redirect('/crime-report/crimehome')->with('message', 'Authority assigned Successfully');  
     }
-    public function load_crimeAssign($id) {
-        
+    
+    public function load_crimeAssign($id) 
+    { 
         $Process_item =Process_item::find($id);
         if($Process_item->form_type == '4'){
             $crime = Crime_report::find($Process_item->form_id);
@@ -48,19 +48,17 @@ class CrimeReportController extends Controller
         return view('crimeReport::crimeAssign',['crime' => $crime],['Users' => $Users],);
     }
 
-    public function load_crimeInvestigate($id) {
-        
+    public function load_crimeInvestigate($id) 
+    {       
         $crime = Crime_report::find($id);
         $Users =User::all()->where('role',1);
         return view('crimeReport::crimeInvestigate',['crime' => $crime],['Users' => $Users],);
     }
 
-    public function crime_report_form_display() {
-
+    public function crime_report_form_display() 
+    {
         return view('crimeReport::logComplaint');
     }
-
-    
 
     public function track_user_crime_reports(Request $request)
     {
