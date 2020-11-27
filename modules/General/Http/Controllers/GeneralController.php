@@ -15,7 +15,6 @@ class GeneralController extends Controller
         $name = 'Yashod';
         return view('general::home', compact('name'));
     }
-
     public function filter_process_items(Request $request)
     {
         $request -> validate([
