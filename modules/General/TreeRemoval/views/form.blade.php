@@ -24,7 +24,6 @@
 
   <form action="/tree-removal/save" method="post" id="treeRemoval">
     @csrf
-
     <div id="accordion" class="mb-3">
       <div class="card">
         <div class="card-header">
@@ -216,8 +215,6 @@
     <br>
     <br>
     <hr>
-
-
 
   </form>
 </div>
