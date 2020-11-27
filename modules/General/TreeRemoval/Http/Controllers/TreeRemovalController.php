@@ -12,15 +12,8 @@ use App\Models\Process_Item;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-
 class TreeRemovalController extends Controller
 {
-    // public function home()
-    // {
-    //     $name = 'Yashod';
-    //     return view('treeRemoval::home', compact('name'));
-    // }
-
     public function openForm()
     {
         $lands = Land_Parcel::all();
