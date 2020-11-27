@@ -57,7 +57,6 @@
                                 </div>
                             @enderror
                            <input type="hidden" class="form-control" name="create_by" value="{{ Auth::user()->id }}">
-
                        </div>
                        </br>
                        <div class="form-check">
