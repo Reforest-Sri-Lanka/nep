@@ -2,7 +2,7 @@
 
 @section('cont')
 
-<kbd><a href="/general" class="text-white font-weight-bolder"><i class="fas fa-chevron-left"></i></i> BACK</a></kbd>
+<kbd><a href="/general/general" class="text-white font-weight-bolder"><i class="fas fa-chevron-left"></i></i> BACK</a></kbd>
 <div class="container border bg-light">
     <form action="/dev-project/saveForm" method="post">
         @csrf

@@ -2,7 +2,7 @@
 
 @section('cont')
 
-<kbd><a onclick="goBack()" class="text-white font-weight-bolder"><i class="fas fa-chevron-left"></i></i> BACK</a></kbd>
+<kbd><a href="/general/general" class="text-white font-weight-bolder"><i class="fas fa-chevron-left"></i></i> BACK</a></kbd>
 <div class="container">
   <h2 align="center">Tree removal Application</h2>
 
