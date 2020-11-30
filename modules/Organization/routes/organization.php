@@ -3,24 +3,27 @@
 use Organization\Http\Controllers\AdminController;
 use Organization\Http\Controllers\OrganizationController;
 use Organization\Http\Controllers\UserController;
-use Organization\Http\Controllers\OrganizationTypeController;
-
-
+use Organization\Http\Controllers\TypeController;
 
 Route::get('/index', [OrganizationController::class, 'index']); 
 
-// Organization ACTIONS.
+// Open create view.
+Route::get('/create', [OrganizationController::class, 'create']);      
 
-Route::get('/create', [OrganizationController::class, 'create']);      // Open create view.
+// Store data in the database. 
+Route::post('/store', [OrganizationController::class, 'store']);       
 
-Route::post('/store', [OrganizationController::class, 'store']);       // Store data in the database. 
+// Open edit view.
+Route::get('/edit/{id}', [OrganizationController::class, 'edit']);         
 
-Route::get('/edit/{id}', [OrganizationController::class, 'edit']);         // Open edit view.
+// Store changes in the db.
+Route::patch('/update/{id}', [OrganizationController::class, 'update']);   
 
-Route::patch('/update/{id}', [OrganizationController::class, 'update']);   // Store changes in the db.
+// Delete a organization.
+Route::delete('/delete/{id}', [OrganizationController::class, 'destroy']);     
 
-Route::delete('/delete/{id}', [OrganizationController::class, 'destroy']);     // Delete a organization.
+//More details.
+Route::get('/more/{id}', [OrganizationController::class, 'more']);              
 
-Route::get('/more/{id}', [OrganizationController::class, 'more']);               //More details
-
-
+//Fetch Contact Types.
+Route::any('/create','Organization\Http\Controllers\TypeController@getTypesList'); 
