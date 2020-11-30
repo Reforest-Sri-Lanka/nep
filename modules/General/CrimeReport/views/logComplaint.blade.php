@@ -1,6 +1,12 @@
 @extends('home')
 
 @section('cont')
+<span>
+    <h3 class="text-center bg-success text-light">{{session('message')}}</h3>
+</span>
+<span>
+    <h3 class="text-center bg-danger text-light">{{session('danger')}}</h3>
+</span>
     <div class='row justify-content-center'>
     </br>
     @error('create_by')
@@ -22,7 +28,7 @@
                                 <option value="0" selected>Select</option>
                                 <option value="1">Illegal tree cutting</option>
                                 <option value="2">Illegal tree transportation</option>
-                                <option value="1">Environment polution</option>
+                                <option value="3">Environment polution</option>
                             </select>
             
         
@@ -31,6 +37,26 @@
                                     <strong>{{ $message }}</strong>
                                 </div>
                             @enderror
+                            
+                        </div>
+                        </br>
+                        <h6>Make complaint to</h6>
+                        <div class="input-group mb-3">
+                            <select name="organization" class="custom-select" required>
+                                <option value="0" selected>Select Organization</option>
+                            @foreach($Organizations as $organization)
+                                
+                                <option value="{{$organization->id}}">{{$organization->title}}</option>
+                                @endforeach
+                            </select>
+            
+        
+                            @error('organization')
+                                <div class="alert">                                   
+                                    <strong>{{ $message }}</strong>
+                                </div>
+                            @enderror
+                            
                         </div>
                         <div class="form-group">
                             <h6>Photos</h6>
