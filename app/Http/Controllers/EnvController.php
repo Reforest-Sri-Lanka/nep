@@ -25,6 +25,7 @@ class EnvController extends Controller
             'type' => 'required',
             'description' => 'required',
             'createby' => 'required', 
+            'status' => 'required', 
             
             
         ]);
@@ -32,6 +33,7 @@ class EnvController extends Controller
         $ecosystems->ecosystem_type=$request->input('type');
         $ecosystems->description=$request->input('description');
         $ecosystems ->created_by_user_id=$request->input('createby');
+        $ecosystems ->status=$request->input('status');
         
         
         $ecosystems->save();
@@ -66,11 +68,13 @@ return view('')
     public function delete($id)
 {
 
-    $ecosystems=Env::findorFail($id);
+    $ecosystems=Env::find($id);
 
     $ecosystems->delete();
 
-    return redirect('environmentcheckstatuseco')->with('success', 'Data deleted  successfully');
+    
+    
+    return redirect()->back()->with('success', 'User Successfully Deleted');
 
 }
 
@@ -84,6 +88,20 @@ public function track(){
    
     
     
+    }
+
+    public function statusupdate( Request $request, $id){
+        $ecosystems = Env::find($id);
+        $ecosystems->update([
+            
+            'status' => $request->status
+        
+        ]);
+        
+        return redirect()->back()->with('success', 'Request Approved Succesfully');
+
+
+
     }
 
 

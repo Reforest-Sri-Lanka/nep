@@ -31,6 +31,7 @@
       <th scope="col">Title</th>
       <th scope="col">Description</th>
       <th scope="col">Status</th>
+      <th scope="col">Approve</th>
       <th scope="col">Delete</th>
     
 
@@ -45,11 +46,33 @@
       <td >{{$row->type}}</td>
       <td >{{$row->title}}</td>
       <td >{{$row->description}}</td>
-      <td>{{$row->status_id}}</td>
+
+
+       @switch($row->status_id)
+                @case('0')
+                <td>Inactive</td>
+                @break;
+                @case('1')
+                <td>Active</td>
+                @break;
+                @endswitch
    
 
       <td>
-      <form action="{{url('delete-request/'.$row ->id)}}" method="POST">
+     
+      <form action="/environmentspe/updatestatus/{{$row->id}}" method="POST">
+      {{csrf_field()}}
+      {{method_field('PUT')}}
+      
+      <button type="submit" name="status" value="1" class="btn btn-outline-warning">Approve</button>
+      
+
+</form>
+
+      </td>
+
+      <td>
+      <form action="{{url('delete-requestspecies/'.$row ->id)}}" method="POST">
       {{csrf_field()}}
       {{method_field('DELETE')}}
       <button type="submit" class="btn btn-outline-danger">Delete </button>

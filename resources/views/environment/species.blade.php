@@ -4,12 +4,7 @@
 <kbd><a href="/generalenv" class="text-white font-weight-bolder"><i class="fas fa-chevron-left"></i></i> BACK</a></kbd>
 <div class='row justify-content-center'>
     </br>
-    @error('create_by')
-    <div class="alert">
-        <strong>{{ "You need to be be logged in first" }}</strong>
-    </div>
-    @enderror
-
+  
     <h2>Fill your Data Here </h2>
 
 
@@ -133,10 +128,15 @@
                 @enderror
             </label>
             </br>
-            <input type="hidden" class="form-control" name="createby" value="{{Auth::user()->id}}">
+           
 
             <button type="submit" name="status" value="1" class="btn btn-success">Submit</button>
         </div>
+
+      
+
+        <input type="hidden" class="form-control" name="createby" value="{{Auth::user()->id}}">
+        <input type="hidden" class="form-control" name="status" value="0">
     </form>
 </div>
 </div>

@@ -2,6 +2,9 @@
 
 @section('cont')
 
+<kbd><a href="/generalenv" class="text-white font-weight-bolder"><i class="fas fa-chevron-left"></i></i> BACK</a></kbd>
+  
+
 <h3 class="p-3 display-4">Eco System Management</h3>
 <hr>
 <div class="row justify-content-center border-secondary rounded-lg ml-3">

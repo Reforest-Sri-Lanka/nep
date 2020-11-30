@@ -10,14 +10,14 @@ class Env extends Model
     use HasFactory;
 
     protected $table = 'eco_systems';
-    protected $fillable = ['ecosystem_type','description','created_by_user_id',];
+    protected $fillable = ['ecosystem_type','description','created_by_user_id','status',];
 
-    protected $attributes = [
-        
-        'status' => 0
-       
-        
-    ];
+    
+    
+    
+    
+    
+   
 
 
 

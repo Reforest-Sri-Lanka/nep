@@ -25,7 +25,14 @@
       <td >{{$item->ecosystem_type}}</td>
       <td >{{$item->description}}</td>
       <td >{{$item->created_at}}</td>
-      <td>{{$item->status}}</td>
+      @switch($item->status)
+                @case('0')
+                <td>Inactive</td>
+                @break;
+                @case('1')
+                <td>Active</td>
+                @break;
+                @endswitch
         </tr>
         @endforeach
     

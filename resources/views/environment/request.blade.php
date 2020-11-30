@@ -69,6 +69,8 @@
                            <button type="submit" class="btn btn-success" >Submit</button>
                        </div>
                        <input type="hidden" class="form-control" name="createby" value="{{Auth::user()->id}}">
+                       <input type="hidden" class="form-control" name="status" value="0">
+
                     </form>
      </div>
     </div>

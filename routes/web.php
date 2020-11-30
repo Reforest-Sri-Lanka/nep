@@ -44,7 +44,7 @@ Route::get('/general', function(){
 Route::get('/generalenv', fn() => view('environment.environment'));
 Route::get('/createrequest', fn() => view('environment.request'));
 
-Route::get('/requestspecies', 'SpeciesController@form');
+
 
 Route::get('/newrequest', fn() => view('environment.environmenthome'));
 Route::get('/newspecies', fn() => view('environment.species'));
@@ -52,8 +52,11 @@ Route::get('/newspecies', fn() => view('environment.species'));
 Route::get('/requesteco', fn() => view('environment.request'));
 Route::get('/neweco', fn() => view('environment.ecohome'));
 Route::post('/newrequest', 'EnvController@store');
+Route::put('/environment/updatestatus/{id}', 'EnvController@statusupdate');
 
 Route::get('/updatedata', 'EnvController@index');
+Route::get('/deletedataeco', fn() => view('environment.checkstatuseco'));
+
 
 Route::get('edit', 'EnvController@edit');
 
@@ -64,10 +67,16 @@ Route::delete('delete-request/{id}', 'EnvController@delete');
 
 Route::post('/newspecies', 'SpeciesController@store');
 Route::get('/trackrequst', 'SpeciesController@track');
-
+Route::put('/environmentspe/updatestatus/{id}', 'SpeciesController@statusupdate');
 Route::get('/requestdataeco', fn() => view('environment.trackrequesteco'));
 
 Route::get('/trackrequsteco', 'EnvController@track');
 
 //Route::get('/trackrequesteco', 'EnvController@showRequest');
 Route::get('/updatedataspecies', 'SpeciesController@index');
+
+Route::get('/requestspecies', 'SpeciesController@form');
+Route::get('/updatedataspecies', 'SpeciesController@index');
+
+Route::delete('delete-requestspecies/{id}', 'SpeciesController@delete');
+
