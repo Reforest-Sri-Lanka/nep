@@ -8,7 +8,6 @@
         <div class="card bg-dark text-light">
             <div class="card-header text-center">
                 <a class="nav-link text-light font-italic p-2" href="#">Tree cutting</a>
-
             </div>
             <div class="card-body text-center text-light">
                 <p class="card-text p-2">Quick links</p>
@@ -53,7 +52,6 @@
             </div>
         </div>
     </div>
-
 </div>
 <hr>
 <div class="row border-secondary rounded-lg ml-3">
@@ -62,13 +60,15 @@
         <thead>
             <tr>
                 <th>Category</th>
-                <th>Assigned by</th>
-                <th>Investigate</th>
+                <th>Date Submitted</th>
+                <th>Requested_by</th>
+                <th>remark</th>
+                <th>Check and assign</th>
             </tr>
         </thead>
         <tbody>
         @foreach($Process_items as $row)<tr>
-            @switch($row['form_type']) 
+            @switch($row['form_type_id']) 
             @case('1')
                 <td>Tree Cutting Request</td>
             @break;
@@ -81,7 +81,10 @@
             @case('4')
                 <td>Crime Report</td>
             @endswitch
-                <td><a href="#" class="text-muted">Investigate</a></td>
+                <td>{{$row['created_at']}}</td>
+                <td>{{$row['requst_organization']}}</td>
+                <td>{{$row['remark']}}</td>
+                <td><a href="/approval-item/assignstaff/{{ $row['id'] }}" class="text-muted">Check</a></td>
             </tr>
             @endforeach
         </tbody>

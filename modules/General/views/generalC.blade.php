@@ -8,7 +8,6 @@
         <div class="card bg-dark text-light">
             <div class="card-header text-center">
                 <a class="nav-link text-light font-italic p-2" href="#">Tree cutting</a>
-
             </div>
             <div class="card-body text-center text-light">
                 <p class="card-text p-2">Quick links</p>
@@ -53,7 +52,6 @@
             </div>
         </div>
     </div>
-
 </div>
 <hr>
 <div class="row border-secondary rounded-lg ml-3">
@@ -96,7 +94,7 @@
             @case('3')
                 <td>Action taken</td>
             @endswitch
-                <td><a href="#" class="text-muted">Go to request</a></td>
+                <td><a href="/approval-item/showRequests" class="text-muted">view more details</a></td>
             </tr>
             @endforeach
         </tbody>

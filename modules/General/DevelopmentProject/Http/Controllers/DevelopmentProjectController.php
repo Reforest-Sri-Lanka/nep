@@ -41,7 +41,7 @@ class DevelopmentProjectController extends Controller
     {
         $dev = new Development_Project();
         $dev->title = request('title');
-        $dev->gazette = request('gazette');
+        $dev->gazette_id = request('gazette');
         $dev->governing_organizations = request('governing_orgs');
         $dev->land_parcel_id = request('landParcel');
         $dev->created_by_user_id = request('createdBy');
@@ -54,13 +54,14 @@ class DevelopmentProjectController extends Controller
 
         foreach ($latest->governing_organizations as $governing_organization) {
             $process = new Process_Item();
-            $process->form_type = 1;
+            $process->form_type_id = 2;
             $process->form_id = $latest->id;
             $process->created_by_user_id = request('createdBy');
-            $process->requst_organization = $governing_organization;
+            $process->requst_organization = 0;
+            $process->activity_organization = $governing_organization;
             $process->save();
         }
-        return redirect('/general')->with('message', 'Request Created Successfully');
+        return redirect('/general/general')->with('message', 'Request Created Successfully');
     }
 
     public function show($id)

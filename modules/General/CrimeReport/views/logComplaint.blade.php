@@ -8,13 +8,12 @@
             <strong>{{ "You need to be be logged in first" }}</strong>
         </div>
     @enderror
-
     <h2>Report a crime</h2>
     </br>
     </div>
     <hr>
      <div class='row justify-content-center'> 
-     <form action="\crimecreate" method="post">
+     <form action="\crime-report\crimecreate" method="post">
       @csrf
                        <h6>Crime type</h6>
                        <div class="input-group mb-3">
@@ -24,13 +23,15 @@
                                 <option value="2">Illegal tree transportation</option>
                                 <option value="1">Environment polution</option>
                             </select>
-            
-        
                             @error('crime_type')
                                 <div class="alert">                                   
                                     <strong>{{ $message }}</strong>
                                 </div>
                             @enderror
+                        </div>
+                        <div class="form-group">
+                            <h6>Photos</h6>
+                            <input type="file" id="images" name="images[]">
                         </div>
                        </br>
                        <h6>Description</h6>
@@ -56,7 +57,6 @@
                                 </div>
                             @enderror
                            <input type="hidden" class="form-control" name="create_by" value="{{ Auth::user()->id }}">
-
                        </div>
                        </br>
                        <div class="form-check">
