@@ -82,7 +82,7 @@ class DevelopmentProjectController extends Controller
             $process->activity_organization = $governing_organization;
             $process->save();
         }
-        return redirect('/general')->with('message', 'Request Created Successfully');
+        return redirect('/general/general')->with('message', 'Request Created Successfully');
     }
 
     public function show($id)

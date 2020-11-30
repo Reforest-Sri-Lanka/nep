@@ -39,4 +39,8 @@ class Land_Parcel extends Model
     public function tree_removal_requests(){
         return $this->hasMany('App\Models\Tree_Removal_Request');
     }
+
+    public function environment_restorations(){
+        return $this->hasMany('App\Models\EnvironmentRestoration');
+    }
 }

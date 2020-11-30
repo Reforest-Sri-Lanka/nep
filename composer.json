@@ -45,7 +45,10 @@
             "Admin\\": "modules/Admin",
             "TreeRemoval\\": "modules/General/TreeRemoval",
             "DevelopmentProject\\": "modules/General/DevelopmentProject",
-            "ApprovalItem\\": "modules/General/ApprovalItem"
+            "EnvironmentRestoration\\": "modules/General/EnvironmentRestoration",
+            "ApprovalItem\\": "modules/General/ApprovalItem",
+            "CrimeReport\\": "modules/General/CrimeReport",
+            "General\\": "modules/General"
         }
     },
     "autoload-dev": {

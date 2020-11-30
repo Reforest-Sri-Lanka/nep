@@ -13,4 +13,8 @@ class Organization extends Model
     public function users(){
         return $this->hasMany('App\Models\User');
     }
+
+    public function environment_restorations(){
+        return $this->hasMany('App\Models\Environment_Restoration');
+    }
 }
