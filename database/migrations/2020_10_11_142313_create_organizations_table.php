@@ -17,8 +17,8 @@ class CreateOrganizationsTable extends Migration
             $table->id();
             $table->string('title');
             $table->string('city');
-            $table->string('country');
-            $table->string('type');
+            $table->string('country')->default('Sri Lanka');
+            $table->unsignedBigInteger('type_id')->references('id')->on('organization_types');
             $table->text('description');
             $table->timestampsTz(); //time stamp with timezone in UTC
             $table->tinyInteger('status');
