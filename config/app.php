@@ -179,10 +179,10 @@ return [
         App\Providers\FortifyServiceProvider::class,
         Admin\Providers\RouteServiceProvider::class,
         Admin\Providers\AdminServiceProvider::class,
-        TreeRemoval\Providers\RouteServiceProvider::class,
-        TreeRemoval\Providers\TreeRemovalServiceProvider::class,
+        Organization\Providers\RouteServiceProvider::class,
+        Organization\Providers\OrganizationServiceProvider::class,
+        
     ],
-
     /*
     |--------------------------------------------------------------------------
     | Class Aliases
