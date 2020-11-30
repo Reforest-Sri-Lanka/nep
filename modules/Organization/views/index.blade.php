@@ -1,8 +1,11 @@
 @extends('home')
 
 @section('cont')
-<h3 class="p-3 display-4" style="display:inline">Organization Management</h3>
-<input type="text" style=" float: right; padding: 6px; margin-top: 20px; margin-right: 16px;border: none;font-size: 17px;" placeholder="Search..." size="30">
+<br>
+<h4 class="p-3 display-6" style="display:inline">Organization Management</h4>
+<input type="text" style=" float: right; padding: 6px; margin-top: 4px; margin-right: 16px;border: none;font-size: 17px;" placeholder="Search..." size="30">
+<br>
+<br>
 <hr>
 <div class="flex row border-secondary rounded-lg ml-3 justify-content-between">
     <span>
@@ -16,25 +19,21 @@
         <h3 class="text-center bg-danger text-light">{{session('danger')}}</h3>
     </span>
     <span>
-
         <!-- opens the create view -->
         <a href="/organization/create" class="btn btn-info mr-4" role="button">Create Organization</a>
     </span>
-    <table class="table table-dark table-striped border-secondary rounded-lg mr-4">
+    <table class="table table-light table-striped border-secondary rounded-lg mr-4">
         <thead>
             <tr>
-
             <th scope="col">ID</th>
             <th scope="col">Title</th>
             <th scope="col">City</th>
             <th scope="col">Country</th>
             <th scope="col">Type</th>
-            <th scope="col">Description</th>
             <th scope="col">Status</th>
             <th scope="col">More Details</th>
             <th scope="col">Edit Organization</th>
             <th scope="col">Disable</th>
-
             </tr>
         </thead>
         <tbody>
@@ -46,13 +45,13 @@
                 <td>{{$organization->country}}</td>
 
                 <!-- If the organization isnt null display the name of the organization else display unassigned -->
-
-                @if($organization->type == NULL)
+                
+                @if($organization->type_id == NULL)
                 <td>Unassigned</td>
                 @else
-                <td>{{$organization->title}}</td>
+                <td>{{$organization->type->title}}</td>
                 @endif
-                <td>{{$organization->description}}</td>
+              
                 @switch($organization->status)
                 @case('0')
                 <td>Inactive</td>
@@ -76,7 +75,6 @@
                         @method('delete');
                     </form>
                 </td>
-
             </tr>
             @endforeach
         </tbody>
