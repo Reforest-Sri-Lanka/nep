@@ -25,7 +25,7 @@
         <!-- opens the create view -->
         <a href="/user/create" class="btn btn-info mr-4" role="button">Create User</a>
     </span>
-    <table class="table table-dark table-striped border-secondary rounded-lg mr-4">
+    <table class="table table-hover table-light mr-4">
         <thead>
             <tr>
                 <th>ID</th>

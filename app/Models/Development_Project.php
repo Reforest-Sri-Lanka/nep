@@ -12,19 +12,19 @@ class Development_Project extends Model
 
     protected $fillable = [
         'title',
-        'gazette',
+        'gazette_id',
         'governing_organizations',
         'logs',
         'land_parcel_id',
         'protected_area',
         'created_by_user_id',
-        'status',
+        'status_id',
     ];
 
     protected $attributes = [
         'logs' => 0,
         'protected_area' => 0,
-        'status' => 1,
+        'status_id' => 1,
     ];
 
     protected $casts = [

@@ -15,7 +15,7 @@
             </div>
             <div class="card-body text-center text-light">
                 <p class="card-text p-2">Quick links</p>
-                <a class="nav-link text-light font-italic p-2" href="#">Application form</a>
+                <a class="nav-link text-light font-italic p-2" href="/tree-removal/form">Application form</a>
                 <a class="nav-link text-light font-italic p-2" href="#">Check status</a>
             </div>
         </div>
@@ -61,7 +61,7 @@
 <hr>
 <div class="row border-secondary rounded-lg ml-3">
     <h5 class="p-3">Pending Requests</h5>
-    <table class="table table-dark table-striped mr-4">
+    <table class="table table-hover table-light mr-4">
         <thead>
             <tr>
                 <th>Category</th>

@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,13 +28,10 @@ Route::get('/general', function(){
     return view('test/mainview');
 });
 
+Route::get('/search', [UserController::class, 'search']);
 
+Route::get('/autocomplete', [UserController::class, 'autocomplete'])->name('autocomplete');
 
-//Route::get('/roles', [RoleController::class, 'fetchAllRoles']);
-//Route::get('/arole', [RoleController::class, 'fetchARole']);
-// Route::get('/lighthome', function () {
-//     return view('test2');
-// });
-// Route::get('/dash', function () {
-//     return view('test3');
-// });
+Route::get('/map', function(){
+    return view('map');
+});

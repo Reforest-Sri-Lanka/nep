@@ -11,7 +11,7 @@ class Process_Item extends Model
     protected $table = 'process_items';
 
     protected $fillable = [
-        'form_type',
+        'form_type_id',
         'form_id',
         'requst_organization',
         'activity_organization',
@@ -20,16 +20,17 @@ class Process_Item extends Model
         'prerequisite',
         'prerequsite_id',
         'created_by_user_id',
-        'status',
+        'status_id',
     ];
 
     protected $attributes = [
         'prerequisite' => 0,
         'prerequsite_id' => 0,
         'remark' => 0,
-        'status' => 1,
+        'status_id' => 1,
         'activity_user_id' => 0,
         'activity_organization' => 0,
+        'requst_organization' => 0,
     ];
 
     public function form_type()
