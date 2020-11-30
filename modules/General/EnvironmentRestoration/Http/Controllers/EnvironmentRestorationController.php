@@ -1,6 +1,7 @@
 <?php
 
 namespace EnvironmentRestoration\Http\Controllers;
+use App\Models\Land_Parcel;
 use App\Models\Environment_Restoration;
 use App\Models\Environment_Restoration_Activity;
 use App\Models\Environment_Restoration_Species;
@@ -71,45 +72,56 @@ class EnvironmentRestorationController extends Controller
 
     public function store(Request $request)
     {
+        $landparcel = new Land_Parcel();
+        $landparcel->title = request('landparceltitle');
+        $landparcel->polygon = request('polygon');
+        $landparcel->save();
+
+        $latest = Land_Parcel::latest()->first();
+        $newland = $latest->id;
+
+
         $restoration = new Environment_Restoration();
         $restoration->title = request('title');
         $restoration->environment_restoration_activity_id = request('environment_restoration_activity');
         $restoration->organization_id = request('organization');
         $restoration->eco_system_id = request('ecosystem');
-        $restoration->land_parcel_id = request('land_parcel_id');
+        $restoration->land_parcel_id = $newland;
         $restoration->created_by_user_id = request('created_by');
         $restoration->status = request('status');
 
         $restoration->save();
         $latest = Environment_Restoration::latest()->first();
         $newres = $latest->id;
-        //Adding to Environment Restoration Species Table using ajax
-                $rules = array(
-                //'environment_restoration_id.*'  => 'required',
-                'statusSpecies.*'  => 'required',
-                'species_id.*'  => 'required',
-                'quantity.*'  => 'required',
-                'height.*'  => 'required',
-                'dimension.*'  => 'required',
-                'remark.*'  => 'required'
-            );
-            $error = Validator::make($request->all(), $rules);
-            if($error->fails())
-            {
-                return response()->json([
-                    'error'  => $error->errors()->all()
-                ]);
-            }
 
-            //$environment_restoration_id = $request->environment_restoration_id;
-            $statusSpecies = $request->statusSpecies;
-            $species_id = $request->species_id;
-            $quantity = $request->quantity;
-            $height = $request->height;
-            $dimension = $request->dimension;
-            $remark = $request->remark;
-            for($count = 0; $count < count($species_id); $count++)
-            {
+        //Adding map coordinates to the land parcel table
+
+
+        //Adding to Environment Restoration Species Table using ajax
+        $rules = array(
+            'statusSpecies.*'  => 'required',
+            'species_id.*'  => 'required',
+            'quantity.*'  => 'required',
+            'height.*'  => 'required',
+            'dimension.*'  => 'required',
+            'remark.*'  => 'required'
+        );
+        $error = Validator::make($request->all(), $rules);
+        if($error->fails())
+        {
+            return response()->json([
+                'error'  => $error->errors()->all()
+            ]);
+        }
+
+        $statusSpecies = $request->statusSpecies;
+        $species_id = $request->species_id;
+        $quantity = $request->quantity;
+        $height = $request->height;
+        $dimension = $request->dimension;
+        $remark = $request->remark;
+        for($count = 0; $count < count($species_id); $count++)
+        {
             $data = array(
                 'environment_restoration_id' => $newres,
                 'status' => $statusSpecies[$count],
@@ -120,10 +132,9 @@ class EnvironmentRestorationController extends Controller
                 'remarks'  => $remark[$count],
             );
             $insert_data[] = $data; 
-            }
+        }
 
-            Environment_Restoration_Species::insert($insert_data);
-            return redirect('/env-restoration/index')->with('message','New Environment Restoration Project Successfully Created');
-        
+        Environment_Restoration_Species::insert($insert_data);
+        return redirect('/env-restoration/index')->with('message','New Environment Restoration Project Successfully Created');   
     }
 }
