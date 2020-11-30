@@ -7,66 +7,101 @@
 <div class="container">
     <h2 style="text-align:center;" class="text-dark">Details of {{$organization->title}}</h2><hr>
     <div class="row justify-content-md-center border p-4 bg-white">
-        <div class="col-6 ml-3">
+        <div class="col-8">
             <form>
             <h6 style="text-align:left;" class="text-dark">Organization Details</h6>
+           <hr>
+           
+            
+            <div class="row">
+                <div class="col">
+                <strong>Organization Name :</strong>
+                </div>
+                <div class="col">
+                {{ $organization->title }}
+                </div>
+            </div>
             <br>
-            <div class="col-xs-12 col-sm-12 col-md-12">
-                <div class="form-group">
-                    <strong>Title:</strong>
-                    {{ $organization->title }}
+            <div class="row">
+                <div class="col">
+                <strong>City :</strong>
+                </div>
+                <div class="col">
+                {{ $organization->city }}
                 </div>
             </div>
-
-            <div class="col-xs-12 col-sm-12 col-md-12">
-                <div class="form-group">
-                    <strong>City:</strong>
-                    {{ $organization->city}}
+            <br>
+            <div class="row">
+                <div class="col">
+                <strong>Organization Type :</strong>
                 </div>
+                <div class="col">
+                    {{$organization->type->title}}
+                </div> 
             </div>
-
-            <div class="col-xs-12 col-sm-12 col-md-12">
-                <div class="form-group">
-                    <strong>Country:</strong>
-                    {{ $organization->country}}
+            <br>
+            <div class="row">
+                <div class="col">
+                <strong>Country :</strong>
                 </div>
+                <div class="col">
+                {{ $organization->country}}
+                </div> 
             </div>
-
-            <div class="col-xs-12 col-sm-12 col-md-12">
-                <div class="form-group">
-                    <strong>Country:</strong>
-                    {{ $organization->type}}
+            <br>
+            <div class="row">
+                <div class="col">
+                <strong>Status :</strong>
                 </div>
-            </div>
-
-            <div class="col-xs-12 col-sm-12 col-md-12">
-                <div class="form-group">
-                    <strong>Description:</strong>
-                    {{ $organization->description}}
-                </div>
-            </div>
-
-            <div class="col-xs-12 col-sm-12 col-md-12">
-                <div class="form-group">
-                    <strong>Status:</strong>
+                <div class="col">
                     @switch($organization->status)
                     @case('0')
-                    {{ $organization->status}}
+                    <td>Inactive</td>
                     @break;
                     @case('1')
-                    {{ $organization->status}}
+                    <td>Active</td>
                     @break;
                     @endswitch
+    
                 </div>
-                
             </div>
-            <h6 style="text-align:left;" class="text-dark">Contact Details</h6>
             <br>
-            
+            <div class="row">
+                <div class="col">
+                <strong>Descroption :</strong>
+                </div>
+                <div class="col">
+                {{ $organization->description }}
+                </div> 
+            </div>
+            <br>
+            <br>
+            <h6 style="text-align:left;" class="text-dark">Contact Details</h6>
+       
+            <hr>
+
+            <table class="table table-light table-striped border-secondary rounded-lg mr-4">
+                <thead>
+                    <tr>
+                   
+                    <th scope="col">Contact Type</th>
+                    <th scope="col">Value</th>
+                </thead>
+                <tbody>
+                    @foreach ($contact as $key => $value)
+                    <tr>
+                  
+                        <td>{{$value->type}}</td>
+                        <td>{{$value->contact_signature}}</td>
+                    </tr>
+                    @endforeach
+
+                </tbody>
+            </table>
 
 
 
-
+            <br>
             </form>
         </div>
     </div>
