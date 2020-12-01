@@ -22,13 +22,9 @@ class ApprovalItemController extends Controller
     
     public function confirm_assign_staff($id,$pid)
     {
-        
-        
         $Process_item =Process_item::find($pid);
         $item = Process_item::where('id',$pid)->update(['activity_user_id' => $id]);
-        return back()->with('message', 'Authority assigned Successfully');
-        
-        
+        return back()->with('message', 'Authority assigned Successfully'); 
     }
 
     public function showRequests()
@@ -41,12 +37,11 @@ class ApprovalItemController extends Controller
 
     public function choose_assign_staff($id)
     {
-        //dd($id);
         $organization=Auth::user()->organization_id;
         $Process_item =Process_item::find($id);
         $Prerequisites=Process_item::all()->where('id',$Process_item->prerequsite_id);
         
-        
+       
         if(Auth::user()->role_id=='3'){
             $Users = User::where([
                 ['role_id', '>' , 3],           
@@ -58,9 +53,8 @@ class ApprovalItemController extends Controller
                 ['role_id', '=' , 5],           
                 ['organization_id', '=', $organization], 
             ])->get();
-        }
-        
-         
+        }         
+
         if($Process_item->form_type_id == '1'){
             $treecut = Tree_Removal_Request::find($Process_item->form_id);
             return view('approvalItem::treeAssign',[

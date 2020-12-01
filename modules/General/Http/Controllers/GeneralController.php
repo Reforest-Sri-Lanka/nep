@@ -15,7 +15,6 @@ class GeneralController extends Controller
         $name = 'Yashod';
         return view('general::home', compact('name'));
     }
-
     public function filter_process_items(Request $request)
     {
         $request -> validate([
@@ -43,7 +42,6 @@ class GeneralController extends Controller
             return view('unauthorized')->with('message', 'Admins are not allowed access to general module');
         }
     }
-
     
     public function showRequests()
     {
@@ -54,12 +52,12 @@ class GeneralController extends Controller
     }
 	
 	public function general_module_access_control()
-    {
-        
+    {        
         $organization=Auth::user()->organization_id;
         $noOrganization=2;
         $role = Auth::user()->role_id;
         $id= Auth::user()->id;
+
         if ($role == 1 || $role == 2 || $role == NULL ){
             
             return view('general::generalA');

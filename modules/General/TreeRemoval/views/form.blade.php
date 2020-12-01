@@ -2,7 +2,9 @@
 
 @section('cont')
 
+
 <kbd><a href="/general/general" class="text-white font-weight-bolder"><i class="fas fa-chevron-left"></i></i> BACK</a></kbd>
+
 <div class="container">
   <h2 align="center">Tree removal Application</h2>
 
@@ -83,7 +85,9 @@
         </div>
       </div>
 
+
       <!-- <div class="card">
+
         <div class="card-header">
           <a class="collapsed card-link text-dark" data-toggle="collapse" href="#collapseFour">
             Land Parcel ID
@@ -100,7 +104,9 @@
             @endforeach
           </div>
         </div>
+
       </div> -->
+
 
       <div class="card">
         <div class="card-header">
@@ -121,6 +127,7 @@
       </div>
     </div>
 
+
     <input id="polygon" type="hidden" name="polygon" value="{{request('polygon')}}">
 
     <hr>
@@ -138,6 +145,7 @@
     </div>
     <hr>
     <br>
+
     <div class="form-group">
       <label for="land_extent">Land Extent (In Acres)</label>
       <input type="text" class="form-control" id="land_extent" name="land_extent">
@@ -232,14 +240,13 @@
     <br>
     <br>
     <hr>
-
-
-
   </form>
 </div>
 
 <script type="text/javascript">
+
   /// SCRIPT FOR THE DYNAMIC COMPONENT
+
   var i = 0;
   $("#add-btn").click(function() {
     ++i;
@@ -250,6 +257,7 @@
     $(this).parents('tr').next('tr').remove()
     $(this).parents('tr').remove();
   });
+
 
 
 
@@ -320,3 +328,4 @@
   });
 </script>
 @endsection
+

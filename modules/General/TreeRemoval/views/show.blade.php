@@ -65,8 +65,6 @@
             <input type="text" class="form-control" placeholder="Tree Removal Request" readonly>
         </div>
 
-        <div id="mapid" style="height:400px;" name="map"></div>
-
         <div class="input-group mb-3">
             <div class="input-group-prepend">
                 <span class="input-group-text">Land Size</span>
@@ -205,6 +203,7 @@
             </div>
             @endfor
             @endif
+
     </form>
 </div>
 
@@ -235,3 +234,4 @@
 
 </script>
 @endsection
+
