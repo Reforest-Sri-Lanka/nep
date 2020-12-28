@@ -8,11 +8,10 @@
         <div class="card bg-dark text-light">
             <div class="card-header text-center">
                 <a class="nav-link text-light font-italic p-2" href="#">Tree cutting</a>
-
             </div>
             <div class="card-body text-center text-light">
                 <p class="card-text p-2">Quick links</p>
-                <a class="nav-link text-light font-italic p-2" href="3">Application form</a>
+                <a class="nav-link text-light font-italic p-2" href="/tree-removal/form">Application form</a>
                 <a class="nav-link text-light font-italic p-2" href="#">Check status</a>
             </div>
         </div>
@@ -20,7 +19,7 @@
     <div class="col-md-3">
         <div class="card bg-dark text-light">
         <div class="card-header text-center">
-                <a class="nav-link text-light font-italic p-2" href="/dev-project/home">Development project </a>
+                <a class="nav-link text-light font-italic p-2" href="">Development project </a>
             </div>
             <div class="card-body text-center text-light">
                 <p class="card-text p-2">Quick links</p>
@@ -32,11 +31,11 @@
     <div class="col-md-3">
         <div class="card bg-dark text-light">
             <div class="card-header text-center">
-                <a class="nav-link text-light font-italic p-2" href="#">Reforest Project</a>
+                <a class="nav-link text-light font-italic p-2" href="/env-restoration/index">Reforest Project</a>
             </div>
             <div class="card-body text-center text-light">
                 <p class="card-text p-2">Quick links</p>
-                <a class="nav-link text-light font-italic p-2" href="#">Register new project</a>
+                <a class="nav-link text-light font-italic p-2" href="/env-restoration/create">Register new project</a>
                 <a class="nav-link text-light font-italic p-2" href="#">Check for reforest details</a>
             </div>
         </div>
@@ -53,11 +52,30 @@
             </div>
         </div>
     </div>
-
 </div>
 <hr>
 <div class="row border-secondary rounded-lg ml-3">
     <h5 class="p-3">My requests</h5>
+</div>
+<form action="/general/filterItems" method="get">
+      @csrf
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <select name="form_type" class="custom-select" required>
+                <option value="0" selected>Select</option>
+                <option value="1">Tree Cutting permission Requests</option>
+                <option value="2">Development project permission Requests</option>
+                <option value="4">Crime Reports</option>
+            </select>            
+        </div>
+        <div class="col-md-3">
+            <button type="submit" class="btn btn-primary" >Filter</button>
+        </div>
+    </div>
+</form>
+
+</br>
+<div class="row border-secondary rounded-lg ml-3">
     <table class="table table-dark table-striped mr-4">
         <thead>
             <tr>
@@ -69,7 +87,7 @@
         </thead>
         <tbody>
         @foreach($Process_items as $row)<tr>
-            @switch($row['form_type']) 
+            @switch($row['form_type_id']) 
             @case('1')
                 <td>Tree Cutting Request</td>
             @break;
@@ -82,8 +100,8 @@
             @case('4')
                 <td>Crime Report</td>
             @endswitch
-                <td>{{$row['created_at']}}</td>
-            @switch($row['status'])
+                <td>{{date('d-m-Y',strtotime($row['created_at']))}}</td>
+            @switch($row['status_id'])
             @case('0')
                 <td>Submitted</td>
             @break;
@@ -96,7 +114,7 @@
             @case('3')
                 <td>Action taken</td>
             @endswitch
-                <td><a href="#" class="text-muted">Go to request</a></td>
+                <td><a href="/approval-item/showRequests" class="text-muted">view more details</a></td>
             </tr>
             @endforeach
         </tbody>

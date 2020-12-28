@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Asel's Dashboard</title>
+  <title>Dark Dashboard</title>
   <meta charset="utf-8">
   <script src="{!!url('/js/jquery.min.js')!!}"></script>
 
@@ -25,8 +25,6 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-
 
 </head>
 
@@ -90,7 +88,6 @@
     <div class="row">
     <div class="col-lg-2">      <!--if screen size goes below large then start stacking-->
         <div class="p-2 border bg-dark border-dark rounded-lg flex-shrink-3">
-            <h4 class="p-2 border border-light rounded-lg text-white">Navigation Bar</h5>
             <!-- A vertical navbar -->
             <nav class="navbar bg-dark">
             <!-- Links -->

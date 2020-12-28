@@ -7,7 +7,7 @@
     <span>
         <h3 class="p-3">Your Requests</h3>
     </span>
-    <table class="table table-dark table-striped border-secondary rounded-lg mr-4">
+    <table class="table table-hover table-light mr-4">
         <thead>
             <tr>
                 <th>Process ID</th>
@@ -24,7 +24,15 @@
                 <td>{{$item->form_type->type}}</td>
                 <td>{{$item->created_at}}</td>
                 <td>{{$item->status->type}}</td>
-                <td><a href="/dev-project/show/{{$item->id}}" class="text-light">See full request</a></td>
+                @if($item->form_type_id == 1)
+                <td><a href="/tree-removal/show/{{$item->id}}" class="text-dark">See full request</a></td>
+                @elseif($item->form_type_id == 2)
+                <td><a href="/dev-project/show/{{$item->id}}" class="text-dark">See full request</a></td>
+                @elseif($item->form_type_id == 3)
+                <td><a href="/dev-project/show/{{$item->id}}" class="text-dark">See full request</a></td>
+                @elseif($item->form_type_id == 4)
+                <td><a href="/dev-project/show/{{$item->id}}" class="text-dark">See full request</a></td>
+                @endif
             </tr>
             @endforeach
         </tbody>

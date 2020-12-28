@@ -73,40 +73,38 @@
     <br>
 
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-2">
-                <!--if screen size goes below large then start stacking-->
-                <div class="p-2 border bg-dark border-dark rounded-lg flex-shrink-3">
-                    <h4 class="p-2 border border-light rounded-lg text-white">Navigation Bar</h5>
-                        <!-- A vertical navbar -->
-                        <nav class="navbar bg-dark">
-                            <!-- Links -->
-                            <ul class="navbar-nav nav-tabs">
-                                <li class="nav-item">
-                                    <a class="nav-link text-light font-italic p-2" href="/general">General Module</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-light font-italic p-2" href="/user/index">User Management</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-light font-italic p-2" href="#">Environment Module</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-light font-italic p-2" href="#">Admin Module</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-light font-italic p-2" href="#">Security Module</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-light font-italic p-2" href="#">Update Map</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-light font-italic p-2" href="#">Requests</a>
-                                </li>
-                            </ul>
-                        </nav>
-                </div>
-            </div>
+    <div class="row">
+    <div class="col-lg-2">      <!--if screen size goes below large then start stacking-->
+        <div class="p-2 border bg-dark border-dark rounded-lg flex-shrink-3">
+            <!-- A vertical navbar -->
+            <nav class="navbar bg-dark">
+            <!-- Links -->
+            <ul class="navbar-nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link text-light font-italic p-2" href="/general/general">General Module</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-light font-italic p-2" href="/user/index">User Management</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-light font-italic p-2" href="#">Environment Module</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-light font-italic p-2" href="#">Admin Module</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-light font-italic p-2" href="#">Security Module</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-light font-italic p-2" href="#">Update Map</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-light font-italic p-2" href="/approval-item/showRequests">Requests</a>
+            </li>
+            </ul>
+            </nav>
+        </div>
+    </div>
 
 
             <div style="background-color:#ECF0F1" class="col-md p-2 border border-secondary rounded-lg ml-2 mr-3">

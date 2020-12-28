@@ -10,35 +10,26 @@ class Land_Parcel extends Model
     use HasFactory;
     protected $table = 'land_parcels';
 
-        /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
         'title',
         'governing_organizations',
         'logs',
         'polygon',
         'protected_area',
+        'created_by_user_id',
         'status',
     ];
 
-
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
-        'deleted_at' => 'datetime',
+    protected $attributes = [
+        'logs' => 0,
+        'protected_area' => 0,
+        'status' => 1,
     ];
 
-    protected $attributes = [
-        'created_by_user_id' => 0,
-        'status' => 0,
+    protected $casts = [
+        'governing_organizations' => 'array',
+        'logs' => 'array',
+        'polygon' => 'array',
     ];
 
     public function development_projects(){
