@@ -24,7 +24,6 @@ class Land_Parcel extends Model
         'status',
     ];
 
-   
 
     /**
      * The attributes that should be cast to native types.
