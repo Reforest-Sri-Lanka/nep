@@ -24,11 +24,26 @@
             <tbody>
                 <tr>
                     <td>{{$crime->id}}</td>
-                    <td>{{$crime->crime_type}}</td>
+                    @switch($crime->crime_type)
+                    @case('1')
+                    <td>Illegal tree cutting</td>
+                    @break;
+                    @case('2')
+                    <td>Illegal mining</td>
+                    @endswitch
                     <td>{{$crime->description}}</td>
-                    <td>{{$crime->polygon}}</td>
-                    <td>{{$crime->created_at}}</td>
-                    <td>{{$crime->action_taken}}</td>
+                    <td>...</td>
+                    <td>{{date('d-m-Y',strtotime($crime->created_at))}}</td>
+                    @switch($crime->action_taken)
+                    @case('0')
+                    <td>To be taken</td>
+                    @break;
+                    @case('1')
+                    <td>Investigated and Rejected</td>
+                    @break;
+                    @case('2')
+                    <td>Investigated and action taken</td>
+                    @endswitch
                     <td>{{$crime->status}}</td>
                 </tr>
             </tbody>
@@ -83,13 +98,7 @@
                 @foreach($Users as $user)<tr>
                     <td>{{$user->id}}</td>
                     <td>{{$user->name}}</td>
-                @switch($user->role_id) 
-                @case('4')
-                    <td>Manager</td>
-                @break;
-                @case('5')
-                    <td>Staff</td>
-                @endswitch
+                    <td>{{$user->role->title}}<td>
                     <td>{{$user->email}}</td>
                     <td><a href="/approval-item/confirmassign/{{$user->id}}/{{$Process_item->id}}" class="text-muted">assign</a></td>
                 </tr>

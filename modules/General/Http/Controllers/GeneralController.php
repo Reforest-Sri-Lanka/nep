@@ -24,13 +24,11 @@ class GeneralController extends Controller
         $organization=Auth::user()->organization_id;
         $role = Auth::user()->role_id;
         $id= Auth::user()->id;
-        /* if ($role == 1 || $role == 2 || $role == NULL ){
-            $Process_items = Process_item::all()->where('activity_organization',$noOrganization)->toArray();
-            return view('general::generalA',compact('Process_items'));
-        } */
         if ($role == 3 || $role == 4){
-            $Process_items = Process_item::all()->where('activity_organization',$organization)->where('form_type_id',$type)->toArray();
-            return view('general::generalM',compact('Process_items'));
+            $Process_items = Process_item::all()->where('activity_organization',$organization)->where('form_type_id',$type);
+            return view('general::generalM', [
+                'Process_items' => $Process_items,
+            ]);
         }
         else if($role == 5){
             $Process_items = Process_item::all()->where('activity_user_id',$id)->where('form_type_id',$type)->toArray();
@@ -59,14 +57,13 @@ class GeneralController extends Controller
         $noOrganization=2;
         $role = Auth::user()->role_id;
         $id= Auth::user()->id;
-        /* if ($role == 1 || $role == 2 || $role == NULL ){
-            $Process_items = Process_item::all()->where('activity_organization',$noOrganization)->toArray();
-            return view('general::generalA',compact('Process_items'));
-        } */
+
+        if ($role == 1 || $role == 2 || $role == NULL ){
+            
+            return view('general::generalA');
+        } 
         if ($role == 3 || $role == 4){
             $Process_items = Process_item::all()->where('activity_organization',$organization);
-            //return view('general::generalM',compact('Process_items'));
-            
             return view('general::generalM', [
                 'Process_items' => $Process_items,
             ]);
@@ -81,6 +78,6 @@ class GeneralController extends Controller
         }
         else{
             return view('unauthorized')->with('message', 'Admins are not allowed access to general module');
-        }       
+        }
     }
 }

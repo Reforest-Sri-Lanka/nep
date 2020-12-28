@@ -14,7 +14,7 @@
             </div>
             <div class="card-body text-center text-light">
                 <p class="card-text p-2">Quick links</p>
-                <a class="nav-link text-light font-italic p-2" href="/newtreecut">Application form</a>
+                <a class="nav-link text-light font-italic p-2" href="/tree-removal/form">Application form</a>
                 <a class="nav-link text-light font-italic p-2" href="#">Check status</a>
             </div>
         </div>
@@ -22,7 +22,7 @@
     <div class="col-md-3">
         <div class="card bg-dark text-light">
             <div class="card-header text-center">
-                <a class="nav-link text-light font-italic p-2" href="/dev-project/home">Development project </a>
+                <a class="nav-link text-light font-italic p-2" href="#">Development project </a>
             </div>
             <div class="card-body text-center text-light">
                 <p class="card-text p-2">Quick links</p>
@@ -34,11 +34,11 @@
     <div class="col-md-3">
         <div class="card bg-dark text-light">
             <div class="card-header text-center">
-                <a class="nav-link text-light font-italic p-2" href="#">Reforest Project</a>
+                <a class="nav-link text-light font-italic p-2" href="/env-restoration/index">Reforest Project</a>
             </div>
             <div class="card-body text-center text-light">
                 <p class="card-text p-2">Quick links</p>
-                <a class="nav-link text-light font-italic p-2" href="#">Register new project</a>
+                <a class="nav-link text-light font-italic p-2" href="/env-restoration/create">Register new project</a>
                 <a class="nav-link text-light font-italic p-2" href="#">Check for reforest details</a>
             </div>
         </div>
@@ -46,7 +46,7 @@
     <div class="col-md-3">
         <div class="card bg-dark text-light">
             <div class="card-header text-center">
-                <a class="nav-link text-light font-italic p-2" href="/crime-report/crimehome">Complaints</a>
+                <a class="nav-link text-light font-italic p-2" href="#">Complaints</a>
             </div>
             <div class="card-body text-center text-light">
                 <p class="card-text p-2">Quick links</p>
@@ -105,7 +105,7 @@
             @case('4')
                 <td>Crime Report</td>
             @endswitch
-                <td>{{$process_item->created_at}}</td>
+                <td>{{date('d-m-Y',strtotime($process_item->created_at))}}</td>
                 <td>{{$process_item->requst_organization}}</td>
                 <td>{{$process_item->remark}}</td>
                 <td><a href="/approval-item/assignstaff/{{$process_item->id}}" class="text-muted">assign</a></td>

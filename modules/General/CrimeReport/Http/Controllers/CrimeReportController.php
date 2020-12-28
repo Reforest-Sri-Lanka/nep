@@ -9,10 +9,18 @@ use Illuminate\Http\Request;
 use App\Models\Crime_report;
 use App\Models\User;
 use App\Models\Process_item;
+use App\Models\Organization;
 use App\Models\tree_removal_request;
 
 class CrimeReportController extends Controller
 {
+
+    
+
+    public function crime_report_form_display() {
+        $Organizations = Organization::all();
+        return view('crimeReport::logComplaint',['Organizations' => $Organizations],);
+
      public function assign_authorities_crimereport(Request $request)
     {
         $request -> validate([
@@ -53,12 +61,7 @@ class CrimeReportController extends Controller
         $crime = Crime_report::find($id);
         $Users =User::all()->where('role',1);
         return view('crimeReport::crimeInvestigate',['crime' => $crime],['Users' => $Users],);
-    }
 
-    public function crime_report_form_display() 
-    {
-        return view('crimeReport::logComplaint');
-    }
 
     public function track_user_crime_reports(Request $request)
     {
@@ -82,6 +85,7 @@ class CrimeReportController extends Controller
     }
 
 
+
     public function create_crime_report(Request $request)
     {       
         $request -> validate([
@@ -91,6 +95,7 @@ class CrimeReportController extends Controller
             'confirm' => 'required',
             'create_by'=>'required',
         ]);
+
         $Crime_report = new Crime_report;
         $Crime_report->Created_by_user_id = $request['create_by'];
         $Crime_report->crime_type = $request['crime_type'];
@@ -105,19 +110,17 @@ class CrimeReportController extends Controller
         $crime_type =$request['crime_type'];
         $Process_item =new Process_item;
         $Process_item->Created_by_user_id = $request['create_by'];
+        $Process_item->requst_organization = $request['organization'];
         $Process_item->activity_organization = "0";
         $Process_item->activity_organization = "0";
         $Process_item->activity_user_id = "0";
         $Process_item->form_id =  $id;
-        $Process_item->form_type_id = "4";
-        if ($crime_type == 1 ){
-            $Process_item->requst_organization = "2";
-        }
-        else if ($crime_type == 2 ){
-            $Process_item->requst_organization = "3";
-        }
-        else{
-            $Process_item->requst_organization = "3";
+        $Process_item->form_type_id = "4";      
+        $Process_item->status_id = "1";
+        $Process_item->remark = "to be made yet";
+        $Process_item->save();
+
+        return back()->with('message', 'Crime report logged Successfully'); 
         }     
         $Process_item->status_id = "1";
         $Process_item->remark = "to be made yet";
@@ -139,6 +142,7 @@ class CrimeReportController extends Controller
         ]);     
     }
 
+  
     public function crime_module_access_controller()                  //show all records for index
     {
         $role = Auth::user()->role_id;
