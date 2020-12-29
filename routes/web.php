@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
 //use App\Http\Controllers\Crime_reportController;
 
@@ -25,10 +26,6 @@ Route::get('/home', function () {
 
 //Route::get('/admin', 'AdministratorController@index');
 
-/* Route::get('/general', function(){
-    return view('test/mainview');
-}); */
-
 
 /* Route::post('/crimecreate', [Crime_reportController::class, 'create_crime_report']);
 Route::get('/crimehome', [Crime_reportController::class, 'crime_module_access_controller']);
@@ -48,11 +45,10 @@ Route::post('/treecutcreate', [Crime_reportController::class, 'create_tree_remov
 Route::get('/newtreecut',fn() => view('general.treecutting.treecut')); */
 
 
-//Route::get('/roles', [RoleController::class, 'fetchAllRoles']);
-//Route::get('/arole', [RoleController::class, 'fetchARole']);
-// Route::get('/lighthome', function () {
-//     return view('test2');
-// });
-// Route::get('/dash', function () {
-//     return view('test3');
-// });
+
+Route::get('/search', [UserController::class, 'search']);
+Route::get('/autocomplete', [UserController::class, 'autocomplete'])->name('autocomplete');
+
+Route::get('/map', function(){
+    return view('map');
+});

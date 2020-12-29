@@ -15,7 +15,7 @@
     </span>
 
 
-    <table class="table table-dark table-striped border-secondary rounded-lg mr-4">
+    <table class="table table-hover table-light border-secondary rounded-lg mr-4">
         <thead>
             <tr>
                 <th>ID</th>

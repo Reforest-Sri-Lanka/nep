@@ -25,12 +25,10 @@
                 <tr>
                     <td>{{$devp->title}}</td>
                     <td>{{$devp->gazzete_id}}</td>
-                    <td><a href="/approval-item/checkGazzette{{ $devp['gazzete_id'] }}/" class="text-muted">View</a></td>
+                    <td><a href="#" class="text-muted">View</a></td>
                     <td>{{$devp->protected_area}}</td>
                     <td>{{$devp->land_parcel_id}}</td>
-                    <td><a href="/approval-item/checkLandParcel{{ $devp['gazzete_id'] }}/" class="text-muted">View</a></td>
-                    
-                    
+                    <td><a href="#" class="text-muted">View</a></td>                 
                 </tr>
             </tbody>
         </table>
@@ -92,3 +90,4 @@
     </div>
 </div>
 @endsection
+

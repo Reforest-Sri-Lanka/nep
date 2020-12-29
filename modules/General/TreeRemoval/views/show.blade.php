@@ -2,7 +2,7 @@
 
 @section('cont')
 
-<kbd><a onclick="goBack()" class="text-white font-weight-bolder"><i class="fas fa-chevron-left"></i></i> BACK</a></kbd>
+<kbd><a href="/approval-item/showRequests" class="text-white font-weight-bolder"><i class="fas fa-chevron-left"></i></i> BACK</a></kbd>
 <div class="container">
     <form>
 
@@ -204,16 +204,34 @@
             @endfor
             @endif
 
-
-
-
-
     </form>
 </div>
-@endsection
 
 <script>
+    /// BACK BUTTON
     function goBack() {
         window.history.back();
     }
+
+    /// MAP MODULE
+    var center = [7.2906, 80.6337];
+
+    // Create the map
+    var map = L.map('mapid').setView(center, 10);
+
+    // Set up the OSM layer 
+    L.tileLayer(
+        'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: 'Data © <a href="http://osm.org/copyright">OpenStreetMap</a>',
+            maxZoom: 18
+        }).addTo(map);
+
+    // add a marker in the given location
+    L.marker(center).addTo(map);
+
+    var polygon= @json($polygon);
+    L.geoJSON(JSON.parse(polygon)).addTo(map);
+
 </script>
+@endsection
+

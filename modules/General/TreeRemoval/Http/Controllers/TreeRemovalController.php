@@ -12,8 +12,16 @@ use App\Models\Process_Item;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+
+
 class TreeRemovalController extends Controller
 {
+    // public function home()
+    // {
+    //     $name = 'Yashod';
+    //     return view('treeRemoval::home', compact('name'));
+    // }
+
     public function openForm()
     {
         $lands = Land_Parcel::all();
@@ -33,6 +41,19 @@ class TreeRemovalController extends Controller
 
     public function save()
     {
+
+        $land = new Land_Parcel();
+        $land->title = request('landTitle');
+        $land->governing_organizations = request('governing_orgs');
+        $land->polygon = request('polygon');
+        $land->created_by_user_id = request('createdBy');
+        if (request('isProtected')) {
+            $land->protected_area = request('isProtected');
+        }
+        $land->save();
+
+        $landid = Land_Parcel::latest()->first()->id;
+
         $tree = new Tree_Removal_Request();
         $tree->created_by_user_id = request('createdBy');
         $tree->description = request('description');
@@ -45,7 +66,7 @@ class TreeRemovalController extends Controller
         $tree->no_of_avian_species = request('number_of_avian_species');
         $tree->no_of_flora_species = request('number_of_flora_species');
         $tree->species_special_notes = request('species_special_notes');
-        $tree->land_parcel_id = request('land_parcel_id');
+        $tree->land_parcel_id = $landid;
         $tree->district_id = request('district_id');
         $tree->province_id = request('province_id');
         $tree->gs_division_id = request('gs_division_id');
@@ -72,10 +93,11 @@ class TreeRemovalController extends Controller
         $item = Process_Item::find($id);
         $tree_removal = Tree_Removal_Request::find($item->form_id);
         $location_data = $tree_removal->tree_locations;
-        // ddd($location_data[0]['tree_species_id']);
+        $land_data = Land_Parcel::find($tree_removal->land_parcel_id);
         return view('treeRemoval::show', [
             'tree' => $tree_removal,
             'location' => $location_data,
+            'polygon' => $land_data->polygon,
         ]);
     }
 }

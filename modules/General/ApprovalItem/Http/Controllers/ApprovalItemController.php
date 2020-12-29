@@ -39,7 +39,9 @@ class ApprovalItemController extends Controller
     {
         $organization=Auth::user()->organization_id;
         $Process_item =Process_item::find($id);
-        $Prerequisites=Process_item::all()->where('id',$Process_item->prerequsite_id);        
+        $Prerequisites=Process_item::all()->where('id',$Process_item->prerequsite_id);
+        
+       
         if(Auth::user()->role_id=='3'){
             $Users = User::where([
                 ['role_id', '>' , 3],           
@@ -52,6 +54,7 @@ class ApprovalItemController extends Controller
                 ['organization_id', '=', $organization], 
             ])->get();
         }         
+
         if($Process_item->form_type_id == '1'){
             $treecut = Tree_Removal_Request::find($Process_item->form_id);
             return view('approvalItem::treeAssign',[

@@ -8,27 +8,41 @@
 </span>
 <div class="row justify-content-between">
     <div class="col-md-12">
-        <h6>Crime information</h6>
+        <h6>Tree cutting request details</h6>
         <table class="table table-dark table-striped border-secondary rounded-lg mr-4">
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>description</th>
+                    <th>Province</th>
+                    <th>GS Division</th>
+                    <th>Location</th>
+                    <th>Special approval</th>
+                    <th>Date application made</th>
+                    <th>Land size</th>
+                    <th>unit</th>
                     <th>No of Trees</th>
                     <th>No of Tree Species</th>
-                    <th>Location</th>
-                    
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td>{{$treecut->id}}</td>
-                    <td>{{$treecut->description}}</td>
+                    @if($treecut->gs_division == NULL)
+                    <td>Unassigned</td>
+                    @else
+                    <td>{{$treecut->gs_division->gs_division}}</td>
+                    @endif
+                    @if($treecut->province == NULL)
+                    <td>Unassigned</td>
+                    @else
+                    <td>{{$treecut->province->province}}</td>
+                    @endif 
+                    <td>----</td>
+                    <td>{{$treecut->special_approval}}</td>
+                    <td>{{date('d-m-Y',strtotime($treecut->created_at))}}</td>
+                    <td>{{$treecut->land_size}}</td>
                     <td>{{$treecut->no_of_trees}}</td>
-                    <td>{{$treecut->no_of_tree_species}}</td>
-                    <td>{{$treecut->land_parcel_id}}</td>
-                    
-                   
+                    <td>{{$treecut->no_of_tree_species}}<td>
                 </tr>
             </tbody>
         </table>

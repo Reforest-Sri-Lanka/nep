@@ -27,17 +27,18 @@ class Process_Item extends Model
         'prerequisite' => 0,
         'prerequsite_id' => 0,
         'remark' => 0,
-        'status_id' => 0,
+        'status_id' => 1,
         'activity_user_id' => 0,
         'activity_organization' => 0,
+        'requst_organization' => 0,
     ];
 
-    public function form_type_id()
+    public function form_type()
     {
         return $this->belongsTo('App\Models\Form_Type');
     }
 
-    public function status_id()
+    public function status()
     {
         return $this->belongsTo('App\Models\Status');
     }

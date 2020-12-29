@@ -18,6 +18,7 @@ class CreateTreeRemovalRequestsTable extends Migration
             $table->integer('created_by_user_id');
             $table->string('description');
             $table->json('images');
+            $table->json('governing_organizations');
             //$table->integer('province');
             //$table->integer('district');
             //$table->integer('gs_division');
