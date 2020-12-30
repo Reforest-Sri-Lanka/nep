@@ -48,7 +48,9 @@
             "EnvironmentRestoration\\": "modules/General/EnvironmentRestoration",
             "ApprovalItem\\": "modules/General/ApprovalItem",
             "CrimeReport\\": "modules/General/CrimeReport",
-            "General\\": "modules/General"
+            "General\\": "modules/General",
+            "Environment\\": "modules/Environment"
+            
         }
     },
     "autoload-dev": {
