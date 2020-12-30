@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateOrganizationsTable extends Migration
+class CreateOrganizationTypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,12 @@ class CreateOrganizationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('organizations', function (Blueprint $table) {
+        Schema::create('organization_types', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->string('city');
-            $table->string('country')->default('Sri Lanka');
-            $table->unsignedBigInteger('type_id')->references('id')->on('organization_types');
-            $table->text('description');
+            $table->string('title');  
             $table->timestampsTz(); //time stamp with timezone in UTC
             $table->tinyInteger('status');
             $table->softDeletesTz('deleted_at', 0);
-            
         });
     }
 
@@ -34,6 +29,6 @@ class CreateOrganizationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('organizations');
+        Schema::dropIfExists('organization_types');
     }
 }

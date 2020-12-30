@@ -43,6 +43,7 @@
             "Database\\Seeders\\": "database/seeders/",
             "Dashboard\\": "MDashboard/",
             "Admin\\": "modules/Admin",
+            "Organization\\": "modules/Organization",
             "TreeRemoval\\": "modules/General/TreeRemoval",
             "DevelopmentProject\\": "modules/General/DevelopmentProject",
             "EnvironmentRestoration\\": "modules/General/EnvironmentRestoration",
