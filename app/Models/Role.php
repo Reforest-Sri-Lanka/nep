@@ -9,10 +9,8 @@ class Role extends Model
 {
     use HasFactory;
 
-    protected $table = "roles";
-
-
+    // A user has one role and a role can belong to many users.
     public function users(){
-        return $this->belongsToMany('App\User');
+        return $this->hasMany('App\Models\User');
     }
 }

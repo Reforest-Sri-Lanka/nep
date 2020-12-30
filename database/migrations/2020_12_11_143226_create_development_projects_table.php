@@ -16,16 +16,22 @@ class CreateDevelopmentProjectsTable extends Migration
         Schema::create('development_projects', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('gazette'); //ref gazettes
+            //$table->integer('gazette'); //ref gazettes
             $table->json('governing_organizations');
             $table->json('logs');
-            $table->json('polygon');
-            $table->integer('land_parcel'); //ref land_parcels
+            //$table->integer('land_parcel_id'); //ref land_parcels
             $table->tinyInteger('protected_area');
             $table->integer('created_by_user_id');
             $table->timestampsTz(); //time stamp with timezone in UTC
-            $table->tinyInteger('status');
+            //$table->tinyInteger('status');
             $table->softDeletesTz('deleted_at', 0);
+
+            $table->unsignedBigInteger('gazette_id')->nullable();            
+            $table->unsignedBigInteger('status_id')->nullable();
+            $table->unsignedBigInteger('land_parcel_id')->nullable();
+            $table->foreign('gazette_id')->references('id')->on('gazettes')->onDelete('cascade');
+            $table->foreign('status_id')->references('id')->on('status')->onDelete('cascade');
+            $table->foreign('land_parcel_id')->references('id')->on('land_parcels')->onDelete('cascade');
         });
     }
 

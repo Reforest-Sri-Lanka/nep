@@ -10,21 +10,6 @@
 ## About National Envrionment Platform - NEP
 
 
-## About Laravel
-
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
-
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
-
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
-
 ## Plugins
 composer require laravel/fortify : version ^1.6 for laravel/fortify
 composer require laravel/tinker:  https://laravel.com/docs/8.x/artisan
@@ -58,4 +43,26 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
 NEP is Licensed is pending. 
 
-## non essential change
+## To Run the Program
+
+1. Download the repository
+
+2. In the terminal, run: `composer install`
+
+3. Then run `composer dump-autoload` or `composer du`
+
+4. Set up the database in the .env file
+
+5. Set up mailtrap.io in the .env file
+
+6. Run `php artisan:migrate`
+
+7. Scripts can be found in database/scripts folder. Add the inserts into your MYSQL database.
+
+8. Run `php artisan:serve`
+
+9. On your browser go to localhost:8000
+
+10. Log into any existing account with the password: password. For account 2 and 4 use password: passwords
+
+

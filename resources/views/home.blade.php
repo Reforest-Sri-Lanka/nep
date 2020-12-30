@@ -1,9 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Dashboard</title>
+  <title>Dark Dashboard</title>
   <meta charset="utf-8">
   <script src="{!!url('/js/jquery.min.js')!!}"></script>
+
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+  integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+  crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+  integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+  crossorigin=""></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.js"></script>
+   <style>
+    #mapid {
+        height:540px;
+        }
+  </style>
+
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -31,7 +47,7 @@ margin:0 ! important;
   </style>
 </head>
 
-<body>
+<body class="bg-secondary">
 
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
         <!-- Brand/logo -->
@@ -45,7 +61,7 @@ margin:0 ! important;
             <i class="fas fa-bell mr-1"> <span class="badge badge-light">4</span>        |</i>
         </a>
 
-        <a href="user/passwordReset" class="text-secondary">
+        <a href="admin/passwordReset" class="text-secondary">
             <i class="fas fa-cog mr-1">          |</i>
         </a>
 
@@ -84,78 +100,67 @@ margin:0 ! important;
     </nav>
 
 
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-lg-2 pl-0 pr-0 ml-0 mr-0">      <!--if screen size goes below large then start stacking-->
-			
-      	<div class="bg-dark border-dark">
-					<!-- A vertical navbar -->
-					<nav class="navbar bg-dark">
-					<!-- Links -->
-					<ul class="navbar-nav nav-tabs">
-          <br>
-          <br>
-          <br>
-					<li class="nav-item">
-						<a class="nav-link text-light font-italic p-2" href="/general">General Module</a>
-					</li>
-          <br>
-					<li class="nav-item">
-						<a class="nav-link text-light font-italic p-2" href="/user/index">User Management</a>
-					</li>
-          <br>
-					<li class="nav-item">
-						<a class="nav-link text-light font-italic p-2" href="#">Environment Module</a>
-					</li>
-          <br>
-					<li class="nav-item">
-						<a class="nav-link text-light font-italic p-2" href="/organization/index">Admin Module</a>
-					</li>
-          <br>
-					<li class="nav-item">
-						<a class="nav-link text-light font-italic p-2" href="#">Security Module</a>
-					</li>
-          <br>
-					<li class="nav-item">
-						<a class="nav-link text-light font-italic p-2" href="#">Update Map</a>
-					</li>
-          <br>
-					<li class="nav-item">
-						<a class="nav-link text-light font-italic p-2" href="#">Requests</a>
-					</li>
-          <br>
-          <br>
-          <br>
-          <br>
-					</ul>
-					</nav>
-				</div>
-			</div>
+
+<br>
+
+<div class="container-fluid">
+    <div class="row">
+    <div class="col-lg-2">      <!--if screen size goes below large then start stacking-->
+        <div class="p-2 border bg-dark border-dark rounded-lg flex-shrink-3">
+            <!-- A vertical navbar -->
+            <nav class="navbar bg-dark">
+            <!-- Links -->
+            <ul class="navbar-nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link text-light font-italic p-2" href="/general/general">General Module</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-light font-italic p-2" href="/user/index">User Management</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-light font-italic p-2" href="#">Environment Module</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-light font-italic p-2" href="/organization/index">Admin Module</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-light font-italic p-2" href="#">Security Module</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-light font-italic p-2" href="#">Update Map</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-light font-italic p-2" href="/approval-item/showRequests">Requests</a>
+            </li>
+            </ul>
+            </nav>
+        </div>
+    </div>
 
 
-			<div style="background-color:#ECF0F1" class="col no-float pl-0 pr-0 ml-0 mr-0">
-			  @yield('cont')
-			</div>
-		</div>
-	</div>
-
-	<div class="d-flex  bg-light justify-content-end">
-	  <a href="#" class="text-secondary mr-2">
-		<i class="fab fa-facebook-square"></i> Facebook |
-	  </a>
-	  <a href="#" class="text-secondary mr-2">
-		<i class="fab fa-twitter-square"></i> Twitter |
-	  </a>
-	  <a href="#" class="text-secondary mr-2">
-		<i class="fab fa-instagram"></i>  Instagram
-	  </a>
-	</div>
-	<div class="d-flex bg-light justify-content-center">
-	  <h5 class="text-secondary"><i class="far fa-copyright"></i> 2020 by Reforest Sri Lanka</h5><br>
-	</div>
-	<div class="d-flex bg-light justify-content-center">
-	  <h6>All rights reserved</h6>
-	</div>
+    <div style="background-color:#ECF0F1" class="col-md p-2 border border-secondary rounded-lg ml-2 mr-3">
+      @yield('cont')
+    </div>
+</div>
+</div>
+<br>
+<div class="d-flex  bg-light justify-content-end">
+  <a href="#" class="text-secondary mr-2">
+    <i class="fab fa-facebook-square"></i> Facebook |
+  </a>
+  <a href="#" class="text-secondary mr-2">
+    <i class="fab fa-twitter-square"></i> Twitter |
+  </a>
+  <a href="#" class="text-secondary mr-2">
+    <i class="fab fa-instagram"></i>  Instagram
+  </a>
+</div>
+<div class="d-flex bg-light justify-content-center">
+  <h5 class="text-secondary"><i class="far fa-copyright"></i> 2020 by Reforest Sri Lanka</h5><br>
+</div>
+<div class="d-flex bg-light justify-content-center">
+  <h6>All rights reserved</h6>
+</div>
 
 </body>
 </html>

@@ -40,4 +40,13 @@ class Organization extends Model
     {
         return $this->belongsTo(\App\Models\Type::class, 'type_id');
     }
+
+    // A user belongs to one organization and an organization has many users.
+    public function users(){
+        return $this->hasMany('App\Models\User');
+    }
+
+    public function environment_restorations(){
+        return $this->hasMany('App\Models\Environment_Restoration');
+    }
 }

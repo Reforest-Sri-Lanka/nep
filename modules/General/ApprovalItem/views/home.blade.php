@@ -7,7 +7,6 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Home</h1>
-    <x-test />
+    <x-test-new />
 </body>
 </html>
