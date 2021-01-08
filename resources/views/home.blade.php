@@ -118,7 +118,7 @@ margin:0 ! important;
                 <a class="nav-link text-light font-italic p-2" href="/user/index">User Management</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-light font-italic p-2" href="#">Environment Module</a>
+                <a class="nav-link text-light font-italic p-2" href="/environment/generalenv">Environment Module</a>
             </li>
             <li class="nav-item">
               <a class="nav-link text-light font-italic p-2" href="/organization/index">Admin Module</a>
