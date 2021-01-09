@@ -20,6 +20,7 @@ class CrimeReportController extends Controller
     public function crime_report_form_display() {
         $Organizations = Organization::all();
         return view('crimeReport::logComplaint',['Organizations' => $Organizations],);
+    }
 
      public function assign_authorities_crimereport(Request $request)
     {
@@ -61,6 +62,7 @@ class CrimeReportController extends Controller
         $crime = Crime_report::find($id);
         $Users =User::all()->where('role',1);
         return view('crimeReport::crimeInvestigate',['crime' => $crime],['Users' => $Users],);
+    }
 
 
     public function track_user_crime_reports(Request $request)
@@ -122,12 +124,7 @@ class CrimeReportController extends Controller
 
         return back()->with('message', 'Crime report logged Successfully'); 
         }     
-        $Process_item->status_id = "1";
-        $Process_item->remark = "to be made yet";
-        $Process_item->save();
-        return redirect('/crime-report/crimehome')->with('message', 'Crime report logged Successfully'); 
-    }
-
+       
     public function search_specific_authorities(Request $request)
     {
         $request -> validate([
