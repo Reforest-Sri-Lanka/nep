@@ -179,6 +179,9 @@ return [
         App\Providers\FortifyServiceProvider::class,
         Admin\Providers\RouteServiceProvider::class,
         Admin\Providers\AdminServiceProvider::class,
+        Organization\Providers\RouteServiceProvider::class,
+        Organization\Providers\OrganizationServiceProvider::class,
+        
         General\Providers\RouteServiceProvider::class,
         General\Providers\GeneralServiceProvider::class,
         TreeRemoval\Providers\RouteServiceProvider::class,
@@ -191,8 +194,9 @@ return [
         ApprovalItem\Providers\ApprovalItemServiceProvider::class,
         CrimeReport\Providers\RouteServiceProvider::class,
         CrimeReport\Providers\CrimeReportServiceProvider::class,
+        Environment\Providers\RouteServiceProvider::class,
+        Environment\Providers\EnvironmentServiceProvider::class,
     ],
-
     /*
     |--------------------------------------------------------------------------
     | Class Aliases

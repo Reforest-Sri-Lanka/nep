@@ -121,10 +121,9 @@ class CrimeReportController extends Controller
         $Process_item->status_id = "1";
         $Process_item->remark = "to be made yet";
         $Process_item->save();
-
         return back()->with('message', 'Crime report logged Successfully'); 
         }     
-       
+
     public function search_specific_authorities(Request $request)
     {
         $request -> validate([

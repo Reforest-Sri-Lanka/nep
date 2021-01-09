@@ -5,6 +5,7 @@ use App\Models\Land_Parcel;
 use App\Models\Environment_Restoration;
 use App\Models\Environment_Restoration_Activity;
 use App\Models\Environment_Restoration_Species;
+use App\Models\Organization;
 use Illuminate\Http\Request;
 use Validator;
 use App\Http\Controllers\Hash;
@@ -34,9 +35,11 @@ class EnvironmentRestorationController extends Controller
 
     public function create()
     {
-        $restorations = Environment_Restoration::all();       //show all records for index
+        $restorations = Environment_Restoration::all();         //shows all records of enviroment restoration request
+        $organizations = Organization::where('type','=','Government')->get();                  //show all records for all government organizations
         return view('environmentRestoration::create', [
             'restorations' => $restorations,
+            'organizations' => $organizations,
         ]);
     }
 
@@ -75,6 +78,8 @@ class EnvironmentRestorationController extends Controller
         $landparcel = new Land_Parcel();
         $landparcel->title = request('landparceltitle');
         $landparcel->polygon = request('polygon');
+        $landparcel->governing_organizations = request('govOrg[]');
+        $landparcel->created_by_user_id = request('created_by');
         $landparcel->save();
 
         $latest = Land_Parcel::latest()->first();

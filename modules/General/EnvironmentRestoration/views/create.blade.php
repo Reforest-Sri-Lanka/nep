@@ -48,8 +48,25 @@
                             <option value=4>Wetland</option>
                         </select>
                     </div>
-
                 </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <a class="collapsed card-link text-dark" data-toggle="collapse" href="#collapseOne"> Select Relevant Governing Organization for selected Land Parcel </a>
+                    </div>
+                    <div id="collapseOne" class="collapse" >
+                        <div class="card-body">
+                            @foreach($organizations as $organization)
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="checkbox" class="form-check-input" name="govOrg[]" value="{{$organization->id}}">{{$organization->title}}
+                                    </label>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+                <br/>
 
                 <!-- MAP MODULE WOULD COME HERE -->
                 <div >
@@ -231,6 +248,7 @@
                 <input type="hidden" class="form-control" name="organization" value="{{Auth::user()->organization_id}}">
                 <input type="hidden" class="form-control" name="created_by" value="{{Auth::user()->id}}">
                 <input id = "polygon" type="hidden" name="polygon" value="{{request('polygon')}}">
+                <input type="hidden" class="form-control" name="logs" value="0">
                 <div style="float:right;">
                     @csrf
                     <button type="submit" name="save" id="save" value="1" class="btn btn-primary">Create</button>
