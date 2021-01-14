@@ -9,7 +9,6 @@ use App\Models\Organization;
 use Illuminate\Http\Request;
 use Validator;
 use App\Http\Controllers\Hash;
-// use App\Http\Controllers\Auth;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\UserRequest;
 
@@ -54,31 +53,12 @@ class EnvironmentRestorationController extends Controller
         ]);
     }
 
-/*     public function edit($id)           //to open the edit view
-    {
-        $restoration = EnvironmentRestoration::find($id);
-        return view('envRestoration/envRestorationEdit', [
-            'restoration' => $restorations,
-        ]);
-    } */
-
-/*     public function update(Request $request, $id)       //to update the data via edit
-    {
-        $user = User::find($id);
-        $user->update([
-            'name' => $request->name,
-        ]);
-        //ddd($request);
-        return redirect ('/envRestoration/index')->with('message', 'Restoration Project Updated Successfully');
-    } */
-
-
     public function store(Request $request)
     {
         $landparcel = new Land_Parcel();
         $landparcel->title = request('landparceltitle');
         $landparcel->polygon = request('polygon');
-        $landparcel->governing_organizations = request('govOrg[]');
+        $landparcel->governing_organizations = request('govOrg');
         $landparcel->created_by_user_id = request('created_by');
         $landparcel->save();
 
