@@ -65,6 +65,7 @@
                 <option value="0" selected>Select</option>
                 <option value="1">Tree Cutting permission Requests</option>
                 <option value="2">Development project permission Requests</option>
+                <option value="3">Environment Restoration Requests</option>
                 <option value="4">Crime Reports</option>
             </select>            
         </div>
