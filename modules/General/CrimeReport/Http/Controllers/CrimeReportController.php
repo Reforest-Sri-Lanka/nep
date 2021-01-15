@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Crime_report;
+use App\Models\Crime_type;
 use App\Models\User;
 use App\Models\Process_item;
 use App\Models\Organization;
@@ -19,7 +20,8 @@ class CrimeReportController extends Controller
 
     public function crime_report_form_display() {
         $Organizations = Organization::all();
-        return view('crimeReport::logComplaint',['Organizations' => $Organizations],);
+        $crime_types = Crime_type::all();
+        return view('crimeReport::logComplaint',['Organizations' => $Organizations],['crime_types' => $crime_types],);
     }
 
      public function assign_authorities_crimereport(Request $request)
@@ -144,9 +146,11 @@ class CrimeReportController extends Controller
         $role = Auth::user()->role_id;
 
         if ($role == 1 || $role == 2) {         //Admin and super admin  
-            $users = User::where('role_id', '>' , 1)->orWhereNull('role_id',)->get();      
+            $users = User::where('role_id', '>' , 1)->orWhereNull('role_id',)->get();
+            $crime_types = Crime_type::all();      
             return view('crimeReport::crimeAdmin', [
                 'users' => $users,
+                'crime_types' => $crime_types
             ]);
         } else if ($role == 3|| $role == 4|| $role == 5) {                //HoO  Manager and staff  
             $users = User::where('role_id', '>' , 2)->orWhereNull('role_id')->get();
@@ -161,5 +165,37 @@ class CrimeReportController extends Controller
         }else if ($role == NULL){            //other
             return view('unauthorized');
         }
+    }
+
+    public function create_crime_type() {
+        return view('crimeReport::crimeTypeCreate');
+    }
+
+    public function store_crime_type() {
+        $ctype = new Crime_type();
+        $ctype->type = request('crimetype'); 
+        $ctype->status = request('status');
+        $ctype->save();
+        return redirect('/crime-report/crimehome')->with('messagetypes', 'Crime Type Successfully Added');
+    }
+    public function edit_crime_type($id) {
+        $crime_type = Crime_type::find($id);
+        return view('crimeReport::crimeTypeEdit', [
+            'crime_type' => $crime_type,
+        ]);
+    }
+
+    public function update_crime_type(Request $request, $id)     
+    {
+        $crime_type = Crime_type::find($id);
+        $crime_type->update([
+            'type' => $request->type,
+        ]);
+        return redirect('/crime-report/crimehome')->with('messagetypes', 'Crime type Successfully Updated');   
+    }
+    public function delete_crime_type($id) {
+        $Crime_types = Crime_type::find($id);
+        $Crime_types->delete();
+        return redirect('/crime-report/crimehome')->with('messagetypes', 'Crime type Successfully Deleted');
     }
 }
