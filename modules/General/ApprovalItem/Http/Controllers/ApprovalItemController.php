@@ -6,6 +6,7 @@ use App\Models\Crime_report;
 use App\Models\tree_removal_request;
 use App\Models\Development_Project;
 use App\Models\Process_Item;
+use App\Models\Environment_Restoration;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Redirect;
@@ -73,6 +74,15 @@ class ApprovalItemController extends Controller
                 'Process_item' =>$Process_item,
             ]);
         }
+        else if($Process_item->form_type_id == '3'){
+            $envrest = Environment_Restoration::find($Process_item->form_id);
+            return view('approvalItem::envrestoreAssign',[
+                'envrest' => $envrest,
+                'Users' => $Users,
+                'Prerequisites' => $Prerequisites,
+                'Process_item' =>$Process_item,
+            ]);
+        }
         else if($Process_item->form_type_id == '4'){
             $crime = Crime_report::find($Process_item->form_id);
             return view('approvalItem::crimeAssign',[
@@ -99,6 +109,13 @@ class ApprovalItemController extends Controller
             $devp = Development_Project::find($Process_item->form_id);
             return view('approvalItem::developview',[
                 'devp' => $devp,
+                'progress' => $progress,
+            ]);
+        }
+        else if($Process_item->form_type_id == '3'){
+            $envrest = Environment_Restoration::find($Process_item->form_id);
+            return view('approvalItem::envrestoreAssign',[
+                'envrest' => $envrest,
                 'progress' => $progress,
             ]);
         }

@@ -12,3 +12,9 @@ Route::get('/assign/{id}',[CrimeReportController::class, 'load_crimeAssign']);
 Route::get('/check/{id}',[CrimeReportController::class, 'load_crimeInvestigate']);
 Route::get('/searchauth', [CrimeReportController::class, 'search_specific_authorities']);
 Route::post('/assignauth', [CrimeReportController::class, 'assign_authorities_crimereport']);
+
+Route::get('/crimeTypeCreate', [CrimeReportController::class, 'create_crime_type']);
+Route::get('/crimeTypeEdit/{id}', [CrimeReportController::class, 'edit_crime_type']);
+Route::patch('/crimeTypeUpdate/{id}', [CrimeReportController::class, 'update_crime_type']);
+Route::delete('/crimeTypeDelete/{id}', [CrimeReportController::class, 'delete_crime_type']);
+Route::post('/crimeTypeStore', [CrimeReportController::class, 'store_crime_type']);
