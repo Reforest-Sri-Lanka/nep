@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Dark Dashboard</title>
+  <title>National Environment Platform</title>
   <meta charset="utf-8">
   <script src="{!!url('/js/jquery.min.js')!!}"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -140,11 +140,10 @@
   </a>
 </div>
 <div class="d-flex bg-light justify-content-center">
-  <h5 class="text-secondary"><i class="far fa-copyright"></i> 2020 by Reforest Sri Lanka</h5><br>
+  <h5 class="text-secondary"><i class="far fa-copyright"></i>2021 by RFSL-LSF-Ministry of Environment</h5><br>
 </div>
 <div class="d-flex bg-light justify-content-center">
   <h6>All rights reserved</h6>
 </div>
-
 </body>
 </html>
