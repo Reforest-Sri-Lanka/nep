@@ -6,7 +6,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use App\Models\Process_item;
+use App\Models\Process_Item;
 
 class GeneralController extends Controller
 {
