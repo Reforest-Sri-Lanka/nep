@@ -194,6 +194,8 @@ return [
         ApprovalItem\Providers\ApprovalItemServiceProvider::class,
         CrimeReport\Providers\RouteServiceProvider::class,
         CrimeReport\Providers\CrimeReportServiceProvider::class,
+        Environment\Providers\RouteServiceProvider::class,
+        Environment\Providers\EnvironmentServiceProvider::class,
     ],
     /*
     |--------------------------------------------------------------------------

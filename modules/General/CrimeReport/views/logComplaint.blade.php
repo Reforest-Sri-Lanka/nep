@@ -24,10 +24,9 @@
                        <h6>Crime type</h6>
                        <div class="input-group mb-3">
                             <select name="crime_type" class="custom-select" required>
-                                <option value="0" selected>Select</option>
-                                <option value="1">Illegal tree cutting</option>
-                                <option value="2">Illegal tree transportation</option>
-                                <option value="3">Environment polution</option>
+                            @foreach($crime_types as $crime_type)
+                                <option value="{{$crime_type->id}}">{{$crime_type->type}}</option>
+                            @endforeach
                             </select>
                             @error('crime_type')
                                 <div class="alert">                                   

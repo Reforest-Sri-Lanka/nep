@@ -13,7 +13,6 @@
 </span>
 <hr>
 <div class="row justify-content-center border-secondary rounded-lg ml-3">
-
     </br>
     <div class="col-md-3 ">
         <a href="/crimeadmin" class="btn btn-info mr-4" role="button">Assign Authorities</a>
@@ -21,6 +20,61 @@
 </div>
 </br>
 </hr>
+
+<span>
+<h3 class="p-3 display-4">Crime Types</h3>
+</span>
+<span>
+    <h3 class="text-center bg-success text-light">{{session('messagetypes')}}</h3>
+</span>
+<span>
+    <h3 class="text-center bg-danger text-light">{{session('danger')}}</h3>
+</span>
+<hr>
+<div class="row justify-content-center border-secondary rounded-lg ml-3">
+    </br>
+    <div class="col-md-3 ">
+        <a href="/crime-report/crimeTypeCreate" class="btn btn-info mr-4" role="button" style="margin-bottom: 25px">Create New Crime Type</a>
+        </br>
+    </div>
+    <table class="table table-hover table-light mr-4">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Crime type</th>
+                <th> </th>
+                <th> </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($crime_types as $crime_type)
+            <tr>
+                <td>{{$crime_type->id}}</td>
+                <td>{{$crime_type->type}}</td>
+
+                <!-- opent the edit view -->
+                <td><a href="/crime-report/crimeTypeEdit/{{$crime_type->id}}" class="btn btn-outline-warning" role="button">Edit</a></td>
+
+                <td>
+                    <button class="btn btn-outline-danger" onclick="event.preventDefault();
+                            document.getElementById('form-delete-{{$crime_type->id}}').submit()">Delete</button>
+
+                    <form id="{{'form-delete-'.$crime_type->id}}" style="display:none" method="post" 
+                        action="/crime-report/crimeTypeDelete/{{$crime_type->id}}">
+                        @csrf
+                        @method('delete');
+                    </form>
+                </td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+</div>
+</br>
+
+
+</hr>
+
 <h5 class="p-3 display-4">Contacts</h5>
 <div class="row justify-content-center">
     <div class="col-md-3">
