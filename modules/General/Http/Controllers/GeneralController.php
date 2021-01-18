@@ -25,17 +25,17 @@ class GeneralController extends Controller
         $role = Auth::user()->role_id;
         $id= Auth::user()->id;
         if ($role == 3 || $role == 4){
-            $Process_items = Process_item::all()->where('activity_organization',$organization)->where('form_type_id',$type);
+            $Process_items = Process_Item::all()->where('activity_organization',$organization)->where('form_type_id',$type);
             return view('general::generalM', [
                 'Process_items' => $Process_items,
             ]);
         }
         else if($role == 5){
-            $Process_items = Process_item::all()->where('activity_user_id',$id)->where('form_type_id',$type)->toArray();
+            $Process_items = Process_Item::all()->where('activity_user_id',$id)->where('form_type_id',$type)->toArray();
             return view('general::.generalS',compact('Process_items'));
         }
         else if($role == 6){
-            $Process_items = Process_item::all()->where('created_by_user_id',$id)->where('form_type_id',$type)->toArray();
+            $Process_items = Process_Item::all()->where('created_by_user_id',$id)->where('form_type_id',$type)->toArray();
             return view('general::.generalC',compact('Process_items'));
         }
         else{
@@ -63,17 +63,17 @@ class GeneralController extends Controller
             return view('general::generalA');
         } 
         if ($role == 3 || $role == 4){
-            $Process_items = Process_item::all()->where('activity_organization',$organization);
+            $Process_items = Process_Item::all()->where('activity_organization',$organization);
             return view('general::generalM', [
                 'Process_items' => $Process_items,
             ]);
         }
         else if($role == 5){
-            $Process_items = Process_item::all()->where('activity_user_id',$id)->toArray();
+            $Process_items = Process_Item::all()->where('activity_user_id',$id)->toArray();
             return view('general::.generalS',compact('Process_items'));
         }
         else if($role == 6){
-            $Process_items = Process_item::all()->where('created_by_user_id',$id)->toArray();
+            $Process_items = Process_Item::all()->where('created_by_user_id',$id)->toArray();
             return view('general::.generalC',compact('Process_items'));
         }
         else{
