@@ -130,7 +130,7 @@
     </div>
     <div class="d-flex bg-light justify-content-center">
         <a href="http://www.reforestsrilanka.com/">
-            <h5 class="text-secondary"><i class="far fa-copyright"></i> 2020 by Reforest Sri Lanka</h5>
+            <h5 class="text-secondary"><i class="far fa-copyright"></i>2021 by RFSL-LSF-Ministry of Environment</h5>
         </a><br>
     </div>
     <div class="d-flex bg-light justify-content-center">
