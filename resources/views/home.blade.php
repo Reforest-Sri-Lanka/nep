@@ -156,6 +156,7 @@ html {
 </div>
 <br>
 
+ {{-- sticky footer --}}
 <footer class="footer">
     <div class="d-flex  bg-light justify-content-end">
         <br>
