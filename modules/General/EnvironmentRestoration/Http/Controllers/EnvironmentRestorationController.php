@@ -6,10 +6,10 @@ use App\Models\Environment_Restoration;
 use App\Models\Environment_Restoration_Activity;
 use App\Models\Environment_Restoration_Species;
 use App\Models\Organization;
+use App\Models\Process_Item;
 use Illuminate\Http\Request;
 use Validator;
 use App\Http\Controllers\Hash;
-// use App\Http\Controllers\Auth;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\UserRequest;
 
@@ -54,31 +54,12 @@ class EnvironmentRestorationController extends Controller
         ]);
     }
 
-/*     public function edit($id)           //to open the edit view
-    {
-        $restoration = EnvironmentRestoration::find($id);
-        return view('envRestoration/envRestorationEdit', [
-            'restoration' => $restorations,
-        ]);
-    } */
-
-/*     public function update(Request $request, $id)       //to update the data via edit
-    {
-        $user = User::find($id);
-        $user->update([
-            'name' => $request->name,
-        ]);
-        //ddd($request);
-        return redirect ('/envRestoration/index')->with('message', 'Restoration Project Updated Successfully');
-    } */
-
-
     public function store(Request $request)
     {
         $landparcel = new Land_Parcel();
         $landparcel->title = request('landparceltitle');
         $landparcel->polygon = request('polygon');
-        $landparcel->governing_organizations = request('govOrg[]');
+        $landparcel->governing_organizations = request('govOrg');
         $landparcel->created_by_user_id = request('created_by');
         $landparcel->save();
 
@@ -140,6 +121,18 @@ class EnvironmentRestorationController extends Controller
         }
 
         Environment_Restoration_Species::insert($insert_data);
+
+        $latest = Land_Parcel::latest()->first();
+        foreach ($latest->governing_organizations as $governing_organization) {
+            $process = new Process_Item();
+            $process->form_type_id = 3;
+            $process->form_id = $latest->id;
+            $process->created_by_user_id = request('created_by');
+            $process->requst_organization = Auth::user()->organization_id;
+            $process->activity_organization = $governing_organization;
+            $process->save();
+        }
+
         return redirect('/env-restoration/index')->with('message','New Environment Restoration Project Successfully Created');   
     }
 }
