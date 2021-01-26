@@ -13,6 +13,7 @@ jobs:
       with: 
         host: neplk.com
         username: nep
+        passphrase: neplk
         key: ${{secrets.DO_SSH_PK}}
         port: 22
         script: |
