@@ -1,0 +1,21 @@
+name: DO Workflow
+on: 
+  push:
+    branches: [ master ]
+
+jobs:
+  job_one: 
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps: 
+    - name: testing neplk ssh server conn
+      uses: appleboy/ssh-action@master
+      with: 
+        host: neplk.com
+        username: nep
+        key: ${{secrets.DO_SSH_PK}}
+        port: 22
+        script: |
+          cd /var/www/neplk.com/public_html
+          git pull origin master
+          git status
