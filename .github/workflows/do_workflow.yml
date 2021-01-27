@@ -12,8 +12,7 @@ jobs:
       uses: appleboy/ssh-action@master
       with: 
         host: neplk.com
-        username: achala
-        passphrase: nepssh
+        username: nepssh
         key: ${{secrets.DO_SSH_PK}}
         port: 22
         script: |
