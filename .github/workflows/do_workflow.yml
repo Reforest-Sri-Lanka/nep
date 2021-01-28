@@ -12,8 +12,8 @@ jobs:
       uses: appleboy/ssh-action@master
       with: 
         host: neplk.com
-        username: nepssh
-        key: ${{secrets.DO_SSH_PK}}
+        username: achal@LAPTOP-DMNBMKIC
+        key: ${{secrets.DO_SSH}}
         port: 22
         script: |
           cd /var/www/neplk.com/public_html
