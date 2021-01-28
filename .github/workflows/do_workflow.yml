@@ -16,6 +16,7 @@ jobs:
         key: ${{secrets.DO_SSH}}
         port: 22
         script: |
-          cd /var/www/neplk.com/public_html
-          git pull origin main
-          git status
+          export TIMESTAMP=`date "+%y%m%d%H%M%S"`															//generate unique name for a folder
+          mkdir /var/www/neplk.com/public_html/releases/$TIMESTAMP				    					//create that folder in target machine
+          scp -r -o StrictHostKeyChecking=no ./* target_machine@/your/project/releases/$TIMESTAMP			//copy everything to above folder
+          ln -sfn /your/project/releases/$TIMESTAMP /var/www/neplk.com/public_html						//make a symlink to that folder in /var/www/neplk.com/public_html
