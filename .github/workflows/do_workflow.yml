@@ -1,0 +1,22 @@
+name: DO Workflow
+on: 
+  push:
+    branches: [ main ]
+
+jobs:
+  job_one: 
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps: 
+    - name: testing neplk ssh server conn11
+      uses: appleboy/ssh-action@master
+      with: 
+        host: neplk.com
+        username: achala
+        key: ${{secrets.DO_SSH}}
+        port: 22
+        script: |
+          export TIMESTAMP=`date "+%y%m%d%H%M%S"`															//generate unique name for a folder
+          mkdir /var/www/neplk.com/public_html/releases/$TIMESTAMP				    					//create that folder in target machine
+          scp -r -o StrictHostKeyChecking=no ./* target_machine@/your/project/releases/$TIMESTAMP			//copy everything to above folder
+          ln -sfn /your/project/releases/$TIMESTAMP /var/www/neplk.com/public_html						//make a symlink to that folder in /var/www/neplk.com/public_html
