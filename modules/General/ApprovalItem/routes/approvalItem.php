@@ -11,3 +11,7 @@ Route::get('/assignstaff/{id}', [ApprovalItemController::class, 'choose_assign_s
 Route::get('/investigate/{id}', [ApprovalItemController::class, 'check_record_details']);
 
 Route::get('/confirmassign/{id}/{pid}', [ApprovalItemController::class, 'confirm_assign_staff']);
+
+Route::get('/assignorganization/{id}', [ApprovalItemController::class, 'choose_assign_organization']);
+
+Route::get('/changeassignOrganization/{id}/{pid}', [ApprovalItemController::class, 'change_assign_organization']);
