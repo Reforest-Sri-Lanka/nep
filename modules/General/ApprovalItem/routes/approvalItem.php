@@ -14,4 +14,6 @@ Route::get('/confirmassign/{id}/{pid}', [ApprovalItemController::class, 'confirm
 
 Route::get('/assignorganization/{id}', [ApprovalItemController::class, 'choose_assign_organization']);
 
+Route::post('/createprerequisite', [ApprovalItemController::class, 'create_prerequisite']);
+
 Route::get('/changeassignOrganization/{id}/{pid}', [ApprovalItemController::class, 'change_assign_organization']);

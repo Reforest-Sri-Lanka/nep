@@ -25,10 +25,8 @@ class Process_Item extends Model
 
     protected $attributes = [
         'prerequisite' => 0,
-        'prerequsite_id' => 0,
         'remark' => 0,
         'status_id' => 1,
-        'activity_user_id' => 0,
         'activity_organization' => 0,
         'requst_organization' => 0,
     ];
