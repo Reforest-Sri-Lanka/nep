@@ -42,4 +42,29 @@ class Process_Item extends Model
     {
         return $this->belongsTo('App\Models\Status');
     }
+
+    public function prerequisite_id()
+    {
+        return $this->belongsTo('App\Models\Process_Item','prerequsite_id');
+    }
+
+    public function Activity_organization()
+    {
+        return $this->belongsTo('App\Models\Organization','activity_organization');
+    }
+
+    public function activity_user()
+    {
+        return $this->belongsTo('App\Models\User','activity_user_id');
+    }
+
+    public function requsting_organization()
+    {
+        return $this->belongsTo('App\Models\Organization','requst_organization');
+    }
+
+    public function created_by_user()
+    {
+        return $this->belongsTo('App\Models\User','created_by_user_id');
+    }
 }

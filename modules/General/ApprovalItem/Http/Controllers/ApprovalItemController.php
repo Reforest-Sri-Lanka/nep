@@ -2,11 +2,13 @@
 
 namespace ApprovalItem\Http\Controllers;
 use App\Models\User;
+use App\Models\Organization;
 use App\Models\Crime_report;
 use App\Models\tree_removal_request;
 use App\Models\Development_Project;
 use App\Models\Process_Item;
-use App\Models\Environment_Restoration;
+use App\Models\land_parcel;
+use App\Models\Environment_Restoration_Activity;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Redirect;
@@ -26,6 +28,13 @@ class ApprovalItemController extends Controller
         $Process_item =Process_item::find($pid);
         $item = Process_item::where('id',$pid)->update(['activity_user_id' => $id]);
         return back()->with('message', 'Authority assigned Successfully'); 
+    }
+
+    public function change_assign_organization($id,$pid)
+    {
+        $Process_item =Process_item::find($pid);
+        $item = Process_item::where('id',$pid)->update(['activity_organization' => $id]);
+        return back()->with('message', 'Assigned Organization Successfully'); 
     }
 
     public function showRequests()
@@ -56,6 +65,7 @@ class ApprovalItemController extends Controller
             ])->get();
         }         
 
+        
         if($Process_item->form_type_id == '1'){
             $treecut = Tree_Removal_Request::find($Process_item->form_id);
             return view('approvalItem::treeAssign',[
@@ -124,6 +134,50 @@ class ApprovalItemController extends Controller
             return view('approvalItem::crimeview',[
                 'crime' => $crime,
                 'progress' => $progress,
+            ]);
+        } 
+    }
+
+    public function choose_assign_organization($id)
+    {
+        $process_item =Process_item::find($id);
+        $Organizations=Organization::all();
+        if($process_item->form_type_id == '1'){ 
+            $treecut = Tree_Removal_Request::find($process_item->form_id);
+            $land_parcel = Land_Parcel::find($treecut->land_parcel_id);
+            return view('approvalItem::assignOrg',[
+                'treecut' => $treecut,
+                'Organizations' => $Organizations,
+                'process_item' =>$process_item,
+                'polygon' => $land_parcel->polygon,
+            ]);
+        } 
+        else if($process_item->form_type_id == '2'){
+            $devp = Development_Project::find($process_item->form_id);
+            $land_parcel = Land_Parcel::find($devp->land_parcel_id);
+            return view('approvalItem::assignOrg',[
+                'devp' => $devp,
+                'Organizations' => $Organizations,
+                'process_item' =>$process_item,
+                'polygon' => $land_parcel->polygon,
+            ]);
+        }
+        else if($process_item->form_type_id == '3'){
+            $reforest = Environment_Restoration_Activity::find($process_item->form_id);
+            return view('approvalItem::assignOrg',[
+                'reforest' => $reforest,
+                'Organizations' => $Organizations,
+                'process_item' =>$process_item,
+            ]);
+        }
+        else if($process_item->form_type_id == '4'){
+            $crime = Crime_report::find($process_item->form_id);
+            $land_parcel = Land_Parcel::find($crime->land_parcel_id);
+            return view('approvalItem::assignOrg',[
+                'crime' => $crime,
+                'process_item' =>$process_item,
+                'Organizations' => $Organizations,
+                'polygon' => $land_parcel->polygon,
             ]);
         } 
     }
