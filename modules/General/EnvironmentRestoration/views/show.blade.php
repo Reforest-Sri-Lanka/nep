@@ -73,15 +73,6 @@
                         @endforeach
                     </ul>
                 </div>
-                <!-- <fieldset disabled>
-                        <input type="checkbox" name="species[]" value="AHeterophyllus" checked><label class="ml-2" checked />	Artocarpus heterophyllus</label> <br>
-                        <input type="checkbox" name="species[]" value="AChampden" checked><label class="ml-2" checked />	Artocarpus champeden</label> <br>
-                        <input type="checkbox" name="species[]" value="Mfragrans"><label class="ml-2">Myristica fragrans</label> <br>
-                        <input type="checkbox" name="species[]" value="CIndica"><label class="ml-2">	Clausena indica</label> <br>
-                        <input type="checkbox" name="species[]" value="Ccommune"><label class="ml-2">Canarium commune</label> <br>
-                    </fieldset> -->
-
-               
             </form>
         </div>
     </div>

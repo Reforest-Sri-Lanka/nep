@@ -2,7 +2,7 @@
 
 @section('cont')
 
-<kbd><a href="/env-restoration/index" class="text-white font-weight-bolder"><i class="fas fa-chevron-left"></i></i> BACK</a></kbd>
+<kbd><a href="{{ url()->previous() }}" class="text-white font-weight-bolder"><i class="fas fa-chevron-left"></i></i> BACK</a></kbd>
 <div class="container">
     <h2 style="text-align:center;" class="text-dark">Add New Environment Restoration Project</h2>
     <hr>

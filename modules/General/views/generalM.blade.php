@@ -92,21 +92,13 @@
         </thead>
         <tbody>
         @foreach($Process_items as $process_item)<tr>
-            @switch($process_item->form_type_id) 
-            @case('1')
-                <td>Tree Cutting Request</td>
-            @break;
-            @case('2')
-                <td>Development Project</td>
-            @break;
-            @case('3')
-                <td>Reforest project</td>
-            @break;
-            @case('4')
-                <td>Crime Report</td>
-            @endswitch
+            <td>{{$process_item->form_type->type}}</td>
                 <td>{{date('d-m-Y',strtotime($process_item->created_at))}}</td>
-                <td>{{$process_item->requst_organization}}</td>
+                @if($process_item->requst_organization==null)
+                    <td>{{$process_item->created_by_user->name}}</td>
+                @else
+                    <td>{{$process_item->requsting_organization->title}}</td>
+                @endif
                 <td>{{$process_item->remark}}</td>
                 <td><a href="/approval-item/assignstaff/{{$process_item->id}}" class="text-muted">assign</a></td>
             </tr>
