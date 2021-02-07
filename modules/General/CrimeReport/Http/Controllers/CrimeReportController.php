@@ -124,7 +124,7 @@ class CrimeReportController extends Controller
         $Process_item->save();
         return back()->with('message', 'Crime report logged Successfully'); 
         }     
-        
+
     public function search_specific_authorities(Request $request)
     {
         $request -> validate([
@@ -198,3 +198,4 @@ class CrimeReportController extends Controller
         return redirect('/crime-report/crimehome')->with('messagetypes', 'Crime type Successfully Deleted');
     }
 }
+
