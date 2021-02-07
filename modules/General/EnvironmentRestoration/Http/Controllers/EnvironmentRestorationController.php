@@ -7,6 +7,7 @@ use App\Models\Environment_Restoration_Activity;
 use App\Models\Environment_Restoration_Species;
 use App\Models\Organization;
 use App\Models\Process_Item;
+use App\Models\Type;
 use Illuminate\Http\Request;
 use Validator;
 use App\Http\Controllers\Hash;
@@ -36,7 +37,7 @@ class EnvironmentRestorationController extends Controller
     public function create()
     {
         $restorations = Environment_Restoration::all();         //shows all records of enviroment restoration request
-        $organizations = Organization::where('type','=','Government')->get();                  //show all records for all government organizations
+        $organizations = Organization::where('type_id','=','2')->get();                  //show all records for all government organizations
         return view('environmentRestoration::create', [
             'restorations' => $restorations,
             'organizations' => $organizations,

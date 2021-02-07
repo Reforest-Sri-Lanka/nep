@@ -60,7 +60,10 @@ class GeneralController extends Controller
 
         if ($role == 1 || $role == 2 || $role == NULL ){
             
-            return view('general::generalA');
+            $Process_items = Process_Item::all()->where('status_id',1);
+            return view('general::generalA', [
+                'Process_items' => $Process_items,
+            ]);
         } 
         if ($role == 3 || $role == 4){
             $Process_items = Process_Item::all()->where('activity_organization',$organization);
