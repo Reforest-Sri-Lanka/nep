@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>NATIONAL ENV PLATFORM</title>
+  <title>National Environment Platform</title>
+
   <meta charset="utf-8">
   <script src="{!!url('/js/jquery.min.js')!!}"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -154,7 +155,7 @@ html {
 </div>
 <br>
 
- {{-- sticky footer --}}
+{{-- sticky footer --}}
 <footer class="footer">
     <div class="d-flex  bg-light justify-content-end">
         <br>
