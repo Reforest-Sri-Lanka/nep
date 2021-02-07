@@ -23,10 +23,41 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 
   <style>
-    .inline{
+   .inline{
         display: inline;
       }
 
+      .remove-all-margin{
+margin:0 ! important;
+}
+      .container{ 
+  padding: 0px;
+}
+.input-group>.input-group-prepend {
+    flex: 0 0 30%;
+}
+.input-group .input-group-text {
+    width: 100%;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+ }
+
+ body {
+    margin-bottom: 60px;
+ }
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 75px;
+    line-height: 15px;
+}
+
+/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
   </style>
 </head>
 
@@ -119,31 +150,35 @@
             </nav>
         </div>
     </div>
-
-
     <div style="background-color:#ECF0F1" class="col-md p-2 border border-secondary rounded-lg ml-2 mr-3">
       @yield('cont')
     </div>
 </div>
 </div>
 <br>
-<div class="d-flex  bg-light justify-content-end">
-  <a href="#" class="text-secondary mr-2">
-    <i class="fab fa-facebook-square"></i> Facebook |
-  </a>
-  <a href="#" class="text-secondary mr-2">
-    <i class="fab fa-twitter-square"></i> Twitter |
-  </a>
-  <a href="#" class="text-secondary mr-2">
-    <i class="fab fa-instagram"></i>  Instagram
-  </a>
-</div>
-<div class="d-flex bg-light justify-content-center">
-  <h5 class="text-secondary"><i class="far fa-copyright"></i> 2020 by Reforest Sri Lanka</h5><br>
-</div>
-<div class="d-flex bg-light justify-content-center">
-  <h6>All rights reserved</h6>
-</div>
+
+ {{-- sticky footer --}}
+<footer class="footer">
+    <div class="d-flex  bg-light justify-content-end">
+        <br>
+        <a href="#" class="text-secondary mr-2">
+          <i class="fab fa-facebook-square"></i> Facebook |
+        </a>
+        <a href="#" class="text-secondary mr-2">
+          <i class="fab fa-twitter-square"></i> Twitter |
+        </a>
+        <a href="#" class="text-secondary mr-2">
+          <i class="fab fa-instagram"></i>  Instagram
+        </a>
+      </div>
+      <div class="d-flex bg-light justify-content-center">
+        <h5 class="text-secondary"><i class="far fa-copyright"></i> 2021 by RFSL - LSF - Ministry of Environment</h5><br>
+      </div>
+      <div class="d-flex bg-light justify-content-center">
+        <h6>All rights reserved</h6>
+      </div>
+      
+</footer>
 
 </body>
 </html>
