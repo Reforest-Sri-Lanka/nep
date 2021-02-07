@@ -111,12 +111,11 @@ class CrimeReportController extends Controller
         $Crime_report->status = "0";
         $Crime_report->save();
         $id = Crime_report::max('id');
-        $crime_type =$request['crime_type'];
+        //$crime_type =$request['crime_type'];
         $Process_item =new Process_item;
         $Process_item->Created_by_user_id = $request['create_by'];
-        $Process_item->requst_organization = $request['organization'];
-        $Process_item->activity_organization = "0";
-        $Process_item->activity_organization = "0";
+        $Process_item->requst_organization = "1";
+        $Process_item->activity_organization = $request['organization'];
         $Process_item->activity_user_id = "0";
         $Process_item->form_id =  $id;
         $Process_item->form_type_id = "4";      
@@ -125,7 +124,7 @@ class CrimeReportController extends Controller
         $Process_item->save();
         return back()->with('message', 'Crime report logged Successfully'); 
         }     
-        
+
     public function search_specific_authorities(Request $request)
     {
         $request -> validate([
@@ -199,3 +198,4 @@ class CrimeReportController extends Controller
         return redirect('/crime-report/crimehome')->with('messagetypes', 'Crime type Successfully Deleted');
     }
 }
+

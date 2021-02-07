@@ -203,8 +203,9 @@
             </div>
             @endfor
             @endif
-
+            <div id="mapid" style="height:400px;" name="map"></div>
     </form>
+    
 </div>
 
 <script>
