@@ -15,7 +15,6 @@ class CreateCrimeReportsTable extends Migration
     {
         Schema::create('crime_reports', function (Blueprint $table) {
             $table->id();
-            $table->integer('crime_type');
             $table->tinyInteger('action_taken');
             $table->json('photos');
             $table->json('logs');
@@ -25,6 +24,9 @@ class CreateCrimeReportsTable extends Migration
             $table->timestampsTz(); //time stamp with timezone in UTC
             $table->tinyInteger('status');
             $table->softDeletesTz('deleted_at', 0);
+            //connecting with the crime types
+            $table->unsignedBigInteger('crime_type_id')->nullable();
+            $table->foreign('crime_type_id')->references('id')->on('crime_types')->onDelete('cascade');
         });
     }
 
@@ -38,3 +40,4 @@ class CreateCrimeReportsTable extends Migration
         Schema::dropIfExists('crime_reports');
     }
 }
+
