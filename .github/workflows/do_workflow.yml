@@ -24,7 +24,7 @@ jobs:
         key: ${{secrets.DO_SSH}}
         port: 22
         source: "."
-        target: "/var/www/neplk.com/public_html/releases/$TIMESTAMP/${{ env.current_timestamp }}"
+        target: "/var/www/neplk.com/releases/${{ env.current_timestamp }}"
     - name: Creating symlink
       uses: appleboy/ssh-action@master
       with: 
@@ -33,4 +33,4 @@ jobs:
         key: ${{secrets.DO_SSH}}
         port: 22
         script: |
-          ln -sfn /var/www/neplk.com/public_html/releases/$TIMESTAMP/${{ env.current_timestamp }} /var/www/neplk.com/public_html/releases/$TIMESTAMP/current
+          ln -sfn /var/www/neplk.com/releases/${{ env.current_timestamp }} /var/www/neplk.com/public_html
