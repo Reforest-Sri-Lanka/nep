@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>National Environment Platform</title>
+  <title>National Environment Platform Test</title>
 
   <meta charset="utf-8">
   <script src="{!!url('/js/jquery.min.js')!!}"></script>
