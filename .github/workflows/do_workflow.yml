@@ -35,4 +35,4 @@ jobs:
         script: |
           ln -sfn /var/www/neplk.com/releases/${{ env.current_timestamp }} /var/www/neplk.com/public_html
           ln -sfn /var/www/neplk.com/.env /var/www/neplk.com/public_html/.env
-          ln -sfn /var/www/neplk.com/storage /var/www/neplk.com/public_html/storage
+          chmod -R 777 /var/www/neplk.com/public_html/storage
