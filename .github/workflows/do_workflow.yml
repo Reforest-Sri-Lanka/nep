@@ -1,4 +1,4 @@
-name: DO Workflow
+name: DO Workflow 2
 on:
   push:
     branches: [ master ]
