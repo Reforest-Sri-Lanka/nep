@@ -64,7 +64,7 @@ html {
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
         <!-- Brand/logo -->
         <a class="navbar-brand mr-auto" href="#">
-        <img src="Logo.jpeg" alt="logo" style="width:70px;">
+        <img src="/Logo.jpeg" alt="logo" style="width:70px;">
         </a>
 
         <a href="#" class="text-secondary mr-1">Help          |</a>
