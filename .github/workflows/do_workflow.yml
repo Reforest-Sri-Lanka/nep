@@ -1,7 +1,7 @@
 name: DO Workflow 2
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
 jobs:
   master_deploy: 
     name: Deploy
