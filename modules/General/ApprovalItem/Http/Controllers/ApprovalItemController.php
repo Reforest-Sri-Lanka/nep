@@ -158,6 +158,8 @@ class ApprovalItemController extends Controller
         $Organizations=Organization::all();
         if($process_item->form_type_id == '1'){ 
             $treecut = Tree_Removal_Request::find($process_item->form_id);
+            $locations=Json_decode($treecut->tree_locations);
+            //dd($locations);
             $land_parcel = Land_Parcel::find($treecut->land_parcel_id);
             return view('approvalItem::assignOrg',[
                 'treecut' => $treecut,
@@ -186,12 +188,14 @@ class ApprovalItemController extends Controller
         }
         else if($process_item->form_type_id == '4'){
             $crime = Crime_report::find($process_item->form_id);
+            $Photos=Json_decode($crime->photos);
             $land_parcel = Land_Parcel::find($crime->land_parcel_id);
             return view('approvalItem::assignOrg',[
                 'crime' => $crime,
                 'process_item' =>$process_item,
                 'Organizations' => $Organizations,
                 'polygon' => $land_parcel->polygon,
+                'Photos' => $Photos,
             ]);
         } 
     }

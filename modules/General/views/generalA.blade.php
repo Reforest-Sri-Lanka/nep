@@ -50,8 +50,8 @@
             </div>
             <div class="card-body text-center text-light">
                 <p class="card-text p-2">Quick links</p>
-                <a class="nav-link text-light font-italic p-2" href="/crime-report/newcrime">Make a complaint</a>
-                <a class="nav-link text-light font-italic p-2" href="#">Check status</a>
+                <a class="nav-link text-light font-italic p-2" href="/crime-report/crimeTypeCreate">New Crime Type</a>
+                <a class="nav-link text-light font-italic p-2" href=#>View Crime Types</a>
             </div>
         </div>
     </div>

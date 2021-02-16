@@ -43,4 +43,8 @@ class Land_Parcel extends Model
     public function environment_restorations(){
         return $this->hasMany('App\Models\EnvironmentRestoration');
     }
+
+    public function crime_reports(){
+        return $this->hasMany('App\Models\Crime_report');
+    }
 }

@@ -28,72 +28,122 @@
 </div>
 <div class="row justify-content-around">
     <div class="col-md-12">
-    @switch($process_item->form_type_id)
-    @case('1')
-        <table class="table table-dark table-striped border-secondary rounded-lg mr-4">
-            <thead>
-                <tr>
-                    <th>Province</th>
-                    <th>District</th>
-                    <th>Grama Niladari Division</th>
-                    <th>Description</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>{{$treecut->province->province}}</td>
-                    <td>{{$treecut->district->district}}</td>
-                    <td>{{$treecut->gs_division_id}}</td>
-                    <td>{{$treecut->description}}</td>
-                </tr>
-            </tbody>
-        </table>
-    @break
-    @case('2')
-        <table class="table table-dark table-striped border-secondary rounded-lg mr-4">
-            <thead>
-                <tr>
-                    <th>Project Title</th>
-                    <th>Gazette</th>
-                    <th>Grama Niladari Division</th>
-                    <th>Description</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>{{$devp->title}}</td>
-                    <td>{{$devp->gazette->title}}</td>
-                    <td>{{$devp->gs_division_id}}</td>
-                    <td>{{$devp->description}}</td>
-                </tr>
-            </tbody>
-        </table>
-    @break
-    @case('3')
-    <h6>nothing yet</h6>
-    @break
-    @case('4')
-        <table class="table table-dark table-striped border-secondary rounded-lg mr-4">
-            <thead>
-                <tr>
-                    <th>Crime Type</th>
-                    <th>Photos</th>
-                    <th>Description</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>{{$crime->crime_type->type}}</td>
-                    <td>{{$crime->photos}}</td>
-                    <td>{{$crime->description}}</td>
-                </tr>
-            </tbody>
-        </table>
-    @break
-    @endswitch
-    <h5>Location</h5>
-    <div id="mapid" style="height:400px;" name="map"></div>
+        @switch($process_item->form_type_id)
+        @case('1')
+            <table class="table table-dark table-striped border-secondary rounded-lg mr-4">
+                <thead>
+                    <tr>
+                        <th>Province</th>
+                        <th>District</th>
+                        <th>Grama Niladari Division</th>
+                        <th>Description</th>
+                        <th>Special approval</th>
+                        <th>Land Size</th>
+                        <th>Number of Trees</th>
+                        <th>Number of Tree Species</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{$treecut->province->province}}</td>
+                        <td>{{$treecut->district->district}}</td>
+                        <td>{{$treecut->gs_division_id}}</td>
+                        <td>{{$treecut->description}}</td>
+                        @if($treecut->special_approval==0)
+                        <td>Not a protected area</td>
+                        @elseif($treecut->special_approval==1)
+                        <td>Protected area</td>
+                        @endif
+                        <td>{{$treecut->land_size}}</td>
+                        <td>{{$treecut->no_of_trees}}</td>
+                        <td>{{$treecut->no_of_tree_species}}<td>
+                    </tr>
+                </tbody>
+            </table>
+            <h6>Additional Data</h6>
+            <table class="table table-dark table-striped border-secondary rounded-lg mr-4">
+                <thead>
+                    <tr>
+                        <th>Number of Mamal Species</th>
+                        <th>Number of Amphibian Species</th>
+                        <th>Number of Reptile Species</th>
+                        <th>Number of Avian Species</th>
+                        <th>Number of Flora Species</th>
+                        <th>Tree Species special notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{$treecut->no_of_mammal_species}}</td>
+                        <td>{{$treecut->no_of_amphibian_species}}</td>
+                        <td>{{$treecut->no_of_reptile_species}}</td>
+                        <td>{{$treecut->no_of_avian_species}}</td>
+                        <td>{{$treecut->no_of_flora_species}}</td>
+                        <td>{{$treecut->species_special_notes}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        @break
+        @case('2')
+            <table class="table table-dark table-striped border-secondary rounded-lg mr-4">
+                <thead>
+                    <tr>
+                        <th>Project Title</th>
+                        <th>Gazette</th>
+                        <th>Grama Niladari Division</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{$devp->title}}</td>
+                        <td>{{$devp->gazette->title}}</td>
+                        <td>{{$devp->gs_division_id}}</td>
+                        <td>{{$devp->description}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        @break
+        @case('3')
+        <h6>nothing yet</h6>
+        @break
+        @case('4')
+            <table class="table table-dark table-striped border-secondary rounded-lg mr-4">
+                <thead>
+                    <tr>
+                        <th>Crime Type</th>
+                        <th>Description</th>
+                        <th>Land Parcel</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{$crime->crime_type->type}}</td>
+                        <td>{{$crime->description}}</td>
+                        <td>{{$crime->land_parcel->title}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        @break
+        @endswitch
+        @isset($Photos)
+        <h6>Photos <h6>
+        <div class="card-deck">
+            @foreach($Photos as $photo)
+            <div class="card" style="background-color:#99A3A4">
+                <img class="card-img-top" src="{{asset('/storage/'.$photo)}}" alt="photo">
+                <div class="card-body text-center">
+                <a class="nav-link text-dark font-italic p-2" href="/crime-report/downloadimage/{{$photo}}">Download Image</a>
+                </div>
+            </div>
+            @endforeach
+        </div>
+        @endempty
+        </br>
+        <h5>Location</h5>
+        <div id="mapid" style="height:400px;" name="map"></div>
     </div>
+    
 </div>
 </br>
 <hr>
