@@ -87,8 +87,7 @@
                             maxZoom: 18
                         }).addTo(map);
 
-                    // add a marker in the given location
-                    L.marker(center).addTo(map);
+
 
                     // Initialise the FeatureGroup to store editable layers
                     var editableLayers = new L.FeatureGroup();
