@@ -2,7 +2,6 @@
 
 @section('cont')
 <h3 class="p-3 display-4" style="display:inline">Environment Restoration Module</h3>
-<input type="text" style=" float: right; padding: 6px; margin-top: 20px; margin-right: 16px;border: none;font-size: 17px;" placeholder="Search..." size="30">
 <hr>
 <div class="flex row border-secondary rounded-lg ml-3 justify-content-between">
     <span>
@@ -65,5 +64,18 @@
             @endforeach
         </tbody>
     </table>
+    <div class="row align-items-center">
+        <button type="button" class="btn btn-link" > Previous
+            <a href="{{$restorations->previousPageUrl()}}"></a>
+        </button>
+        @for($i=1;$i<=$restorations->lastPage();$i++)
+            <button type="button" class="btn btn-link">
+                <a href="{{$restorations->url($i)}}">{{$i}}</a>
+            <button type="button" class="btn btn-link">
+        @endfor
+        <button type="button" class="btn btn-link"> Next
+            <a href="{{$restorations->nextPageUrl()}}"></a>
+        </button>
+    </div>
 </div>
 @endsection
