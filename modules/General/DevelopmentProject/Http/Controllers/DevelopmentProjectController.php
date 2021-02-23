@@ -26,10 +26,6 @@ class DevelopmentProjectController extends Controller
     //Returns the view for the application form passing in data of lands, organziations and gazettes
     public function form()
     {
-
-        $coords = Development_Project::latest()->first()->logs;
-
-
         $lands = Land_Parcel::all();
         $gazettes = Gazette::all();
         $organizations = Organization::all();
@@ -37,7 +33,6 @@ class DevelopmentProjectController extends Controller
             'lands' => $lands,
             'gazettes' => $gazettes,
             'organizations' => $organizations,
-            'coordinates' => $coords,
         ]);
     }
 
