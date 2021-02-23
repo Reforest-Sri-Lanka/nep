@@ -1,6 +1,7 @@
 @extends('home')
 
 @section('cont')
+<kbd><a href="/general/general" class="text-white font-weight-bolder"><i class="fas fa-chevron-left"></i></i> BACK</a></kbd>
 <h3 class="p-3 display-4">Request handling</h3>
 <hr>
 <span>
@@ -45,7 +46,11 @@
                     @else
                     <td>{{$treecut->gs_division->gs_division}}</td>
                     @endif
-                    <td>{{$treecut->special_approval}}</td>
+                    @if($treecut->special_approval==0)
+                        <td>Not a protected area</td>
+                    @elseif($treecut->special_approval==1)
+                        <td>Protected area</td>
+                    @endif
                     <td>{{date('d-m-Y',strtotime($treecut->created_at))}}</td>
                     <td>{{$treecut->land_size}}</td>
                     <td>{{$treecut->no_of_trees}}</td>
@@ -53,9 +58,32 @@
                 </tr>
             </tbody>
         </table>
+        <h6>Additional Data</h6>
+        <table class="table table-dark table-striped border-secondary rounded-lg mr-4">
+                <thead>
+                    <tr>
+                        <th>Number of Mamal Species</th>
+                        <th>Number of Amphibian Species</th>
+                        <th>Number of Reptile Species</th>
+                        <th>Number of Avian Species</th>
+                        <th>Number of Flora Species</th>
+                        <th>Tree Species special notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{$treecut->no_of_mammal_species}}</td>
+                        <td>{{$treecut->no_of_amphibian_species}}</td>
+                        <td>{{$treecut->no_of_reptile_species}}</td>
+                        <td>{{$treecut->no_of_avian_species}}</td>
+                        <td>{{$treecut->no_of_flora_species}}</td>
+                        <td>{{$treecut->species_special_notes}}</td>
+                    </tr>
+                </tbody>
+        </table>
     @break
     @case('2')
-    <h6>Development project information</h6>
+        <h6>Development project information</h6>
         <table class="table table-dark table-striped border-secondary rounded-lg mr-4">
             <thead>
                 <tr>

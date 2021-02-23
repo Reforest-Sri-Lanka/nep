@@ -41,7 +41,6 @@ class TreeRemovalController extends Controller
 
     public function save()
     {
-
         $land = new Land_Parcel();
         $land->title = request('landTitle');
         $land->governing_organizations = request('governing_orgs');
