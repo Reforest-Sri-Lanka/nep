@@ -13,15 +13,16 @@ use Validator;
 use App\Http\Controllers\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\UserRequest;
+use Livewire\WithPagination;
 
 class EnvironmentRestorationController extends Controller
 {
-    
+    use WithPagination;
     public function index()
     {
         $restorations = Environment_Restoration::all();       //show all records for index
         return view('environmentRestoration::index', [
-            'restorations' => $restorations,
+            'restorations' => Environment_Restoration::paginate(10),
         ]);
     }
 

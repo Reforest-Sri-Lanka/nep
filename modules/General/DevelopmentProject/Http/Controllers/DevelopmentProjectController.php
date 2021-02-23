@@ -27,7 +27,7 @@ class DevelopmentProjectController extends Controller
     public function form()
     {
 
-        $coords = Development_Project::latest()->first()->logs;
+        $coords = Development_Project::latest()->first();
 
 
         $lands = Land_Parcel::all();
@@ -68,7 +68,6 @@ class DevelopmentProjectController extends Controller
             $dev->protected_area = request('isProtected');
         }
         //saving the coordinates in string form. when giving back to the map it needs to be converted back into JSON in the script.
-        $dev->logs = request('polygon');
         $dev->save();
 
         $latest = Development_Project::latest()->first();
