@@ -47,7 +47,7 @@ Route::get('/newtreecut',fn() => view('general.treecutting.treecut')); */
 
 
 Route::get('/search', [UserController::class, 'search']);
-Route::get('/autocomplete', [UserController::class, 'autocomplete'])->name('autocomplete');
+//Route::get('/autocomplete', [UserController::class, 'autocomplete'])->name('autocomplete');
 
 Route::get('/map', function(){
     return view('map');
