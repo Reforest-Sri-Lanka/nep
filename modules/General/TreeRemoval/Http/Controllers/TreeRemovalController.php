@@ -16,27 +16,9 @@ use Illuminate\Support\Facades\Auth;
 
 class TreeRemovalController extends Controller
 {
-    // public function home()
-    // {
-    //     $name = 'Yashod';
-    //     return view('treeRemoval::home', compact('name'));
-    // }
-
     public function openForm()
     {
-        $lands = Land_Parcel::all();
-        $provinces = Province::all();
-        $districts = District::all();
-        $gs_divisions = GS_Division::all();
-        $organizations = Organization::all();
-        return view('treeRemoval::form', [
-            'lands' => $lands,
-            'provinces' => $provinces,
-            'districts' => $districts,
-            'gs_divisions' => $gs_divisions,
-            'organizations' => $organizations,
-
-        ]);
+        return view('treeRemoval::form');
     }
 
     public function save()
@@ -99,5 +81,41 @@ class TreeRemovalController extends Controller
             'location' => $location_data,
             'polygon' => $land_data->polygon,
         ]);
+    }
+
+    public function provinceAutocomplete(Request $request)
+    {
+        $data = Province::select("province")
+                ->where("province","LIKE","%{$request->terms}%")
+                ->get();
+
+        return response()->json($data);
+    }
+
+    public function districtAutocomplete(Request $request)
+    {
+        $data = District::select("district")
+                ->where("district","LIKE","%{$request->terms}%")
+                ->get();
+
+        return response()->json($data);
+    }
+
+    public function organizationAutocomplete(Request $request)
+    {
+        $data = Organization::select("title")
+                ->where("title","LIKE","%{$request->terms}%")
+                ->get();
+
+        return response()->json($data);
+    }
+
+    public function GSAutocomplete(Request $request)
+    {
+        $data = GS_Division::select("gs_division")
+                ->where("gs_division","LIKE","%{$request->terms}%")
+                ->get();
+
+        return response()->json($data);
     }
 }
