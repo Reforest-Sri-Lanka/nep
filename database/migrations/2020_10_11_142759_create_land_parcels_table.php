@@ -22,8 +22,10 @@ class CreateLandParcelsTable extends Migration
             $table->integer('created_by_user_id');
             $table->tinyInteger('protected_area');
             $table->timestampsTz(); //time stamp with timezone in UTC
-            $table->tinyInteger('status');
             $table->softDeletesTz('deleted_at', 0);
+
+            $table->unsignedBigInteger('status_id')->nullable();
+            $table->foreign('status_id')->references('id')->on('status')->onDelete('cascade');
         });
     }
 

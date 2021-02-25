@@ -55,8 +55,10 @@
             </div>
         </div>
     </div>
-
 </div>
+
+<a class="nav-link text-dark font-bold p-2" href="/land/form">Register a Land</a>
+
 <hr>
 <div class="row border-secondary rounded-lg ml-3">
     <h5 class="p-3">To be assigned to staff</h5>

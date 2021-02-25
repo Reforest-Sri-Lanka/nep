@@ -23,7 +23,6 @@ class Land_Parcel extends Model
     protected $attributes = [
         'logs' => 0,
         'protected_area' => 0,
-        'status' => 1,
     ];
 
     protected $casts = [
@@ -42,5 +41,20 @@ class Land_Parcel extends Model
 
     public function environment_restorations(){
         return $this->hasMany('App\Models\EnvironmentRestoration');
+    }
+
+    public function organizations()
+    {
+        return $this->belongsToMany(Organization::class, 'Land_Has_Organization');
+    }
+
+    public function gazettes()
+    {
+        return $this->belongsToMany(Gazette::class, 'Land_Has_Gazette');
+    }
+
+    public function status()
+    {
+        return $this->belongsTo('App\Models\Status');
     }
 }

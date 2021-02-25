@@ -86,4 +86,13 @@ class DevelopmentProjectController extends Controller
             'polygon' => $land_data->polygon,
         ]);
     }
+
+    public function gazetteAutocomplete(Request $request)
+    {
+        $data = Gazette::select("gazette_number")
+                ->where("gazette_number","LIKE","%{$request->terms}%")
+                ->get();
+
+        return response()->json($data);
+    }
 }

@@ -25,100 +25,20 @@
   <form action="/tree-removal/save" method="post" id="treeRemoval">
     @csrf
 
-    <div id="accordion" class="mb-3">
-      <div class="card">
-        <div class="card-header">
-          <a class="card-link text-dark" data-toggle="collapse" href="#collapseOne">
-            Province
-          </a>
-        </div>
-        <div id="collapseOne" class="collapse" data-parent="#accordion">
-          <div class="card-body">
-            @foreach($provinces as $province)
-            <div class="form-check">
-              <label class="form-check-label">
-                <input type="radio" class="form-check-input" name="province_id" value="{{$province->id}}">{{$province->province}}
-              </label>
-            </div>
-            @endforeach
-          </div>
-        </div>
-      </div>
+    <div class="form-group">
+      Province:<input type="text" class="form-control typeahead" placeholder="Search" />
+    </div>
 
-      <div class="card">
-        <div class="card-header">
-          <a class="collapsed card-link text-dark" data-toggle="collapse" href="#collapseTwo">
-            District
-          </a>
-        </div>
-        <div id="collapseTwo" class="collapse" data-parent="#accordion">
-          <div class="card-body">
-            @foreach($districts as $district)
-            <div class="form-check">
-              <label class="form-check-label">
-                <input type="radio" class="form-check-input" name="district_id" value="{{$district->id}}">{{$district->district}}
-              </label>
-            </div>
-            @endforeach
-          </div>
-        </div>
-      </div>
+    <div class="form-group">
+      District:<input type="text" class="form-control typeahead2" placeholder="Search" />
+    </div>
 
-      <div class="card">
-        <div class="card-header">
-          <a class="collapsed card-link text-dark" data-toggle="collapse" href="#collapseThree">
-            GS Division
-          </a>
-        </div>
-        <div id="collapseThree" class="collapse" data-parent="#accordion">
-          <div class="card-body">
-            @foreach($gs_divisions as $gs_division)
-            <div class="form-check">
-              <label class="form-check-label">
-                <input type="radio" class="form-check-input" name="gs_division_id" value="{{$gs_division->id}}">{{$gs_division->gs_division}}
-              </label>
-            </div>
-            @endforeach
-          </div>
-        </div>
-      </div>
+    <div class="form-group">
+      GS Division:<input type="text" class="form-control typeahead4" placeholder="Search" />
+    </div>
 
-      <!-- <div class="card">
-        <div class="card-header">
-          <a class="collapsed card-link text-dark" data-toggle="collapse" href="#collapseFour">
-            Land Parcel ID
-          </a>
-        </div>
-        <div id="collapseFour" class="collapse" data-parent="#accordion">
-          <div class="card-body">
-            @foreach($lands as $land)
-            <div class="form-check">
-              <label class="form-check-label">
-                <input type="radio" class="form-check-input" name="land_parcel_id" value="{{$land->id}}">{{$land->title}}
-              </label>
-            </div>
-            @endforeach
-          </div>
-        </div>
-      </div> -->
-
-      <div class="card">
-        <div class="card-header">
-          <a class="collapsed card-link text-dark" data-toggle="collapse" href="#collapseFive">
-            Organizations
-          </a>
-        </div>
-        <div id="collapseFive" class="collapse" data-parent="#accordion">
-          <div class="card-body bg-secondary text-light">
-            <strong>Select Multiple</strong>
-            <fieldset>
-              @foreach($organizations as $organization)
-              <input type="checkbox" name="governing_orgs[]" value="{{$organization->id}}"><label class="ml-2">{{$organization->title}}</label> <br>
-              @endforeach
-            </fieldset>
-          </div>
-        </div>
-      </div>
+    <div class="form-group">
+      Organization:<input type="text" class="form-control typeahead3" placeholder="Search" />
     </div>
 
     <input id="polygon" type="hidden" name="polygon" value="{{request('polygon')}}">
@@ -238,7 +158,80 @@
   </form>
 </div>
 
-<script type="text/javascript">
+<script>
+  ///TYPEAHEAD
+  var path = "{{route('province')}}";
+  $('input.typeahead').typeahead({
+    source: function(terms, process) {
+
+      return $.get(path, {
+        terms: terms
+      }, function(data) {
+        console.log(data);
+        objects = [];
+        data.map(i => {
+          objects.push(i.province)
+        })
+        console.log(objects);
+        return process(objects);
+      })
+    },
+  });
+
+  var path2 = "{{route('district')}}";
+  $('input.typeahead2').typeahead({
+    source: function(terms, process) {
+
+      return $.get(path2, {
+        terms: terms
+      }, function(data) {
+        console.log(data);
+        objects = [];
+        data.map(i => {
+          objects.push(i.district)
+        })
+        console.log(objects);
+        return process(objects);
+      })
+    },
+  });
+
+  var path3 = "{{route('organization')}}";
+  $('input.typeahead3').typeahead({
+    source: function(terms, process) {
+
+      return $.get(path3, {
+        terms: terms
+      }, function(data) {
+        console.log(data);
+        objects = [];
+        data.map(i => {
+          objects.push(i.title)
+        })
+        console.log(objects);
+        return process(objects);
+      })
+    },
+  });
+
+  var path4 = "{{route('gramasevaka')}}";
+  $('input.typeahead4').typeahead({
+    source: function(terms, process) {
+
+      return $.get(path4, {
+        terms: terms
+      }, function(data) {
+        console.log(data);
+        objects = [];
+        data.map(i => {
+          objects.push(i.gs_division)
+        })
+        console.log(objects);
+        return process(objects);
+      })
+    },
+  });
+
   /// SCRIPT FOR THE DYNAMIC COMPONENT
   var i = 0;
   $("#add-btn").click(function() {
@@ -250,8 +243,6 @@
     $(this).parents('tr').next('tr').remove()
     $(this).parents('tr').remove();
   });
-
-
 
   /// SCRIPT FOR THE MAP
   var center = [7.2906, 80.6337];
@@ -265,9 +256,6 @@
       attribution: 'Data © <a href="http://osm.org/copyright">OpenStreetMap</a>',
       maxZoom: 18
     }).addTo(map);
-
-  // add a marker in the given location
-  L.marker(center).addTo(map);
 
   // Initialise the FeatureGroup to store editable layers
   var editableLayers = new L.FeatureGroup();
