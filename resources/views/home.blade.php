@@ -22,7 +22,7 @@
    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js" integrity="sha512-ozq8xQKq6urvuU6jNgkfqAmT7jKN2XumbrX1JiB3TnF7tI48DPI4Gy1GXKD/V3EExgAs1V+pRO7vwtS1LHg0Gw==" crossorigin="anonymous"></script>
 
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-
+<link href="{{ url('/css/app.css') }}" rel="stylesheet">
   <style>
    .inline{
         display: inline;
@@ -64,7 +64,7 @@ html {
 
 <body class="bg-secondary">
     @livewireScripts
-    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <nav class="navbar navbar-expand-sm bd-navbar navbar-dark">
         <!-- Brand/logo -->
         <a class="navbar-brand mr-auto" href="#">
         <img src="/Logo.jpeg" alt="logo" style="width:70px;">
