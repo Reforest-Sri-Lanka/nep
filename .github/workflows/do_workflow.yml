@@ -16,6 +16,14 @@ jobs:
       with:
         php_version: 7.4
         version: 1
+    - name: Laravel mix
+      uses: actions/setup-node@v1
+        with:
+          node-version: 12
+          registry-url: https://registry.npmjs.org/
+      run: |
+          npm i
+          npm run prod
     - name: Deploy to Server
       uses: appleboy/scp-action@master
       with:
