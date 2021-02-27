@@ -43,7 +43,7 @@
     <div class="col-md-3">
         <div class="card bg-dark text-light">
             <div class="card-header text-center">
-                <a class="nav-link text-light font-italic p-2" href="#">Complaints</a>
+                <a class="nav-link text-light font-italic p-2" href="#">Crime Reporting</a>
             </div>
             <div class="card-body text-center text-light">
                 <p class="card-text p-2">Quick links</p>
@@ -68,6 +68,7 @@
                 <option value="0" selected>Select</option>
                 <option value="1">Tree Cutting permission Requests</option>
                 <option value="2">Development project permission Requests</option>
+                <option value="3">Environment Restoration Requests</option>
                 <option value="4">Crime Reports</option>
             </select>            
         </div>

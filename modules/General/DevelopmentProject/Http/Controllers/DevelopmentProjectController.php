@@ -22,12 +22,8 @@ class DevelopmentProjectController extends Controller
     //Returns the view for the application form passing in data of lands, organziations and gazettes
     public function form()
     {
-        $lands = Land_Parcel::all();
-        $gazettes = Gazette::all();
         $organizations = Organization::all();
         return view('developmentProject::form', [
-            'lands' => $lands,
-            'gazettes' => $gazettes,
             'organizations' => $organizations,
         ]);
     }
@@ -59,7 +55,6 @@ class DevelopmentProjectController extends Controller
             $dev->protected_area = request('isProtected');
         }
         //saving the coordinates in string form. when giving back to the map it needs to be converted back into JSON in the script.
-        $dev->logs = request('polygon');
         $dev->save();
 
         $latest = Development_Project::latest()->first();

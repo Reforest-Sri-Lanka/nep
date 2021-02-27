@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Land_Parcel extends Model
 {
     use HasFactory;
+    
     protected $table = 'land_parcels';
 
     protected $fillable = [
@@ -56,5 +57,10 @@ class Land_Parcel extends Model
     public function status()
     {
         return $this->belongsTo('App\Models\Status');
+    }
+
+    public function crime_reports(){
+        return $this->hasMany('App\Models\Crime_report');
+
     }
 }

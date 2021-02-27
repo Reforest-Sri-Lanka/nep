@@ -6,21 +6,23 @@ use App\Models\Environment_Restoration;
 use App\Models\Environment_Restoration_Activity;
 use App\Models\Environment_Restoration_Species;
 use App\Models\Organization;
+use App\Models\Process_Item;
+use App\Models\Type;
 use Illuminate\Http\Request;
 use Validator;
 use App\Http\Controllers\Hash;
-// use App\Http\Controllers\Auth;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\UserRequest;
+use Livewire\WithPagination;
 
 class EnvironmentRestorationController extends Controller
 {
-    
+    use WithPagination;
     public function index()
     {
         $restorations = Environment_Restoration::all();       //show all records for index
         return view('environmentRestoration::index', [
-            'restorations' => $restorations,
+            'restorations' => Environment_Restoration::paginate(10),
         ]);
     }
 
@@ -36,7 +38,7 @@ class EnvironmentRestorationController extends Controller
     public function create()
     {
         $restorations = Environment_Restoration::all();         //shows all records of enviroment restoration request
-        $organizations = Organization::where('type','=','Government')->get();                  //show all records for all government organizations
+        $organizations = Organization::where('type_id','=','2')->get();                  //show all records for all government organizations
         return view('environmentRestoration::create', [
             'restorations' => $restorations,
             'organizations' => $organizations,
@@ -54,31 +56,12 @@ class EnvironmentRestorationController extends Controller
         ]);
     }
 
-/*     public function edit($id)           //to open the edit view
-    {
-        $restoration = EnvironmentRestoration::find($id);
-        return view('envRestoration/envRestorationEdit', [
-            'restoration' => $restorations,
-        ]);
-    } */
-
-/*     public function update(Request $request, $id)       //to update the data via edit
-    {
-        $user = User::find($id);
-        $user->update([
-            'name' => $request->name,
-        ]);
-        //ddd($request);
-        return redirect ('/envRestoration/index')->with('message', 'Restoration Project Updated Successfully');
-    } */
-
-
     public function store(Request $request)
     {
         $landparcel = new Land_Parcel();
         $landparcel->title = request('landparceltitle');
         $landparcel->polygon = request('polygon');
-        $landparcel->governing_organizations = request('govOrg[]');
+        $landparcel->governing_organizations = request('govOrg');
         $landparcel->created_by_user_id = request('created_by');
         $landparcel->save();
 
@@ -140,6 +123,18 @@ class EnvironmentRestorationController extends Controller
         }
 
         Environment_Restoration_Species::insert($insert_data);
+
+        $latest = Land_Parcel::latest()->first();
+        foreach ($latest->governing_organizations as $governing_organization) {
+            $process = new Process_Item();
+            $process->form_type_id = 3;
+            $process->form_id = $latest->id;
+            $process->created_by_user_id = request('created_by');
+            $process->requst_organization = Auth::user()->organization_id;
+            $process->activity_organization = $governing_organization;
+            $process->save();
+        }
+
         return redirect('/env-restoration/index')->with('message','New Environment Restoration Project Successfully Created');   
     }
 }

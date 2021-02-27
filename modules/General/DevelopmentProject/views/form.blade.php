@@ -11,27 +11,14 @@
             <input type="text" class="form-control" placeholder="Enter Title" id="title" name="title">
         </div>
         <hr>
-        <div id="accordion">
 
-            <div class="card">
-                <div class="card-header">
-                    <a class="card-link text-dark" data-toggle="collapse" href="#collapseOne">
-                        Select Relavant Gazette
-                    </a>
-                </div>
-                <div id="collapseOne" class="collapse" data-parent="#accordion">
-                    <div class="card-body bg-secondary text-light">
-                        <strong>Select One</strong>
-                        @foreach($gazettes as $gazette)
-                        <div class="form-check">
-                            <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="gazette" value="{{$gazette->id}}">{{$gazette->title}}
-                            </label>
-                        </div>
-                        @endforeach
-                    </div>
-                </div>
-            </div>
+        <div class="form-group">
+            Gazette:<input type="text" class="form-control typeahead" placeholder="Search" />
+        </div>
+        <div class="form-group">
+            Organization:<input type="text" class="form-control typeahead3" placeholder="Search" />
+        </div>
+
 
             <div class="card">
                 <div class="card-header">
@@ -64,6 +51,45 @@
             <div id="mapid" style="height:400px;" name="map"></div>
 
             <script type="text/javascript">
+                var path = "{{route('gazette')}}";
+                $('input.typeahead').typeahead({
+                    source: function(terms, process) {
+
+                        return $.get(path, {
+                            terms: terms
+                        }, function(data) {
+                            console.log(data);
+                            objects = [];
+                            data.map(i => {
+                                objects.push(i.gazette_number)
+                            })
+                            console.log(objects);
+                            return process(objects);
+                        })
+                    },
+                });
+
+                //THIS USES THE AUTOMECOMPLETE FUNCTION IN TREE REMOVAL CONTROLLER
+                var path3 = "{{route('organization')}}";
+                $('input.typeahead3').typeahead({
+                    source: function(terms, process) {
+
+                        return $.get(path3, {
+                            terms: terms
+                        }, function(data) {
+                            console.log(data);
+                            objects = [];
+                            data.map(i => {
+                                objects.push(i.title)
+                            })
+                            console.log(objects);
+                            return process(objects);
+                        })
+                    },
+                });
+
+
+
                 var center = [7.2906, 80.6337];
 
                 // Create the map
