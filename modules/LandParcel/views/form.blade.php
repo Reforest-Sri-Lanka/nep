@@ -1,11 +1,7 @@
-@extends('home')
+@extends('general')
 
-@section('cont')
-
-<kbd><a href="/general/general" class="text-white font-weight-bolder"><i class="fas fa-chevron-left"></i></i> BACK</a></kbd>
+@section('general')
 <div class="container">
-    <h2 align="center">Register a Land Parcel</h2>
-
     @if(count($errors) >0)
     <div class="alert alert-danger">
         <ul>

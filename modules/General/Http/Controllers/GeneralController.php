@@ -52,35 +52,36 @@ class GeneralController extends Controller
     }
 	
 	public function general_module_access_control()
-    {        
-        $organization=Auth::user()->organization_id;
-        $noOrganization=2;
-        $role = Auth::user()->role_id;
-        $id= Auth::user()->id;
+    {    
+        return view('general::general');    
+        // $organization=Auth::user()->organization_id;
+        // $noOrganization=2;
+        // $role = Auth::user()->role_id;
+        // $id= Auth::user()->id;
 
-        if ($role == 1 || $role == 2 || $role == NULL ){
+        // if ($role == 1 || $role == 2 || $role == NULL ){
             
-            $Process_items = Process_Item::all()->where('status_id',1);
-            return view('general::generalA', [
-                'Process_items' => $Process_items,
-            ]);
-        } 
-        if ($role == 3 || $role == 4){
-            $Process_items = Process_Item::all()->where('activity_organization',$organization);
-            return view('general::generalM', [
-                'Process_items' => $Process_items,
-            ]);
-        }
-        else if($role == 5){
-            $Process_items = Process_Item::all()->where('activity_user_id',$id)->toArray();
-            return view('general::.generalS',compact('Process_items'));
-        }
-        else if($role == 6){
-            $Process_items = Process_Item::all()->where('created_by_user_id',$id)->toArray();
-            return view('general::.generalC',compact('Process_items'));
-        }
-        else{
-            return view('unauthorized')->with('message', 'Admins are not allowed access to general module');
-        }
+        //     $Process_items = Process_Item::all()->where('status_id',1);
+        //     return view('general::generalA', [
+        //         'Process_items' => $Process_items,
+        //     ]);
+        // } 
+        // if ($role == 3 || $role == 4){
+        //     $Process_items = Process_Item::all()->where('activity_organization',$organization);
+        //     return view('general::generalM', [
+        //         'Process_items' => $Process_items,
+        //     ]);
+        // }
+        // else if($role == 5){
+        //     $Process_items = Process_Item::all()->where('activity_user_id',$id)->toArray();
+        //     return view('general::.generalS',compact('Process_items'));
+        // }
+        // else if($role == 6){
+        //     $Process_items = Process_Item::all()->where('created_by_user_id',$id)->toArray();
+        //     return view('general::.generalC',compact('Process_items'));
+        // }
+        // else{
+        //     return view('unauthorized')->with('message', 'Admins are not allowed access to general module');
+        // }
     }
 }

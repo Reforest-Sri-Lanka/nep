@@ -1,11 +1,8 @@
-@extends('home')
+@extends('general')
 
-@section('cont')
+@section('general')
 
-<kbd><a href="/general/general" class="text-white font-weight-bolder"><i class="fas fa-chevron-left"></i></i> BACK</a></kbd>
 <div class="container">
-  <h2 align="center">Tree removal Application</h2>
-
   @if(count($errors) >0)
   <div class="alert alert-danger">
     <ul>
@@ -25,136 +22,146 @@
   <form action="/tree-removal/save" method="post" id="treeRemoval">
     @csrf
 
-    <div class="form-group">
-      Province:<input type="text" class="form-control typeahead" placeholder="Search" />
-    </div>
 
-    <div class="form-group">
-      District:<input type="text" class="form-control typeahead2" placeholder="Search" />
-    </div>
 
-    <div class="form-group">
-      GS Division:<input type="text" class="form-control typeahead4" placeholder="Search" />
-    </div>
 
-    <div class="form-group">
-      Organization:<input type="text" class="form-control typeahead3" placeholder="Search" />
-    </div>
+    <div class="container">
+      <div class="row border rounded-lg p-4 bg-white">
+        <div class="col border border-muted rounded-lg mr-2 p-2">
+          <div class="row p-2">
+            <div class="col p-2">
+              <div class="form-group">
+                Province:<input type="text" class="form-control typeahead" placeholder="Search" />
+              </div>
+              <div class="form-group">
+                GS Division:<input type="text" class="form-control typeahead4" placeholder="Search" />
+              </div>
+            </div>
+            <div class="col p-2">
+              <div class="form-group">
+                District:<input type="text" class="form-control typeahead2" placeholder="Search" />
+              </div>
+              <div class="form-group">
+                Organization:<input type="text" class="form-control typeahead3" placeholder="Search" />
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="title">Land Title:</label>
+            <input type="text" class="form-control" placeholder="Enter Land Title" id="landTitle" name="landTitle">
+          </div>
+          <div class="form-group">
+            <label for="land_extent">Land Extent (In Acres)</label>
+            <input type="text" class="form-control" id="land_extent" name="land_extent">
+          </div>
+          <!-- ////////MAP GOES HERE -->
+          <div id="mapid" style="height:400px;" name="map"></div>
 
-    <input id="polygon" type="hidden" name="polygon" value="{{request('polygon')}}">
+          <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="customCheck" value="1" name="isProtected">
+            <label class="custom-control-label" for="customCheck"><strong>Check if land is a protected area</strong></label>
+          </div>
+        </div>
+        <div class="col border border-muted rounded-lg">
+          <div class="row p-2 mt-2">
+            <div class="col">
+              <div class="form-group">
+                <label for="number_of_trees">Number of Trees</label>
+                <input type="text" class="form-control" id="number_of_trees" name="number_of_trees">
+              </div>
 
-    <hr>
-    <div class="form-group">
-      <label for="title">Land Title:</label>
-      <input type="text" class="form-control" placeholder="Enter Land Title" id="landTitle" name="landTitle">
-    </div>
+              <div class="form-group">
+                <label for="number_of_tree_species">Number of Tree Species</label>
+                <input type="text" class="form-control" id="number_of_tree_species" name="number_of_tree_species">
+              </div>
 
-    <!-- ////////MAP GOES HERE -->
-    <div id="mapid" style="height:400px;" name="map"></div>
-    <br>
-    <div class="custom-control custom-checkbox">
-      <input type="checkbox" class="custom-control-input" id="customCheck" value="1" name="isProtected">
-      <label class="custom-control-label" for="customCheck"><strong>Check if land is a protected area</strong></label>
-    </div>
-    <hr>
-    <br>
-    <div class="form-group">
-      <label for="land_extent">Land Extent (In Acres)</label>
-      <input type="text" class="form-control" id="land_extent" name="land_extent">
-    </div>
+              <div class="form-group">
+                <label for="number_of_flora_species">Number of Flora Species</label>
+                <input type="text" class="form-control" id="number_of_flora_species" name="number_of_flora_species">
+              </div>
+              <div class="form-group">
+                <label for="number_of_reptile_species">Number of Reptile Species</label>
+                <input type="text" class="form-control" id="number_of_reptile_species" name="number_of_reptile_species">
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-group">
+                <label for="number_of_mammal_species">Number of Mammal Species</label>
+                <input type="text" class="form-control" id="number_of_mammal_species" name="number_of_mammal_species">
+              </div>
 
-    <div class="form-group">
-      <label for="number_of_trees">Number of Trees</label>
-      <input type="text" class="form-control" id="number_of_trees" name="number_of_trees">
-    </div>
+              <div class="form-group">
+                <label for="number_of_amphibian_species">Number of Ambhibian Species</label>
+                <input type="text" class="form-control" id="number_of_amphibian_species" name="number_of_amphibian_species">
+              </div>
 
-    <div class="form-group">
-      <label for="number_of_tree_species">Number of Tree Species</label>
-      <input type="text" class="form-control" id="number_of_tree_species" name="number_of_tree_species">
-    </div>
+              <div class="form-group">
+                <label for="number_of_fish_species">Number of Fish Species</label>
+                <input type="text" class="form-control" id="number_of_fish_species" name="number_of_fish_species">
+              </div>
 
-    <div class="form-group">
-      <label for="number_of_flora_species">Number of Flora Species</label>
-      <input type="text" class="form-control" id="number_of_flora_species" name="number_of_flora_species">
-    </div>
+              <div class="form-group">
+                <label for="number_of_avian_species">Number of Avian Species</label>
+                <input type="text" class="form-control" id="number_of_avian_species" name="number_of_avian_species">
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="species_special_notes">Species Special Notes</label>
+            <textarea class="form-control" rows="1" id="species_special_notes" name="species_special_notes"></textarea>
+          </div>
 
-    <div class="form-group">
-      <label for="number_of_mammal_species">Number of Mammal Species</label>
-      <input type="text" class="form-control" id="number_of_mammal_species" name="number_of_mammal_species">
-    </div>
-
-    <div class="form-group">
-      <label for="number_of_amphibian_species">Number of Ambhibian Species</label>
-      <input type="text" class="form-control" id="number_of_amphibian_species" name="number_of_amphibian_species">
-    </div>
-
-    <div class="form-group">
-      <label for="number_of_fish_species">Number of Fish Species</label>
-      <input type="text" class="form-control" id="number_of_fish_species" name="number_of_fish_species">
-    </div>
-
-    <div class="form-group">
-      <label for="number_of_avian_species">Number of Avian Species</label>
-      <input type="text" class="form-control" id="number_of_avian_species" name="number_of_avian_species">
-    </div>
-
-    <div class="form-group">
-      <label for="number_of_reptile_species">Number of Reptile Species</label>
-      <input type="text" class="form-control" id="number_of_reptile_species" name="number_of_reptile_species">
-    </div>
-
-    <div class="form-group">
-      <label for="species_special_notes">Species Special Notes</label>
-      <textarea class="form-control" rows="5" id="species_special_notes" name="species_special_notes"></textarea>
-    </div>
-
-    <div class="form-group">
-      <label for="description">Description</label>
-      <textarea class="form-control" rows="5" id="description" name="description"></textarea>
-    </div>
-
-    <div class="form-group">
-      <label for="images">Image (Optional)</label>
-      <div class="custom-file mb-3">
-        <input type="file" id="images" name="images">
+          <div class="form-group">
+            <label for="description">Description</label>
+            <textarea class="form-control" rows="2" id="description" name="description"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="images">Image (Optional)</label>
+            <div class="custom-file mb-3">
+              <input type="file" id="images" name="images">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row p-4 bg-white">
+        <div class="col border border-muted rounded-lg p-4">
+          <table class="table" id="dynamicAddRemove">
+            <tr>
+              <th>Species ID</th>
+              <th>Tree ID</th>
+              <th>Width at Breast Height</th>
+              <th>Height</th>
+              <th>Timber Volume</th>
+              <th>Timber Cubic</th>
+              <th>Age</th>
+            </tr>
+            <tr>
+              <td><input type="text" name="location[0][tree_species_id]" placeholder="Enter ID" class="form-control" /></td>
+              <td><input type="text" name="location[0][tree_id]" placeholder="Enter ID" class="form-control" /></td>
+              <td><input type="text" name="location[0][width_at_breast_height]" placeholder="Enter Width" class="form-control" /></td>
+              <td><input type="text" name="location[0][height]" placeholder="Enter Height" class="form-control" /></td>
+              <td><input type="text" name="location[0][timber_volume]" placeholder="Enter Volume" class="form-control" /></td>
+              <td><input type="text" name="location[0][timber_cubic]" placeholder="Enter Cubic" class="form-control" /></td>
+              <td><input type="text" name="location[0][age]" placeholder="Enter Age" class="form-control" /></td>
+              <td rowspan="2"><button type="button" name="add" id="add-btn" class="btn bd-navbar text-white">Add</button></td>
+            </tr>
+            <tr>
+              <td colspan="7"><textarea name="location[0][remark]" placeholder="Enter Remarks" class="form-control" rows="3"></textarea></td>
+            </tr>
+          </table>
+        </div>
       </div>
     </div>
+    <input id="polygon" type="hidden" name="polygon" value="{{request('polygon')}}">
 
-    <table class="table table-bordered" id="dynamicAddRemove">
-      <tr>
-        <th>Species ID</th>
-        <th>Tree ID</th>
-        <th>Width at Breast Height</th>
-        <th>Height</th>
-        <th>Timber Volume</th>
-        <th>Timber Cubic</th>
-        <th>Age</th>
-      </tr>
-      <tr>
-        <td><input type="text" name="location[0][tree_species_id]" placeholder="Enter ID" class="form-control" /></td>
-        <td><input type="text" name="location[0][tree_id]" placeholder="Enter ID" class="form-control" /></td>
-        <td><input type="text" name="location[0][width_at_breast_height]" placeholder="Enter Width" class="form-control" /></td>
-        <td><input type="text" name="location[0][height]" placeholder="Enter Height" class="form-control" /></td>
-        <td><input type="text" name="location[0][timber_volume]" placeholder="Enter Volume" class="form-control" /></td>
-        <td><input type="text" name="location[0][timber_cubic]" placeholder="Enter Cubic" class="form-control" /></td>
-        <td><input type="text" name="location[0][age]" placeholder="Enter Age" class="form-control" /></td>
-        <td rowspan="2"><button type="button" name="add" id="add-btn" class="btn btn-success">Add More</button></td>
-      </tr>
-      <tr>
-        <td colspan="7"><textarea name="location[0][remark]" placeholder="Enter Remarks" class="form-control" rows="3"></textarea></td>
-      </tr>
-    </table>
+<br/>
+
+    <div style="float:right;">
+      <button type="submit" name="submit" class="btn bd-navbar text-white">Submit</button>
+      <button type="button" class="btn bd-navbar text-white" onclick="document.getElementById('treeRemoval').reset();">Clear</button>
+    </div>
 
     <input type="hidden" class="form-control" name="createdBy" value="{{Auth::user()->id}}">
-    <br><br>
-    <button type="submit" name="submit" class="btn btn-success">Submit</button>
-    <button type="button" class="btn btn-danger" onclick="document.getElementById('treeRemoval').reset();">Clear</button>
-    <br>
-    <br>
-    <hr>
-
-
-
   </form>
 </div>
 
