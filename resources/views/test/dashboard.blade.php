@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-3">
             <div class="card bg-dark text-light">
-                <div class="card-header text-center">Tree Removals This Month</div>
+                <div class="card-header text-center bg-dark">Tree Removals This Month</div>
                     <div class="card-body text-center text-light">
                         <p class="card-text display-1">12</p>
                     </div>
@@ -13,7 +13,7 @@
         </div>
         <div class="col-md-3">
         <div class="card bg-dark text-light">
-            <div class="card-header text-center">Tree Removals This Month</div>
+            <div class="card-header text-center bg-dark">Tree Removals This Month</div>
             <div class="card-body text-center text-light">
                 <p class="card-text display-1">5</p>
             </div>
