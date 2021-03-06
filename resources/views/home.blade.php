@@ -65,7 +65,7 @@ html {
 
 <body class="bg-secondary">
     @livewireScripts
-    <nav class="navbar navbar-expand-sm bd-navbar navbar-light">
+    <nav class="navbar navbar-expand-sm bd-navbar navbar-dark">
         <!-- Brand/logo -->
         <a class="navbar-brand mr-auto" href="#">
         <img src="/Logo.jpeg" alt="logo" style="width:70px;">
