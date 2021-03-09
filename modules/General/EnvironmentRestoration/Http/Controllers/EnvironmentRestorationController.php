@@ -38,7 +38,7 @@ class EnvironmentRestorationController extends Controller
     public function create()
     {
         $restorations = Environment_Restoration::all();         //shows all records of enviroment restoration request
-        $organizations = Organization::where('type_id','=','2')->get();                  //show all records for all government organizations
+        $organizations = Organization::where('type_id','=','1')->get();                  //show all records for all government organizations
         return view('environmentRestoration::create', [
             'restorations' => $restorations,
             'organizations' => $organizations,

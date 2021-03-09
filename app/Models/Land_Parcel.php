@@ -17,13 +17,13 @@ class Land_Parcel extends Model
         'polygon',
         'protected_area',
         'created_by_user_id',
-        'status',
+        'status_id',
     ];
 
     protected $attributes = [
         'logs' => 0,
         'protected_area' => 0,
-        'status' => 1,
+        'status_id' => 1,
     ];
 
     protected $casts = [
