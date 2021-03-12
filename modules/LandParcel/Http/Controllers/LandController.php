@@ -13,6 +13,7 @@ use App\Models\Land_Has_Organization;
 use App\Models\Process_Item;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Validator;
 
 
 class LandController extends Controller
@@ -20,16 +21,8 @@ class LandController extends Controller
     public function form()
     {
         $gazettes = Gazette::all();
-        $lands = Land_Parcel::all();
-        $provinces = Province::all();
-        $districts = District::all();
-        $gs_divisions = GS_Division::all();
         $organizations = Organization::all();
         return view('land::form', [
-            'lands' => $lands,
-            'provinces' => $provinces,
-            'districts' => $districts,
-            'gs_divisions' => $gs_divisions,
             'organizations' => $organizations,
             'gazettes' => $gazettes,
 
@@ -68,7 +61,7 @@ class LandController extends Controller
         foreach($gazettes as $gazette) 
         {
         $land_has_gazette = new Land_Has_Gazette();
-        $land_has_gazette->land_id = $landid;
+        $land_has_gazette->land_parcel_id = $landid;
         $land_has_gazette->gazette_id = $gazette;
         $land_has_gazette->status = 2;
         $land_has_gazette->save();
@@ -83,7 +76,7 @@ class LandController extends Controller
             $process->activity_organization = $governing_organization;
             $process->save();
         }
-        //return redirect('/general/general')->with('message', 'Request Created Successfully');
+        return redirect('/general/pending')->with('message', 'Request Created Successfully');
     }
     public function show($id)
     {
@@ -93,6 +86,32 @@ class LandController extends Controller
             'land' => $land_data,
             'polygon' => $land_data->polygon,
         ]);
+    }
+
+    function action(Request $request)
+    {
+     $validation = Validator::make($request->all(), [
+      'select_file' => 'required'
+     ]);
+     if($validation->passes())
+     {
+      $image = $request->file('select_file');
+      $new_name = rand() . '.' . $image->getClientOriginalExtension();
+      $image->move(public_path('kml'), $new_name);
+      return response()->json([
+       'message'   => 'Image Upload Successfully',
+       'uploaded_image' => "kml/$new_name",
+       'class_name'  => 'alert-success'
+      ]);
+     }
+     else
+     {
+      return response()->json([
+       'message'   => $validation->errors()->all(),
+       'uploaded_image' => '',
+       'class_name'  => 'alert-danger'
+      ]);
+     }
     }
 
 }

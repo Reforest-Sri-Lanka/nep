@@ -21,11 +21,14 @@ class TreeRemovalController extends Controller
         return view('treeRemoval::form');
     }
 
-    public function save()
+    public function save(Request $request)
     {
         $land = new Land_Parcel();
         $land->title = request('landTitle');
-        $land->governing_organizations = request('governing_orgs');
+        
+        $governing_organizations1 = request('organization');
+        $land->governing_organizations = Organization::where('title', $governing_organizations1)->pluck('id');
+
         $land->polygon = request('polygon');
         $land->created_by_user_id = request('createdBy');
         if (request('isProtected')) {
@@ -48,11 +51,25 @@ class TreeRemovalController extends Controller
         $tree->no_of_flora_species = request('number_of_flora_species');
         $tree->species_special_notes = request('species_special_notes');
         $tree->land_parcel_id = $landid;
-        $tree->district_id = request('district_id');
-        $tree->province_id = request('province_id');
-        $tree->gs_division_id = request('gs_division_id');
+        //$tree->district_id = request('district_id');
+        //$tree->province_id = request('province_id');
+        //$tree->gs_division_id = request('gs_division_id');
+        //$tree->governing_organizations = request('governing_orgs');
+
+        $district_id1 = District::where('district', request('district'))->pluck('id');
+        $tree->district_id = $district_id1[0];
+        
+        $province_id1 = Province::where('province', request('province'))->pluck('id');
+        //$tree->province_id = Province::where('province','=',$province_id1)->get();
+        $tree->province_id = $province_id1[0];
+ 
+        $gs_division_id1 = GS_Division::where('gs_division', request('gs_division'))->pluck('id');
+        $tree->gs_division_id = $gs_division_id1[0];
+
+        $tree->governing_organizations = Organization::where('title', $governing_organizations1 )->pluck('id');
+        
         $tree->tree_locations = request('location');
-        $tree->governing_organizations = request('governing_orgs');
+        
         $tree->save();
 
         $latest = Tree_Removal_Request::latest()->first();

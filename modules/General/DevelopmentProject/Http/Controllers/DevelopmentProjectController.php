@@ -32,10 +32,12 @@ class DevelopmentProjectController extends Controller
     // depenign on the number of governing organizations selected.
     public function save(Request $request)
     {
-
         $land = new Land_Parcel();
         $land->title = request('landTitle');
-        $land->governing_organizations = request('governing_orgs');
+        
+        $governing_organizations1 = request('organization');
+        $land->governing_organizations = Organization::where('title', $governing_organizations1)->pluck('id');
+
         $land->polygon = request('polygon');
         $land->created_by_user_id = request('createdBy');
         if (request('isProtected')) {
@@ -47,8 +49,13 @@ class DevelopmentProjectController extends Controller
 
         $dev = new Development_Project();
         $dev->title = request('title');
-        $dev->gazette_id = request('gazette');
-        $dev->governing_organizations = request('governing_orgs');
+        //$dev->gazette_id = request('gazette');
+
+        $gazette = Gazette::where('gazette_number', request('gazette'))->pluck('id');
+        $dev->gazette_id = $gazette[0];
+
+        $dev->governing_organizations = Organization::where('title', $governing_organizations1)->pluck('id');
+
         $dev->land_parcel_id = $landid;
         $dev->created_by_user_id = request('createdBy');
         if (request('isProtected')) {

@@ -15,10 +15,10 @@
                     </div>
 
                     <div class="form-group">
-                        Gazette:<input type="text" class="form-control typeahead" placeholder="Search" />
+                        Gazette:<input type="text" class="form-control typeahead" placeholder="Search" name="gazette" />
                     </div>
                     <div class="form-group">
-                        Organization:<input type="text" class="form-control typeahead3" placeholder="Search" />
+                        Organization:<input type="text" class="form-control typeahead3" placeholder="Search" name="organization"/>
                     </div>
                     
                     <div class="form-group">

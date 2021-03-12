@@ -18,127 +18,91 @@
     </div>
     @endif
 
-    <form action="/land/save" method="post" id="treeRemoval">
+    <form action="/land/save" method="post" id="upload_form" enctype="multipart/form-data">
         @csrf
 
-        <div id="accordion" class="mb-3">
-            <div class="card">
-                <div class="card-header">
-                    <a class="card-link text-dark" data-toggle="collapse" href="#collapseOne">
-                        Province
-                    </a>
-                </div>
-                <div id="collapseOne" class="collapse" data-parent="#accordion">
-                    <div class="card-body">
-                        @foreach($provinces as $province)
-                        <div class="form-check">
-                            <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="province_id" value="{{$province->id}}">{{$province->province}}
-                            </label>
+        <div class="container">
+            <div class="row p-4 bg-white">
+                <div class="col border border-muted rounded-lg mr-2 p-4">
+                    <div class="form-group">
+                        <label for="title">Title:</label>
+                        <input type="text" class="form-control" placeholder="Enter Title" id="title" name="title">
+                    </div>
+
+                    <div class="form-group">
+                        Province:<input type="text" class="form-control typeahead" placeholder="Search" name="province" />
+                    </div>
+                    <div class="form-group">
+                        District:<input type="text" class="form-control typeahead2" placeholder="Search" name="district" />
+                    </div>
+                    <div class="form-group">
+                        GS Division:<input type="text" class="form-control typeahead4" placeholder="Search" name="gs_division" />
+                    </div>
+
+                    <div id="accordion" class="mb-3">
+                        <div class="card mb-3">
+                            <div class="card-header bg-white">
+                                <a class="collapsed card-link text-dark" data-toggle="collapse" href="#collapseone">
+                                    Organizations
+                                </a>
+                            </div>
+                            <div id="collapseone" class="collapse" data-parent="#accordion">
+                                <div class="card-body">
+                                    <strong>Select Multiple</strong>
+                                    <fieldset>
+                                        @foreach($organizations as $organization)
+                                        <input type="checkbox" name="governing_orgs[]" value="{{$organization->id}}"><label class="ml-2">{{$organization->title}}</label> <br>
+                                        @endforeach
+                                    </fieldset>
+                                </div>
+                            </div>
                         </div>
-                        @endforeach
-                    </div>
-                </div>
-            </div>
 
-            <div class="card">
-                <div class="card-header">
-                    <a class="collapsed card-link text-dark" data-toggle="collapse" href="#collapseTwo">
-                        District
-                    </a>
-                </div>
-                <div id="collapseTwo" class="collapse" data-parent="#accordion">
-                    <div class="card-body">
-                        @foreach($districts as $district)
-                        <div class="form-check">
-                            <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="district_id" value="{{$district->id}}">{{$district->district}}
-                            </label>
+                        <div class="card">
+                            <div class="card-header bg-white">
+                                <a class="collapsed card-link text-dark" data-toggle="collapse" href="#collapsetwo">
+                                    Gazettes
+                                </a>
+                            </div>
+                            <div id="collapsetwo" class="collapse" data-parent="#accordion">
+                                <div class="card-body">
+                                    <strong>Select Multiple</strong>
+                                    <fieldset>
+                                        @foreach($gazettes as $gazette)
+                                        <input type="checkbox" name="gazettes[]" value="{{$gazette->id}}"><label class="ml-2">{{$gazette->title}}</label> <br>
+                                        @endforeach
+                                    </fieldset>
+                                </div>
+                            </div>
                         </div>
-                        @endforeach
                     </div>
                 </div>
-            </div>
-
-            <div class="card">
-                <div class="card-header">
-                    <a class="collapsed card-link text-dark" data-toggle="collapse" href="#collapseThree">
-                        GS Division
-                    </a>
-                </div>
-                <div id="collapseThree" class="collapse" data-parent="#accordion">
-                    <div class="card-body">
-                        @foreach($gs_divisions as $gs_division)
-                        <div class="form-check">
-                            <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="gs_division_id" value="{{$gs_division->id}}">{{$gs_division->gs_division}}
-                            </label>
-                        </div>
-                        @endforeach
+                <div class="col border border-muted rounded-lg p-4">
+                    <div class="form-group">
+                        <label for="title">Land Title:</label>
+                        <input type="text" class="form-control" placeholder="Enter Land Title" id="landTitle" name="landTitle">
                     </div>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-header">
-                    <a class="collapsed card-link text-dark" data-toggle="collapse" href="#collapseFour">
-                        Gazettes
-                    </a>
-                </div>
-                <div id="collapseFour" class="collapse" data-parent="#accordion">
-                    <div class="card-body bg-secondary text-light">
-                        <strong>Select Multiple</strong>
-                        <fieldset>
-                            @foreach($gazettes as $gazette)
-                            <input type="checkbox" name="gazettes[]" value="{{$gazette->id}}"><label class="ml-2">{{$gazette->title}}</label> <br>
-                            @endforeach
-                        </fieldset>
+                    <div>
+                        <label>Upload KML File</label>
+                        <input type="file" name="select_file" id="select_file" />
+                        <input type="button" name="upload" id="upload" class="btn btn-primary" value="Upload">
                     </div>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-header">
-                    <a class="collapsed card-link text-dark" data-toggle="collapse" href="#collapseFive">
-                        Organizations
-                    </a>
-                </div>
-                <div id="collapseFive" class="collapse" data-parent="#accordion">
-                    <div class="card-body bg-secondary text-light">
-                        <strong>Select Multiple</strong>
-                        <fieldset>
-                            @foreach($organizations as $organization)
-                            <input type="checkbox" name="governing_orgs[]" value="{{$organization->id}}"><label class="ml-2">{{$organization->title}}</label> <br>
-                            @endforeach
-                        </fieldset>
+                    <br>
+                    <!-- ////////MAP GOES HERE -->
+                    <div id="mapid" style="height:400px;" name="map"></div>
+                    <br>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="customCheck" value="1" name="isProtected">
+                        <label class="custom-control-label" for="customCheck"><strong>Check if land is a protected area</strong></label>
+                    </div>
+                    <div style="float:right;">
+                        <button type="submit" name="submit" class="btn bd-navbar text-white">Submit</button>
                     </div>
                 </div>
             </div>
         </div>
-
         <input id="polygon" type="hidden" name="polygon" value="{{request('polygon')}}">
-
-        <hr>
-        <div class="form-group">
-            <label for="title">Land Title:</label>
-            <input type="text" class="form-control" placeholder="Enter Land Title" id="landTitle" name="landTitle">
-        </div>
-
-        <!-- ////////MAP GOES HERE -->
-        <div id="mapid" style="height:400px;" name="map"></div>
-        <br>
-        <div class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input" id="customCheck" value="1" name="isProtected">
-            <label class="custom-control-label" for="customCheck"><strong>Check if land is a protected area</strong></label>
-        </div>
-
         <input type="hidden" class="form-control" name="createdBy" value="{{Auth::user()->id}}">
-        <br><br>
-        <button type="submit" name="submit" class="btn btn-success">Submit</button>
-        <button type="button" class="btn btn-danger" onclick="document.getElementById('land').reset();">Clear</button>
-        <br>
-        <br>
-        <hr>
     </form>
 </div>
 
@@ -207,6 +171,102 @@
         //console.log(layer.toGeoJSON());
         $('#polygon').val(JSON.stringify(layer.toGeoJSON()));
 
+    });
+
+
+    ///UPLOADING A FILE AND RETRIEVING AND CREATING A LAYER FROM IT.
+    document.getElementById("upload").addEventListener("click", function() {
+        var data = new FormData(document.getElementById("upload_form"));
+            event.preventDefault();
+            $.ajax({
+                url: "{{ route('ajaxmap.action') }}",
+                method: "POST",
+                data: data,
+                dataType: 'JSON',
+                contentType: false,
+                cache: false,
+                processData: false,
+                success: function(data) {
+                    $('#message').css('display', 'block');
+                    $('#message').html(data.message);
+                    $('#message').addClass(data.class_name);
+                    $('#uploaded_image').html(data.uploaded_image);
+                    var tmp = data.uploaded_image;
+                    console.log(tmp);
+                    fetch(`/${tmp}`)
+                        .then(res => res.text())
+                        .then(kmltext => {
+                            // Create new kml overlay
+                            const track = new omnivore.kml.parse(kmltext);
+                            map.addLayer(track);
+
+                            //SAVING THE UPLOADED COORDIATE LAYER TO GEOJSON
+                            $('#polygon').val(JSON.stringify(track.toGeoJSON()));
+
+                            // Adjust map to show the kml
+                            const bounds = track.getBounds();
+                            map.fitBounds(bounds);
+                        }).catch((e) => {
+                            console.log(e);
+                        })
+                }
+            })
+       
+    });
+
+    ///TYPEAHEAD
+    var path = "{{route('province')}}";
+    $('input.typeahead').typeahead({
+        source: function(terms, process) {
+
+            return $.get(path, {
+                terms: terms
+            }, function(data) {
+                console.log(data);
+                objects = [];
+                data.map(i => {
+                    objects.push(i.province)
+                })
+                console.log(objects);
+                return process(objects);
+            })
+        },
+    });
+
+    var path2 = "{{route('district')}}";
+    $('input.typeahead2').typeahead({
+        source: function(terms, process) {
+
+            return $.get(path2, {
+                terms: terms
+            }, function(data) {
+                console.log(data);
+                objects = [];
+                data.map(i => {
+                    objects.push(i.district)
+                })
+                console.log(objects);
+                return process(objects);
+            })
+        },
+    });
+
+    var path4 = "{{route('gramasevaka')}}";
+    $('input.typeahead4').typeahead({
+        source: function(terms, process) {
+
+            return $.get(path4, {
+                terms: terms
+            }, function(data) {
+                console.log(data);
+                objects = [];
+                data.map(i => {
+                    objects.push(i.gs_division)
+                })
+                console.log(objects);
+                return process(objects);
+            })
+        },
     });
 </script>
 @endsection

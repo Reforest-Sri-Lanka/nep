@@ -3,7 +3,7 @@
 @section('general')
 
 <div class="container">
-  @if(count($errors) >0)
+  <!-- @if(count($errors) >0)
   <div class="alert alert-danger">
     <ul>
       @foreach($errors->all() as $error)
@@ -17,122 +17,167 @@
   <div class="alert alert-success">
     <p>{{\Session::get('success') }}</p>
   </div>
-  @endif
+  @endif -->
 
-  <form action="/tree-removal/save" method="post" id="treeRemoval">
+  <form action="/tree-removal/save" method="post" id="regForm">
     @csrf
+    <!-- One "tab" for each step in the form: -->
+    <div class="tab">
+      <div class="container">
+        <div class="row border rounded-lg p-4 bg-white">
+          <div class="col border border-muted rounded-lg mr-2 p-2">
+            <div class="form-group">
+              <label for="title">Land Title:</label>
+              <input type="text" class="form-control verifythis" oninput="this.className = 'form-control'" placeholder="Enter Land Title" id="landTitle" name="landTitle">
+            </div>
 
-
-
-
-    <div class="container">
-      <div class="row border rounded-lg p-4 bg-white">
-        <div class="col border border-muted rounded-lg mr-2 p-2">
-          <div class="row p-2">
-            <div class="col p-2">
-              <div class="form-group">
-                Province:<input type="text" class="form-control typeahead" placeholder="Search" />
+            <div class="row p-2">
+              <div class="col p-2">
+                <div class="form-group">
+                  Province:<input type="text" class="form-control typeahead verifythis" oninput="this.className = 'form-control typeahead'" placeholder="Search" name="province" />
+                </div>
+                <div class="form-group">
+                  District:<input type="text" class="form-control typeahead2 verifythis" oninput="this.className = 'form-control typeahead2'" placeholder="Search" name="district" />
+                </div>
+                <div class="form-group">
+                  GS Division:<input type="text" class="form-control typeahead4" oninput="this.className = 'form-control typeahead4'" placeholder="Search" name="gs_division" />
+                </div>
               </div>
-              <div class="form-group">
-                GS Division:<input type="text" class="form-control typeahead4" placeholder="Search" />
+              <div class="col p-2">
+                <div class="form-group">
+                  <label>Removal Requestor Type:</label>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input verifythis" oninput="this.className = 'form-check-input'" type="radio" name="removalrequestortype" id="removalrequestortype1" value="gov" required>
+                    <label class="form-check-label" for="removalrequestortype1">
+                      Government
+                    </label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input verifythis" oninput="this.className = 'form-check-input'" type="radio" name="removalrequestortype" id="removalrequestortype2" value="pvt" required>
+                    <label class="form-check-label" for="removalrequestortype2">
+                      Private
+                    </label>
+                  </div>
+                </div>
+                <div class="form-group">
+                  Removal Requestor:<input type="text" class="form-control typeahead3 verifythis" oninput="this.className = 'form-control typeahead3'" name="organization" placeholder="Search" required />
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="otherremovalrequestor" value="1" name="otherremovalrequestor">
+                    <label class="custom-control-label" for="otherremovalrequestor">Other</label>
+                  </div>
+                </div>
               </div>
             </div>
-            <div class="col p-2">
-              <div class="form-group">
-                District:<input type="text" class="form-control typeahead2" placeholder="Search" />
+
+
+            <div class="form-group">
+              <label for="land_extent">Land Extent (In Acres)</label>
+              <input type="text" class="form-control" id="land_extent" name="land_extent">
+            </div>
+            <div class="form-group">
+              <label>Land Owner Type:</label>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input verifythis" oninput="this.className = 'form-check-input'" type="radio" name="landownertype" id="landownertype1" value="gov" required>
+                <label class="form-check-label" for="landownertype1">
+                  Government
+                </label>
               </div>
-              <div class="form-group">
-                Organization:<input type="text" class="form-control typeahead3" placeholder="Search" />
+              <div class="form-check form-check-inline">
+                <input class="form-check-input verifythis" oninput="this.className = 'form-check-input'" type="radio" name="landownertype" id="landownertype2" value="pvt" required>
+                <label class="form-check-label" for="landownertype2">
+                  Private
+                </label>
               </div>
             </div>
-          </div>
-          <div class="form-group">
-            <label for="title">Land Title:</label>
-            <input type="text" class="form-control" placeholder="Enter Land Title" id="landTitle" name="landTitle">
-          </div>
-          <div class="form-group">
-            <label for="land_extent">Land Extent (In Acres)</label>
-            <input type="text" class="form-control" id="land_extent" name="land_extent">
-          </div>
-          <!-- ////////MAP GOES HERE -->
-          <div id="mapid" style="height:400px;" name="map"></div>
-
-          <div class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input" id="customCheck" value="1" name="isProtected">
-            <label class="custom-control-label" for="customCheck"><strong>Check if land is a protected area</strong></label>
-          </div>
-        </div>
-        <div class="col border border-muted rounded-lg">
-          <div class="row p-2 mt-2">
-            <div class="col">
-              <div class="form-group">
-                <label for="number_of_trees">Number of Trees</label>
-                <input type="text" class="form-control" id="number_of_trees" name="number_of_trees">
-              </div>
-
-              <div class="form-group">
-                <label for="number_of_tree_species">Number of Tree Species</label>
-                <input type="text" class="form-control" id="number_of_tree_species" name="number_of_tree_species">
-              </div>
-
-              <div class="form-group">
-                <label for="number_of_flora_species">Number of Flora Species</label>
-                <input type="text" class="form-control" id="number_of_flora_species" name="number_of_flora_species">
-              </div>
-              <div class="form-group">
-                <label for="number_of_reptile_species">Number of Reptile Species</label>
-                <input type="text" class="form-control" id="number_of_reptile_species" name="number_of_reptile_species">
+            <div class="form-group">
+              Land Owner:<input type="text" class="form-control typeahead3 verifythis" oninput="this.className = 'form-control typeahead3'" placeholder="Search" />
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="otherlandowner" value="1" name="otherlandowner">
+                <label class="custom-control-label" for="otherlandowner">Other</label>
               </div>
             </div>
-            <div class="col">
-              <div class="form-group">
-                <label for="number_of_mammal_species">Number of Mammal Species</label>
-                <input type="text" class="form-control" id="number_of_mammal_species" name="number_of_mammal_species">
-              </div>
-
-              <div class="form-group">
-                <label for="number_of_amphibian_species">Number of Ambhibian Species</label>
-                <input type="text" class="form-control" id="number_of_amphibian_species" name="number_of_amphibian_species">
-              </div>
-
-              <div class="form-group">
-                <label for="number_of_fish_species">Number of Fish Species</label>
-                <input type="text" class="form-control" id="number_of_fish_species" name="number_of_fish_species">
-              </div>
-
-              <div class="form-group">
-                <label for="number_of_avian_species">Number of Avian Species</label>
-                <input type="text" class="form-control" id="number_of_avian_species" name="number_of_avian_species">
-              </div>
+            <!-- ////////MAP GOES HERE -->
+            <div id="mapid" style="height:400px;" name="map" ></div>
+            <input id="polygon" type="hidden" name="polygon" value="{{request('polygon')}}" />
+            <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" id="customCheck" value="1" name="isProtected">
+              <label class="custom-control-label" for="customCheck"><strong>Check if land is a protected area</strong></label>
             </div>
           </div>
-          <div class="form-group">
-            <label for="species_special_notes">Species Special Notes</label>
-            <textarea class="form-control" rows="1" id="species_special_notes" name="species_special_notes"></textarea>
-          </div>
+          <div class="col border border-muted rounded-lg">
+            <div class="row p-2 mt-2">
+              <div class="col">
+                <div class="form-group">
+                  <label for="number_of_trees">Number of Trees</label>
+                  <input type="text" class="form-control verifythis" oninput="this.className = 'form-control'" id="number_of_trees" name="number_of_trees" >
+                </div>
 
-          <div class="form-group">
-            <label for="description">Description</label>
-            <textarea class="form-control" rows="2" id="description" name="description"></textarea>
-          </div>
-          <div class="form-group">
-            <label for="images">Image (Optional)</label>
-            <div class="custom-file mb-3">
-              <input type="file" id="images" name="images">
+                <div class="form-group">
+                  <label for="number_of_tree_species">Number of Tree Species</label>
+                  <input type="text" class="form-control" id="number_of_tree_species" name="number_of_tree_species">
+                </div>
+
+                <div class="form-group">
+                  <label for="number_of_flora_species">Number of Flora Species</label>
+                  <input type="text" class="form-control" id="number_of_flora_species" name="number_of_flora_species">
+                </div>
+                <div class="form-group">
+                  <label for="number_of_reptile_species">Number of Reptile Species</label>
+                  <input type="text" class="form-control" id="number_of_reptile_species" name="number_of_reptile_species">
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-group">
+                  <label for="number_of_mammal_species">Number of Mammal Species</label>
+                  <input type="text" class="form-control" id="number_of_mammal_species" name="number_of_mammal_species">
+                </div>
+
+                <div class="form-group">
+                  <label for="number_of_amphibian_species">Number of Ambhibian Species</label>
+                  <input type="text" class="form-control" id="number_of_amphibian_species" name="number_of_amphibian_species">
+                </div>
+
+                <div class="form-group">
+                  <label for="number_of_fish_species">Number of Fish Species</label>
+                  <input type="text" class="form-control" id="number_of_fish_species" name="number_of_fish_species">
+                </div>
+
+                <div class="form-group">
+                  <label for="number_of_avian_species">Number of Avian Species</label>
+                  <input type="text" class="form-control" id="number_of_avian_species" name="number_of_avian_species">
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="species_special_notes">Species Special Notes</label>
+              <textarea class="form-control" rows="1" id="species_special_notes" name="species_special_notes"></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="description">Description</label>
+              <textarea class="form-control verifythis" oninput="this.className = 'form-control'" rows="2" id="description" name="description"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="images">Image (Optional)</label>
+              <div class="custom-file mb-3">
+                <input type="file" id="images" name="images">
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="row p-4 bg-white">
-        <div class="col border border-muted rounded-lg p-4">
+    </div>
+    <div class="tab">
+      <div class="container">
+        <div class="row border rounded-lg p-4 bg-white">
           <table class="table" id="dynamicAddRemove">
             <tr>
-              <th>Species ID</th>
+              <th>Species</th>
               <th>Tree ID</th>
               <th>Width at Breast Height</th>
               <th>Height</th>
               <th>Timber Volume</th>
-              <th>Timber Cubic</th>
+              <th>Cubic Feet</th>
               <th>Age</th>
             </tr>
             <tr>
@@ -152,20 +197,99 @@
         </div>
       </div>
     </div>
-    <input id="polygon" type="hidden" name="polygon" value="{{request('polygon')}}">
-
-<br/>
-
-    <div style="float:right;">
-      <button type="submit" name="submit" class="btn bd-navbar text-white">Submit</button>
-      <button type="button" class="btn bd-navbar text-white" onclick="document.getElementById('treeRemoval').reset();">Clear</button>
+    <br>
+    <div style="overflow:auto;">
+      <div style="float:right;">
+        <button type="button" id="prevBtn" class="btn bd-navbar text-white" onclick="nextPrev(-1)">Previous</button>
+        <button type="button" id="nextBtn" class="btn bd-navbar text-white" onclick="nextPrev(1)">Next</button>
+      </div>
     </div>
-
+    <!-- Circles which indicates the steps of the form: -->
+    <div style="text-align:center;margin-top:40px;">
+      <span class="step"></span>
+      <span class="step"></span>
+    </div>
     <input type="hidden" class="form-control" name="createdBy" value="{{Auth::user()->id}}">
   </form>
 </div>
 
+
 <script>
+  ///STEPPER
+  var currentTab = 0; // Current tab is set to be the first tab (0)
+  showTab(currentTab); // Display the current tab
+
+  function showTab(n) {
+    // This function will display the specified tab of the form...
+    var x = document.getElementsByClassName("tab");
+    x[n].style.display = "block";
+    //... and fix the Previous/Next buttons:
+    if (n == 0) {
+      document.getElementById("prevBtn").style.display = "none";
+    } else {
+      document.getElementById("prevBtn").style.display = "inline";
+    }
+    if (n == (x.length - 1)) {
+      document.getElementById("nextBtn").innerHTML = "Submit";
+    } else {
+      document.getElementById("nextBtn").innerHTML = "Next";
+    }
+    //... and run a function that will display the correct step indicator:
+    fixStepIndicator(n)
+  }
+
+  function nextPrev(n) {
+    // This function will figure out which tab to display
+    var x = document.getElementsByClassName("tab");
+    // Exit the function if any field in the current tab is invalid:
+    if (n == 1 && !validateForm()) return false;
+    // Hide the current tab:
+    x[currentTab].style.display = "none";
+    // Increase or decrease the current tab by 1:
+    currentTab = currentTab + n;
+    // if you have reached the end of the form...
+    if (currentTab >= x.length) {
+      // ... the form gets submitted:
+      document.getElementById("regForm").submit();
+      return false;
+    }
+    // Otherwise, display the correct tab:
+    showTab(currentTab);
+  }
+
+  function validateForm() {
+    // This function deals with validation of the form fields
+    var x, y, i, valid = true;
+    x = document.getElementsByClassName("tab");
+    y = x[currentTab].getElementsByClassName("verifythis");
+    // A loop that checks every input field in the current tab:
+    for (i = 0; i < y.length; i++) {
+      // If a field is empty...
+      if (y[i].value == "") {
+        // add an "invalid" class to the field:
+        y[i].className += " invalid";
+        // and set the current valid status to false
+        valid = false;
+      }
+    }
+    // If the valid status is true, mark the step as finished and valid:
+    if (valid) {
+      document.getElementsByClassName("step")[currentTab].className += " finish";
+    }
+    return valid; // return the valid status
+  }
+
+  function fixStepIndicator(n) {
+    // This function removes the "active" class of all steps...
+    var i, x = document.getElementsByClassName("step");
+    for (i = 0; i < x.length; i++) {
+      x[i].className = x[i].className.replace(" active", "");
+    }
+    //... and adds the "active" class on the current step:
+    x[n].className += " active";
+  }
+
+
   ///TYPEAHEAD
   var path = "{{route('province')}}";
   $('input.typeahead').typeahead({
