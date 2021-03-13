@@ -40,7 +40,7 @@
                   District:<input type="text" class="form-control typeahead2 verifythis" oninput="this.className = 'form-control typeahead2'" placeholder="Search" name="district" />
                 </div>
                 <div class="form-group">
-                  GS Division:<input type="text" class="form-control typeahead4" oninput="this.className = 'form-control typeahead4'" placeholder="Search" name="gs_division" />
+                  GS Division:<input type="text" class="form-control typeahead4 verifythis" oninput="this.className = 'form-control typeahead4'" placeholder="Search" name="gs_division" />
                 </div>
               </div>
               <div class="col p-2">
@@ -393,36 +393,44 @@
   map.addLayer(editableLayers);
 
   var drawPluginOptions = {
-    position: 'topright',
-    draw: {
-      polygon: {
-        allowIntersection: false, // Restricts shapes to simple polygons
-        drawError: {
-          color: '#e1e100', // Color the shape will turn when intersects
-          message: '<strong>Oh snap!<strong> you can\'t draw that!' // Message that will show when intersect
+      position: 'topright',
+      draw: {
+        polygon: {
+          allowIntersection: false, // Restricts shapes to simple polygons
+          drawError: {
+            color: '#e1e100', // Color the shape will turn when intersects
+            message: '<strong>Oh snap!<strong> you can\'t draw that!' // Message that will show when intersect
+          },
+          shapeOptions: {
+            color: '#97009c'
+          }
         },
-        shapeOptions: {
-          color: '#97009c'
-        }
+        // disable toolbar item by setting it to false
+        polyline: true,
+        circle: false, // Turns off this drawing tool
+        rectangle: true,
+        marker: true,
+        circlemarker: false,
+        polygon: {
+          shapeOptions: {
+            color: 'green'
+          },
+          allowIntersection: false,
+          drawError: {
+            color: 'orange',
+            timeout: 1000
+          },
       },
-      // disable toolbar item by setting it to false
-      polyline: true,
-      circle: false, // Turns off this drawing tool
-      rectangle: false,
-      marker: true,
     },
     edit: {
       featureGroup: editableLayers, //REQUIRED!!
-      remove: false
+      remove: true
     }
   };
 
   // Initialise the draw control and pass it the FeatureGroup of editable layers
   var drawControl = new L.Control.Draw(drawPluginOptions);
   map.addControl(drawControl);
-
-  var editableLayers = new L.FeatureGroup();
-  map.addLayer(editableLayers);
 
   map.on('draw:created', function(e) {
     var type = e.layerType,

@@ -113,7 +113,11 @@
     console.log(polygon);
 
     //ADDING THE JSOON COORDINATES TO MAP
-    L.geoJSON(JSON.parse(polygon)).addTo(map);
+    var layer = L.geoJSON(JSON.parse(polygon)).addTo(map);
+    
+    // Adjust map to show the kml
+    var bounds = layer.getBounds();
+    map.fitBounds(bounds);
     
 </script>
 @endsection

@@ -18,9 +18,9 @@
                         Gazette:<input type="text" class="form-control typeahead" placeholder="Search" name="gazette" />
                     </div>
                     <div class="form-group">
-                        Organization:<input type="text" class="form-control typeahead3" placeholder="Search" name="organization"/>
+                        Organization:<input type="text" class="form-control typeahead3" placeholder="Search" name="organization" />
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="title">Land Title:</label>
                         <input type="text" class="form-control" placeholder="Enter Land Title" id="landTitle" name="landTitle">
@@ -42,20 +42,9 @@
             </div>
         </div>
         <input type="hidden" class="form-control" name="createdBy" value="{{Auth::user()->id}}">
-        <input id="polygon" type="hidden" name="polygon" value="{{request('polygon')}}">
+        <input id="polygon" type="text" name="polygon" value="{{request('polygon')}}">
     </form>
 </div>
-
-
-
-
-
-
-
-
-
-
-
 
 
 <script type="text/javascript">
@@ -97,7 +86,7 @@
     });
 
 
-
+    ///SCRIPT FOR THE MAP
     var center = [7.2906, 80.6337];
 
     // Create the map
@@ -110,64 +99,56 @@
             maxZoom: 18
         }).addTo(map);
 
-    // Initialise the FeatureGroup to store editable layers
-    var editableLayers = new L.FeatureGroup();
-    map.addLayer(editableLayers);
+		var drawnItems = new L.FeatureGroup();
+		map.addLayer(drawnItems);
 
-    var drawPluginOptions = {
-        position: 'topright',
-        draw: {
-            polygon: {
-                allowIntersection: false, // Restricts shapes to simple polygons
-                drawError: {
-                    color: '#e1e100', // Color the shape will turn when intersects
-                    message: '<strong>Oh snap!<strong> you can\'t draw that!' // Message that will show when intersect
-                },
-                shapeOptions: {
-                    color: '#97009c'
-                }
-            },
-            // disable toolbar item by setting it to false
-            polyline: true,
-            circle: false, // Turns off this drawing tool
-            rectangle: false,
-            marker: true,
-        },
-        edit: {
-            featureGroup: editableLayers, //REQUIRED!!
-            remove: false
-        }
-    };
+		var drawControl = new L.Control.Draw({
+			position: 'topright',
+			draw: {
+				polygon: {
+					shapeOptions: {
+						color: 'purple'
+					},
+					allowIntersection: false,
+					drawError: {
+						color: 'orange',
+						timeout: 1000
+					},
+					showArea: true,
+					metric: false,
+					repeatMode: true
+				},
+				polyline: {
+					shapeOptions: {
+						color: 'red'
+					},
+				},
+                circlemarker: false,
+				rect: {
+					shapeOptions: {
+						color: 'green'
+					},
+				},
+				circle: false,
+			},
+			edit: {
+				featureGroup: drawnItems
+			}
+		});
+		map.addControl(drawControl);
 
-    // Initialise the draw control and pass it the FeatureGroup of editable layers
-    var drawControl = new L.Control.Draw(drawPluginOptions);
-    map.addControl(drawControl);
+		map.on('draw:created', function (e) {
+			var type = e.layerType,
+				layer = e.layer;
 
-    var editableLayers = new L.FeatureGroup();
-    map.addLayer(editableLayers);
+			if (type === 'marker') {
+				layer.bindPopup('A popup!');
+			}
 
-    map.on('draw:created', function(e) {
-        var type = e.layerType,
-            layer = e.layer;
-
-        if (type === 'marker') {
-            layer.bindPopup('A popup!');
-        }
-        editableLayers.addLayer(layer);
-
-
-        var shape = layer.toGeoJSON()
-        var shape_for_db = JSON.stringify(shape);
-
-        // console.log(shape);
-        // console.log(shape_for_db);
-        // $('#polygon').val(shape_for_db);
-
-        //console.log(layer.toGeoJSON());
-        $('#polygon').val(JSON.stringify(layer.toGeoJSON()));
+			drawnItems.addLayer(layer);
+            $('#polygon').val(JSON.stringify(layer.toGeoJSON()));
+   
 
     });
 </script>
-
-
 @endsection

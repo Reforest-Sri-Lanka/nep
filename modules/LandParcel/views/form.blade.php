@@ -107,7 +107,7 @@
 </div>
 
 <script type="text/javascript">
-    /// SCRIPT FOR THE MAP
+    ///SCRIPT FOR THE MAP
     var center = [7.2906, 80.6337];
 
     // Create the map
@@ -120,44 +120,43 @@
             maxZoom: 18
         }).addTo(map);
 
-    // add a marker in the given location
-    //L.marker(center).addTo(map);
+    var drawnItems = new L.FeatureGroup();
+    map.addLayer(drawnItems);
 
-    // Initialise the FeatureGroup to store editable layers
-    var editableLayers = new L.FeatureGroup();
-    map.addLayer(editableLayers);
-
-    var drawPluginOptions = {
+    var drawControl = new L.Control.Draw({
         position: 'topright',
         draw: {
             polygon: {
-                allowIntersection: false, // Restricts shapes to simple polygons
-                drawError: {
-                    color: '#e1e100', // Color the shape will turn when intersects
-                    message: '<strong>Oh snap!<strong> you can\'t draw that!' // Message that will show when intersect
-                },
                 shapeOptions: {
-                    color: '#97009c'
-                }
+                    color: 'purple'
+                },
+                allowIntersection: false,
+                drawError: {
+                    color: 'orange',
+                    timeout: 1000
+                },
+                showArea: true,
+                metric: false,
+                repeatMode: true
             },
-            // disable toolbar item by setting it to false
-            polyline: true,
-            circle: false, // Turns off this drawing tool
-            rectangle: false,
-            marker: true,
+            polyline: {
+                shapeOptions: {
+                    color: 'red'
+                },
+            },
+            circlemarker: false,
+            rect: {
+                shapeOptions: {
+                    color: 'green'
+                },
+            },
+            circle: false,
         },
         edit: {
-            featureGroup: editableLayers, //REQUIRED!!
-            remove: false
+            featureGroup: drawnItems
         }
-    };
-
-    // Initialise the draw control and pass it the FeatureGroup of editable layers
-    var drawControl = new L.Control.Draw(drawPluginOptions);
+    });
     map.addControl(drawControl);
-
-    var editableLayers = new L.FeatureGroup();
-    map.addLayer(editableLayers);
 
     map.on('draw:created', function(e) {
         var type = e.layerType,
@@ -166,52 +165,50 @@
         if (type === 'marker') {
             layer.bindPopup('A popup!');
         }
-        editableLayers.addLayer(layer);
 
-        //console.log(layer.toGeoJSON());
+        drawnItems.addLayer(layer);
         $('#polygon').val(JSON.stringify(layer.toGeoJSON()));
-
     });
 
 
     ///UPLOADING A FILE AND RETRIEVING AND CREATING A LAYER FROM IT.
     document.getElementById("upload").addEventListener("click", function() {
         var data = new FormData(document.getElementById("upload_form"));
-            event.preventDefault();
-            $.ajax({
-                url: "{{ route('ajaxmap.action') }}",
-                method: "POST",
-                data: data,
-                dataType: 'JSON',
-                contentType: false,
-                cache: false,
-                processData: false,
-                success: function(data) {
-                    $('#message').css('display', 'block');
-                    $('#message').html(data.message);
-                    $('#message').addClass(data.class_name);
-                    $('#uploaded_image').html(data.uploaded_image);
-                    var tmp = data.uploaded_image;
-                    console.log(tmp);
-                    fetch(`/${tmp}`)
-                        .then(res => res.text())
-                        .then(kmltext => {
-                            // Create new kml overlay
-                            const track = new omnivore.kml.parse(kmltext);
-                            map.addLayer(track);
+        event.preventDefault();
+        $.ajax({
+            url: "{{ route('ajaxmap.action') }}",
+            method: "POST",
+            data: data,
+            dataType: 'JSON',
+            contentType: false,
+            cache: false,
+            processData: false,
+            success: function(data) {
+                $('#message').css('display', 'block');
+                $('#message').html(data.message);
+                $('#message').addClass(data.class_name);
+                $('#uploaded_image').html(data.uploaded_image);
+                var tmp = data.uploaded_image;
+                console.log(tmp);
+                fetch(`/${tmp}`)
+                    .then(res => res.text())
+                    .then(kmltext => {
+                        // Create new kml overlay
+                        const track = new omnivore.kml.parse(kmltext);
+                        map.addLayer(track);
 
-                            //SAVING THE UPLOADED COORDIATE LAYER TO GEOJSON
-                            $('#polygon').val(JSON.stringify(track.toGeoJSON()));
+                        //SAVING THE UPLOADED COORDIATE LAYER TO GEOJSON
+                        $('#polygon').val(JSON.stringify(track.toGeoJSON()));
 
-                            // Adjust map to show the kml
-                            const bounds = track.getBounds();
-                            map.fitBounds(bounds);
-                        }).catch((e) => {
-                            console.log(e);
-                        })
-                }
-            })
-       
+                        // Adjust map to show the kml
+                        const bounds = track.getBounds();
+                        map.fitBounds(bounds);
+                    }).catch((e) => {
+                        console.log(e);
+                    })
+            }
+        })
+
     });
 
     ///TYPEAHEAD
