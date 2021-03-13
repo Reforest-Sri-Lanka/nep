@@ -4,6 +4,7 @@
   <title>National Environment Platform</title>
 
   <meta charset="utf-8">
+  <script src="{{ url('/vendor/jquery/dist/jquery.min.js') }}"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -17,15 +18,6 @@
    crossorigin=""></script>
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw-src.css" integrity="sha512-vJfMKRRm4c4UupyPwGUZI8U651mSzbmmPgR3sdE3LcwBPsdGeARvUM5EcSTg34DK8YIRiIo+oJwNfZPMKEQyug==" crossorigin="anonymous" />
    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js" integrity="sha512-ozq8xQKq6urvuU6jNgkfqAmT7jKN2XumbrX1JiB3TnF7tI48DPI4Gy1GXKD/V3EExgAs1V+pRO7vwtS1LHg0Gw==" crossorigin="anonymous"></script>
-  <!-- Argon Scripts -->
-  <!-- Core -->  
-  <script src="{{ url('/vendor/jquery/dist/jquery.min.js') }}"></script>
-  <script src="{{ url('/vendor/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
-  <script src="{{ url('/vendor/js-cookie/js.cookie.js') }}"></script>
-  <script src="{{ url('/vendor/jquery.scrollbar/jquery.scrollbar.min.js') }}"></script>
-  <script src="{{ url('/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js') }}"></script>
-  <!-- Argon JS -->
-  <script src="{{ url('/js/argon.js?v=1.2.0') }} "></script>
   <style>
    .inline{
       display: inline;
@@ -61,6 +53,16 @@
   <link href="{{ url('/vendor/@fortawesome/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
   <!-- Argon CSS -->
   <link href="{{ url('/css/argon.css') }}" rel="stylesheet" type="text/css">
+
+      <!-- Argon Scripts -->
+  <!-- Core -->  
+  <script src="{{ url('/vendor/js-cookie/js.cookie.js') }}"></script>
+  <script src="{{ url('/vendor/jquery.scrollbar/jquery.scrollbar.min.js') }}"></script>
+  <script src="{{ url('/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js') }}"></script>
+  <script src="{{ url('/vendor/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+
+  <!-- Argon JS -->
+  <script src="{{ url('/js/argon.js?v=1.2.0') }} "></script>
 </head>
 
 <body class="bg-secondary">
@@ -245,14 +247,15 @@
     <!-- Page content -->
     <div class="container-fluid">
       <div class="row">
-          <div class="col-xl-12">
+          <div class="col-sm-12">
             @yield('cont')
           </div>
       </div>
     </div>
-    <div class="container-fixed">
+  </div>
+  <div class="footer">
       <div class="row">
-          <div class="col-xl-12">
+          <div class="col-sm">
               <footer class="footer">
                 <div class="d-flex  bg-success justify-content-end">
                     <br>
@@ -277,12 +280,5 @@
           </div>
       </div>            
     </div>
-
-  </div>
-
-
-  {{-- sticky footer --}}
-
-
 </body>
 </html>
