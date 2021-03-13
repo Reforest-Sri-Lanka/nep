@@ -47,23 +47,23 @@
                 <div class="form-group">
                   <label>Removal Requestor Type:</label>
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input verifythis" oninput="this.className = 'form-check-input'" type="radio" name="removalrequestortype" id="removalrequestortype1" value="gov" required>
+                    <input class="form-check-input verifythis" oninput="this.className = 'form-check-input'" type="radio" name="removalrequestortype" id="removalrequestortype1" value="1">
                     <label class="form-check-label" for="removalrequestortype1">
                       Government
                     </label>
                   </div>
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input verifythis" oninput="this.className = 'form-check-input'" type="radio" name="removalrequestortype" id="removalrequestortype2" value="pvt" required>
+                    <input class="form-check-input verifythis" oninput="this.className = 'form-check-input'" type="radio" name="removalrequestortype" id="removalrequestortype2" value="2">
                     <label class="form-check-label" for="removalrequestortype2">
                       Private
                     </label>
                   </div>
                 </div>
                 <div class="form-group">
-                  Removal Requestor:<input type="text" class="form-control typeahead3 verifythis" oninput="this.className = 'form-control typeahead3'" name="organization" placeholder="Search" required />
+                  Removal Requestor:<input type="text" class="form-control typeahead3 verifythis" oninput="this.className = 'form-control typeahead3'" name="removal_requestor" placeholder="Search" />
                   <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="otherremovalrequestor" value="1" name="otherremovalrequestor">
-                    <label class="custom-control-label" for="otherremovalrequestor">Other</label>
+                    <input type="checkbox" class="custom-control-input" id="customCheck2" value="1" name="checkremovalrequestor">
+                    <label class="custom-control-label" for="customCheck2"><strong>Other</strong></label>
                   </div>
                 </div>
               </div>
@@ -77,27 +77,27 @@
             <div class="form-group">
               <label>Land Owner Type:</label>
               <div class="form-check form-check-inline">
-                <input class="form-check-input verifythis" oninput="this.className = 'form-check-input'" type="radio" name="landownertype" id="landownertype1" value="gov" required>
+                <input class="form-check-input verifythis" oninput="this.className = 'form-check-input'" type="radio" name="landownertype" id="landownertype1" value="1" required>
                 <label class="form-check-label" for="landownertype1">
                   Government
                 </label>
               </div>
               <div class="form-check form-check-inline">
-                <input class="form-check-input verifythis" oninput="this.className = 'form-check-input'" type="radio" name="landownertype" id="landownertype2" value="pvt" required>
+                <input class="form-check-input verifythis" oninput="this.className = 'form-check-input'" type="radio" name="landownertype" id="landownertype2" value="2" required>
                 <label class="form-check-label" for="landownertype2">
                   Private
                 </label>
               </div>
             </div>
             <div class="form-group">
-              Land Owner:<input type="text" class="form-control typeahead3 verifythis" oninput="this.className = 'form-control typeahead3'" placeholder="Search" />
+              Land Owner:<input type="text" class="form-control typeahead3 verifythis" oninput="this.className = 'form-control typeahead3'" placeholder="Search" name="land_owner" />
               <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="otherlandowner" value="1" name="otherlandowner">
-                <label class="custom-control-label" for="otherlandowner">Other</label>
+                <input type="checkbox" class="custom-control-input" id="customCheck1" value="1" name="checklandowner">
+                <label class="custom-control-label" for="customCheck1"><strong>Other</strong></label>
               </div>
             </div>
             <!-- ////////MAP GOES HERE -->
-            <div id="mapid" style="height:400px;" name="map" ></div>
+            <div id="mapid" style="height:400px;" name="map"></div>
             <input id="polygon" type="hidden" name="polygon" value="{{request('polygon')}}" />
             <div class="custom-control custom-checkbox">
               <input type="checkbox" class="custom-control-input" id="customCheck" value="1" name="isProtected">
@@ -109,7 +109,7 @@
               <div class="col">
                 <div class="form-group">
                   <label for="number_of_trees">Number of Trees</label>
-                  <input type="text" class="form-control verifythis" oninput="this.className = 'form-control'" id="number_of_trees" name="number_of_trees" >
+                  <input type="text" class="form-control verifythis" oninput="this.className = 'form-control'" id="number_of_trees" name="number_of_trees">
                 </div>
 
                 <div class="form-group">

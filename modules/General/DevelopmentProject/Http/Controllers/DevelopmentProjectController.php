@@ -71,7 +71,7 @@ class DevelopmentProjectController extends Controller
             $process->form_type_id = 2;
             $process->form_id = $latest->id;
             $process->created_by_user_id = request('createdBy');
-            $process->requst_organization = Auth::user()->organization_id;
+            $process->request_organization = Auth::user()->organization_id;
             $process->activity_organization = $governing_organization;
             $process->save();
         }

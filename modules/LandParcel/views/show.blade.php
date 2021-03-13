@@ -44,7 +44,7 @@
             <div class="input-group-prepend">
                 <span class="input-group-text">Status: </span>
             </div>
-            <input type="text" class="form-control" placeholder="{{$land->status->type}}" readonly>
+            <input type="text" class="form-control" placeholder="{{$land->status}}" readonly>
         </div>
 
 

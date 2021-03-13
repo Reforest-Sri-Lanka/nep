@@ -212,7 +212,7 @@ class ApprovalItemController extends Controller
         ]);
         $Process_item =new Process_item;
         $Process_item->Created_by_user_id = $request['create_by'];
-        $Process_item->requst_organization = $request['create_organization'];
+        $Process_item->request_organization = $request['create_organization'];
         $Process_item->activity_organization = $request['organization'];
         $Process_item->form_id = $Process_item_old['form_id'];
         $Process_item->form_type_id = $Process_item_old['form_type_id'];  

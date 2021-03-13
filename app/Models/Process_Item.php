@@ -13,7 +13,7 @@ class Process_Item extends Model
     protected $fillable = [
         'form_type_id',
         'form_id',
-        'requst_organization',
+        'request_organization',
         'activity_organization',
         'activity_user_id',
         'remark',
@@ -21,6 +21,10 @@ class Process_Item extends Model
         'prerequsite_id',
         'created_by_user_id',
         'status_id',
+        'other_land_owner_type',
+        'other_land_owner_name',
+        'other_removal_requestor_type',
+        'other_removal_requestor_name',
     ];
 
     protected $attributes = [
@@ -29,8 +33,12 @@ class Process_Item extends Model
         'remark' => 0,
         'status_id' => 1,
         'activity_organization' => 0,
-        'requst_organization' => 0,
+        'request_organization' => 0,
         'activity_user_id' => 0,
+        'other_land_owner_type' => 0,
+        'other_land_owner_name' => '',
+        'other_removal_requestor_type' => 0,
+        'other_removal_requestor_name' => '',
     ];
 
     public function form_type()

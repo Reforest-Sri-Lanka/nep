@@ -107,8 +107,6 @@
             maxZoom: 18
         }).addTo(map);
 
-    // add a marker in the given location
-    L.marker(center).addTo(map);
 
     //FROM LARAVEL THE COORDINATES ARE BEING TAKEN TO THE SCRIPT AND CONVERTED TO JSON
     var polygon = @json($polygon);
