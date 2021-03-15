@@ -596,7 +596,7 @@ h6,
 
 .display-4
 {
-    font-size: 1.6275rem;
+    font-size: 3.5rem;
     font-weight: 600;
     line-height: 1.5;
 }
@@ -782,8 +782,8 @@ pre code
     width: 100%;
     margin-right: auto;
     margin-left: auto; 
-    padding-right: 15px;
-    padding-left: 15px;
+    padding-right: 10px;
+    padding-left: 10px;
 }
 @media (min-width: 576px)
 {
@@ -796,7 +796,7 @@ pre code
 {
     .container
     {
-        max-width: 720px;
+        max-width: 760px;
     }
 }
 @media (min-width: 992px)
@@ -22094,7 +22094,7 @@ textarea[resize='horizontal']
 
 .navbar-vertical.navbar-expand-xs.fixed-right + .main-content
 {
-    margin-right: 62px;
+    margin-right: px;
 }
 
 @media (min-width: 576px)
@@ -22205,7 +22205,7 @@ textarea[resize='horizontal']
 .sidenav .navbar-brand,
 .sidenav .navbar-heading
 {
-    padding: 0.1rem;
+    padding: 1.5rem;
 }
 
 .sidenav-header
@@ -22244,7 +22244,7 @@ textarea[resize='horizontal']
 
 .g-sidenav-pinned .sidenav
 {
-    max-width: 260px !important;
+    max-width: 250px !important;
 }
 .g-sidenav-pinned .sidenav .navbar-brand,
 .g-sidenav-pinned .sidenav .navbar-heading
@@ -23887,7 +23887,7 @@ h6 > a
 
 .heading
 {
-    font-size: .5rem;
+    font-size: .95rem;
     font-weight: 600; 
 
     letter-spacing: .025em;
@@ -23916,7 +23916,7 @@ h6 > a
 
 .heading-section
 {
-    font-size: 1.375rem;
+    font-size: 2rem;
     font-weight: 600;
 
     letter-spacing: .025em;
