@@ -227,12 +227,13 @@
             maxZoom: 18
         }).addTo(map);
 
-    // add a marker in the given location
-    L.marker(center).addTo(map);
 
-    var polygon= @json($polygon);
-    L.geoJSON(JSON.parse(polygon)).addTo(map);
-
+    var polygon = @json($polygon);
+    var layer = L.geoJSON(JSON.parse(polygon)).addTo(map);
+    
+    // Adjust map to show the kml
+    var bounds = layer.getBounds();
+    map.fitBounds(bounds);
 </script>
 @endsection
 

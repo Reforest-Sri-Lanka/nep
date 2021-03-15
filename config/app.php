@@ -196,6 +196,8 @@ return [
         CrimeReport\Providers\CrimeReportServiceProvider::class,
         Environment\Providers\RouteServiceProvider::class,
         Environment\Providers\EnvironmentServiceProvider::class,
+        LandParcel\Providers\RouteServiceProvider::class,
+        LandParcel\Providers\LandServiceProvider::class,
     ],
     /*
     |--------------------------------------------------------------------------

@@ -15,11 +15,13 @@ class CreateLandHasOrganizationsTable extends Migration
     {
         Schema::create('land_has_organizations', function (Blueprint $table) {
             $table->id();
-            $table->integer('land_parcel_id');
-            $table->integer('organization_id');
+            $table->unsignedBigInteger('land_parcel_id')->nullable();
+            $table->unsignedBigInteger('organization_id')->nullable();
             $table->timestampsTz(); //time stamp with timezone in UTC
             $table->tinyInteger('status');
             $table->softDeletesTz('deleted_at', 0);
+            $table->foreign('land_parcel_id')->references('id')->on('land_parcels')->onDelete('cascade');
+            $table->foreign('organization_id')->references('id')->on('organizations')->onDelete('cascade');
         });
     }
 

@@ -1,8 +1,7 @@
-@extends('home')
+@extends('general')
 
-@section('cont')
-<kbd><a href="/general/general" class="text-white font-weight-bolder"><i class="fas fa-chevron-left"></i></i> BACK</a></kbd>
-<h3 class="p-3 display-4">Request handling</h3>
+@section('general')
+<h3 class="p-3 display-6">Request handling</h3>
 <hr>
 <span>
     <h3 class="text-center bg-success text-light">{{session('message')}}</h3>

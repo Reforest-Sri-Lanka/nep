@@ -44,7 +44,7 @@ class CrimeReportController extends Controller
         $Process_item->activity_user_id = $request['authority_id'];
         $Process_item->prerequisite = "4";
         $Process_item->prerequsite_id = $request['crimeid'];
-        $Process_item->requst_organization = "0";
+        $Process_item->request_organization = "0";
         $Process_item->status = "0";
         $Process_item->remark = $request['comment'];
         $Process_item->save();
@@ -154,7 +154,7 @@ class CrimeReportController extends Controller
         
         $Process_item =new Process_item;
         $Process_item->created_by_user_id = $request['create_by'];
-        $Process_item->requst_organization = "1";
+        $Process_item->request_organization = "1";
         $Process_item->activity_organization = $request['organization'];
         $Process_item->activity_user_id = null;
         $Process_item->form_id =  $id;
