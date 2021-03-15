@@ -25,7 +25,7 @@
 </div>
 <hr>
 <div class="row border-secondary rounded-lg ml-3">
-    <h5 class="p-3">New requests to confirm Organization assigning</h5>
+    <h2 class="p-3">New requests to confirm Organization assigning</h5>
 </div>
 <form action="/general/filterItems" method="get">
     @csrf

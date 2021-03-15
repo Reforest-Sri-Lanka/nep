@@ -96,7 +96,7 @@ body
     text-align: left;
 
     color: #525f7f;
-    background-color: #f8f9fe;
+    background-color: #f0f0f7;
 }
 
 [tabindex='-1']:focus:not(:focus-visible)
@@ -497,7 +497,7 @@ h6,
     font-weight: 600;
     line-height: 1.5;
 
-    margin-bottom: .5rem;
+    margin-bottom: .1rem;
 
     color: #32325d;
 }
@@ -531,7 +531,7 @@ h3,
 h4,
 .h4
 {
-    font-size: .9375rem;
+    font-size: 1.2375rem;
 }
 
 h5,

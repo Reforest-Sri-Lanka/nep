@@ -49,9 +49,6 @@
       height: 75px;
       line-height: 15px;
     }
-
-
-/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
   </style>
   <link href="{{ url('/css/app.css') }}" rel="stylesheet">
   <!-- Fonts -->
@@ -73,7 +70,7 @@
   <script src="{{ url('/js/argon.js?v=1.2.0') }} "></script>
 </head>
 
-<body class="bg-secondary">
+<body>
   <!-- Sidenav -->
   <nav class="sidenav navbar navbar-vertical  fixed-left  navbar-expand-xs navbar-light bg-white" id="sidenav-main">
     <div class="scrollbar-inner">
@@ -88,17 +85,13 @@
           <!-- Nav items -->
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link " href="">National Environment Platform
-              </a>
+              <a class="nav-link " href="">National Environment Platform</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="/home">
-                <i class="ni ni-tv-2 text-primary"></i>
-                <span class="nav-link-text">Dashboard</span>
+              <a class="nav-link" href="/general/pending">
+                <i class="ni ni-app text-orange"></i>
+                <span class="nav-link-text">General Module</span>
               </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-light font-italic p-2" href="/general/pending">General Module</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/user/index">
@@ -140,13 +133,7 @@
         </div>
       </div>
     </div>
-    <div style="background-color:#f0f0f7" class="col-md p-2 border border-secondary rounded-lg ml-2 mr-3">
-      @yield('cont')
-    </div>
-</div>
-</div>
-<br>
-
+  </nav>
   <!-- Main content -->
   <div class="main-content" id="panel">
     <!-- Topnav -->
@@ -191,6 +178,7 @@
                       </div>
                     </div>
                   </a>
+                </div>
                 <!-- View all -->
                 <a href="#!" class="dropdown-item text-center text-primary font-weight-bold py-3">View all</a>
               </div>
@@ -200,7 +188,7 @@
             <li class="nav-item dropdown">
             @guest
             <li class="nav-item">
-            <a class="nav-link text-light" href="{{ route('login') }}">{{ __('Login') }}</a>
+              <a class="nav-link text-light" href="{{ route('login') }}">{{ __('Login') }}</a>
             </li>
             @if (Route::has('register'))
                 <li class="nav-item">
@@ -226,7 +214,7 @@
                   <i class="ni ni-single-02"></i>
                   <span>User</span>
                 </a>
-                <a href="#!" class="dropdown-item">
+                <a href="/admin/passwordReset" class="dropdown-item">
                   <i class="ni ni-settings-gear-65"></i>
                   <span>Change my password</span>
                 </a>
@@ -255,40 +243,31 @@
       </div>
     </nav>
     <!-- Page content -->
-    <div class="container-fluid">
-      <div class="row">
-          <div class="col-sm-12">
-            @yield('cont')
-          </div>
-      </div>
+    <div class="col-md p-2 border border-secondary rounded-lg ml-2 mr-3">
+      @yield('cont')
     </div>
   </div>
-  <div class="footer">
-      <div class="row">
-          <div class="col-sm">
-              <footer class="footer">
-                <div class="d-flex  bg-success justify-content-end">
-                    <br>
-                    <a href="#" class="text-secondary mr-2">
-                      <i class="fab fa-facebook-square"></i> Facebook |
-                    </a>
-                    <a href="#" class="text-secondary mr-2">
-                      <i class="fab fa-twitter-square"></i> Twitter |
-                    </a>
-                    <a href="#" class="text-secondary mr-2">
-                      <i class="fab fa-instagram"></i>  Instagram
-                    </a>
-                  </div>
-                  <div class="d-flex bg-success justify-content-center">
-                    <h5 class="text-secondary"><i class="far fa-copyright"></i> 2021 by RFSL - LSF - Ministry of Environment</h5><br>
-                  </div>
-                  <div class="d-flex bg-success justify-content-center">
-                    <h6>All rights reserved</h6>
-                  </div>
-                <div>  
-            </footer>
-          </div>
-      </div>            
-    </div>
+  <div class="footer" style="background-color:#f0f0f7">
+    <footer>
+      <div class="d-flex  bg-success justify-content-end">
+        <a href="#" class="text-secondary mr-2">
+          <i class="fab fa-facebook-square"></i> Facebook |
+        </a>
+        <a href="#" class="text-secondary mr-2">
+          <i class="fab fa-twitter-square"></i> Twitter |
+        </a>
+        <a href="#" class="text-secondary mr-2">
+          <i class="fab fa-instagram"></i>  Instagram
+        </a>
+        </div>
+        <div class="d-flex bg-success justify-content-center">
+          <h5 class="text-secondary"><i class="far fa-copyright"></i> 2021 by RFSL - LSF - Ministry of Environment</h5><br>
+        </div>
+        <div class="d-flex bg-success justify-content-center">
+          <h6>All rights reserved</h6>
+        </div>
+      <div>  
+    </footer>         
+  </div>
 </body>
 </html>
