@@ -4,7 +4,7 @@
 
 <div class="flex row border-secondary rounded-lg ml-3 justify-content-between">
     <span>
-        <h5 class="p-3">{{Auth::user()->role->title}}</h5>
+        <h1 class="p-2">{{Auth::user()->role->title}}</h5>
     </span>
     <!-- Sessions to display success or failure -->
     <span>

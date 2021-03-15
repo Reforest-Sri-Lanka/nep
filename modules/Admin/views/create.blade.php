@@ -4,7 +4,7 @@
 
 <kbd><a href="/user/index" class="text-white font-weight-bolder"><i class="fas fa-chevron-left"></i></i> BACK</a></kbd>
 <div class="container">
-    <h2 style="text-align:center;" class="text-dark">Create User</h2>
+    <h1 style="text-align:center;" class="text-dark">Create User</h2>
     <hr>
     <div class="row justify-content-md-center border p-4 bg-white">
         <div class="col-6 ml-3">
@@ -52,6 +52,7 @@
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text">Designation</span>
+                    </div>
                         <select name="designation" class="custom-select">
                             <option selected>Select Designation</option>
                             <option value=1>Additional Director</option>
@@ -62,7 +63,6 @@
                             <option value=6>Deputy Manager</option>
                             <option value=7>Assistant Manager</option>
                         </select>
-                    </div>
                 </div>
                 @error('designation')
                 <div class="alert alert-danger">{{ $message }}</div>
@@ -71,6 +71,7 @@
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text">Role</span>
+                    </div>
                         <select name="role" class="custom-select">
                             <option selected>Select Role</option>
                             @if(Auth::user()->role_id == 1 ||Auth::user()->role_id == 2)
@@ -83,7 +84,6 @@
                             <option value=5>Staff</option>
                             <option value=6>Citizen</option>
                         </select>
-                    </div>
                 </div>
                 @error('role')
                 <div class="alert alert-danger">{{ $message }}</div>
