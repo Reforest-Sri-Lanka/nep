@@ -13,4 +13,9 @@ class Gazette extends Model
     public function development_projects(){
         return $this->hasMany('App\Models\Development_Project');
     }
+
+    public function land_parcels()
+    {
+        return $this->belongsToMany(Land_Parcel::class, 'Land_Has_Gazette');
+    }
 }

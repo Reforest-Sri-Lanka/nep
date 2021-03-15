@@ -15,29 +15,42 @@
                     <th>Date complained logged</th>
                     <th>Action taken</th>
                     <th>Status</th>
+                    <th>photo</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td>{{$crime->id}}</td>
-                    <td>{{$crime->crime_type}}</td>
+                    <td>{{$crime->crime_type->type}}</td>
                     <td>{{$crime->description}}</td>
                     <td>{{$crime->polygon}}</td>
                     <td>{{$crime->created_at}}</td>
                     <td>{{$crime->action_taken}}</td>
-                    <td>{{$crime->status}}</td>
+                    <td>a</td>
+                    <th>a</th>
                     <!-- <td><a href='/edit/{{ $crime->id }}' class="btn btn-outline-warning" role="button" >Edit</a></td>
                     <td><a href="#" class="btn btn-outline-danger" role="button">Disable</a></td> -->
                 </tr>
             </tbody>
         </table>
+        </br>
+        <div class="card-deck">
+            @foreach($Photos as $photo)
+            <div class="card" style="background-color:#99A3A4">
+                <img class="card-img-top" src="{{asset('/storage/'.$photo)}}" alt="photo">
+                <div class="card-body text-center">
+                <a class="nav-link text-dark font-italic p-2" href="/crime-report/downloadimage/{{$photo}}">Download Image</a>
+                </div>
+            </div>
+            @endforeach
+        </div>
     </div>
+    
 </div>
-</br>
 </br>
 <div class="row justify-content-between">
     <div class="col-md-3">
-    <h6>Check relevant details</h6>
+        <h6>Check relevant details</h6>
         <form action="#" method="get">
             @csrf
             <h6>Select permission type</h6>
@@ -92,8 +105,6 @@
             </tbody>
         </table>
     </div>
-</div>
-</br>
 </div>
 @endsection
 

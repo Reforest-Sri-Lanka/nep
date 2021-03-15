@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use General\Http\Controllers\GeneralController;
 use App\Http\Controllers\RoleController;
 //use App\Http\Controllers\Crime_reportController;
 
@@ -20,9 +21,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/home', function () {
-    return view('test/dashboard');
-})->middleware(['auth', 'verified']);
+Route::get('/home', [GeneralController::class, 'pending']);
 
 //Route::get('/admin', 'AdministratorController@index');
 
@@ -47,8 +46,14 @@ Route::get('/newtreecut',fn() => view('general.treecutting.treecut')); */
 
 
 Route::get('/search', [UserController::class, 'search']);
-Route::get('/autocomplete', [UserController::class, 'autocomplete'])->name('autocomplete');
+//Route::get('/autocomplete', [UserController::class, 'autocomplete'])->name('autocomplete');
 
 Route::get('/map', function(){
     return view('map');
 });
+
+Route::get('/loadmap', function(){
+    return view('loadmap');
+});
+
+Route::post('/ajax_upload/action', [UserController::class, 'action'])->name('ajaxupload.action');

@@ -21,7 +21,7 @@ jobs:
       with:
         node-version: 12
         registry-url: https://registry.npmjs.org/
-      run: |
+    - run: |
           npm i
           npm run prod
     - name: Deploy to Server

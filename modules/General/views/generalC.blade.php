@@ -43,7 +43,7 @@
     <div class="col-md-3">
         <div class="card bg-dark text-light">
             <div class="card-header text-center">
-                <a class="nav-link text-light font-italic p-2" href="/crime-report/crimehome">Complaints</a>
+                <a class="nav-link text-light font-italic p-2" href="/crime-report/crimehome">Crime Reporting</a>
             </div>
             <div class="card-body text-center text-light">
                 <p class="card-text p-2">Quick links</p>
@@ -53,6 +53,9 @@
         </div>
     </div>
 </div>
+
+<a class="nav-link text-dark font-bold p-2" href="/land/form">Register a Land</a>
+
 <hr>
 <div class="row border-secondary rounded-lg ml-3">
     <h5 class="p-3">My requests</h5>

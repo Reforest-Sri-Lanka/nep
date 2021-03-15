@@ -16,35 +16,19 @@ use Illuminate\Support\Facades\Auth;
 
 class TreeRemovalController extends Controller
 {
-    // public function home()
-    // {
-    //     $name = 'Yashod';
-    //     return view('treeRemoval::home', compact('name'));
-    // }
-
     public function openForm()
     {
-        $lands = Land_Parcel::all();
-        $provinces = Province::all();
-        $districts = District::all();
-        $gs_divisions = GS_Division::all();
-        $organizations = Organization::all();
-        return view('treeRemoval::form', [
-            'lands' => $lands,
-            'provinces' => $provinces,
-            'districts' => $districts,
-            'gs_divisions' => $gs_divisions,
-            'organizations' => $organizations,
-
-        ]);
+        return view('treeRemoval::form');
     }
 
-    public function save()
+    public function save(Request $request)
     {
-
         $land = new Land_Parcel();
         $land->title = request('landTitle');
-        $land->governing_organizations = request('governing_orgs');
+
+        $governing_organizations1 = request('removal_requestor');
+        $land->governing_organizations = Organization::where('title', $governing_organizations1)->pluck('id');
+
         $land->polygon = request('polygon');
         $land->created_by_user_id = request('createdBy');
         if (request('isProtected')) {
@@ -67,11 +51,25 @@ class TreeRemovalController extends Controller
         $tree->no_of_flora_species = request('number_of_flora_species');
         $tree->species_special_notes = request('species_special_notes');
         $tree->land_parcel_id = $landid;
-        $tree->district_id = request('district_id');
-        $tree->province_id = request('province_id');
-        $tree->gs_division_id = request('gs_division_id');
+        //$tree->district_id = request('district_id');
+        //$tree->province_id = request('province_id');
+        //$tree->gs_division_id = request('gs_division_id');
+        //$tree->governing_organizations = request('governing_orgs');
+
+        $district_id1 = District::where('district', request('district'))->pluck('id');
+        $tree->district_id = $district_id1[0];
+
+        $province_id1 = Province::where('province', request('province'))->pluck('id');
+        //$tree->province_id = Province::where('province','=',$province_id1)->get();
+        $tree->province_id = $province_id1[0];
+
+        $gs_division_id1 = GS_Division::where('gs_division', request('gs_division'))->pluck('id');
+        $tree->gs_division_id = $gs_division_id1[0];
+
+        $tree->governing_organizations = Organization::where('title', $governing_organizations1)->pluck('id');
+
         $tree->tree_locations = request('location');
-        $tree->governing_organizations = request('governing_orgs');
+
         $tree->save();
 
         $latest = Tree_Removal_Request::latest()->first();
@@ -81,11 +79,30 @@ class TreeRemovalController extends Controller
             $process->form_type_id = 1;
             $process->form_id = $latest->id;
             $process->created_by_user_id = request('createdBy');
-            $process->requst_organization = Auth::user()->organization_id;
-            $process->activity_organization = $governing_organization;
+            //$process->requst_organization = Auth::user()->organization_id;
+            //$process->activity_organization = $governing_organization;
+
+            //Getting the IDs of organizations to create the activity_organization and request_organization in rocess item table
+
+
+
+            if (request('checklandowner')) {
+                $process->other_land_owner_name = request('land_owner');
+                $process->other_land_owner_type = request('landownertype');
+            } else {
+                $land_owner = Organization::where('title', request('land_owner'))->pluck('id');
+                $process->request_organization = $land_owner[0];
+            }
+            if (request('checkremovalrequestor')) {
+                $process->other_removal_requestor_name = request('removal_requestor');
+                $process->other_removal_requestor_type = request('removalrequestortype');
+            } else {
+                $removal_requestor = Organization::where('title', request('removal_requestor'))->pluck('id');
+                $process->activity_organization = $removal_requestor[0];
+            }
             $process->save();
         }
-        return redirect('/general/general')->with('message', 'Request Created Successfully');
+        return redirect('/general/pending')->with('message', 'Request Created Successfully');
     }
 
     public function show($id)
@@ -99,5 +116,41 @@ class TreeRemovalController extends Controller
             'location' => $location_data,
             'polygon' => $land_data->polygon,
         ]);
+    }
+
+    public function provinceAutocomplete(Request $request)
+    {
+        $data = Province::select("province")
+            ->where("province", "LIKE", "%{$request->terms}%")
+            ->get();
+
+        return response()->json($data);
+    }
+
+    public function districtAutocomplete(Request $request)
+    {
+        $data = District::select("district")
+            ->where("district", "LIKE", "%{$request->terms}%")
+            ->get();
+
+        return response()->json($data);
+    }
+
+    public function organizationAutocomplete(Request $request)
+    {
+        $data = Organization::select("title")
+            ->where("title", "LIKE", "%{$request->terms}%")
+            ->get();
+
+        return response()->json($data);
+    }
+
+    public function GSAutocomplete(Request $request)
+    {
+        $data = GS_Division::select("gs_division")
+            ->where("gs_division", "LIKE", "%{$request->terms}%")
+            ->get();
+
+        return response()->json($data);
     }
 }

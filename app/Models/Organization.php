@@ -8,14 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Organization extends Model
 {
     use HasFactory;
-    
+
     protected $table = 'organizations';
     public $timestamps = true;
 
 
     protected $fillable = [
         'title',
-       
+
     ];
 
 
@@ -35,18 +35,25 @@ class Organization extends Model
     // {
     //     return $this->hasOne('App\Models\Type');
     // }
-    
+
     public function type()
     {
         return $this->belongsTo(\App\Models\Type::class, 'type_id');
     }
 
     // A user belongs to one organization and an organization has many users.
-    public function users(){
+    public function users()
+    {
         return $this->hasMany('App\Models\User');
     }
 
-    public function environment_restorations(){
+    public function environment_restorations()
+    {
         return $this->hasMany('App\Models\Environment_Restoration');
+    }
+
+    public function land_parcels()
+    {
+        return $this->belongsToMany(Land_Parcel::class, 'Land_Has_Organization');
     }
 }
