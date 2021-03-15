@@ -29,8 +29,16 @@ class LandController extends Controller
         ]);
     }
 
-    public function save()
+    public function save(Request $request)
     {
+
+        $request->validate([
+            'title' => 'required',
+            'landTitle' => 'required',
+            'governing_orgs' => 'required',
+            'gazettes' => 'required',
+            'polygon' => 'required'
+        ]);
 
         $land = new Land_Parcel();
         $land->title = request('landTitle');

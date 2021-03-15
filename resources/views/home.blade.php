@@ -80,7 +80,7 @@ html {
             <i class="fas fa-bell mr-1"> <span class="badge badge-light">4</span>        |</i>
         </a>
 
-        <a href="admin/passwordReset" class="text-secondary">
+        <a href="/admin/passwordReset" class="text-secondary">
             <i class="fas fa-cog mr-1">          |</i>
         </a>
 

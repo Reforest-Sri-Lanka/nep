@@ -14,10 +14,6 @@ use Illuminate\Support\Facades\Auth;
 
 class DevelopmentProjectController extends Controller
 {
-    public function test()
-    {
-        return view('developmentProject::index');
-    }
 
     //Returns the view for the application form passing in data of lands, organziations and gazettes
     public function form()
@@ -32,6 +28,14 @@ class DevelopmentProjectController extends Controller
     // depenign on the number of governing organizations selected.
     public function save(Request $request)
     {
+        $request->validate([
+            'title' => 'required',
+            'landTitle' => 'required',
+            'organization' => 'required|exists:organizations,title',
+            'gazette' => 'required|exists:gazettes,gazette_number',
+            'polygon' => 'required'
+        ]);
+
         $land = new Land_Parcel();
         $land->title = request('landTitle');
         
