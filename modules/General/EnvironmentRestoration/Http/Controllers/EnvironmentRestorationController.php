@@ -7,12 +7,9 @@ use App\Models\Environment_Restoration_Activity;
 use App\Models\Environment_Restoration_Species;
 use App\Models\Organization;
 use App\Models\Process_Item;
-use App\Models\Type;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use App\Http\Controllers\Hash;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\UserRequest;
 use App\Models\Ecosystem;
 use Livewire\WithPagination;
 

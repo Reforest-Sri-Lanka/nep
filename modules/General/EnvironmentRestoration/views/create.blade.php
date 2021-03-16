@@ -73,7 +73,8 @@
                 <div class="row border rounded-lg p-4 bg-white">
                     <!-- creating the species table followed by ajax script to add and remove species in the table -->
                     <div class="table-responsive">
-                        <h5> Species </h5>
+                        <h4> Species </h4>
+                        <br/>
                         <form method="post" id="dynamic_form">
                             <span id="result"></span>
                             <table class="table table-bordered table-striped" id="species">
