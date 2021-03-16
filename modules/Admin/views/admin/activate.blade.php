@@ -9,7 +9,7 @@
     <hr>
     <div class="row justify-content-md-center border p-4 bg-white">
         <div class="col-6 ml-3">
-            <form method="post" action="/admin/activate/{{$user->id}}">
+            <form method="post" action="/admin/activate/{{$user->id}}" class="needs-validation" novalidate>
                 @csrf
                 @method('patch')
 
@@ -33,13 +33,11 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text">Role</span>
                     </div>
-                    <select name="role" class="custom-select">
-                        <option selected>Select Role</option>
-                        <option value=2>Admin</option>
-                        <option value=3>Head Of Organization</option>
-                        <option value=4>Manager</option>
-                        <option value=5>Staff</option>
-                        <option value=6>Citizen</option>
+                    <select name="role" class="custom-select" required>
+                        <option selected value="">Select Role</option>
+                        @foreach($roles as $role)
+                        <option value="{{$role->id}}">{{$role->title}}</option>
+                        @endforeach
                     </select>
                 </div>
                 @error('role')
@@ -50,13 +48,11 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text">Organization</span>
                     </div>
-                    <select name="organization" class="custom-select">
-                        <option selected>Select Organization</option>
-                        <option value=1>Reforest Sri Lanka</option>
-                        <option value=2>Ministry of Environment</option>
-                        <option value=3>Central Environmental Authority</option>
-                        <option value=4>Ministry of Wilflife</option>
-                        <option value=5>Road Development Agency</option>
+                    <select name="organization" class="custom-select" required>
+                        <option selected value="">Select Organization</option>
+                        @foreach($organizations as $organization)
+                        <option value="{{$organization->id}}">{{$organization->title}}</option>
+                        @endforeach
                     </select>
                 </div>
                 @error('organization')
@@ -67,15 +63,11 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text">Designation</span>
                     </div>
-                    <select name="designation" class="custom-select">
-                        <option selected>Select Designation</option>
-                        <option value=1>Additional Director</option>
-                        <option value=2>Manager</option>
-                        <option value=3>Director</option>
-                        <option value=4>Staff Assistant</option>
-                        <option value=5>Assistant Director</option>
-                        <option value=6>Deputy Manager</option>
-                        <option value=7>Assistant Manager</option>
+                    <select name="designation" class="custom-select" required>
+                        <option selected value="">Select Designation</option>
+                        @foreach($designations as $designation)
+                        <option value="{{$designation->id}}">{{$designation->designation}}</option>
+                        @endforeach
                     </select>
                 </div>
                 @error('designation')
@@ -101,4 +93,24 @@
         </div>
     </div>
 </div>
+<script>
+    // Disable form submissions if there are invalid fields
+    (function() {
+        'use strict';
+        window.addEventListener('load', function() {
+            // Get the forms we want to add validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function(form) {
+                form.addEventListener('submit', function(event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+</script>
 @endsection

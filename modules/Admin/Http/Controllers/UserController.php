@@ -2,7 +2,10 @@
 
 namespace Admin\Http\Controllers;
 
+use App\Models\Designation;
+use App\Models\Organization;
 use App\Models\User;
+use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -21,7 +24,21 @@ class UserController extends Controller
     // Returns the create.blade.php view in the admin module.
     public function create()
     {
-        return view('admin::create');
+        $organizations = Organization::all();
+        $designations = Designation::all();
+        if(Auth::user()->role_id == 1 ||Auth::user()->role_id == 2){
+            $roles = Role::where('id', '>', 1)->get();
+        } elseif(Auth::user()->role_id == 3){
+            $roles = Role::where('id', '>', 3)->get();
+        } elseif (Auth::user()->role_id == 4) {
+            $roles = Role::where('id', '>', 4)->get();
+        }
+                        
+        return view('admin::create', [
+            'designations' => $designations,
+            'organizations' => $organizations,
+            'roles' => $roles,
+        ]);
     }
 
     // When the user fills in the details of the new user and clicks submit it will be handled here
@@ -29,21 +46,21 @@ class UserController extends Controller
     // Hope to send an email to the newly created user's email saying login and change password?
     public function store(Request $request)
     {
-        if (Auth::user()->role_id == 1 || Auth::user()->role_id == 2) {
-            $request->validate([
-                'name' => 'required',
-                'email' => 'required|email',
-                'designation' => 'required|in:1,2,3,4,5,6,7',
-                'role' => 'required|in:2,3,4,5,6',
-                'organization' => 'required',
-            ]);
-        }
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email',
-            'designation' => 'required|in:1,2,3,4,5,6,7',
-            'role' => 'required|in:2,3,4,5,6',
-        ]);
+        // if (Auth::user()->role_id == 1 || Auth::user()->role_id == 2) {
+        //     $request->validate([
+        //         'name' => 'required',
+        //         'email' => 'required|email',
+        //         'designation' => 'required|in:1,2,3,4,5,6,7',
+        //         'role' => 'required|in:2,3,4,5,6',
+        //         'organization' => 'required|in:1,2,3,4,5,6',
+        //     ]);
+        // }
+        // $request->validate([
+        //     'name' => 'required',
+        //     'email' => 'required|email',
+        //     'designation' => 'required|in:1,2,3,4,5,6,7',
+        //     'role' => 'required|in:2,3,4,5,6',
+        // ]);
 
         $user = new User();
         $user->name = $request->name;
@@ -61,9 +78,13 @@ class UserController extends Controller
     // Returns the edit view for admin.
     public function edit($id)
     {
+        $organizations = Organization::all();
+        $designations = Designation::all();
         $user = User::find($id);
         return view('admin::edit', [
             'user' => $user,
+            'designations' => $designations,
+            'organizations' => $organizations
         ]);
     }
 
@@ -131,7 +152,6 @@ class UserController extends Controller
     // Function to reset the password.
     public function alterPassword(Request $request)
     {
-        ddd($request);
         // Validation rules;
         // Data is required in all fields
         // new password must match cnfirm password.

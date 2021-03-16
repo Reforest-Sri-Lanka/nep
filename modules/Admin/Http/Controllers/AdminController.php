@@ -2,6 +2,9 @@
 
 namespace Admin\Http\Controllers;
 use App\Models\User;
+use App\Models\Role;
+use App\Models\Organization;
+use App\Models\Designation;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -18,9 +21,11 @@ class AdminController extends Controller
     // Open the view to be able to change the selected user's privileges (roles and module access)
     public function changePrivilege($id)          
     {
+        $roles = Role::where('id', '>', 1)->get(); 
         $user = User::find($id);
         return view('admin::admin.privilege', [
             'user' => $user,
+            'roles' => $roles,
         ]);
     }
 
@@ -47,9 +52,15 @@ class AdminController extends Controller
     // Opens the view to activate users (Activate button in the selfRegistered view)
     public function showActivate($id)    
     {
+        $roles = Role::where('id', '>', 1)->get(); 
+        $organizations = Organization::all();
+        $designations = Designation::all();
         $user = User::find($id);
         return view('admin::admin.activate', [
             'user' => $user,
+            'organizations' => $organizations,
+            'designations' => $designations,
+            'roles' => $roles,
         ]);
     }
 

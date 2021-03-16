@@ -44,11 +44,9 @@
                         @else
                         <option selected value="{{$user->role_id}}">{{$user->role->title}}</option>
                         @endif
-                        <option value=2>Admin</option>
-                        <option value=3>Head Of Organization</option>
-                        <option value=4>Manager</option>
-                        <option value=5>Staff</option>
-                        <option value=6>Citizen</option>
+                        @foreach($roles as $role)
+                        <option value="{{$role->id}}">{{$role->title}}</option>
+                        @endforeach
                     </select>
                 </div>
 

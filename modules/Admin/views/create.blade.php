@@ -8,72 +8,66 @@
     <hr>
     <div class="row justify-content-md-center border p-4 bg-white">
         <div class="col-6 ml-3">
-            <form method="post" action="/user/store">
+            <form method="post" action="/user/store" class="needs-validation" novalidate>
                 @csrf
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text">Name</span>
                     </div>
-                    <input type="text" class="form-control" name="name" value="{{ old('name') }}" placeholder="Enter Name">
+                    <input type="text" class="form-control" name="name" value="{{ old('name') }}" placeholder="Enter Name" required>
                 </div>
-                @error('name')
+                <!-- @error('name')
                 <div class="alert alert-danger">{{ $message }}</div>
-                @enderror
+                @enderror -->
 
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" name="email" value="{{ old('email') }}" placeholder="Enter Email">
+                    <input type="text" class="form-control" name="email" value="{{ old('email') }}" placeholder="Enter Email" required>
                     <div class="input-group-append">
                         <span class="input-group-text">@example.com</span>
                     </div>
                 </div>
-                @error('email')
+                <!-- @error('email')
                 <div class="alert alert-danger">{{ $message }}</div>
-                @enderror
+                @enderror -->
 
                 @if(Auth::user()->role_id == 1 ||Auth::user()->role_id == 2)
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text">Organization</span>
                     </div>
-                    <select name="organization" class="custom-select">
-                        <option selected>Select</option>
-                        <option value=1>Reforest Sri Lanka</option>
-                        <option value=2>Ministry of Environment</option>
-                        <option value=3>Central Environmental Authority</option>
-                        <option value=4>Ministry of Wilflife</option>
-                        <option value=5>Road Development Agency</option>
+                    <select name="organization" class="custom-select" required>
+                        <option selected value="">Select</option>
+                        @foreach($organizations as $organization)
+                        <option value="{{$organization->id}}">{{$organization->title}}</option>
+                        @endforeach
                     </select>
                 </div>
-                @error('organization')
+                <!-- @error('organization')
                 <div class="alert alert-danger">{{ $message }}</div>
-                @enderror
+                @enderror -->
                 @endif
 
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text">Designation</span>
                     </div>
-                    <select name="designation" class="custom-select">
-                        <option selected>Select</option>
-                        <option value=1>Additional Director</option>
-                        <option value=2>Manager</option>
-                        <option value=3>Director</option>
-                        <option value=4>Staff Assistant</option>
-                        <option value=5>Assistant Director</option>
-                        <option value=6>Deputy Manager</option>
-                        <option value=7>Assistant Manager</option>
+                    <select name="designation" class="custom-select" required>
+                        <option selected value="">Select</option>
+                        @foreach($designations as $designation)
+                        <option value="{{$designation->id}}">{{$designation->designation}}</option>
+                        @endforeach
                     </select>
                 </div>
-                @error('designation')
+                <!-- @error('designation')
                 <div class="alert alert-danger">{{ $message }}</div>
-                @enderror
+                @enderror -->
 
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text">Role</span>
                     </div>
-                    <select name="role" class="custom-select">
-                        <option selected>Select</option>
+                    <select name="role" class="custom-select" required>
+                        <option selected value="">Select</option>
                         @if(Auth::user()->role_id == 1 ||Auth::user()->role_id == 2)
                         <option value=2>Admin</option>
                         <option value=3>Head Of Organization</option>
@@ -84,11 +78,10 @@
                         <option value=5>Staff</option>
                         <option value=6>Citizen</option>
                     </select>
-
                 </div>
-                @error('role')
+                <!-- @error('role')
                 <div class="alert alert-danger">{{ $message }}</div>
-                @enderror
+                @enderror -->
 
                 <!-- If the user is not super admin then pass in the user's organization id as well -->
                 @if (Auth::user()->role_id == 3 ||Auth::user()->role_id == 4)
@@ -106,4 +99,24 @@
         </div>
     </div>
 </div>
+<script>
+    // Disable form submissions if there are invalid fields
+    (function() {
+        'use strict';
+        window.addEventListener('load', function() {
+            // Get the forms we want to add validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function(form) {
+                form.addEventListener('submit', function(event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+</script>
 @endsection

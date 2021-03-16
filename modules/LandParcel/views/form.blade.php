@@ -18,10 +18,11 @@
                     <div class="form-group">
                         <label for="title">Title:</label>
                         <input type="text" class="form-control @error('title') is-invalid @enderror" placeholder="Enter Title" value="{{ old('title') }}" id="title" name="title">
+                        @error('title')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
-                    @error('title')
-                    <div class="alert alert-danger">{{ $message }}</div>
-                    @enderror
+
 
                     <div class="form-group">
                         Province:<input type="text" class="form-control typeahead" placeholder="Search" name="province" />
@@ -81,10 +82,11 @@
                     <div class="form-group">
                         <label for="title">Land Title:</label>
                         <input type="text" class="form-control @error('landTitle') is-invalid @enderror" value="{{ old('title') }}" placeholder="Enter Land Title" id="landTitle" name="landTitle">
+                        @error('landTitle')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
-                    @error('landTitle')
-                    <div class="alert alert-danger">{{ $message }}</div>
-                    @enderror
+
                     <div>
                         <label>Upload KML File</label>
                         <input type="file" name="select_file" id="select_file" />
