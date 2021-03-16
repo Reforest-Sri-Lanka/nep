@@ -26,7 +26,6 @@ class CreateEnvironmentRestorationSpeciesTable extends Migration
             $table->unsignedBigInteger('environment_restoration_id');
             $table->unsignedBigInteger('species_id');
             $table->foreign('environment_restoration_id','er_id')->references('id')->on('environment_restorations')->onDelete('cascade');
-            $table->foreign('species_id')->references('id')->on('species_information')->onDelete('cascade');
         });
     }
 

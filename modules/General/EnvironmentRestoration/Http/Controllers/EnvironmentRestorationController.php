@@ -9,10 +9,11 @@ use App\Models\Organization;
 use App\Models\Process_Item;
 use App\Models\Type;
 use Illuminate\Http\Request;
-use Validator;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\UserRequest;
+use App\Models\Ecosystem;
 use Livewire\WithPagination;
 
 class EnvironmentRestorationController extends Controller
@@ -38,10 +39,14 @@ class EnvironmentRestorationController extends Controller
     public function create()
     {
         $restorations = Environment_Restoration::all();         //shows all records of enviroment restoration request
-        $organizations = Organization::where('type_id','=','1')->get();                  //show all records for all government organizations
+        $organizations = Organization::where('type_id','=','1')->get(); //show all records for all government organizations
+        $restoration_activities = Environment_Restoration_Activity::all();
+        $ecosystems = Ecosystem::all();
         return view('environmentRestoration::create', [
             'restorations' => $restorations,
             'organizations' => $organizations,
+            'restoration_activities' => $restoration_activities,
+            'ecosystems' => $ecosystems
         ]);
     }
 
@@ -62,6 +67,7 @@ class EnvironmentRestorationController extends Controller
         $landparcel->title = request('landparceltitle');
         $landparcel->polygon = request('polygon');
         $landparcel->governing_organizations = request('govOrg');
+        $landparcel->protected_area = request('isProtected');
         $landparcel->created_by_user_id = request('created_by');
         $landparcel->save();
 
@@ -135,6 +141,6 @@ class EnvironmentRestorationController extends Controller
             $process->save();
         }
 
-        return redirect('/env-restoration/index')->with('message','New Environment Restoration Project Successfully Created');   
+        return redirect('/general/pending')->with('message', 'Restoration Request Created Successfully');
     }
 }
