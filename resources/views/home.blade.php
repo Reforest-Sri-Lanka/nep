@@ -59,15 +59,6 @@
   <!-- Argon CSS -->
   <link href="{{ url('/css/argon.css') }}" rel="stylesheet" type="text/css">
 
-      <!-- Argon Scripts -->
-  <!-- Core -->  
-  <script src="{{ url('/vendor/js-cookie/js.cookie.js') }}"></script>
-  <script src="{{ url('/vendor/jquery.scrollbar/jquery.scrollbar.min.js') }}"></script>
-  <script src="{{ url('/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js') }}"></script>
-  <script src="{{ url('/vendor/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
-
-  <!-- Argon JS -->
-  <script src="{{ url('/js/argon.js?v=1.2.0') }} "></script>
 </head>
 
 <body>
@@ -118,7 +109,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="">
+              <a class="nav-link" href="/reporting/overview">
                 <i class="ni ni-single-copy-04 text-primary"></i>
                 <span class="nav-link-text">Reports</span>
               </a>
@@ -263,5 +254,14 @@
       <div>  
     </footer>         
   </div>
+  <!-- Argon Scripts -->
+  <!-- Core -->  
+  <script src="{{ url('/vendor/js-cookie/js.cookie.js') }}"></script>
+  <script src="{{ url('/vendor/jquery.scrollbar/jquery.scrollbar.min.js') }}"></script>
+  <script src="{{ url('/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js') }}"></script>
+  <script src="{{ url('/vendor/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+
+  <!-- Argon JS -->
+  <script src="{{ url('/js/argon.js?v=1.2.0') }} "></script>
 </body>
 </html>
