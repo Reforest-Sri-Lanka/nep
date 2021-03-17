@@ -106,12 +106,6 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="">
-                <i class="ni ni-lock-circle-open text-primary"></i>
-                <span class="nav-link-text">Security Module</span>
-              </a>
-            </li>
-            <li class="nav-item">
               <a class="nav-link" href="/environment/generalenv">
                 <i class="fa fa-tree text-green"></i>
                 <span class="nav-link-text">Environment Module</span>
@@ -125,7 +119,7 @@
             </li>
             <li class="nav-item">
               <a class="nav-link" href="">
-                <i class="ni ni-single-copy-04 text-dark"></i>
+                <i class="ni ni-single-copy-04 text-primary"></i>
                 <span class="nav-link-text">Reports</span>
               </a>
             </li>

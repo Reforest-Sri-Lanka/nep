@@ -2188,7 +2188,7 @@ pre code
 .table th,
 .table td
 {
-    padding: 1rem;
+    padding: 0.5rem;
 
     vertical-align: top;
 
@@ -23714,7 +23714,7 @@ textarea[resize='horizontal']
 
 .table thead th
 {
-    font-size: .65rem;
+    font-size: .85rem;
 
     padding-top: .75rem;
     padding-bottom: .75rem;
