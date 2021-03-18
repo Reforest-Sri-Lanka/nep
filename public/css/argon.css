@@ -782,8 +782,8 @@ pre code
     width: 100%;
     margin-right: auto;
     margin-left: auto; 
-    padding-right: 10px;
-    padding-left: 10px;
+    padding-right: 15px;
+    padding-left: 15px;
 }
 @media (min-width: 576px)
 {
@@ -796,7 +796,7 @@ pre code
 {
     .container
     {
-        max-width: 760px;
+        max-width: 720px;
     }
 }
 @media (min-width: 992px)
@@ -22094,7 +22094,7 @@ textarea[resize='horizontal']
 
 .navbar-vertical.navbar-expand-xs.fixed-right + .main-content
 {
-    margin-right: px;
+    margin-right: 62px;
 }
 
 @media (min-width: 576px)

@@ -81,25 +81,25 @@
             <li class="nav-item">
               <a class="nav-link" href="/general/pending">
                 <i class="ni ni-app text-orange"></i>
-                <span class="nav-link-text">General Module</span>
+                <span class="nav-link-text">General</span>
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/user/index">
                 <i class="ni ni-single-02 text-yellow"></i>
-                <span class="nav-link-text">User Module</span>
+                <span class="nav-link-text">User Management</span>
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/organization/index">
                 <i class="ni ni-badge text-info"></i>
-                <span class="nav-link-text">Admin Module</span>
+                <span class="nav-link-text">Admin</span>
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/environment/generalenv">
                 <i class="fa fa-tree text-green"></i>
-                <span class="nav-link-text">Environment Module</span>
+                <span class="nav-link-text">Environment Management</span>
               </a>
             </li>
             <li class="nav-item">
