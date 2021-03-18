@@ -18,7 +18,7 @@
     <p>{{\Session::get('success') }}</p>
   </div>
   @endif -->
-
+  
   <form action="/tree-removal/save" method="post" id="regForm">
     @csrf
     <!-- One "tab" for each step in the form: -->

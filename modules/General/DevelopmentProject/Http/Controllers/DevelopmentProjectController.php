@@ -6,10 +6,13 @@ use App\Models\Development_Project;
 use App\Models\Land_Parcel;
 use App\Models\Gazette;
 use App\Models\Organization;
+use App\Models\User;
 use App\Models\Process_Item;
 use Illuminate\Http\Request;
 use App\Models\Test_Map;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
+Use App\Notifications\StaffAssigned;
 
 
 class DevelopmentProjectController extends Controller
@@ -67,6 +70,7 @@ class DevelopmentProjectController extends Controller
         }
         //saving the coordinates in string form. when giving back to the map it needs to be converted back into JSON in the script.
         $dev->save();
+        
 
         $latest = Development_Project::latest()->first();
 
@@ -78,6 +82,13 @@ class DevelopmentProjectController extends Controller
             $process->request_organization = Auth::user()->organization_id;
             $process->activity_organization = $governing_organization;
             $process->save();
+
+
+            //User::find(2)->notify(new StaffAssigned($process));
+            $users = User::where('role_id', '<', 3)->get();
+            Notification::send($users, new StaffAssigned($process));
+        
+        
         }
         return redirect('/general/pending')->with('message', 'Request Created Successfully');
     }
