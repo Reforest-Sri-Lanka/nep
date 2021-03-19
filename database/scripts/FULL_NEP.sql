@@ -244,7 +244,7 @@ INSERT INTO `development_projects` (`id`, `title`, `governing_organizations`, `l
 -- Dumping data for table `process_items`
 --
 
-INSERT INTO `process_items` (`id`, `form_id`, `created_by_user_id`, `requst_organization`, `activity_organization`, `activity_user_id`, `remark`, `prerequisite`, `prerequsite_id`, `created_at`, `updated_at`, `deleted_at`, `form_type_id`, `status_id`) VALUES
+INSERT INTO `process_items` (`id`, `form_id`, `created_by_user_id`, `request_organization`, `activity_organization`, `activity_user_id`, `remark`, `prerequisite`, `prerequisite_id`, `created_at`, `updated_at`, `deleted_at`, `form_type_id`, `status_id`) VALUES
 (1, 9, 2, 2, 0, 0, '0', 0, 0, '2020-11-14 19:29:59', '2020-11-14 19:29:59', NULL, 2, 1),
 (2, 10, 3, 2, 0, 0, '0', 0, 0, '2020-11-14 19:36:26', '2020-11-14 19:36:26', NULL, 2, 1),
 (3, 11, 2, 2, 0, 0, '0', 0, 0, '2020-11-14 19:37:09', '2020-11-14 19:37:09', NULL, 2, 1),

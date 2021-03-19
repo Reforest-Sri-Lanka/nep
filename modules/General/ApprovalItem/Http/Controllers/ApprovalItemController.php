@@ -7,21 +7,20 @@ use App\Models\Crime_report;
 use App\Models\tree_removal_request;
 use App\Models\Development_Project;
 use App\Models\Process_Item;
+use App\Models\Form_Type;
+use App\Models\Process_item_progress;
+use App\Models\Process_item_status;
 use App\Models\land_parcel;
 use App\Models\Environment_Restoration_Activity;
+use App\Mail\RequestApproved;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Redirect;
 
 
 class ApprovalItemController extends Controller
 {
-    public function home()
-    {
-        $name = 'Yashod';
-        return view('approvalItem::home', compact('name'));
-    }
-
     
     public function confirm_assign_staff($id,$pid)
     {
@@ -29,14 +28,20 @@ class ApprovalItemController extends Controller
         if($Process_item->activity_user_id != null){
             return back()->with('warning', 'Authority already assigned!');
         }
-        $item = Process_item::where('id',$pid)->update(['activity_user_id' => $id]);
+        Process_item::where('id',$pid)->update([
+            'activity_user_id' => $id,
+            'status_id' => 3
+            ]);
         return back()->with('message', 'Authority assigned Successfully'); 
     }
 
     public function change_assign_organization($id,$pid)
     {
         $Process_item =Process_item::find($pid);
-        $item = Process_item::where('id',$pid)->update(['activity_organization' => $id]);
+        Process_item::where('id',$pid)->update([
+            'activity_organization' => $id ,
+            'status_id' => 2
+            ]);
         return back()->with('message', 'Assigned Organization Successfully'); 
     }
 
@@ -50,9 +55,14 @@ class ApprovalItemController extends Controller
 
     public function choose_assign_staff($id)
     {
-        $organization=Auth::user()->organization_id;
         $Process_item =Process_item::find($id);
-        $Prerequisites=Process_item::all()->where('id',$Process_item->id);
+        if($Process_item->status_id>2){
+            return redirect()->action(
+                [ApprovalItemController::class, 'investigate'], ['id' => $id]
+            );
+        }
+        $organization=Auth::user()->organization_id;
+        $Prerequisites=Process_item::all()->where('prerequisite_id',$Process_item->id);
         $Organizations=Organization::all()->where('type_id','2');
         if(Auth::user()->role_id=='3'){
             $Users = User::where([
@@ -198,6 +208,55 @@ class ApprovalItemController extends Controller
             ]);
         } 
     }
+
+    public function investigate($id)
+    {
+        $process_item =Process_item::find($id);
+        $Organizations=Organization::all();
+        $Form_Types=Form_Type::all();
+        $Prerequisites=Process_item::all()->where('prerequisite_id',$process_item->id);
+        $Process_item_statuses=Process_item_status::all();
+        $Process_item_progresses=Process_item_progress::all()->where('process_item_id',$id);
+        //dd($Process_item_progress);
+        if($process_item->form_type_id == '1'){ 
+            $item = Tree_Removal_Request::find($process_item->form_id);
+            $tree_data = $item->tree_locations;
+            //dd($location_data);
+        } 
+        else if($process_item->form_type_id == '2'){
+            $item = Development_Project::find($process_item->form_id);
+            $tree_data = null;
+        }
+        else if($process_item->form_type_id == '3'){
+            $item = Environment_Restoration_Activity::find($process_item->form_id);
+            $tree_data = null;
+        }
+        else if($process_item->form_type_id == '4'){
+            $item = Crime_report::find($process_item->form_id);
+            $Photos=Json_decode($item->photos);
+            $tree_data = $item->null;
+        }
+        $land_parcel = Land_Parcel::find($item->land_parcel_id);
+        $related_treecuts = Tree_Removal_Request::all()->where('land_parcel_id',$item->land_parcel_id);
+        $related_devps = Development_Project::all()->where('land_parcel_id',$item->land_parcel_id);
+        $related_crimes = Crime_report::all()->where('land_parcel_id',$item->land_parcel_id);
+
+            return view('approvalItem::investigate',[
+                'item' => $item,
+                'Organizations' => $Organizations,
+                'Prerequisites' => $Prerequisites,
+                'process_item' =>$process_item,
+                'polygon' => $land_parcel->polygon,
+                'Form_Types' => $Form_Types,
+                'Related_Treecuts' => $related_treecuts,
+                'Related_Devps' => $related_devps,
+                'Related_Crimes' => $related_crimes,
+                'Process_item_statuses' =>$Process_item_statuses,
+                'Process_item_progresses' =>$Process_item_progresses,
+                'tree_data' =>$tree_data,
+            ]);
+        
+    }
     public function create_prerequisite(Request $request)
     {
         
@@ -207,19 +266,100 @@ class ApprovalItemController extends Controller
         ]);
         $id=$request['process_id'];
         $Process_item_old =Process_item::find($id);
-        $Process_item_old->update([
-            'prerequisite' => "1",
-        ]);
+        
         $Process_item =new Process_item;
-        $Process_item->Created_by_user_id = $request['create_by'];
+        $Process_item->created_by_user_id = $request['create_by'];
         $Process_item->request_organization = $request['create_organization'];
         $Process_item->activity_organization = $request['organization'];
         $Process_item->form_id = $Process_item_old['form_id'];
-        $Process_item->form_type_id = $Process_item_old['form_type_id'];  
-        $Process_item->status_id = "1";
-        $Process_item->prerequsite_id  = $Process_item_old['id'];
+        $Process_item->form_type_id = $Process_item_old['form_type_id'];   
+        $Process_item->status_id = "2";
+        $Process_item->prerequisite= "1";
+        $Process_item->prerequisite_id = $Process_item_old['id'];
         $Process_item->remark = $request['request'];
         $Process_item->save();
         return back()->with('message', 'Prerequisite logged Successfully');  
     }
+
+    public function cancel_prerequisite($id,$userid)
+    {
+        $Process_item =Process_item::find($id);
+        if($Process_item->created_by_user_id==$userid){
+            $Process_item->update(['status_id' => 8]);
+            return back()->with('message', 'Prerequisite is removed successfully');
+        }
+        return back()->with('message', 'Prerequisite logged by someone else');  
+    }
+
+    public function progress_update(Request $request)
+    {
+        
+        $request -> validate([
+            'status' => 'required|not_in:0',
+            'request' => 'required',
+        ]);
+        $id=$request['process_id'];
+        Process_item::where('id',$id)->update(['status_id' => 4]);
+        $Process_item_progress =new Process_item_progress;
+        $Process_item_progress->created_by_user_id = $request['create_by'];
+        $Process_item_progress->process_item_id = $request['process_id'];
+        $Process_item_progress->status_id = $request['status'];
+        $Process_item_progress->remark = $request['request'];
+        $Process_item_progress->save();
+        $Process_item_statuses=Process_item_status::all();
+        
+        //dd($Process_item_progress,$Process_item_statuses);
+        return back()->with('message', 'Progress updated Successfully');  
+    }
+
+    public function final_approval(Request $request)
+    {
+        
+        $request -> validate([
+            'status' => 'required|not_in:0',
+            'request' => 'required',
+        ]);
+        $id=$request['process_id'];
+        $title=Process_item_status::where('id',$request['status'])->first()->status_title;
+        if($request['status']==5){
+            $Incomplete_prerequisites2=Process_item::all()->where(
+                'status_id','!=','5',
+            )->where(
+                'status_id','!=','8',
+            )->where('prerequisite_id',$id);
+            if($Incomplete_prerequisites2->isNotEmpty()){
+                //dd($Incomplete_prerequisites2);
+                return back()->with('warning', 'Prerequisites need to be approved first');  
+                
+            }
+            else{
+                
+                Process_item::where('id',$id)->update(['status_id' => 5]);
+                $Process_item_progress =new Process_item_progress;
+                $Process_item_progress->created_by_user_id = $request['create_by'];
+                $Process_item_progress->process_item_id = $request['process_id'];
+                $Process_item_progress->status_id = $request['status'];
+                $Process_item_progress->remark = 'Final Approval of application '.$request['request'];
+                $Process_item_progress->save();
+            }
+        }
+        else{
+                Process_item::where('id',$id)->update(['status_id' => 6]);
+                $Process_item_progress =new Process_item_progress;
+                $Process_item_progress->created_by_user_id = $request['create_by'];
+                $Process_item_progress->process_item_id = $request['process_id'];
+                $Process_item_progress->status_id = $request['status'];
+                $Process_item_progress->remark = 'Final Reject of application '.$request['request'];
+                $Process_item_progress->save();
+        }
+        
+        //dd($title);
+        
+        
+        //$title="this";
+        //dd($Process_item_progress,$Process_item_statuses);
+        
+        return back()->with('message', 'Request '.$title);  
+    }
+
 }
