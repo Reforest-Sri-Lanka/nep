@@ -87,7 +87,7 @@
                 <td>Crime Report</td>
             @endswitch
                 <td>{{$row['created_at']}}</td>
-                <td>{{$row['requst_organization']}}</td>
+                <td>{{$row['request_organization']}}</td>
                 <td>{{$row['remark']}}</td>
                 <td><a href="#" class="text-muted">Go to request</a></td>
             </tr>

@@ -85,7 +85,7 @@ class GeneralController extends Controller
             $Process_items = Process_Item::all()->where('created_by_user_id', $id)->where('form_type_id', $type)->toArray();
             return view('general::.generalA', compact('Process_items'));
         } else {
-            return view('unauthorized')->with('message', 'Admins are not allowed access to general module');
+            return view('unauthorized')->with('message', 'No access to general module');
         }
     }
 
