@@ -2,9 +2,7 @@
 
 @section('cont')
 <h3 class="p-3 display-4" style="display:inline">User Management</h3>
-<span>
-  <h3 class="text-center bg-success text-light">{{session('message')}}</h3>
-</span>
+
 <div class="container bg-white border">
   <nav class="navbar navbar-expand-sm navbar-light">
     <ul class="navbar-nav">
