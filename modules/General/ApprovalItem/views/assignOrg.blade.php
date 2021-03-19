@@ -1,8 +1,7 @@
-@extends('home')
+@extends('general')
 
-@section('cont')
-<kbd><a href="/general/general" class="text-white font-weight-bolder"><i class="fas fa-chevron-left"></i></i> BACK</a></kbd>
-<h3 class="p-3 display-4">Assigning Organizations</h3>
+@section('general')
+<h3 class="p-3 display-6">Assigning Organizations</h3>
 <hr>
 <span>
     <h3 class="text-center bg-success text-light">{{session('message')}}</h3>
@@ -21,7 +20,11 @@
             <tr>
                 <td>{{$process_item->form_type->type}}</td>
                 <td>{{date('d-m-Y',strtotime($process_item->created_at))}}</td>
+                @if($process_item->activity_organization == 0)
+                <td>Not Entered</td>
+                @else
                 <td>{{$process_item->Activity_organization->title}}</td>
+                @endif
             </tr>
         </tbody>
     </table>

@@ -1,68 +1,34 @@
-@extends('home')
+@extends('general')
 
-@section('cont')
-<h3 class="p-3 display-4" style="display:inline">General Module</h3>
+@section('general')
 <span>
     <h3 class="text-center bg-success text-light">{{session('message')}}</h3>
 </span>
 <hr>
 <div class="row justify-content-center">
     <div class="col-md-3">
-        <div class="card bg-dark text-light">
-            <div class="card-header text-center">
-                <a class="nav-link text-light font-italic p-2" href="/tree-removal/form">Tree cutting</a>
-            </div>
-            <div class="card-body text-center text-light">
-                <p class="card-text p-2">Quick links</p>
-                <a class="nav-link text-light font-italic p-2" href="/tree-removal/form">Application form</a>
-                <a class="nav-link text-light font-italic p-2" href="#">Check status</a>
+        <div class="card">
+            <div class="card-header bg-white text-center">Tree Removals This Month</div>
+            <div class="card-body text-center">
+                <p class="card-text display-1">12</p>
             </div>
         </div>
     </div>
     <div class="col-md-3">
-        <div class="card bg-dark text-light">
-            <div class="card-header text-center">
-                <a class="nav-link text-light font-italic p-2" href="#">Development project </a>
-            </div>
-            <div class="card-body text-center text-light">
-                <p class="card-text p-2">Quick links</p>
-                <a class="nav-link text-light font-italic p-2" href="/dev-project/applicationForm">Application form</a>
-                <a class="nav-link text-light font-italic p-2" href="#">Check status</a>
+        <div class="card">
+            <div class="card-header bg-white text-center">Tree Removals This Month</div>
+            <div class="card-body text-center">
+                <p class="card-text display-1">5</p>
             </div>
         </div>
     </div>
-    <div class="col-md-3">
-        <div class="card bg-dark text-light">
-            <div class="card-header text-center">
-                <a class="nav-link text-light font-italic p-2" href="/env-restoration/index">Reforest Project</a>
-            </div>
-            <div class="card-body text-center text-light">
-                <p class="card-text p-2">Quick links</p>
-                <a class="nav-link text-light font-italic p-2" href="/env-restoration/create">Register new project</a>
-                <a class="nav-link text-light font-italic p-2" href="#">Check for reforest details</a>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="card bg-dark text-light">
-            <div class="card-header text-center">
-                <a class="nav-link text-light font-italic p-2" href="#">Complaints</a>
-            </div>
-            <div class="card-body text-center text-light">
-                <p class="card-text p-2">Quick links</p>
-                <a class="nav-link text-light font-italic p-2" href="/crime-report/crimeTypeCreate">New Crime Type</a>
-                <a class="nav-link text-light font-italic p-2" href=#>View Crime Types</a>
-            </div>
-        </div>
-    </div>
-
 </div>
 <hr>
 <div class="row border-secondary rounded-lg ml-3">
     <h5 class="p-3">New requests to confirm Organization assigning</h5>
 </div>
 <form action="/general/filterItems" method="get">
-      @csrf
+    @csrf
     <div class="row justify-content-center">
         <div class="col-md-4">
             <select name="form_type" class="custom-select" required>
@@ -70,40 +36,55 @@
                 <option value="1">Tree Cutting permission Requests</option>
                 <option value="2">Development project permission Requests</option>
                 <option value="4">Crime Reports</option>
-            </select>            
+            </select>
         </div>
         <div class="col-md-3">
-            <button type="submit" class="btn btn-primary" >Filter</button>
+            <button type="submit" class="btn btn-primary">Filter</button>
         </div>
     </div>
 </form>
 
 </br>
 <div class="row border-secondary rounded-lg ml-3">
-    <table class="table table-dark table-striped mr-4">
+    <table class="table table-striped mr-4">
         <thead>
             <tr>
                 <th>Category</th>
                 <th>Date Submitted</th>
+                @if(Auth::user()->role_id == 6)
+                <th>Status</th>
+                @else
                 <th>Requested_by</th>
-                <th>remark</th>
-                <th>Check and assign</th>
+                @endif
+                <th>Remark</th>
+                @if(Auth::user()->role_id !== 6)
+                <th>Check and Assign</th>
+                @endif
             </tr>
         </thead>
         <tbody>
-        @foreach($Process_items as $process_item)<tr>
-            <td>{{$process_item->form_type->type}}</td>
+            @foreach($Process_items as $process_item)<tr>
+                <td>{{$process_item->form_type->type}}</td>
                 <td>{{date('d-m-Y',strtotime($process_item->created_at))}}</td>
                 @if($process_item->requst_organization==null)
-                    <td>{{$process_item->created_by_user->name}}</td>
+                <td>{{$process_item->created_by_user->name}}</td>
                 @else
-                    <td>{{$process_item->requsting_organization->title}}</td>
+                <td>{{$process_item->requsting_organization->title}}</td>
                 @endif
                 <td>{{$process_item->remark}}</td>
-                <td><a href="/approval-item/assignorganization/{{$process_item->id}}" class="text-muted">assign</a></td>
+                @if(Auth::user()->role_id == 1 ||Auth::user()->role_id == 2)
+                <td><a href="/approval-item/assignorganization/{{$process_item->id}}" class="text-muted">Assign</a></td>
+                @elseif(Auth::user()->role_id == 3 ||Auth::user()->role_id == 4)
+                <td><a href="/approval-item/assignstaff/{{$process_item->id}}" class="text-muted">Assign</a></td>
+                @elseif(Auth::user()->role_id == 5)
+                <td><a href="/approval-item/investigate/{{$process_item->id}}" class="text-muted">Investigate</a></td>
+                @elseif(Auth::user()->role_id == 5)
+                <td><a href="/approval-item/showRequests" class="text-muted">View More Details</a></td>
+                @endif
             </tr>
             @endforeach
         </tbody>
     </table>
 </div>
+
 @endsection

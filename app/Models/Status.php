@@ -26,4 +26,8 @@ class Status extends Model
     public function Crime_Reports(){
         return $this->hasMany('App\Models\Crime_Report');
     }
+
+    public function land_parcels(){
+        return $this->hasMany('App\Models\Land_Parcel');
+    }
 }
