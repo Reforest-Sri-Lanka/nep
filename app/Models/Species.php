@@ -8,8 +8,7 @@ class Species extends Model
 
 {
     use HasFactory;
-    protected $fillable = ['type', 'title', 'scientefic_name', 'habitats', 'taxa', 'description','status_id',
-];
+    protected $fillable = ['type', 'title', 'scientefic_name', 'habitats', 'taxa', 'description','status_id',];
     protected $table = 'species_information';
 
 

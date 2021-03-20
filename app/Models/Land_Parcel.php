@@ -18,7 +18,7 @@ class Land_Parcel extends Model
         'polygon',
         'protected_area',
         'created_by_user_id',
-        'status',
+        'status_id',
     ];
 
     protected $attributes = [
