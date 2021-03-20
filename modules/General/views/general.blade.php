@@ -18,7 +18,7 @@
                 <a class="nav-link h4" href="/dev-project/applicationForm">Development Project</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link h4" href="#">Restoration</a>
+                <a class="nav-link h4" href="/env-restoration/create">Restoration</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link h4" href="/land/form">Register Land</a>

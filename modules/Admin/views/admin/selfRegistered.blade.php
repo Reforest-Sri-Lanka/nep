@@ -8,7 +8,7 @@
 <hr>
 <div class="flex row border-secondary rounded-lg ml-3">
     <span>
-        <h5 class="p-3">User Details</h5>
+        <h4 class="p-3 display-5">User Details</h4>
     </span>
     <span class="ml-5">
         <h3 class="text-center bg-success text-light">{{session('message')}}</h3>
