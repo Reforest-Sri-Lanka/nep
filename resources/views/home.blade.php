@@ -82,14 +82,14 @@
         <li class="nav-item dropdown">
             <a id="navbarDropdown" class="nav-link dropdown-toggle text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                 <i class="fas fa-bell mr-1"></i>
-                @if(auth()->user()->notifications)
-                <span class="badge badge-light">{{auth()->user()->notifications->count()}}</span> 
+                @if(auth()->user()->unreadNotifications->count())
+                <span class="badge badge-light">{{auth()->user()->unreadNotifications->count()}}</span> 
                 @endif
             </a>
 
             <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                    <li><a href="#">Notify</a></li>
-                    @foreach(auth()->user()->notifications as $notification)
+                    <li><a href="/markAsRead" style="color:green"> Mark All As Read</a></li>
+                    @foreach(auth()->user()->unreadNotifications as $notification)
                     <li>ID:{{$notification->data['id']}} - Type:{{$notification->data['type']}}</li>
                     @endforeach
                 </ul>
