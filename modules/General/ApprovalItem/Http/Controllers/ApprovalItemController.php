@@ -14,8 +14,11 @@ use App\Models\land_parcel;
 use App\Models\Environment_Restoration_Activity;
 use App\Mail\RequestApproved;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Mail;
+Use App\Notifications\StaffAssigned;
 use Redirect;
 
 
@@ -24,14 +27,19 @@ class ApprovalItemController extends Controller
     
     public function confirm_assign_staff($id,$pid)
     {
-        $Process_item =Process_item::find($pid);
-        if($Process_item->activity_user_id != null){
+        DB::transaction(function () use($id,$pid){
+            $Process_item =Process_item::find($pid);
+        /* if($Process_item->activity_user_id != null){
             return back()->with('warning', 'Authority already assigned!');
-        }
+        } */
         Process_item::where('id',$pid)->update([
             'activity_user_id' => $id,
             'status_id' => 3
             ]);
+        $user = User::find($id);
+        Notification::send($user, new StaffAssigned($Process_item));
+        
+        });
         return back()->with('message', 'Authority assigned Successfully'); 
     }
 
@@ -217,11 +225,22 @@ class ApprovalItemController extends Controller
         $Prerequisites=Process_item::all()->where('prerequisite_id',$process_item->id);
         $Process_item_statuses=Process_item_status::all();
         $Process_item_progresses=Process_item_progress::all()->where('process_item_id',$id);
-        //dd($Process_item_progress);
+        $organization=Auth::user()->organization_id;
+        if(Auth::user()->role_id=='3'){
+            $Users = User::where([
+                ['role_id', '>' , 3],           
+                ['organization_id', '=', $organization], 
+            ])->get();
+        }
+        else{
+            $Users = User::where([
+                ['role_id', '=' , 5],           
+                ['organization_id', '=', $organization], 
+            ])->get();
+        } 
         if($process_item->form_type_id == '1'){ 
             $item = Tree_Removal_Request::find($process_item->form_id);
             $tree_data = $item->tree_locations;
-            //dd($location_data);
         } 
         else if($process_item->form_type_id == '2'){
             $item = Development_Project::find($process_item->form_id);
@@ -254,6 +273,8 @@ class ApprovalItemController extends Controller
                 'Process_item_statuses' =>$Process_item_statuses,
                 'Process_item_progresses' =>$Process_item_progresses,
                 'tree_data' =>$tree_data,
+                'Users' => $Users,
+                
             ]);
         
     }

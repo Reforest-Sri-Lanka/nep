@@ -90,7 +90,7 @@
             <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                     <li><a href="#">Notify</a></li>
                     @foreach(auth()->user()->notifications as $notification)
-                    <li>ID:{{$notification->data['id']}} - Type:{{$notification->data['type']}}</li>
+                    <li>ID:{{$notification->data['id']}}</li><li>Type:{{$notification->data['type']}}</li>
                     @endforeach
                 </ul>
         </li>

@@ -84,7 +84,7 @@ class DevelopmentProjectController extends Controller
             $process->save();
 
 
-            //User::find(2)->notify(new StaffAssigned($process));
+            //User::find($process->created_by_user_id)->notify(new StaffAssigned($process));
             $users = User::where('role_id', '<', 3)->get();
             Notification::send($users, new StaffAssigned($process));
         
