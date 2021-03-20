@@ -19,6 +19,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Mail;
 Use App\Notifications\StaffAssigned;
+Use App\Notifications\AssignOrg;
 use Redirect;
 
 
@@ -27,29 +28,43 @@ class ApprovalItemController extends Controller
     
     public function confirm_assign_staff($id,$pid)
     {
-        DB::transaction(function () use($id,$pid){
+        $array=DB::transaction(function () use($id,$pid){
             $Process_item =Process_item::find($pid);
-        /* if($Process_item->activity_user_id != null){
-            return back()->with('warning', 'Authority already assigned!');
-        } */
+        if($Process_item->activity_user_id != null){
+            $new_assign='0';
+        } 
+        
         Process_item::where('id',$pid)->update([
             'activity_user_id' => $id,
             'status_id' => 3
             ]);
         $user = User::find($id);
         Notification::send($user, new StaffAssigned($Process_item));
-        
+        return $new_assign;
         });
+        if($array == 0){
+            return back()->with('message', 'Authority changed Successfully'); 
+        }
         return back()->with('message', 'Authority assigned Successfully'); 
     }
 
     public function change_assign_organization($id,$pid)
     {
-        $Process_item =Process_item::find($pid);
-        Process_item::where('id',$pid)->update([
-            'activity_organization' => $id ,
-            'status_id' => 2
-            ]);
+        DB::transaction(function () use($id,$pid){
+            $Process_item =Process_item::find($pid);
+            $Users = User::where([
+                ['role_id', '=' , 3],           
+                ['organization_id', '=', $id], 
+            ])->orWhere([
+                ['role_id', '=' , 4],           
+                ['organization_id', '=', $id], 
+            ])->get();
+            Process_item::where('id',$pid)->update([
+                'activity_organization' => $id ,
+                'status_id' => 2
+                ]);
+            Notification::send($Users, new AssignOrg($Process_item));
+        });
         return back()->with('message', 'Assigned Organization Successfully'); 
     }
 

@@ -11,6 +11,10 @@ use App\Models\Organization;
 use App\Models\Process_Item;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification;
+Use App\Notifications\ApplicationMade;
+use App\Models\User;
 
 
 
@@ -94,7 +98,7 @@ class TreeRemovalController extends Controller
         //     'description' => 'required',
         //     'land_extent' => 'integer'
         // ]);
-
+        DB::transaction(function () use($request) {
         $land = new Land_Parcel();
         $land->title = request('landTitle');
 
@@ -189,7 +193,9 @@ class TreeRemovalController extends Controller
                 $process->activity_organization = $removal_requestor[0];
             }
             $process->save();
-        
+            $Users = User::where('role_id', '=', 2)->get();
+            Notification::send($Users, new ApplicationMade($process));
+        });
         return redirect('/general/pending')->with('message', 'Request Created Successfully');
     }
 

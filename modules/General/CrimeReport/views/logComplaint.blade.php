@@ -2,7 +2,7 @@
 
 @section('general')
 <div class="container">
-    <hr>
+<hr>
     <form action="\crime-report\crimecreate" method="post" enctype="multipart/form-data">
     @csrf
         <div class="container bg-white">

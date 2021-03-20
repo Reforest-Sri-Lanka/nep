@@ -87,12 +87,20 @@
                 @endif
             </a>
 
-            <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+            <ol class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                     <li><a href="#">Notify</a></li>
                     @foreach(auth()->user()->notifications as $notification)
-                    <li>ID:{{$notification->data['id']}}</li><li>Type:{{$notification->data['type']}}</li>
+                    @if($notification->type == "App\Notifications\StaffAssigned")
+                    <li><a href="/approval-item/investigate/{{$notification->data['id']}}"><p> {{$notification->data['type']}} application No {{$notification->data['id']}} {{$notification->data['action']}}</p></a></i>
+                    @endif
+                    @if($notification->type == "App\Notifications\AssignOrg")
+                    <li><a href="/approval-item/assignstaff/{{$notification->data['id']}}"><p> {{$notification->data['type']}} application No {{$notification->data['id']}} {{$notification->data['action']}}</p></a></i>
+                    @endif
+                    @if($notification->type == "App\Notifications\ApplicationMade")
+                    <li><a href="/approval-item/assignorganization/{{$notification->data['id']}}"><p>New {{$notification->data['type']}} application No {{$notification->data['id']}} has been made.</p></a></i>
+                    @endif
                     @endforeach
-                </ul>
+                </ol>
         </li>
         </span>
 
