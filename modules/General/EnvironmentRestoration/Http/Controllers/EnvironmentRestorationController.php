@@ -7,10 +7,12 @@ use App\Models\Environment_Restoration_Activity;
 use App\Models\Environment_Restoration_Species;
 use App\Models\Organization;
 use App\Models\Process_Item;
+use App\Models\Type;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+use Validator;
+use App\Http\Controllers\Hash;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Ecosystem;
+use App\Http\Requests\UserRequest;
 use Livewire\WithPagination;
 
 class EnvironmentRestorationController extends Controller
@@ -36,14 +38,10 @@ class EnvironmentRestorationController extends Controller
     public function create()
     {
         $restorations = Environment_Restoration::all();         //shows all records of enviroment restoration request
-        $organizations = Organization::where('type_id','=','1')->get(); //show all records for all government organizations
-        $restoration_activities = Environment_Restoration_Activity::all();
-        $ecosystems = Ecosystem::all();
+        $organizations = Organization::where('type_id','=','2')->get();                  //show all records for all government organizations
         return view('environmentRestoration::create', [
             'restorations' => $restorations,
             'organizations' => $organizations,
-            'restoration_activities' => $restoration_activities,
-            'ecosystems' => $ecosystems
         ]);
     }
 
@@ -64,7 +62,6 @@ class EnvironmentRestorationController extends Controller
         $landparcel->title = request('landparceltitle');
         $landparcel->polygon = request('polygon');
         $landparcel->governing_organizations = request('govOrg');
-        $landparcel->protected_area = request('isProtected');
         $landparcel->created_by_user_id = request('created_by');
         $landparcel->save();
 
@@ -138,6 +135,6 @@ class EnvironmentRestorationController extends Controller
             $process->save();
         }
 
-        return redirect('/general/pending')->with('message', 'Restoration Request Created Successfully');
+        return redirect('/env-restoration/index')->with('message','New Environment Restoration Project Successfully Created');   
     }
 }

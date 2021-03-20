@@ -95,9 +95,8 @@
                         <input type="checkbox" class="custom-control-input" id="customCheck" value="1" name="isProtected">
                         <label class="custom-control-label" for="customCheck"><strong>Check if land is a protected area</strong></label>
                     </div>
-                    <br/>
-                    <div style="float:left;">
-                        <button type="submit" name="submit" class="btn btn-success">Submit</button>
+                    <div style="float:right;">
+                        <button type="submit" name="submit" class="btn bd-navbar text-white">Submit</button>
                     </div>
                 </div>
             </div>

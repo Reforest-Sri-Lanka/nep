@@ -4,7 +4,7 @@
 
 <div class="flex row border-secondary rounded-lg ml-3 justify-content-between">
     <span>
-        <h1 class="p-2">{{Auth::user()->role->title}}</h5>
+        <h5 class="p-3">{{Auth::user()->role->title}}</h5>
     </span>
     <!-- Sessions to display success or failure -->
     <span>
@@ -22,12 +22,13 @@
         <!-- opens the create view -->
         <a href="/user/create" class="btn btn-info mr-4" role="button">Create User</a>
     </span>
-    <table class="table table-hover mr-4">
+    <table class="table table-hover table-light mr-4">
         <thead>
             <tr>
                 <th>ID</th>
                 <th>Name</th>
                 <th>Organization</th>
+                <th>Email</th>
                 <th>Role</th>
                 <th>Status</th>
                 <th>More Data</th>
@@ -50,6 +51,7 @@
                 @else
                 <td>{{$user->organization->title}}</td>
                 @endif
+                <td>{{$user->email}}</td>
                 @if($user->role == NULL)
                 <td>Unassigned</td>
                 @else
