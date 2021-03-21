@@ -17,6 +17,10 @@ use App\Http\Controllers\RoleController;
 |
 */
 
+Route::get('/leaflet', function () {
+    return view('leafletmap');
+});
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -54,6 +58,11 @@ Route::get('/map', function(){
 
 Route::get('/loadmap', function(){
     return view('loadmap');
+});
+
+Route::get('/markAsRead', function(){
+    auth()->user()->unreadNotifications->markAsRead();
+    return redirect()->back();
 });
 
 Route::post('/ajax_upload/action', [UserController::class, 'action'])->name('ajaxupload.action');

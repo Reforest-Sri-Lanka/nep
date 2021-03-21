@@ -37,24 +37,21 @@
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text">Role</span>
-                        <select name="role" class="custom-select">
-                            @if($user->role == NULL)
-                            <option selected value="NULL">Select Role</option>
-                            @else
-                            <option selected value="{{$user->role_id}}">{{$user->role->title}}</option>
-                            @endif
-                            <option value=2>Admin</option>
-                            <option value=3>Head Of Organization</option>
-                            <option value=4>Manager</option>
-                            <option value=5>Staff</option>
-                            <option value=6>Citizen</option>
-                        </select>
                     </div>
-
+                    <select name="role" class="custom-select">
+                        @if($user->role == NULL)
+                        <option selected value="NULL">Select Role</option>
+                        @else
+                        <option selected value="{{$user->role_id}}">{{$user->role->title}}</option>
+                        @endif
+                        @foreach($roles as $role)
+                        <option value="{{$role->id}}">{{$role->title}}</option>
+                        @endforeach
+                    </select>
                 </div>
 
 
-                <div class="form-check border-secondary rounded-lg mb-4" style="background-color:#ebeef0">
+                <!-- <div class="form-check border-secondary rounded-lg mb-4" style="background-color:#ebeef0">
                     <label class="mt-2"> Modules Allowed: </label>
                     <hr>
                     <fieldset>
@@ -64,7 +61,7 @@
                         <input type="checkbox" name="modules[]" value="security"><label class="ml-2">Security Module</label> <br>
                         <input type="checkbox" name="modules[]" value="env"><label class="ml-2">Environmental Module</label> <br>
                     </fieldset>
-                </div>
+                </div> -->
                 <div style="float:right;">
                     <button type="submit" class="btn btn-warning">Submit</button>
                 </div>

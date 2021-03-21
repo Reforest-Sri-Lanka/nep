@@ -14,6 +14,8 @@ use App\Models\Process_Item;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Validator;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 
 class LandController extends Controller
@@ -29,8 +31,16 @@ class LandController extends Controller
         ]);
     }
 
-    public function save()
+    public function save(Request $request)
     {
+
+        $request->validate([
+            'title' => 'required',
+            'landTitle' => 'required',
+            'governing_orgs' => 'required',
+            'gazettes' => 'required',
+            'polygon' => 'required'
+        ]);
 
         $land = new Land_Parcel();
         $land->title = request('landTitle');
@@ -41,30 +51,29 @@ class LandController extends Controller
         if (request('isProtected')) {
             $land->protected_area = request('isProtected');
         }
+        $land->status_id = 1;
         $land->save();
 
         $landid = Land_Parcel::latest()->first()->id;
 
         $governing_organizations = request('governing_orgs');
 
-        foreach($governing_organizations as $governing_organization) 
-        {
-        $land_has_organization = new Land_Has_Organization();
-        $land_has_organization->land_parcel_id = $landid;
-        $land_has_organization->organization_id = $governing_organization;
-        $land_has_organization->status = 2;
-        $land_has_organization->save();
+        foreach ($governing_organizations as $governing_organization) {
+            $land_has_organization = new Land_Has_Organization();
+            $land_has_organization->land_parcel_id = $landid;
+            $land_has_organization->organization_id = $governing_organization;
+            $land_has_organization->status = 2;
+            $land_has_organization->save();
         }
 
         $gazettes = request('gazettes');
 
-        foreach($gazettes as $gazette) 
-        {
-        $land_has_gazette = new Land_Has_Gazette();
-        $land_has_gazette->land_parcel_id = $landid;
-        $land_has_gazette->gazette_id = $gazette;
-        $land_has_gazette->status = 2;
-        $land_has_gazette->save();
+        foreach ($gazettes as $gazette) {
+            $land_has_gazette = new Land_Has_Gazette();
+            $land_has_gazette->land_parcel_id = $landid;
+            $land_has_gazette->gazette_id = $gazette;
+            $land_has_gazette->status = 2;
+            $land_has_gazette->save();
         }
 
         foreach ($governing_organizations as $governing_organization) {
@@ -76,6 +85,13 @@ class LandController extends Controller
             $process->activity_organization = $governing_organization;
             $process->save();
         }
+        // if (request('file')) {
+        //     $fileloc = request('file');
+        //     Storage::delete('public/'.$fileloc);
+        //     File::delete(public_path($fileloc));
+        //     Storage::delete($fileloc);
+        // }
+
         return redirect('/general/pending')->with('message', 'Request Created Successfully');
     }
     public function show($id)
@@ -90,28 +106,24 @@ class LandController extends Controller
 
     function action(Request $request)
     {
-     $validation = Validator::make($request->all(), [
-      'select_file' => 'required'
-     ]);
-     if($validation->passes())
-     {
-      $image = $request->file('select_file');
-      $new_name = rand() . '.' . $image->getClientOriginalExtension();
-      $image->move(public_path('kml'), $new_name);
-      return response()->json([
-       'message'   => 'Image Upload Successfully',
-       'uploaded_image' => "kml/$new_name",
-       'class_name'  => 'alert-success'
-      ]);
-     }
-     else
-     {
-      return response()->json([
-       'message'   => $validation->errors()->all(),
-       'uploaded_image' => '',
-       'class_name'  => 'alert-danger'
-      ]);
-     }
+        $validation = Validator::make($request->all(), [
+            'select_file' => 'required'
+        ]);
+        if ($validation->passes()) {
+            $image = $request->file('select_file');
+            $new_name = rand() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('kml'), $new_name);
+            return response()->json([
+                'message'   => 'Image Upload Successfully',
+                'uploaded_image' => "kml/$new_name",
+                'class_name'  => 'alert-success'
+            ]);
+        } else {
+            return response()->json([
+                'message'   => $validation->errors()->all(),
+                'uploaded_image' => '',
+                'class_name'  => 'alert-danger'
+            ]);
+        }
     }
-
 }

@@ -11,19 +11,31 @@
                 <div class="col border border-muted rounded-lg mr-2 p-4">
                     <div class="form-group">
                         <label for="title">Title:</label>
-                        <input type="text" class="form-control" placeholder="Enter Title" id="title" name="title">
+                        <input type="text" class="form-control" placeholder="Enter Title" id="title" name="title" value="{{ old('title') }}">
+                        @error('title')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="form-group">
-                        Gazette:<input type="text" class="form-control typeahead" placeholder="Search" name="gazette" />
+                        Gazette:<input type="text" class="form-control typeahead" placeholder="Search" name="gazette" value="{{ old('gazette') }}" />
+                        @error('gazette')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="form-group">
-                        Organization:<input type="text" class="form-control typeahead3" placeholder="Search" name="organization" />
+                        Organization:<input type="text" class="form-control typeahead3" placeholder="Search" name="organization" value="{{ old('organization') }}"/>
+                        @error('organization')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="form-group">
                         <label for="title">Land Title:</label>
-                        <input type="text" class="form-control" placeholder="Enter Land Title" id="landTitle" name="landTitle">
+                        <input type="text" class="form-control" placeholder="Enter Land Title" id="landTitle" name="landTitle" value="{{ old('landTitle') }}">
+                        @error('landTitle')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div>
@@ -33,7 +45,11 @@
                 <div class="col border border-muted rounded-lg p-4">
                     <!-- ////////MAP GOES HERE -->
                     <div id="mapid" style="height:400px;" name="map"></div>
+                    @error('polygon')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
                     <br>
+                    <input id="polygon" type="hidden" name="polygon" value="{{request('polygon')}}">
                     <div class="custom-control custom-checkbox">
                         <input type="checkbox" class="custom-control-input" id="customCheck" value="1" name="isProtected">
                         <label class="custom-control-label" for="customCheck"><strong>Check if land is a protected area</strong></label>
@@ -42,7 +58,6 @@
             </div>
         </div>
         <input type="hidden" class="form-control" name="createdBy" value="{{Auth::user()->id}}">
-        <input id="polygon" type="text" name="polygon" value="{{request('polygon')}}">
     </form>
 </div>
 
@@ -99,55 +114,55 @@
             maxZoom: 18
         }).addTo(map);
 
-		var drawnItems = new L.FeatureGroup();
-		map.addLayer(drawnItems);
+    var drawnItems = new L.FeatureGroup();
+    map.addLayer(drawnItems);
 
-		var drawControl = new L.Control.Draw({
-			position: 'topright',
-			draw: {
-				polygon: {
-					shapeOptions: {
-						color: 'purple'
-					},
-					allowIntersection: false,
-					drawError: {
-						color: 'orange',
-						timeout: 1000
-					},
-					showArea: true,
-					metric: false,
-					repeatMode: true
-				},
-				polyline: {
-					shapeOptions: {
-						color: 'red'
-					},
-				},
-                circlemarker: false,
-				rect: {
-					shapeOptions: {
-						color: 'green'
-					},
-				},
-				circle: false,
-			},
-			edit: {
-				featureGroup: drawnItems
-			}
-		});
-		map.addControl(drawControl);
+    var drawControl = new L.Control.Draw({
+        position: 'topright',
+        draw: {
+            polygon: {
+                shapeOptions: {
+                    color: 'purple'
+                },
+                allowIntersection: false,
+                drawError: {
+                    color: 'orange',
+                    timeout: 1000
+                },
+                showArea: true,
+                metric: false,
+                repeatMode: true
+            },
+            polyline: {
+                shapeOptions: {
+                    color: 'red'
+                },
+            },
+            circlemarker: false,
+            rect: {
+                shapeOptions: {
+                    color: 'green'
+                },
+            },
+            circle: false,
+        },
+        edit: {
+            featureGroup: drawnItems
+        }
+    });
+    map.addControl(drawControl);
 
-		map.on('draw:created', function (e) {
-			var type = e.layerType,
-				layer = e.layer;
+    map.on('draw:created', function(e) {
+        var type = e.layerType,
+            layer = e.layer;
 
-			if (type === 'marker') {
-				layer.bindPopup('A popup!');
-			}
+        if (type === 'marker') {
+            layer.bindPopup('A popup!');
+        }
 
-			drawnItems.addLayer(layer);
-            $('#polygon').val(JSON.stringify(layer.toGeoJSON()));
-   
+        drawnItems.addLayer(layer);
+        $('#polygon').val(JSON.stringify(layer.toGeoJSON()));
+
 
     });
 </script>

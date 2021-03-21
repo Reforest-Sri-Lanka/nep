@@ -8,7 +8,7 @@
     <hr>
     <div class="row justify-content-md-center border p-4 bg-white">
         <div class="col-6 ml-3">
-            <form method="post" action="admin/alterPassword">
+            <form method="post" action="user/alterPassword">
                 @csrf
 
                 <div class="input-group mb-3">
@@ -48,5 +48,4 @@
         </div>
     </div>
 </div>
-
 @endsection

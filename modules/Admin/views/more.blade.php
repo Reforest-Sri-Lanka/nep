@@ -5,7 +5,8 @@
 <kbd><a href="/user/index" class="text-white font-weight-bolder"><i class="fas fa-chevron-left"></i></i> BACK</a></kbd>
 
 <div class="container">
-    <h2 style="text-align:center;" class="text-dark">Details of {{$user->name}}</h2><hr>
+    <h2 style="text-align:center;" class="text-dark">Details of {{$user->name}}</h2>
+    <hr>
     <div class="row justify-content-md-center border p-4 bg-white">
         <div class="col-6 ml-3">
             <form>
@@ -28,9 +29,9 @@
                         <span class="input-group-text">Role</span>
                     </div>
                     @if($user->role == NULL)
-                        <input type="text" class="form-control" placeholder="Unassigned" readonly>
+                    <input type="text" class="form-control" placeholder="Unassigned" readonly>
                     @else
-                        <input type="text" class="form-control" placeholder="{{$user->role->title}}" readonly>
+                    <input type="text" class="form-control" placeholder="{{$user->role->title}}" readonly>
                     @endif
                 </div>
 
@@ -39,9 +40,9 @@
                         <span class="input-group-text">Organization</span>
                     </div>
                     @if($user->organization == NULL)
-                        <input type="text" class="form-control" placeholder="Unassigned" readonly>
+                    <input type="text" class="form-control" placeholder="Unassigned" readonly>
                     @else
-                        <input type="text" class="form-control" placeholder="{{$user->organization->title}}" readonly>
+                    <input type="text" class="form-control" placeholder="{{$user->organization->title}}" readonly>
                     @endif
                 </div>
 
@@ -50,9 +51,9 @@
                         <span class="input-group-text">Designation</span>
                     </div>
                     @if($user->designation == NULL)
-                        <input type="text" class="form-control" placeholder="Unassigned" readonly>
+                    <input type="text" class="form-control" placeholder="Unassigned" readonly>
                     @else
-                        <input type="text" class="form-control" placeholder="{{$user->designation->designation}}" readonly>
+                    <input type="text" class="form-control" placeholder="{{$user->designation->designation}}" readonly>
                     @endif
                 </div>
 
@@ -81,17 +82,7 @@
                     @endif
                 </div>
 
-                <div class="form-check border-secondary rounded-lg" style="background-color:#ebeef0">
-                    <label class="mt-2"> Modules Allowed: </label>
-                    <hr>
-                    <fieldset disabled>
-                        <input type="checkbox" name="modules[]" value="general" checked><label class="ml-2" checked />General Module</label> <br>
-                        <input type="checkbox" name="modules[]" value="user" checked><label class="ml-2" checked />User Module</label> <br>
-                        <input type="checkbox" name="modules[]" value="admin"><label class="ml-2">Administrator Module</label> <br>
-                        <input type="checkbox" name="modules[]" value="security"><label class="ml-2">Security Module</label> <br>
-                        <input type="checkbox" name="modules[]" value="env"><label class="ml-2">Environmental Module</label> <br>
-                    </fieldset>
-                </div>
+
             </form>
         </div>
     </div>
