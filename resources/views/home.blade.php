@@ -91,13 +91,13 @@
                     <li><a href="#">Notify</a></li>
                     @foreach(auth()->user()->notifications as $notification)
                     @if($notification->type == "App\Notifications\StaffAssigned")
-                    <li><a href="/approval-item/investigate/{{$notification->data['id']}}"><p> {{$notification->data['type']}} application No {{$notification->data['id']}} {{$notification->data['action']}}</p></a></i>
+                    <li><a href="/approval-item/investigate/{{$notification->data['process_id']}}"><p> {{$notification->data['type']}} application No {{$notification->data['form_id']}} {{$notification->data['action']}}</p></a></i>
                     @endif
                     @if($notification->type == "App\Notifications\AssignOrg")
-                    <li><a href="/approval-item/assignstaff/{{$notification->data['id']}}"><p> {{$notification->data['type']}} application No {{$notification->data['id']}} {{$notification->data['action']}}</p></a></i>
+                    <li><a href="/approval-item/assignstaff/{{$notification->data['process_id']}}"><p> {{$notification->data['type']}} application No {{$notification->data['form_id']}} {{$notification->data['action']}}</p></a></i>
                     @endif
                     @if($notification->type == "App\Notifications\ApplicationMade")
-                    <li><a href="/approval-item/assignorganization/{{$notification->data['id']}}"><p>New {{$notification->data['type']}} application No {{$notification->data['id']}} has been made.</p></a></i>
+                    <li><a href="/approval-item/assignorganization/{{$notification->data['process_id']}}"><p>New {{$notification->data['type']}} application No {{$notification->data['form_id']}} has been made.</p></a></i>
                     @endif
                     @endforeach
                 </ol>
