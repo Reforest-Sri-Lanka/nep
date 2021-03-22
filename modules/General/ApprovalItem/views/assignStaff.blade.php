@@ -161,7 +161,7 @@
                     </thead>
                     <tbody>
                     @foreach($Prerequisites as $prerequisite)<tr>
-                            <td>{{$prerequisite->requsting_organization->title}}</td>
+                            <td>{{$prerequisite->requesting_organization->title}}</td>
                             <td>{{$prerequisite->Activity_organization->title}}</td>
                             <td>{{$prerequisite->remark}}</td>
                         </tr>

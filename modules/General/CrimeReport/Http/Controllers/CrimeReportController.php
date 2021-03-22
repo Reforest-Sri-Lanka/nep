@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification;
+Use App\Notifications\ApplicationMade;
 use Illuminate\Http\Request;
 use App\Models\Land_Parcel;
 use App\Models\Crime_report;
@@ -16,35 +18,9 @@ use App\Models\Process_item;
 use App\Models\Organization;
 use App\Models\tree_removal_request;
 
+
 class CrimeReportController extends Controller
 {
-
-    
-
-    public function crime_report_form_display() {
-        $Organizations = Organization::all();
-        $crime_types = Crime_type::all();
-        return view('crimeReport::logComplaint',['Organizations' => $Organizations],['crime_types' => $crime_types],);
-    }
-
-     
-    
-    
-    public function download_image($path,$file) 
-    {       
-        return Storage::disk('public')->download($path.'/'.$file);
-        dd($path,$file);
-        return back()->with('message', 'Downloaded'); 
-       
-    }
-
-
-    public function track_user_crime_reports(Request $request)
-    {
-        $id=$request['create_by'];
-        $Crimes = Crime_report::all()->where('created_by_user_id',$id)->toArray();
-        return view('crimeReport::trackCrime',compact('Crimes'));
-    }
 
     
     public function create_crime_report(Request $request)
@@ -58,7 +34,7 @@ class CrimeReportController extends Controller
             'organization' => 'required|not_in:0',
             'polygon' => 'required',
         ]);
-        $successmessage1=DB::transaction(function () use($request) {
+        $array=DB::transaction(function () use($request) {
             $land = new Land_Parcel();
             $land->title = $request['landTitle'];
             $land->governing_organizations =$request['organization'];
@@ -108,18 +84,52 @@ class CrimeReportController extends Controller
             $Process_item->save();
             $Process_itemnew =Process_item::latest()->first()->id;
             $successmessage='Crime report logged Successfully the ID of the application is '.$Process_itemnew;
+            $Users = User::where('role_id', '=', 2)->get();
+            Notification::send($Users, new ApplicationMade($Process_item));
             return $successmessage;
             
         });
-        echo($successmessage1);
-        
-
-        return back()->with('message', 'Crime report logged Successfully'); 
+        return redirect('/general/pending')->with('message', $array); 
                
-    }     
+    }  
 
+    public function crime_report_form_display() {
+        $Organizations = Organization::all();
+        $crime_types = Crime_type::all();
+        return view('crimeReport::logComplaint',['Organizations' => $Organizations],['crime_types' => $crime_types],);
+    }
+
+    public function download_image($path,$file) 
+    {       
+        return Storage::disk('public')->download($path.'/'.$file);
+        dd($path,$file);
+        return back()->with('message', 'Downloaded'); 
+       
+    }
+
+    public function track_user_crime_reports(Request $request)
+    {
+        $id=$request['create_by'];
+        $Crimes = Crime_report::all()->where('created_by_user_id',$id)->toArray();
+        return view('crimeReport::trackCrime',compact('Crimes'));
+    }
+
+    //related to crime_types
     public function create_crime_type() {
         return view('crimeReport::crimeTypeCreate');
+    }
+
+    public function edit_crime_type($id) {
+        $crime_type = Crime_type::find($id);
+        return view('crimeReport::crimeTypeEdit', [
+            'crime_type' => $crime_type,
+        ]);
+    }
+
+    public function delete_crime_type($id) {
+        $Crime_types = Crime_type::find($id);
+        $Crime_types->delete();
+        return redirect('/crime-report/crimehome')->with('messagetypes', 'Crime type Successfully Deleted');
     }
 
     public function store_crime_type() {
@@ -128,12 +138,6 @@ class CrimeReportController extends Controller
         $ctype->status = request('status');
         $ctype->save();
         return redirect('/crime-report/crimehome')->with('messagetypes', 'Crime Type Successfully Added');
-    }
-    public function edit_crime_type($id) {
-        $crime_type = Crime_type::find($id);
-        return view('crimeReport::crimeTypeEdit', [
-            'crime_type' => $crime_type,
-        ]);
     }
 
     public function update_crime_type(Request $request, $id)     
@@ -144,10 +148,6 @@ class CrimeReportController extends Controller
         ]);
         return redirect('/crime-report/crimehome')->with('messagetypes', 'Crime type Successfully Updated');   
     }
-    public function delete_crime_type($id) {
-        $Crime_types = Crime_type::find($id);
-        $Crime_types->delete();
-        return redirect('/crime-report/crimehome')->with('messagetypes', 'Crime type Successfully Deleted');
-    }
+    
 }
 

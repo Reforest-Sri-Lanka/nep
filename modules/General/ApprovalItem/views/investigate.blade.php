@@ -330,6 +330,26 @@
             </div>
             <div class="col border border-muted rounded-lg mr-2 p-4">
                 <h6>Change assigned staff member</h6>
+                <table class="table table-light table-striped border-secondary rounded-lg mr-4">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>name</th>
+                            <th>email</th>
+                            <th>assign</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($Users as $user)
+                        <tr>
+                            <td>{{$user->id}}</td>
+                            <td>{{$user->name}}</td>
+                            <td>{{$user->email}}</td>
+                            <td><a href="/approval-item/confirmassign/{{$user->id}}/{{$process_item->id}}" class="text-muted">assign</a></td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
         <div class="row p-4 bg-white">
