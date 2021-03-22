@@ -9,17 +9,19 @@
 <div class="container">
     <div class="container bg-white">
         <div class="row p-4 bg-white">
-            <h3>Investigation</h3>
+        @if($process_item->prerequisite == 0)
+            <h3>Investigation of {{$process_item->form_type->type}} application no {{$process_item->form_id}}</h3>
+        @elseif($process_item->prerequisite == 1)
+            <h3>Additional Investigation for {{$process_item->form_type->type}} application no {{$process_item->form_id}}</h3>
+        @endif
         </div>   
         <div class="row p-4 bg-white">
             <div class="col border border-muted rounded-lg mr-2 p-4">
                 @switch($process_item->form_type_id)
                     @case('1')
-                        <h6>Tree cutting request details</h6>
                         <table class="table table-light table-striped border-secondary rounded-lg mr-4">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
                                     <th>Province</th>
                                     <th>District</th>
                                     <th>GS Division</th>
@@ -28,7 +30,6 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>{{$item->id}}</td>
                                     @if($item->province == NULL)
                                     <td>Unassigned</td>
                                     @else
@@ -97,7 +98,6 @@
                         </table>
                     @break
                     @case('2')
-                        <h6>Development project information</h6>
                         <table class="table table-light table-striped border-secondary rounded-lg mr-4">
                             <thead>
                                 <tr>
@@ -116,11 +116,9 @@
                         </table>
                     @break
                     @case('4')
-                        <h6>Crime report information</h6>
                         <table class="table table-light table-striped border-secondary rounded-lg mr-4">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
                                     <th>Crime type</th>
                                     <th>description</th>
                                     <th>Date complained logged</th>
@@ -128,7 +126,6 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>{{$item->id}}</td>
                                     <td>{{$item->crime_type->type}}</td>
                                     <td>{{$item->description}}</td>
                                     <td>{{date('d-m-Y',strtotime($item->created_at))}}</td>
@@ -143,41 +140,64 @@
             </div>
         </div>
         @if($process_item->form_type_id == 1)
-        <div class="row p-4 bg-white">
-            <h6>Tree Data</h6>
-            @if(count($tree_data) < 1)
-                <h1>No data</h1>
-            @else
-                <table class="table table-light table-striped border-secondary rounded-lg mr-4">
-                    <thead>
-                        <tr>
-                            <th>Tree Species ID</th>
-                            <th>Tree ID</th>
-                            <th>Width at Breast Height</th>
-                            <th>Height</th>
-                            <th>Timber Volume</th>
-                            <th>Timber Cubic</th>
-                            <th>Age</th>
-                            <th>Remark</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @for($x = 0; $x < count($tree_data); $x++)
-                        <tr>
-                            <td>{{$tree_data[$x]['tree_species_id']}}</td>
-                            <td>{{$tree_data[$x]['tree_id']}}</td>
-                            <td>{{$tree_data[$x]['width_at_breast_height']}}</td>
-                            <td>{{$tree_data[$x]['height']}}</td>
-                            <td>{{$tree_data[$x]['timber_volume']}}</td>
-                            <td>{{$tree_data[$x]['timber_cubic']}}</td>
-                            <td>{{$tree_data[$x]['age']}}</td>
-                            <td>{{$tree_data[$x]['remark']}}</td>
-                        </tr>
-                        @endfor
-                     </tbody>
-                </table>
-            @endif             
-        </div>
+            <div class="row p-4 bg-white">
+                <h6>Tree Data</h6>
+                @if(count($tree_data) < 1)
+                    <h1>No data</h1>
+                @else
+                    <table class="table table-light table-striped border-secondary rounded-lg mr-4">
+                        <thead>
+                            <tr>
+                                <th>Tree Species ID</th>
+                                <th>Tree ID</th>
+                                <th>Width at Breast Height</th>
+                                <th>Height</th>
+                                <th>Timber Volume</th>
+                                <th>Timber Cubic</th>
+                                <th>Age</th>
+                                <th>Remark</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for($x = 0; $x < count($tree_data); $x++)
+                            <tr>
+                                <td>{{$tree_data[$x]['tree_species_id']}}</td>
+                                <td>{{$tree_data[$x]['tree_id']}}</td>
+                                <td>{{$tree_data[$x]['width_at_breast_height']}}</td>
+                                <td>{{$tree_data[$x]['height']}}</td>
+                                <td>{{$tree_data[$x]['timber_volume']}}</td>
+                                <td>{{$tree_data[$x]['timber_cubic']}}</td>
+                                <td>{{$tree_data[$x]['age']}}</td>
+                                <td>{{$tree_data[$x]['remark']}}</td>
+                            </tr>
+                            @endfor
+                        </tbody>
+                    </table>
+                @endif             
+            </div>
+        @endif
+        @if($process_item->form_type_id == 1 || 4)
+            <div class="row p-4 bg-white">
+                <h6>Related images</h6>
+            </div>
+            <div class="row p-4 bg-white">
+                @isset($Photos)
+                    @if (count($Photos) > 0)
+                            @foreach($Photos as $photo)
+                                <div class="col border border-muted rounded-lg mr-2 p-4">
+                                    <img class="img-responsive" src="{{URL::asset('/storage/crimeEvidence/27NO041NO0oie_7M8XMhI9uOs1 (2).png')}}" alt="photo">
+                                    <a class="nav-link text-dark font-italic p-2" href="/crime-report/downloadimage/{{$photo}}">Download Image</a>
+                                </div>
+                            @endforeach
+                    @endif
+                    @if (count($Photos) < 1)
+                            <p>No photos included in the application</p>
+                    @endif
+                @endisset
+                @empty($Photos)
+                    <p>No photos included in the application</p>
+                @endempty
+            </div>
         @endif
         <div class="row p-4 bg-white">
             <div class="col border border-muted rounded-lg mr-2 p-4">

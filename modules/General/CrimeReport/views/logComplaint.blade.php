@@ -24,17 +24,16 @@
                     </div>
                     <div class="form-group">
                         <label for="organization">Make complaint to:</label>
-                        <select name="organization" class="custom-select" required>
-                            <option value="0" selected>Select Organization</option>
-                            @foreach($Organizations as $organization)
-                                <option value="{{$organization->id}}">{{$organization->title}}</option>
-                            @endforeach
-                        </select>
+                            <input type="text" class="form-control typeahead3" placeholder="Search" name="organization" value="{{ old('organization') }}"/>
+                            
                         @error('organization')
                             <div class="alert">                                   
                                 <strong>{{ $message }}</strong>
                             </div>
                         @enderror    
+                    </div>
+                    <div class="form-group">
+                    <input type="checkbox" class="form-check-input" name="nonregorg" ><strong>Other</strong>
                     </div>
                     <div class="form-group" id="dynamicAddRemove">
                         <label for="images">Photos:</label>
@@ -51,7 +50,28 @@
                             </div>
                         @enderror
                     </div>
-                    
+                    <hr>
+                    <div class="form-group">
+                        <input type="checkbox" name="nonreguser" value="1" ><strong>Creating on behalf of non registered user</strong>
+                        <input type="checkbox" name="nonreguser" value="1" ><strong>Creating on behalf of non registered user</strong>
+                        <label for="description">Inform investigation result to Mr/Ms:</label>
+                        <input type="text" class="form-control" placeholder="Enter complainant name" name="Requestor" value=""/>
+                        @error('confirm')
+                            <div class="alert">
+                                <strong>{{ $message }}</strong>
+                            </div>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Through email:</label>
+                        <input type="text" class="form-control" placeholder="Enter complainant's email" name="Requestor_email" value=""/>
+                        @error('confirm')
+                            <div class="alert">
+                                <strong>{{ $message }}</strong>
+                            </div>
+                        @enderror
+                    </div>
+                    <hr>
                     <div class="form-check">
                     <input type="hidden" class="form-control" name="create_by" value="{{ Auth::user()->id }}">  `   1
                         <input id="polygon" type="hidden" name="polygon" value="{{request('polygon')}}">
@@ -80,6 +100,25 @@
     </form>
 </div>
 <script type="text/javascript">
+
+    //THIS USES THE AUTOMECOMPLETE FUNCTION IN TREE REMOVAL CONTROLLER
+    var path3 = "{{route('organization')}}";
+    $('input.typeahead3').typeahead({
+        source: function(terms, process) {
+
+            return $.get(path3, {
+                terms: terms
+            }, function(data) {
+                console.log(data);
+                objects = [];
+                data.map(i => {
+                    objects.push(i.title)
+                })
+                console.log(objects);
+                return process(objects);
+            })
+        },
+    });
 
     //photos add
     var i = 0;

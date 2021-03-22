@@ -44,7 +44,8 @@ class AssignOrg extends Notification
     public function toDatabase($notifiable)
     {
         return [
-            'id'     => $this->processitem->form_id,
+            'form_id'     => $this->processitem->form_id,
+            'process_id'    =>$this->processitem->id,
             'type'   => $this->processitem->form_type->type,
             'requestor' => $this->processitem->created_by_user_id,
             'action' =>$this->processitem->status->type,

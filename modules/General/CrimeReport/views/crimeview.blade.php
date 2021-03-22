@@ -8,83 +8,62 @@
     <form>
         <div class="input-group mb-3 mt-3">
             <div class="input-group-prepend">
-                <span class="input-group-text">Title</span>
+                <span class="input-group-text">Crime Type</span>
             </div>
-            <input type="text" class="form-control" placeholder="{{$development_project->title}}" readonly>
+            <input type="text" class="form-control" placeholder="{{$crime->Crime_type->type}}" readonly>
         </div>
 
         <div class="input-group mb-3">
             <div class="input-group-prepend">
-                <span class="input-group-text">Category</span>
+                <span class="input-group-text">Description</span>
             </div>
-            <input type="text" class="form-control" placeholder="Development Project" readonly>
+            <input type="text" class="form-control" placeholder="{{$crime->description}}" readonly>
         </div>
 
         <div class="input-group mb-3">
             <div class="input-group-prepend">
-                <span class="input-group-text">Gazette</span>
+                <span class="input-group-text">Photos</span>
             </div>
-            <input type="text" class="form-control" placeholder="{{$development_project->gazette->title}}" readonly>
-        </div>
-
-
-        <div class="form-check border-secondary rounded-lg mb-3" style="background-color:#ebeef0">
-            <label class="mt-2"> Governing Organizations: </label>
-            <hr>
-            <ul class="list-unstyled">
-                @foreach($development_project->governing_organizations as $governing_organization)
-                @switch($governing_organization)
-                @case(1)
-                <li class="ml-5">Reforest Sri Lanka</li>
-                @break
-                @case(2)
-                <li class="ml-5">Ministry of Environment</li>
-                @break
-                @case(3)
-                <li class="ml-5">Central Environmental Authority</li>
-                @break
-                @case(4)
-                <li class="ml-5">Ministry of Wildlife</li>
-                @break
-                @case(5)
-                <li class="ml-5">Road Development Authority</li>
-                @break
-                @endswitch
-                @endforeach
-            </ul>
-        </div>
-
-
-        <div class="input-group mb-3">
+            
             <div class="input-group-prepend">
-                <span class="input-group-text">Logs</span>
+                @isset($Photos)
+                    @if (count($Photos) > 0)
+                            @foreach($Photos as $photo)
+                                <div class="col border border-muted rounded-lg mr-2 p-4">
+                                    <img class="img-responsive" src="{{URL::asset('/storage/crimeEvidence/27NO041NO0oie_7M8XMhI9uOs1 (2).png')}}" alt="photo">
+                                    <a class="nav-link text-dark font-italic p-2" href="/crime-report/downloadimage/{{$photo}}">Download Image</a>
+                                </div>
+                            @endforeach
+                    @endif
+                    @if (count($Photos) < 1)
+                            <p>No photos included in the application</p>
+                    @endif
+                @endisset
+                @empty($Photos)
+                    <p>No photos included in the application</p>
+                @endempty
             </div>
-            @if($development_project->logs == 0)
-            <input type="text" class="form-control" placeholder="No logs" readonly>
-            @else
-            <input type="text" class="form-control" placeholder="CONFIGURE CODE TO SHOW LOGS NOT DONE - CURRENTLY SAVING COORDINATES HERE" readonly>
-            @endif
         </div>
 
         <div class="input-group mb-3">
             <div class="input-group-prepend">
                 <span class="input-group-text">Land Parcel</span>
             </div>
-            <input type="text" class="form-control" placeholder="{{$development_project->land_parcel->title}}" readonly>
+            <input type="text" class="form-control" placeholder="{{$crime->land_parcel->title}}" readonly>
         </div>
 
         <div class="input-group mb-3">
             <div class="input-group-prepend">
                 <span class="input-group-text">Status</span>
             </div>
-            <input type="text" class="form-control" placeholder="{{$development_project->status->type}}" readonly>
+            <input type="text" class="form-control" placeholder="{{$crime->status_id}}" readonly>
         </div>
 
         <div class="input-group mb-3">
             <div class="input-group-prepend">
                 <span class="input-group-text">Created at</span>
             </div>
-            <input type="text" class="form-control" placeholder="{{$development_project->created_at}}" readonly>
+            <input type="text" class="form-control" placeholder="{{$crime->created_at}}" readonly>
         </div>
 
         <div id="mapid" style="height:400px;" name="map"></div>

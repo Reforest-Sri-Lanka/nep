@@ -19,7 +19,7 @@
   </div>
   @endif -->
   
-  <form action="/tree-removal/save" method="post" id="regForm">
+  <form action="/tree-removal/save" method="post" id="regForm" enctype="multipart/form-data">
     @csrf
     <!-- One "tab" for each step in the form: -->
     <div class="tab">
@@ -197,10 +197,11 @@
               @enderror
             </div>
 
-            <div class="form-group">
+            <div class="form-group" id="dynamicAddRemove2">
               <label for="images">Image (Optional)</label>
               <div class="custom-file mb-3">
-                <input type="file" id="images" name="images">
+                <input type="file" id="images" name="images[0]">
+                <button type="button" name="add" id="add-btn2" class="btn btn-success">Add More</button>
               </div>
             </div>
           </div>
@@ -255,7 +256,16 @@
 
 
 <script>
-  ///STEPPER
+
+  //photos add
+    var i = 0;
+    $("#add-btn2").click(function() {
+        ++i;
+        $("#dynamicAddRemove2").append(
+        '<input type="file" id="images" name="images['+ i +']">');
+    });
+
+  //STEPPER
   var currentTab = 0; // Current tab is set to be the first tab (0)
   showTab(currentTab); // Display the current tab
 
