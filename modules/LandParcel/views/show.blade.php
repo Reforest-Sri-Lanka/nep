@@ -3,69 +3,50 @@
 @section('cont')
 
 <kbd><a href="/approval-item/showRequests" class="text-white font-weight-bolder"><i class="fas fa-chevron-left"></i></i> BACK</a></kbd>
+<hr>
 <div class="container">
-    <form>
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text">Title: </span>
-            </div>
-            <input type="text" class="form-control" placeholder="{{$land->title}}" readonly>
-        </div>
 
-        <div class="form-check border-secondary rounded-lg mb-3" style="background-color:#ebeef0">
-            <label class="mt-2"> Governing Organizations: </label>
-            <hr>
+    <dl class="row">
+        <dt class="col-sm-3">Title:</dt>
+        <dd class="col-sm-9">{{$land->title}}</dd>
+
+        <dt class="col-sm-3">Governing Organizations:</dt>
+        <dd class="col-sm-9">
             <ul class="list-unstyled">
                 @foreach($land->governing_organizations as $governing_organization)
                 @switch($governing_organization)
                 @case(1)
-                <li class="ml-5">Reforest Sri Lanka</li>
+                <li>Reforest Sri Lanka</li>
                 @break
                 @case(2)
-                <li class="ml-5">Ministry of Environment</li>
+                <li>Ministry of Environment</li>
                 @break
                 @case(3)
-                <li class="ml-5">Central Environmental Authority</li>
+                <li>Central Environmental Authority</li>
                 @break
                 @case(4)
-                <li class="ml-5">Ministry of Wildlife</li>
+                <li>Ministry of Wildlife</li>
                 @break
                 @case(5)
-                <li class="ml-5">Road Development Authority</li>
+                <li>Road Development Authority</li>
                 @break
                 @default
-                <li class="ml-5">Other</li>
+                <li>Other</li>
                 @endswitch
                 @endforeach
             </ul>
-        </div>
+        </dd>
 
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text">Status: </span>
-            </div>
-            <input type="text" class="form-control" placeholder="{{$land->status}}" readonly>
-        </div>
+        <dt class="col-sm-3">Status:</dt>
+        <dd class="col-sm-9">{{$land->status->type}}</dd>
 
-
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text">Created at</span>
-            </div>
-            <input type="text" class="form-control" placeholder="{{$land->created_at}}" readonly>
-        </div>
-        <hr>
-        <br>
-        <div id="mapid" style="height:400px;" name="map"></div>
-    </form>
+        <dt class="col-sm-3 text-truncate">Created at:</dt>
+        <dd class="col-sm-9">{{$land->created_at}}</dd>
+    </dl>
+    <div class="container border border-dark border-rounded"><div id="mapid" style="height:400px;" name="map"></div></div>
 </div>
 
 <script>
-    /// BACK BUTTON
-    function goBack() {
-        window.history.back();
-    }
-
     /// MAP MODULE
     var center = [7.2906, 80.6337];
 
@@ -79,10 +60,10 @@
             maxZoom: 18
         }).addTo(map);
 
-        
+
     var polygon = @json($polygon);
     var layer = L.geoJSON(JSON.parse(polygon)).addTo(map);
-    
+
     // Adjust map to show the kml
     var bounds = layer.getBounds();
     map.fitBounds(bounds);

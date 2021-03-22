@@ -19,6 +19,7 @@
   </div>
   @endif -->
   
+
   <form action="/tree-removal/save" method="post" id="regForm" enctype="multipart/form-data">
     @csrf
     <!-- One "tab" for each step in the form: -->
@@ -51,7 +52,10 @@
                 </div>
 
                 <div class="form-group">
-                  GS Division:<input type="text" class="form-control typeahead4 verifythis" oninput="this.className = 'form-control typeahead4'" placeholder="Search" name="gs_division" />
+                  GS Division:<input type="text" class="form-control typeahead4 @error('gs_division') is-invalid @enderror" value="{{ old('gs_division') }}" placeholder="Search" name="gs_division" />
+                  @error('gs_division')
+                  <div class="alert alert-danger">{{ $message }}</div>
+                  @enderror
                 </div>
 
               </div>
@@ -443,33 +447,33 @@
   map.addLayer(editableLayers);
 
   var drawPluginOptions = {
-      position: 'topright',
-      draw: {
-        polygon: {
-          allowIntersection: false, // Restricts shapes to simple polygons
-          drawError: {
-            color: '#e1e100', // Color the shape will turn when intersects
-            message: '<strong>Oh snap!<strong> you can\'t draw that!' // Message that will show when intersect
-          },
-          shapeOptions: {
-            color: '#97009c'
-          }
+    position: 'topright',
+    draw: {
+      polygon: {
+        allowIntersection: false, // Restricts shapes to simple polygons
+        drawError: {
+          color: '#e1e100', // Color the shape will turn when intersects
+          message: '<strong>Oh snap!<strong> you can\'t draw that!' // Message that will show when intersect
         },
-        // disable toolbar item by setting it to false
-        polyline: true,
-        circle: false, // Turns off this drawing tool
-        rectangle: true,
-        marker: true,
-        circlemarker: false,
-        polygon: {
-          shapeOptions: {
-            color: 'green'
-          },
-          allowIntersection: false,
-          drawError: {
-            color: 'orange',
-            timeout: 1000
-          },
+        shapeOptions: {
+          color: '#97009c'
+        }
+      },
+      // disable toolbar item by setting it to false
+      polyline: true,
+      circle: false, // Turns off this drawing tool
+      rectangle: true,
+      marker: true,
+      circlemarker: false,
+      polygon: {
+        shapeOptions: {
+          color: 'green'
+        },
+        allowIntersection: false,
+        drawError: {
+          color: 'orange',
+          timeout: 1000
+        },
       },
 
     },
