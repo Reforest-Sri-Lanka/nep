@@ -110,6 +110,7 @@
             </div>
         </div>
         <input id="polygon" type="hidden" name="polygon" value="{{request('polygon')}}">
+        <input id="loc" type="text" name="file" value="{{request('loc')}}">
         <input type="hidden" class="form-control" name="createdBy" value="{{Auth::user()->id}}">
     </form>
 </div>
@@ -197,6 +198,7 @@
                 $('#message').addClass(data.class_name);
                 $('#uploaded_image').html(data.uploaded_image);
                 var tmp = data.uploaded_image;
+                $('#loc').val(JSON.stringify(tmp));
                 console.log(tmp);
                 fetch(`/${tmp}`)
                     .then(res => res.text())
