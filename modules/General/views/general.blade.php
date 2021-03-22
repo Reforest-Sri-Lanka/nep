@@ -18,13 +18,13 @@
                 <a class="nav-link h4" href="/dev-project/applicationForm">Development Project</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link h4" href="#">Restoration</a>
+                <a class="nav-link h4" href="#">Environment Restoration</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link h4" href="/land/form">Register Land</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link h4" href="/crime-report/newcrime">Complaints</a>
+                <a class="nav-link h4" href="/crime-report/crimehome">Crime Reporting</a>
             </li>
         </ul>
     </div>
