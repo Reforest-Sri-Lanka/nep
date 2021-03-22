@@ -53,6 +53,7 @@
                     <hr>
                     <div class="form-group">
                         <input type="checkbox" name="nonreguser" value="1" ><strong>Creating on behalf of non registered user</strong>
+                        <input type="checkbox" name="nonreguser" value="1" ><strong>Creating on behalf of non registered user</strong>
                         <label for="description">Inform investigation result to Mr/Ms:</label>
                         <input type="text" class="form-control" placeholder="Enter complainant name" name="Requestor" value=""/>
                         @error('confirm')

@@ -178,26 +178,22 @@
                 <h6>Related images</h6>
                 @isset($Photos)
                     @if (count($Photos) > 0)
-                        <div class="card-deck">
                             @foreach($Photos as $photo)
-                            <div class="card" style="background-color:#99A3A4">
-                                <img class="card-img-top" src="{{asset('/storage/'.$photo)}}" alt="photo">
-                                <div class="card-body text-center">
-                                <a class="nav-link text-dark font-italic p-2" href="/crime-report/downloadimage/{{$photo}}">Download Image</a>
+                                <div class="col border border-muted rounded-lg mr-2 p-4">
+                                    <img class="img-responsive" src="{{URL::asset('/storage/crimeEvidence/27NO041NO0oie_7M8XMhI9uOs1 (2).png')}}" alt="photo">
+                                    <a class="nav-link text-dark font-italic p-2" href="/crime-report/downloadimage/{{$photo}}">Download Image</a>
                                 </div>
-                            </div>
                             @endforeach
-                        </div>
                     @endif
                     @if (count($Photos) < 1)
-                        <p>No photos included in the application</p>
+                            <p>No photos included in the application</p>
                     @endif
                 @endisset
                 @empty($Photos)
                     <p>No photos included in the application</p>
                 @endempty
             </div>
-            @endif
+        @endif
         </div>
         <div class="row p-4 bg-white">
             <div class="col border border-muted rounded-lg mr-2 p-4">

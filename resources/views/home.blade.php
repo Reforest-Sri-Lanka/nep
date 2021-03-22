@@ -61,6 +61,12 @@
             line-height: 15px;
         }
 
+        .img-responsive{
+            max-height:500px;
+            max-width:auto;
+            height:40%;
+        }
+
 
         /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
     </style>

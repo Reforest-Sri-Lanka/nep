@@ -77,11 +77,12 @@ class CrimeReportController extends Controller
                 }
                 $crime_rep = Crime_report::where('id',$id)->update(['photos' => json_encode($photoarray)]);
             }
-            
+            $org=Organization::where('title', $request['organization'])->first();
             $Process_item =new Process_item;
             $Process_item->created_by_user_id = $request['create_by'];
             $Process_item->request_organization = "1";
-            $Process_item->activity_organization = $request['organization'];
+            //dd($org->city);
+            $Process_item->activity_organization = $org->id;
             $Process_item->activity_user_id = null;
             $Process_item->form_id =  $id;
             $Process_item->form_type_id = "4";      
@@ -110,18 +111,35 @@ class CrimeReportController extends Controller
     }
 
     public function download_image($path,$file) 
-    {       
+    {   
+        dd($path,$file);    
         return Storage::disk('public')->download($path.'/'.$file);
-        dd($path,$file);
-        return back()->with('message', 'Downloaded'); 
        
     }
 
-    public function track_user_crime_reports(Request $request)
+    public function view_image($path,$file) 
+    {   
+        $url = Storage::disk('public')->url($path.'/'.$file);
+        return $url;
+       
+    }
+
+    public function display_image($path,$file)
     {
-        $id=$request['create_by'];
-        $Crimes = Crime_report::all()->where('created_by_user_id',$id)->toArray();
-        return view('crimeReport::trackCrime',compact('Crimes'));
+
+    }
+
+    public function view_crime_reports($id)
+    {
+        $process_item=Process_item::find($id);
+        $crime = Crime_report::find($process_item->form_id);
+        $Photos=Json_decode($crime->photos);
+        $land_parcel = Land_Parcel::find($crime->land_parcel_id);
+        return view('crimeReport::crimeview',[
+            'crime' => $crime,
+            'Photos' =>$Photos,
+            'polygon' =>$land_parcel->polygon,
+        ]);
     }
 
     //related to crime_types
