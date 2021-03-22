@@ -106,6 +106,7 @@ class ApprovalItemController extends Controller
             $treecut = Tree_Removal_Request::find($Process_item->form_id);
             $land_parcel = Land_Parcel::find($treecut->land_parcel_id);
             $Photos=Json_decode($treecut->images);
+            dd($Photos);
             return view('approvalItem::assignStaff',[
                 'treecut' => $treecut,
                 'Users' => $Users,

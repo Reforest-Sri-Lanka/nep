@@ -174,8 +174,7 @@
                 @endif
             </div> 
             @if($Process_item->form_type_id == 1 || 4)
-            <div class="col border border-muted rounded-lg mr-2 p-4">
-                <h6>Related images</h6>
+            <div class="row p-4 bg-white">
                 @isset($Photos)
                     @if (count($Photos) > 0)
                             @foreach($Photos as $photo)

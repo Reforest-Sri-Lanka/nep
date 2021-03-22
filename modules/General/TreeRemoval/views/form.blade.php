@@ -19,6 +19,7 @@
   </div>
   @endif -->
   
+
   <form action="/tree-removal/save" method="post" id="regForm" enctype="multipart/form-data">
     @csrf
     <!-- One "tab" for each step in the form: -->
@@ -474,6 +475,7 @@
           timeout: 1000
         },
       },
+
     },
     edit: {
       featureGroup: editableLayers, //REQUIRED!!

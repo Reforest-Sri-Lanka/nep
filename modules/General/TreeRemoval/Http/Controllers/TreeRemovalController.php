@@ -27,7 +27,7 @@ class TreeRemovalController extends Controller
 
     public function save(Request $request)
     {
-        
+
         if (request('checklandowner') && request('checkremovalrequestor')) {
             $request->validate([
                 'landTitle' => 'required',
@@ -99,7 +99,9 @@ class TreeRemovalController extends Controller
         //     'description' => 'required',
         //     'land_extent' => 'integer'
         // ]);
+
         DB::transaction(function () use($request) {
+
         $land = new Land_Parcel();
         $land->title = request('landTitle');
 
@@ -159,7 +161,7 @@ class TreeRemovalController extends Controller
             $tree->species_special_notes = request('species_special_notes');
         }
         
-        
+
         $tree->land_parcel_id = $landid;
         //$tree->district_id = request('district_id');
         //$tree->province_id = request('province_id');
@@ -196,6 +198,7 @@ class TreeRemovalController extends Controller
                 $process->other_land_owner_name = request('land_owner');
                 $process->other_land_owner_type = request('landownertype');
             } else {
+                
                 $land_owner = Organization::where('title', request('land_owner'))->pluck('id');
                 $process->request_organization = $land_owner[0];
             }
@@ -207,9 +210,11 @@ class TreeRemovalController extends Controller
                 $process->activity_organization = $removal_requestor[0];
             }
             $process->save();
+
             $Users = User::where('role_id', '=', 2)->get();
             Notification::send($Users, new ApplicationMade($process));
         });
+
         return redirect('/general/pending')->with('message', 'Request Created Successfully');
     }
 
