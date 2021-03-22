@@ -188,7 +188,7 @@
               <td><input type="text" name="location[0][timber_volume]" placeholder="Enter Volume" class="form-control" /></td>
               <td><input type="text" name="location[0][timber_cubic]" placeholder="Enter Cubic" class="form-control" /></td>
               <td><input type="text" name="location[0][age]" placeholder="Enter Age" class="form-control" /></td>
-              <td rowspan="2"><button type="button" name="add" id="add-btn" class="btn btn-success">Add</button></td>
+              <td rowspan="2"><button type="button" name="add" id="add-btn" class="btn bd-navbar text-white">Add</button></td>
             </tr>
             <tr>
               <td colspan="7"><textarea name="location[0][remark]" placeholder="Enter Remarks" class="form-control" rows="3"></textarea></td>
@@ -201,7 +201,7 @@
     <div style="overflow:auto;">
       <div style="float:right;">
         <button type="button" id="prevBtn" class="btn bd-navbar text-white" onclick="nextPrev(-1)">Previous</button>
-        <button type="button" id="nextBtn" class="btn btn-primary" onclick="nextPrev(1)">Next</button>
+        <button type="button" id="nextBtn" class="btn bd-navbar text-white" onclick="nextPrev(1)">Next</button>
       </div>
     </div>
     <!-- Circles which indicates the steps of the form: -->

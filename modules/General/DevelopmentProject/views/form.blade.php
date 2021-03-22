@@ -27,7 +27,7 @@
                     </div>
 
                     <div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn bd-navbar text-light">Submit</button>
                     </div>
                 </div>
                 <div class="col border border-muted rounded-lg p-4">
@@ -42,7 +42,7 @@
             </div>
         </div>
         <input type="hidden" class="form-control" name="createdBy" value="{{Auth::user()->id}}">
-        <input id="polygon" type="hidden" name="polygon" value="{{request('polygon')}}">
+        <input id="polygon" type="text" name="polygon" value="{{request('polygon')}}">
     </form>
 </div>
 
