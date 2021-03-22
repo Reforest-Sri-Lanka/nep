@@ -16,6 +16,7 @@ use App\Mail\RequestApproved;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use App\Mail\AssignOrganization;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Mail;
 Use App\Notifications\StaffAssigned;
@@ -76,12 +77,13 @@ class ApprovalItemController extends Controller
             'email' => 'required',
         ]);
         $array=DB::transaction(function () use($request){
-            $Process_item =Process_item::find($request['process_id']);
+            
             //$User = User::find($request['create_by']);
             Process_item::where('id',$request['process_id'])->update([
                 'other_removal_requestor_name' => $request['organization'],
                 'status_id' => 2
                 ]);
+            $process_item =Process_item::find($request['process_id']);
             Mail::to($request['email'])->send(new AssignOrganization($process_item));
         });
         return back()->with('message', 'Successfully forwarded the application through email'); 
