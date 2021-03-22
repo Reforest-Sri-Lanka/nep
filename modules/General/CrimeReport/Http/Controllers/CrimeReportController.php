@@ -34,6 +34,12 @@ class CrimeReportController extends Controller
             'organization' => 'required|not_in:0',
             'polygon' => 'required',
         ]);
+        if($request->has('nonreguser')){
+            $request -> validate([
+                'Requestor_email' => 'required',
+                'Requestor' => 'required',
+            ]);
+        }
         $array=DB::transaction(function () use($request) {
             $land = new Land_Parcel();
             $land->title = $request['landTitle'];
@@ -81,6 +87,10 @@ class CrimeReportController extends Controller
             $Process_item->form_type_id = "4";      
             $Process_item->status_id = "1";
             $Process_item->remark = "to be made yet";
+            if($request->has('nonreguser')){
+                $Process_item->requestor_email = $request['Requestor_email'];
+                $Process_item->other_removal_requestor_name = $request['Requestor'];
+            }
             $Process_item->save();
             $Process_itemnew =Process_item::latest()->first()->id;
             $successmessage='Crime report logged Successfully the ID of the application is '.$Process_itemnew;
