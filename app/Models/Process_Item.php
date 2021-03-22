@@ -31,7 +31,6 @@ class Process_Item extends Model
         'prerequisite' => 0,
         'remark' => 0,
         'status_id' => 1,
-        'request_organization' => 0,
         'other_land_owner_type' => 0,
         'other_land_owner_name' => '',
         'other_removal_requestor_type' => 0,

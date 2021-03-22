@@ -15,14 +15,22 @@
                         <tr>
                             <th>Type</th>
                             <th>Date Application logged</th>
-                            <th>Organization Assigned</th>
+                            @if($process_item->activity_organization ==null)
+                                <th>Organization Assigned (Non registered)</th>
+                            @else
+                                <th>Organization Assigned</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td>{{$process_item->form_type->type}}</td>
                             <td>{{date('d-m-Y',strtotime($process_item->created_at))}}</td>
-                            <td>{{$process_item->Activity_organization->title}}</td>
+                            @if($process_item->activity_organization ==null)
+                                <td>{{$process_item->other_removal_requestor_name}}</td>
+                            @else
+                                <td>{{$process_item->Activity_organization->title}}</td>
+                            @endif
                         </tr>
                     </tbody>
                 </table>

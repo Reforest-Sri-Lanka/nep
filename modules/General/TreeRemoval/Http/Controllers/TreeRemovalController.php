@@ -198,6 +198,7 @@ class TreeRemovalController extends Controller
                 $process->other_land_owner_name = request('land_owner');
                 $process->other_land_owner_type = request('landownertype');
             } else {
+                
                 $land_owner = Organization::where('title', request('land_owner'))->pluck('id');
                 $process->request_organization = $land_owner[0];
             }

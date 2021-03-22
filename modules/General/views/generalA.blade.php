@@ -68,8 +68,10 @@
             @foreach($Process_items as $process_item)<tr>
                 <td>{{$process_item->form_type->type}}</td>
                 <td>{{date('d-m-Y',strtotime($process_item->created_at))}}</td>
-                @if($process_item->request_organization==null)
+                @if($process_item->request_organization==null && $process_item->other_land_owner_name==null)
                 <td>{{$process_item->created_by_user->name}}</td>
+                @elseif($process_item->request_organization==null)
+                <td>{{$process_item->other_land_owner_name}}</td>
                 @else
                 <td>{{$process_item->requesting_organization->title}}</td>
                 @endif
