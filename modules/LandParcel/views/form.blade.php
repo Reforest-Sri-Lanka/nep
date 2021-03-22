@@ -142,6 +142,7 @@
                 drawError: {
                     color: 'orange',
                     timeout: 1000
+
                 },
                 showArea: true,
                 metric: false,
@@ -151,6 +152,7 @@
                 shapeOptions: {
                     color: 'red'
                 },
+
             },
             circlemarker: false,
             rect: {

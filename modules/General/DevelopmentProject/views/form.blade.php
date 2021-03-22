@@ -24,10 +24,7 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        Organization:<input type="text" class="form-control typeahead3" placeholder="Search" name="organization" value="{{ old('organization') }}"/>
-                        @error('organization')
-                        <div class="alert alert-danger">{{ $message }}</div>
-                        @enderror
+                        Organization:<input type="text" class="form-control typeahead3" placeholder="Search" name="organization" />
                     </div>
 
                     <div class="form-group">
@@ -58,6 +55,7 @@
             </div>
         </div>
         <input type="hidden" class="form-control" name="createdBy" value="{{Auth::user()->id}}">
+        <input id="polygon" type="text" name="polygon" value="{{request('polygon')}}">
     </form>
 </div>
 
@@ -114,54 +112,57 @@
             maxZoom: 18
         }).addTo(map);
 
-    var drawnItems = new L.FeatureGroup();
-    map.addLayer(drawnItems);
 
-    var drawControl = new L.Control.Draw({
-        position: 'topright',
-        draw: {
-            polygon: {
-                shapeOptions: {
-                    color: 'purple'
-                },
-                allowIntersection: false,
-                drawError: {
-                    color: 'orange',
-                    timeout: 1000
-                },
-                showArea: true,
-                metric: false,
-                repeatMode: true
-            },
-            polyline: {
-                shapeOptions: {
-                    color: 'red'
-                },
-            },
-            circlemarker: false,
-            rect: {
-                shapeOptions: {
-                    color: 'green'
-                },
-            },
-            circle: false,
-        },
-        edit: {
-            featureGroup: drawnItems
-        }
-    });
-    map.addControl(drawControl);
+		var drawnItems = new L.FeatureGroup();
+		map.addLayer(drawnItems);
 
-    map.on('draw:created', function(e) {
-        var type = e.layerType,
-            layer = e.layer;
+		var drawControl = new L.Control.Draw({
+			position: 'topright',
+			draw: {
+				polygon: {
+					shapeOptions: {
+						color: 'purple'
+					},
+					allowIntersection: false,
+					drawError: {
+						color: 'orange',
+						timeout: 1000
+					},
+					showArea: true,
+					metric: false,
+					repeatMode: true
+				},
+				polyline: {
+					shapeOptions: {
+						color: 'red'
+					},
+				},
+                circlemarker: false,
+				rect: {
+					shapeOptions: {
+						color: 'green'
+					},
+				},
+				circle: false,
+			},
+			edit: {
+				featureGroup: drawnItems
+			}
+		});
+		map.addControl(drawControl);
 
-        if (type === 'marker') {
-            layer.bindPopup('A popup!');
-        }
+		map.on('draw:created', function (e) {
+			var type = e.layerType,
+				layer = e.layer;
 
-        drawnItems.addLayer(layer);
-        $('#polygon').val(JSON.stringify(layer.toGeoJSON()));
+			if (type === 'marker') {
+				layer.bindPopup('A popup!');
+			}
+
+			drawnItems.addLayer(layer);
+            $('#polygon').val(JSON.stringify(layer.toGeoJSON()));
+   
+
 
 
     });
