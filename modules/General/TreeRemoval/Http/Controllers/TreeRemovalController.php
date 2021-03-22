@@ -27,6 +27,7 @@ class TreeRemovalController extends Controller
 
     public function save(Request $request)
     {
+        
         if (request('checklandowner') && request('checkremovalrequestor')) {
             $request->validate([
                 'landTitle' => 'required',
@@ -158,6 +159,7 @@ class TreeRemovalController extends Controller
             $tree->species_special_notes = request('species_special_notes');
         }
         
+        
         $tree->land_parcel_id = $landid;
         //$tree->district_id = request('district_id');
         //$tree->province_id = request('province_id');
@@ -169,6 +171,18 @@ class TreeRemovalController extends Controller
 
 
         $latest = Tree_Removal_Request::latest()->first();
+        if(request('images')){ 
+            //dd($request->images);
+            $i = count($request->images);
+            for($y=0;$y<$i;$y++){
+                $file = $request->images[$y];
+                $filename =$file->getClientOriginalName();
+                $newname = $latest->id.'NO'.$y.$filename;
+                $path = $file->storeAs('crimeEvidence',$newname,'public');
+                $photoarray[$y] = $path;            
+            }
+            $tree = Tree_Removal_Request::where('id',$latest->id)->update(['images' => json_encode($photoarray)]);
+        }
 
             $process = new Process_Item();
             $process->form_type_id = 1;

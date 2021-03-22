@@ -41,6 +41,7 @@ class CrimeReportController extends Controller
             ]);
         }
         $array=DB::transaction(function () use($request) {
+            
             $land = new Land_Parcel();
             $land->title = $request['landTitle'];
             $land->governing_organizations =$request['organization'];
