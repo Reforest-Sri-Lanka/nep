@@ -20,6 +20,8 @@ Route::post('/createprerequisite', [ApprovalItemController::class, 'create_prere
 
 Route::get('/changeassignOrganization/{id}/{pid}', [ApprovalItemController::class, 'change_assign_organization']);
 
+Route::post('/changeassignOrganization', [ApprovalItemController::class, 'assign_unregistered_organization']);
+
 Route::post('/progresssave', [ApprovalItemController::class, 'progress_update']);
 
 Route::post('/finalapproval', [ApprovalItemController::class, 'final_approval']);

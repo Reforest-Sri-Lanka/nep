@@ -69,6 +69,24 @@ class ApprovalItemController extends Controller
         return back()->with('message', 'Assigned Organization Successfully'); 
     }
 
+    public function assign_unregistered_organization(request $request)
+    {
+        $request -> validate([
+            'organization' => 'required',
+            'email' => 'required',
+        ]);
+        $array=DB::transaction(function () use($request){
+            $Process_item =Process_item::find($request['process_id']);
+            //$User = User::find($request['create_by']);
+            Process_item::where('id',$request['process_id'])->update([
+                'other_removal_requestor_name' => $request['organization'],
+                'status_id' => 2
+                ]);
+            Mail::to($request['email'])->send(new AssignOrganization($process_item));
+        });
+        return back()->with('message', 'Successfully forwarded the application through email'); 
+    }
+
     public function showRequests()
     {
         $items = Process_Item::where('created_by_user_id', '=', Auth::user()->id)->get();
