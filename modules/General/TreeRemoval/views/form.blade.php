@@ -18,7 +18,7 @@
     <p>{{\Session::get('success') }}</p>
   </div>
   @endif -->
-
+  
   <form action="/tree-removal/save" method="post" id="regForm">
     @csrf
     <!-- One "tab" for each step in the form: -->
@@ -28,39 +28,61 @@
           <div class="col border border-muted rounded-lg mr-2 p-2">
             <div class="form-group">
               <label for="title">Land Title:</label>
-              <input type="text" class="form-control verifythis" oninput="this.className = 'form-control'" placeholder="Enter Land Title" id="landTitle" name="landTitle">
+              <input type="text" class="form-control @error('landTitle') is-invalid @enderror" value="{{ old('landTitle') }}" placeholder="Enter Land Title" id="landTitle" name="landTitle">
+              @error('landTitle')
+              <div class="alert alert-danger">{{ $message }}</div>
+              @enderror
             </div>
 
             <div class="row p-2">
               <div class="col p-2">
                 <div class="form-group">
-                  Province:<input type="text" class="form-control typeahead verifythis" oninput="this.className = 'form-control typeahead'" placeholder="Search" name="province" />
+                  Province:<input type="text" class="form-control typeahead @error('province') is-invalid @enderror" value="{{ old('province') }}" placeholder="Search" name="province" />
+                  @error('province')
+                  <div class="alert alert-danger">{{ $message }}</div>
+                  @enderror
                 </div>
+
                 <div class="form-group">
-                  District:<input type="text" class="form-control typeahead2 verifythis" oninput="this.className = 'form-control typeahead2'" placeholder="Search" name="district" />
+                  District:<input type="text" class="form-control typeahead2 @error('district') is-invalid @enderror" value="{{ old('district') }}" placeholder="Search" name="district" />
+                  @error('district')
+                  <div class="alert alert-danger">{{ $message }}</div>
+                  @enderror
                 </div>
+
                 <div class="form-group">
-                  GS Division:<input type="text" class="form-control typeahead4 verifythis" oninput="this.className = 'form-control typeahead4'" placeholder="Search" name="gs_division" />
+                  GS Division:<input type="text" class="form-control typeahead4 @error('gs_division') is-invalid @enderror" value="{{ old('gs_division') }}" placeholder="Search" name="gs_division" />
+                  @error('gs_division')
+                  <div class="alert alert-danger">{{ $message }}</div>
+                  @enderror
                 </div>
+
               </div>
               <div class="col p-2">
                 <div class="form-group">
                   <label>Removal Requestor Type:</label>
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input verifythis" oninput="this.className = 'form-check-input'" type="radio" name="removalrequestortype" id="removalrequestortype1" value="1">
+                    <input class="form-check-input" type="radio" name="removalrequestortype" id="removalrequestortype1" value="1">
                     <label class="form-check-label" for="removalrequestortype1">
                       Government
                     </label>
                   </div>
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input verifythis" oninput="this.className = 'form-check-input'" type="radio" name="removalrequestortype" id="removalrequestortype2" value="2">
+                    <input class="form-check-input" type="radio" name="removalrequestortype" id="removalrequestortype2" value="2">
                     <label class="form-check-label" for="removalrequestortype2">
                       Private
                     </label>
                   </div>
+                  @error('removalrequestortype')
+                  <div class="alert alert-danger">Please Select the Type</div>
+                  @enderror
                 </div>
+
                 <div class="form-group">
-                  Removal Requestor:<input type="text" class="form-control typeahead3 verifythis" oninput="this.className = 'form-control typeahead3'" name="removal_requestor" placeholder="Search" />
+                  Removal Requestor:<input type="text" class="form-control typeahead3 @error('removal_requestor') is-invalid @enderror" value="{{ old('removal_requestor') }}" name="removal_requestor" placeholder="Search" />
+                  @error('removal_requestor')
+                  <div class="alert alert-danger">{{ $message }}</div>
+                  @enderror
                   <div class="custom-control custom-checkbox">
                     <input type="checkbox" class="custom-control-input" id="customCheck2" value="1" name="checkremovalrequestor">
                     <label class="custom-control-label" for="customCheck2"><strong>Other</strong></label>
@@ -72,25 +94,36 @@
 
             <div class="form-group">
               <label for="land_extent">Land Extent (In Acres)</label>
-              <input type="text" class="form-control" id="land_extent" name="land_extent">
+              <input type="text" class="form-control typeahead3 @error('removal_requestor') is-invalid @enderror" value="{{ old('land_extent') }}" id="land_extent" name="land_extent">
+              @error('land_extent')
+              <div class="alert alert-danger">{{ $message }}</div>
+              @enderror
             </div>
+
             <div class="form-group">
               <label>Land Owner Type:</label>
               <div class="form-check form-check-inline">
-                <input class="form-check-input verifythis" oninput="this.className = 'form-check-input'" type="radio" name="landownertype" id="landownertype1" value="1" required>
+                <input class="form-check-input" type="radio" name="landownertype" id="landownertype1" value="1" required>
                 <label class="form-check-label" for="landownertype1">
                   Government
                 </label>
               </div>
               <div class="form-check form-check-inline">
-                <input class="form-check-input verifythis" oninput="this.className = 'form-check-input'" type="radio" name="landownertype" id="landownertype2" value="2" required>
+                <input class="form-check-input" type="radio" name="landownertype" id="landownertype2" value="2" required>
                 <label class="form-check-label" for="landownertype2">
                   Private
                 </label>
               </div>
+              @error('landownertype')
+              <div class="alert alert-danger">Please Select the Type</div>
+              @enderror
             </div>
+
             <div class="form-group">
-              Land Owner:<input type="text" class="form-control typeahead3 verifythis" oninput="this.className = 'form-control typeahead3'" placeholder="Search" name="land_owner" />
+              Land Owner:<input type="text" class="form-control typeahead3 @error('land_owner') is-invalid @enderror" value="{{ old('land_owner') }}" placeholder="Search" name="land_owner" />
+              @error('land_owner')
+              <div class="alert alert-danger">{{ $message }}</div>
+              @enderror
               <div class="custom-control custom-checkbox">
                 <input type="checkbox" class="custom-control-input" id="customCheck1" value="1" name="checklandowner">
                 <label class="custom-control-label" for="customCheck1"><strong>Other</strong></label>
@@ -98,7 +131,10 @@
             </div>
             <!-- ////////MAP GOES HERE -->
             <div id="mapid" style="height:400px;" name="map"></div>
-            <input id="polygon" type="hidden" name="polygon" value="{{request('polygon')}}" />
+            @error('polygon')
+            <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
+            <input id="polygon" type="hidden" name="polygon" class="form-control @error('polygon') is-invalid @enderror" value="{{request('polygon')}}" />
             <div class="custom-control custom-checkbox">
               <input type="checkbox" class="custom-control-input" id="customCheck" value="1" name="isProtected">
               <label class="custom-control-label" for="customCheck"><strong>Check if land is a protected area</strong></label>
@@ -109,7 +145,10 @@
               <div class="col">
                 <div class="form-group">
                   <label for="number_of_trees">Number of Trees</label>
-                  <input type="text" class="form-control verifythis" oninput="this.className = 'form-control'" id="number_of_trees" name="number_of_trees">
+                  <input type="text" class="form-control @error('number_of_trees') is-invalid @enderror" value="{{ old('number_of_trees') }}" id="number_of_trees" name="number_of_trees">
+                  @error('number_of_trees')
+                  <div class="alert alert-danger">{{ $message }}</div>
+                  @enderror
                 </div>
 
                 <div class="form-group">
@@ -155,8 +194,12 @@
 
             <div class="form-group">
               <label for="description">Description</label>
-              <textarea class="form-control verifythis" oninput="this.className = 'form-control'" rows="2" id="description" name="description"></textarea>
+              <textarea class="form-control @error('description') is-invalid @enderror" rows="2" id="description" name="description" value="{{ old('description') }}"></textarea>
+              @error('description')
+              <div class="alert alert-danger">{{ $message }}</div>
+              @enderror
             </div>
+
             <div class="form-group">
               <label for="images">Image (Optional)</label>
               <div class="custom-file mb-3">
@@ -188,7 +231,7 @@
               <td><input type="text" name="location[0][timber_volume]" placeholder="Enter Volume" class="form-control" /></td>
               <td><input type="text" name="location[0][timber_cubic]" placeholder="Enter Cubic" class="form-control" /></td>
               <td><input type="text" name="location[0][age]" placeholder="Enter Age" class="form-control" /></td>
-              <td rowspan="2"><button type="button" name="add" id="add-btn" class="btn btn-success">Add</button></td>
+              <td rowspan="2"><button type="button" name="add" id="add-btn" class="btn bd-navbar text-white">Add</button></td>
             </tr>
             <tr>
               <td colspan="7"><textarea name="location[0][remark]" placeholder="Enter Remarks" class="form-control" rows="3"></textarea></td>
@@ -201,7 +244,7 @@
     <div style="overflow:auto;">
       <div style="float:right;">
         <button type="button" id="prevBtn" class="btn bd-navbar text-white" onclick="nextPrev(-1)">Previous</button>
-        <button type="button" id="nextBtn" class="btn btn-primary" onclick="nextPrev(1)">Next</button>
+        <button type="button" id="nextBtn" class="btn bd-navbar text-white" onclick="nextPrev(1)">Next</button>
       </div>
     </div>
     <!-- Circles which indicates the steps of the form: -->
@@ -393,33 +436,33 @@
   map.addLayer(editableLayers);
 
   var drawPluginOptions = {
-      position: 'topright',
-      draw: {
-        polygon: {
-          allowIntersection: false, // Restricts shapes to simple polygons
-          drawError: {
-            color: '#e1e100', // Color the shape will turn when intersects
-            message: '<strong>Oh snap!<strong> you can\'t draw that!' // Message that will show when intersect
-          },
-          shapeOptions: {
-            color: '#97009c'
-          }
+    position: 'topright',
+    draw: {
+      polygon: {
+        allowIntersection: false, // Restricts shapes to simple polygons
+        drawError: {
+          color: '#e1e100', // Color the shape will turn when intersects
+          message: '<strong>Oh snap!<strong> you can\'t draw that!' // Message that will show when intersect
         },
-        // disable toolbar item by setting it to false
-        polyline: true,
-        circle: false, // Turns off this drawing tool
-        rectangle: true,
-        marker: true,
-        circlemarker: false,
-        polygon: {
-          shapeOptions: {
-            color: 'green'
-          },
-          allowIntersection: false,
-          drawError: {
-            color: 'orange',
-            timeout: 1000
-          },
+        shapeOptions: {
+          color: '#97009c'
+        }
+      },
+      // disable toolbar item by setting it to false
+      polyline: true,
+      circle: false, // Turns off this drawing tool
+      rectangle: true,
+      marker: true,
+      circlemarker: false,
+      polygon: {
+        shapeOptions: {
+          color: 'green'
+        },
+        allowIntersection: false,
+        drawError: {
+          color: 'orange',
+          timeout: 1000
+        },
       },
     },
     edit: {

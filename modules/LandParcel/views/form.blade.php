@@ -2,15 +2,6 @@
 
 @section('general')
 <div class="container">
-    @if(count($errors) >0)
-    <div class="alert alert-danger">
-        <ul>
-            @foreach($errors->all() as $error)
-            <li>{{$error}}</li>
-            @endforeach
-        </ul>
-    </div>
-    @endif
 
     @if(\Session::has('success'))
     <div class="alert alert-success">
@@ -26,8 +17,12 @@
                 <div class="col border border-muted rounded-lg mr-2 p-4">
                     <div class="form-group">
                         <label for="title">Title:</label>
-                        <input type="text" class="form-control" placeholder="Enter Title" id="title" name="title">
+                        <input type="text" class="form-control @error('title') is-invalid @enderror" placeholder="Enter Title" value="{{ old('title') }}" id="title" name="title">
+                        @error('title')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
+
 
                     <div class="form-group">
                         Province:<input type="text" class="form-control typeahead" placeholder="Search" name="province" />
@@ -56,6 +51,9 @@
                                     </fieldset>
                                 </div>
                             </div>
+                            @error('governing_orgs')
+                            <div class="alert alert-danger">Please Select at Least 1 Organization</div>
+                            @enderror
                         </div>
 
                         <div class="card">
@@ -74,14 +72,21 @@
                                     </fieldset>
                                 </div>
                             </div>
+                            @error('gazettes')
+                            <div class="alert alert-danger">Please Select at Least 1 Gazette</div>
+                            @enderror
                         </div>
                     </div>
                 </div>
                 <div class="col border border-muted rounded-lg p-4">
                     <div class="form-group">
                         <label for="title">Land Title:</label>
-                        <input type="text" class="form-control" placeholder="Enter Land Title" id="landTitle" name="landTitle">
+                        <input type="text" class="form-control @error('landTitle') is-invalid @enderror" value="{{ old('title') }}" placeholder="Enter Land Title" id="landTitle" name="landTitle">
+                        @error('landTitle')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
+
                     <div>
                         <label>Upload KML File</label>
                         <input type="file" name="select_file" id="select_file" />
@@ -90,19 +95,22 @@
                     <br>
                     <!-- ////////MAP GOES HERE -->
                     <div id="mapid" style="height:400px;" name="map"></div>
+                    @error('polygon')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
                     <br>
                     <div class="custom-control custom-checkbox">
                         <input type="checkbox" class="custom-control-input" id="customCheck" value="1" name="isProtected">
                         <label class="custom-control-label" for="customCheck"><strong>Check if land is a protected area</strong></label>
                     </div>
-                    <br/>
-                    <div style="float:left;">
-                        <button type="submit" name="submit" class="btn btn-success">Submit</button>
+                    <div style="float:right;">
+                        <button type="submit" name="submit" class="btn bd-navbar text-white">Submit</button>
                     </div>
                 </div>
             </div>
         </div>
         <input id="polygon" type="hidden" name="polygon" value="{{request('polygon')}}">
+        <input id="loc" type="text" name="file" value="{{request('loc')}}">
         <input type="hidden" class="form-control" name="createdBy" value="{{Auth::user()->id}}">
     </form>
 </div>
@@ -190,6 +198,7 @@
                 $('#message').addClass(data.class_name);
                 $('#uploaded_image').html(data.uploaded_image);
                 var tmp = data.uploaded_image;
+                $('#loc').val(JSON.stringify(tmp));
                 console.log(tmp);
                 fetch(`/${tmp}`)
                     .then(res => res.text())
