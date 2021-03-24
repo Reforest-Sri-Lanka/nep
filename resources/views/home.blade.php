@@ -25,6 +25,7 @@
 
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
   <link href="{{ url('/css/app.css') }}" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
   <style>
    .inline{
       display: inline;
@@ -263,5 +264,10 @@
 
   <!-- Argon JS -->
   <script src="{{ url('/js/argon.js?v=1.2.0') }} "></script>
+
+  <!--chart js -->
+  <script src="{{ url('/vendor/chart.js/dist/Chart.min.js') }}"></script>
+  <script src="{{ url('/vendor/chart.js/dist/Chart.extension.js') }}"></script>
+  <script src="{{ url('/vendor/create-charts.js' ) }}"></script>
 </body>
 </html>

@@ -9,19 +9,19 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link h4" href="/general/pending">Overview<span class="sr-only">(current)</span></a>
+                <a class="nav-link h4" href="/reporting/overview">Overview<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link h4" href="">Tree Removal</a>
+                <a class="nav-link h4" href="/reporting/tree-removal">Tree Removal</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link h4" href="/dev-project/applicationForm">Development Project</a>
+                <a class="nav-link h4" href="/reporting/dev-proj">Development Project</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link h4" href="/env-restoration/create">Restoration</a>
+                <a class="nav-link h4" href="/reporting/env-restoration">Restoration</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link h4" href="/crime-report/crimehome">Complaints</a>
+                <a class="nav-link h4" href="/reporting/complaints">Complaints</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link h4" href="">Other</a>
