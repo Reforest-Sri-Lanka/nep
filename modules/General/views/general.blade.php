@@ -24,7 +24,7 @@
                 <a class="nav-link h4" href="/land/form">Register Land</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link h4" href="/crime-report/crimehome">Crime Reporting</a>
+                <a class="nav-link h4" href="/crime-report/newcrime">Crime Reporting</a>
             </li>
         </ul>
     </div>

@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Mail;
 Use App\Notifications\StaffAssigned;
 Use App\Notifications\AssignOrg;
+use PDF;
 use Redirect;
 
 
@@ -67,6 +68,7 @@ class ApprovalItemController extends Controller
                 ]);
             Notification::send($Users, new AssignOrg($Process_item));
         });
+        
         return back()->with('message', 'Assigned Organization Successfully'); 
     }
 
@@ -84,8 +86,49 @@ class ApprovalItemController extends Controller
                 'status_id' => 2
                 ]);
             $process_item =Process_item::find($request['process_id']);
-            Mail::to($request['email'])->send(new AssignOrganization($process_item));
+            return($process_item);
         });
+        $user =User::find($request['create_by']);
+        if($array->form_type_id == '1'){ 
+            $item = Tree_Removal_Request::find($array->form_id);
+            $Photos=Json_decode($item->images);
+            $tree_data = $item->tree_locations;
+        } 
+        else if($array->form_type_id == '2'){
+            $item = Development_Project::find($array->form_id);
+            $Photos=null;
+            $tree_data = null;
+        }
+        else if($array->form_type_id == '4'){
+            $item = Crime_report::find($array->form_id);
+
+            $Photos=Json_decode($item->photos);
+            
+            $tree_data = null;
+        }
+        $land_parcel = Land_Parcel::find($item->land_parcel_id);
+        //dd($array);
+        
+
+        $pdf = PDF::loadView('approvalItem::index',[
+            'process_item' => $array,
+            'user' =>$user,
+            'item' => $item,
+            'polygon' => $land_parcel->polygon,
+            'tree_data' =>$tree_data,
+        ]);
+        $array->requestor_email=$request['email'];
+        
+        $process_item = $array->toarray();
+        
+        
+        Mail::send('emails.assignorg', $process_item, function($message) use ($pdf,$process_item){
+            
+            $message->to($process_item['requestor_email']);
+            $message->subject('Assigning application');
+            $message->attachData($pdf->output(),'document.pdf');
+        }); 
+        
         return back()->with('message', 'Successfully forwarded the application through email'); 
     }
 
