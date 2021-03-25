@@ -3,9 +3,6 @@
 @section('admin')
 
 <div class="flex row border-secondary rounded-lg ml-3 justify-content-between">
-    <span>
-        <h5 class="p-3">{{Auth::user()->role->title}}</h5>
-    </span>
     <!-- Sessions to display success or failure -->
     <span>
         <h3 class="text-center bg-success text-light">{{session('message')}}</h3>
@@ -22,7 +19,7 @@
         <!-- opens the create view -->
         <a href="/user/create" class="btn btn-info mr-4" role="button">Create User</a>
     </span>
-    <table class="table table-hover table-light mr-4">
+    <table class="table table-hover table-light mt-2 mr-4">
         <thead>
             <tr>
                 <th>ID</th>
