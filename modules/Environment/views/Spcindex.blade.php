@@ -1,11 +1,28 @@
-@extends('home')
+@extends('Envmain')
 
-@section('cont')
+@section('env')
 
-<kbd><a href="/environment/generalenv" class="text-white font-weight-bolder"><i class="fas fa-chevron-left"></i></i> BACK</a></kbd>
+
 <div class="container">
 <div class="jumbotron">
-<h2> Requests from  users</h2>
+
+<div>
+
+<a href="/environment/requestspecies" class="btn bd-navbar text-light" role="button">New Species</a>
+</div>
+
+
+
+<nav class="navbar navbar-expand-sm navbar-light">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link h4" href="">Info</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link h4" href="">Quick Links</a>
+      </li>
+    </ul>
+  </nav>
 
 @if(count($errors) >0)
     <div class="alert alert-danger">
@@ -23,11 +40,13 @@
 
     </div>
     @endif
+    
 <table class="table table-striped table-white">
   <thead>
     <tr>
       <th scope="col">ID</th>
       <th scope="col">Type</th>
+      <th scope="col">Title</th>
       <th scope="col">Description</th>
       <th scope="col">Status</th>
       <th scope="col">Approve</th>
@@ -39,13 +58,15 @@
   </thead>
   <tbody>
   
-        @foreach ($ecosystems  as $row)
+        @foreach ($species  as $row)
         <tr>
       <td >{{$row->id}}</td>
-      <td >{{$row->ecosystem_type}}</td>
+      <td >{{$row->type}}</td>
+      <td >{{$row->title}}</td>
       <td >{{$row->description}}</td>
 
-      @switch($row->status)
+
+       @switch($row->status_id)
                 @case('0')
                 <td>Inactive</td>
                 @break;
@@ -53,35 +74,31 @@
                 <td>Active</td>
                 @break;
                 @endswitch
-     
    
 
       <td>
-      <form action="/environment/environment/updatestatus/{{$row->id}}" method="POST">
+     
+      <form action="/environment/environmentspe/updatestatus/{{$row->id}}" method="POST">
       {{csrf_field()}}
       {{method_field('PUT')}}
-
-     
+      
       <button type="submit" name="status" value="1" class="btn btn-outline-warning">Approve</button>
-     
       
 
 </form>
 
-
       </td>
 
       <td>
-      <form action="{{url('/environment/delete-request/'.$row ->id)}}" method="POST">
+      <form action="{{url('/environment/delete-requestspecies/'.$row ->id)}}" method="POST">
       {{csrf_field()}}
       {{method_field('DELETE')}}
       <button type="submit" class="btn btn-outline-danger">Delete </button>
       
 
 </form>
+
       </td>
-
-
       
 
       </tr>

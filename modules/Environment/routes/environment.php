@@ -5,7 +5,7 @@ use Environment\Http\Controllers\SpeciesController;
 
 Route::get('/home', [EnvController::class, 'home'])->name('environment.home');
 
-Route::get('/generalenv', fn() => view('environment::environment'));
+Route::get('/generalenv', fn() => view('environment::Envmain'));
 Route::get('/createrequest', fn() => view('environment::request'));
 
 

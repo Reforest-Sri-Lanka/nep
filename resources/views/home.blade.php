@@ -41,7 +41,7 @@
                                 <a class="nav-link text-light" href="/user/index"><i class="fa fa-user" aria-hidden="true"></i>  User Management</a>
                             </li>
                             <li class="nav-item mt-3">
-                                <a class="nav-link text-light" href="/environment/generalenv"><i class="fa fa-tree" aria-hidden="true"></i>  Environment Module</a>
+                                <a class="nav-link text-light" href="/environment/updatedata"><i class="fa fa-tree" aria-hidden="true"></i>  Environment Module</a>
                             </li>
                             <li class="nav-item mt-3">
                                 <a class="nav-link text-light" href="/approval-item/showRequests"><i class="fa fa-arrow-down" aria-hidden="true"></i>  Requests</a>

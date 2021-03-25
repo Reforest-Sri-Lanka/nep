@@ -19,7 +19,7 @@ class EnvController extends Controller
     public function show($id)           //show one record for moreinfo button
     {
         $ecosystems = Env::find($id);
-        return view('environment/checkstatuseco',compact('ecosystems','id'));
+        return view('environment/Envindex',compact('ecosystems','id'));
             
         
     }
@@ -56,7 +56,7 @@ class EnvController extends Controller
 
     public function index(){
         $ecosystems=Env::all();
-        return view('environment::checkstatuseco',compact('ecosystems',$ecosystems));
+        return view('environment::Envindex',compact('ecosystems',$ecosystems));
 
 
 

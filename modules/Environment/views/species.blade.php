@@ -1,11 +1,17 @@
 @extends('home')
 
 @section('cont')
-<kbd><a href="/environment/generalenv" class="text-white font-weight-bolder"><i class="fas fa-chevron-left"></i></i> BACK</a></kbd>
-<div class='row justify-content-center'>
-    </br>
-  
-    <h2>Fill your Data Here </h2>
+<kbd><a href="/environment/updatedataspecies" class="text-white font-weight-bolder"><i class="fas fa-chevron-left"></i></i> BACK</a></kbd>
+
+<div class="container">
+   <h2 style="text-align:center;" class="text-dark">Application Form </h2>
+   <hr>
+   <div class="row justify-content-md-center border p-5 bg-white">
+      <div class="col-10 ml-2">
+         <!--Organizaion Details -->        
+         <h6 style="text-align:left;" class="text-dark">Species Details</h6>
+         <hr>
+      
 
 
     @if(count($errors) >0)
@@ -27,33 +33,26 @@
     </br>
 </div>
 <hr>
-<!-- @foreach($org as $org)
-<ul>
-    <li>{{$org->title}}</li>
-</ul>
-@endforeach -->
-<div class='row justify-content-center'>
+
+
     <form action='/environment/newspecies' method="post">
         @csrf
+    
+        <div class="row border rounded-lg p-8 bg-white">
+        <div class="row p-2 mt-2">
+              <div class="col">
+                <div class="form-group">
+                  <label for="number_of_tree_species">Species Type</label>
+                  <input type="text" class="form-control"  name="type">
+                
+      
+         
+       
+           <label for="number_of_tree_species">Species Title</label>
+           <input type="text" class="form-control"  name="title">
+         </div>
 
-        <h6>Species Type</h6>
-        <div class="form-group">
-
-            <input type="text" name="type" class="form-control">
-
-
-
-        </div>
-        </br>
-        <h6>Title</h6>
-        <div class="form-group">
-
-            <input type="text" name="title" class="form-control">
-
-
-
-        </div>
-
+        
 
 
 
@@ -118,20 +117,17 @@
         </br>
 
         </br>
-        <div class="form-check">
-            <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" name="confirm"><strong>I confirm these information to be true</strong>
-                @error('confirm')
-                <div class="alert">
-                    <strong>{{ $message }}</strong>
-                </div>
-                @enderror
-            </label>
-            </br>
-           
+       
+        
+        <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="customCheck" value="1" name="isProtected">
+                        <label class="custom-control-label" for="customCheck"><strong>I confirmed these information to be true</strong></label>
 
-            <button type="submit" name="status" value="1" class="btn btn-success">Submit</button>
-        </div>
+                        </br>
+                        <button type="submit" class="tn btn-outline-secondary btn" >Cancel</button>
+                        <button type="submit" class="btn bd-navbar text-light" >Submit</button>
+                        
+                    </div>
 
       
 
@@ -140,6 +136,5 @@
     </form>
 </div>
 </div>
-</div>
-</div>
+
 @endsection

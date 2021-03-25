@@ -45,8 +45,7 @@ public function store(Request $request){
 
 
     
-    return redirect('environment/requestspecies')->with('success', 'Data added successfully');
-
+    return redirect('/environment/newspecies')->with('success', 'Data added successfully');
 
 
 }
@@ -62,7 +61,7 @@ public function track(Request $request)
 }
 public function index(){
     $species=Species::all();
-    return view('environment::checkstatusspecies',compact('species',$species));
+    return view('environment::Spcindex',compact('species',$species));
 
 
 
@@ -83,7 +82,7 @@ return view('environment::trackrequest',[
 public function show($id)           //show one record for moreinfo button
 {
     $items = Species::find($id);
-    return view('environment/checkstatusspecies',compact('species','id'));
+    return view('environment/Spcindex',compact('species','id'));
         
     
 }

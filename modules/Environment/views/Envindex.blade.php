@@ -1,28 +1,30 @@
-@extends('home')
+@extends('Envmain')
 
-@section('cont')
+@section('env')
 
-<kbd><a href="/environment/generalenv" class="text-white font-weight-bolder"><i class="fas fa-chevron-left"></i></i> BACK</a></kbd>
+
 <div class="container">
 <div class="jumbotron">
-<h2> Requests from  users</h2>
+<div>
 
-@if(count($errors) >0)
-    <div class="alert alert-danger">
-        <ul>
-            @foreach($errors->all() as $error)
-            <li>{{$error}}</li>
-            @endforeach
-        </ul>
-    </div>
-    @endif
+<a href="/environment/createrequest" class="btn bd-navbar text-light" role="button">New Eco-System</a>
+</div>
 
-    @if(\Session::has('success'))
-    <div class="alert alert-success">
-        <p>{{\Session::get('success') }} </p>
+<br>
+<nav class="navbar navbar-expand-sm navbar-light">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link h4" href="/environment/updatedata">Info</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link h4" href="/environment/updatedataspecies">Quick Links</a>
+      </li>
+    </ul>
+  </nav>
 
-    </div>
-    @endif
+
+
+
 <table class="table table-striped table-white">
   <thead>
     <tr>
@@ -32,6 +34,7 @@
       <th scope="col">Status</th>
       <th scope="col">Approve</th>
       <th scope="col">Delete</th>
+      <th scope = "col">More</th>
     
 
 
@@ -54,6 +57,7 @@
                 @break;
                 @endswitch
      
+      
    
 
       <td>
@@ -80,7 +84,8 @@
 
 </form>
       </td>
-
+<!-- opens the more view -->
+<td class="text-center"><a href="" class="btn btn-outline-info mr-4" role="button">...</a></td>
 
       
 
