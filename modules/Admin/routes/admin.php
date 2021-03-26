@@ -10,7 +10,7 @@ Route::get('/passwordReset', function() {       // Open view to reset password.
 Route::patch('/alterPassword', [UserController::class, 'alterPassword']);       // Save data to the db.
 
 // user/index route will route to the UserController to route based on the user's role  
-Route::get('/index', [UserController::class, 'index']); 
+Route::get('/index', [UserController::class, 'index'])->name('userIndex'); 
 
 ///////ADMIN ACTIONS      
 Route::get('/create', [UserController::class, 'create']);      // Open create view.

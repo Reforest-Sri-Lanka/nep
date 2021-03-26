@@ -2,7 +2,7 @@
 
 use LandParcel\Http\Controllers\LandController;
 
-Route::get('/form', [LandController::class, 'form']);
+Route::get('/form', [LandController::class, 'form'])->name("land");
 
 Route::post('/save', [LandController::class, 'save']);
 
