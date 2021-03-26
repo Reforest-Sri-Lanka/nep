@@ -37,24 +37,19 @@
                         <!-- Links -->
                         <ul class="navbar-nav">
                             <li class="nav-item mt-5">
-                                <a class="nav-link text-light" href="/general/pending"><i class="fa fa-home" aria-hidden="true"></i>
-                                    <span class="ml-2">General Module</span>
-                                </a>
+                                <a class="nav-link text-light" href="/general/pending"><i class="fa fa-home" aria-hidden="true"></i>   General Module</a>
                             </li>
                             <li class="nav-item mt-3">
-                                <a class="nav-link text-light" href="/user/index"><i class="fa fa-user" aria-hidden="true"></i>
-                                    <span class="ml-2">User Management</span>
-                                </a>
+                                <a class="nav-link text-light" href="/user/index"><i class="fa fa-user" aria-hidden="true"></i>   User Management</a>
                             </li>
                             <li class="nav-item mt-3">
-                                <a class="nav-link text-light" href="/environment/generalenv"><i class="fa fa-tree" aria-hidden="true"></i>
-                                    <span class="ml-2">Environment Module</span>
-                                </a>
+                                <a class="nav-link text-light" href="/environment/generalenv"><i class="fa fa-tree" aria-hidden="true"></i>   Environment Module</a>
                             </li>
                             <li class="nav-item mt-3">
-                                <a class="nav-link text-light" href="/approval-item/showRequests"><i class="fa fa-arrow-down" aria-hidden="true"></i>
-                                    <span class="ml-2">Requests</span>
-                                </a>
+                                <a class="nav-link text-light" href="/approval-item/showRequests"><i class="fa fa-arrow-down" aria-hidden="true"></i>   Requests</a>
+                            </li>
+                            <li class="nav-item mt-3">
+                                <a class="nav-link text-light" href="/reporting/overview"><i class="fa fa-book" aria-hidden="true"></i>   Reporting</a>
                             </li>
                         </ul>
                     </nav>
@@ -186,6 +181,9 @@
             </div>
         </footer>
     </div>
+  <!--chart js -->
+  <script src="{{ url('/vendor/chart.js/dist/Chart.min.js') }}"></script>
+  <script src="{{ url('/vendor/chart.js/dist/Chart.extension.js') }}"></script>
+  <script src="{{ url('/vendor/create-charts.js' ) }}"></script>
 </body>
-
 </html>
