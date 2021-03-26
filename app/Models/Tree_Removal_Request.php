@@ -11,12 +11,6 @@ class Tree_Removal_Request extends Model
 
     protected $table = 'tree_removal_requests';
 
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
         'created_by_user_id',
         'description',
@@ -36,18 +30,11 @@ class Tree_Removal_Request extends Model
         'province_id',
         'gs_division_id',
         'governing_organizations',
-
         'images',
-        'special approval',
+        'special_approval',
         'tree_locations',
-
     ];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
     protected $casts = [
         'tree_locations' => 'array',
         'special_approval' => 'array',
@@ -55,13 +42,19 @@ class Tree_Removal_Request extends Model
     ];
 
     protected $attributes = [
-        'created_by_user_id' => 0,
         'images' => 0,
         'special_approval' => 0,
         'tree_locations' => 0,
         'status_id' => 1,
         'land_size_unit' => "acres",
-        'governing_organizations' => 0
+        'land_size' => 0,
+        'no_of_tree_species' => 0,
+        'no_of_mammal_species' => 0,
+        'no_of_amphibian_species' => 0,
+        'no_of_reptile_species' => 0,
+        'no_of_avian_species' => 0,
+        'no_of_flora_species' => 0,
+        'species_special_notes' => 0,
     ];
 
 

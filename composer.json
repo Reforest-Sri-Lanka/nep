@@ -51,7 +51,10 @@
             "ApprovalItem\\": "modules/General/ApprovalItem",
             "CrimeReport\\": "modules/General/CrimeReport",
             "General\\": "modules/General",
-            "Environment\\": "modules/Environment"
+            "Environment\\": "modules/Environment",
+            "LandParcel\\": "modules/LandParcel",
+            "Reporting\\": "modules/Reporting"
+
             
         }
     },

@@ -3,209 +3,138 @@
 @section('cont')
 
 <kbd><a href="/approval-item/showRequests" class="text-white font-weight-bolder"><i class="fas fa-chevron-left"></i></i> BACK</a></kbd>
+<hr>
 <div class="container">
-    <form>
+    <div class="row">
+        <div class="col border border-muted rounded-lg mr-2 p-2">
+            <dl class="row">
+                <dt class="col-sm-3">Province:</dt>
+                <dd class="col-sm-9">{{$tree->province->province}}</dd>
 
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text">Province</span>
-            </div>
-            <input type="text" class="form-control" placeholder="{{$tree->province->province}}" readonly>
+                <dt class="col-sm-3">District:</dt>
+                <dd class="col-sm-9">{{$tree->district->district}}</dd>
+
+                <dt class="col-sm-3">Grama Sevaka Division:</dt>
+                <dd class="col-sm-9">{{$tree->gs_division->gs_division}}</dd>
+
+                <dt class="col-sm-3">Description:</dt>
+                <dd class="col-sm-9">
+                    <p>{{$tree->description}}</p>
+                </dd>
+
+                <dt class="col-sm-3">Governing Organizations:</dt>
+                <dd class="col-sm-9">
+                    <ul class="list-unstyled">
+                        @foreach($tree->governing_organizations as $governing_organization)
+                        @switch($governing_organization)
+                        @case(1)
+                        <li>Reforest Sri Lanka</li>
+                        @break
+                        @case(2)
+                        <li>Ministry of Environment</li>
+                        @break
+                        @case(3)
+                        <li>Central Environmental Authority</li>
+                        @break
+                        @case(4)
+                        <li>Ministry of Wildlife</li>
+                        @break
+                        @case(5)
+                        <li>Road Development Authority</li>
+                        @break
+                        @endswitch
+                        @endforeach
+                    </ul>
+                </dd>
+
+                <dt class="col-sm-3">Category:</dt>
+                <dd class="col-sm-9">Tree Removal</dd>
+
+                <dt class="col-sm-3">Land Size:</dt>
+                <dd class="col-sm-9">{{$tree->land_size}} {{$tree->land_size_unit}}</dd>
+
+                <dt class="col-sm-3">Number of Trees:</dt>
+                <dd class="col-sm-9">{{$tree->no_of_trees}}</dd>
+
+                <dt class="col-sm-3">Number of Tree Species:</dt>
+                <dd class="col-sm-9">{{$tree->no_of_tree_species}}</dd>
+
+                <dt class="col-sm-3">Number of Mammal Species:</dt>
+                <dd class="col-sm-9">{{$tree->no_of_mammal_species}}</dd>
+
+                <dt class="col-sm-3">Number of Amphibian Species:</dt>
+                <dd class="col-sm-9">{{$tree->no_of_amphibian_species}}</dd>
+
+                <dt class="col-sm-3">Number of Reptile Species:</dt>
+                <dd class="col-sm-9">{{$tree->no_of_reptile_species}}</dd>
+
+                <dt class="col-sm-3">Number of Avian Species:</dt>
+                <dd class="col-sm-9">{{$tree->no_of_avian_species}}</dd>
+
+                <dt class="col-sm-3">Number of Floral Species:</dt>
+                <dd class="col-sm-9">{{$tree->no_of_flora_species}}</dd>
+
+                <dt class="col-sm-3">Species Special Notes:</dt>
+                <dd class="col-sm-9">
+                    <p>{{$tree->species_special_notes}}</p>
+                </dd>
+
+                <dt class="col-sm-3">Special Approval:</dt>
+                <dd class="col-sm-9">{{$tree->special_approval}}</dd>
+
+                <dt class="col-sm-3">Land Parcel:</dt>
+                <dd class="col-sm-9">{{$tree->land_parcel->title}}</dd>
+
+                <dt class="col-sm-3">Status:</dt>
+                <dd class="col-sm-9">{{$tree->status->type}}</dd>
+
+                <dt class="col-sm-3">Created at:</dt>
+                <dd class="col-sm-9">{{$tree->created_at}}</dd>
         </div>
-
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text">District</span>
-            </div>
-            <input type="text" class="form-control" placeholder="{{$tree->district->district}}" readonly>
-        </div>
-
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text">Grama Sevaka Division</span>
-            </div>
-            <input type="text" class="form-control" placeholder="{{$tree->gs_division_id}}" readonly>
-        </div>
-
-        <div class="form-group">
-            <label for="description">Description</label>
-            <textarea class="form-control" rows="5" id="description" readonly>{{$tree->description}}</textarea>
-        </div>
-
-        <div class="form-check border-secondary rounded-lg mb-3" style="background-color:#ebeef0">
-            <label class="mt-2"> Governing Organizations: </label>
+        <div class="col border border-muted rounded-lg mr-2 p-2">
+            <dt class="col-sm-3">Properties</dt>
             <hr>
-            <ul class="list-unstyled">
-                @foreach($tree->governing_organizations as $governing_organization)
-                @switch($governing_organization)
-                @case(1)
-                <li class="ml-5">Reforest Sri Lanka</li>
-                @break
-                @case(2)
-                <li class="ml-5">Ministry of Environment</li>
-                @break
-                @case(3)
-                <li class="ml-5">Central Environmental Authority</li>
-                @break
-                @case(4)
-                <li class="ml-5">Ministry of Wildlife</li>
-                @break
-                @case(5)
-                <li class="ml-5">Road Development Authority</li>
-                @break
-                @endswitch
-                @endforeach
-            </ul>
-        </div>
-
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text">Category</span>
-            </div>
-            <input type="text" class="form-control" placeholder="Tree Removal Request" readonly>
-        </div>
-
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text">Land Size</span>
-            </div>
-            <input type="text" class="form-control" placeholder="{{$tree->land_size}} {{$tree->land_size_unit}}" readonly>
-        </div>
-
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text">Number of Trees</span>
-            </div>
-            <input type="text" class="form-control" placeholder="{{$tree->no_of_trees}}" readonly>
-        </div>
-
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text">Number of Tree Species</span>
-            </div>
-            <input type="text" class="form-control" placeholder="{{$tree->no_of_tree_species}}" readonly>
-        </div>
-
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text">Number of Mammal Species</span>
-            </div>
-            <input type="text" class="form-control" placeholder="{{$tree->no_of_mammal_species}}" readonly>
-        </div>
-
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text">Number of Amphibian Species</span>
-            </div>
-            <input type="text" class="form-control" placeholder="{{$tree->no_of_amphibian_species}}" readonly>
-        </div>
-
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text">Number of Reptile Species</span>
-            </div>
-            <input type="text" class="form-control" placeholder="{{$tree->no_of_reptile_species}}" readonly>
-        </div>
-
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text">Number of Avian Species</span>
-            </div>
-            <input type="text" class="form-control" placeholder="{{$tree->no_of_avian_species}}" readonly>
-        </div>
-
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text">Number of Flora Species</span>
-            </div>
-            <input type="text" class="form-control" placeholder="{{$tree->no_of_flora_species}}" readonly>
-        </div>
-
-        <div class="form-group">
-            <label for="special_notes">Species Special Notes</label>
-            <textarea class="form-control" rows="5" id="special_notes" readonly>{{$tree->species_special_notes}}</textarea>
-        </div>
-
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text">Special Approval</span>
-            </div>
-            @if($tree->special_approval == 0)
-            <input type="text" class="form-control" placeholder="None" readonly>
+            @if($location==0)
+            <dd class="col-sm-9">No Properties</dd>
             @else
-            <input type="text" class="form-control" placeholder="{{$tree->special_approval}}" readonly>
-            @endif
-        </div>
+            @for($x = 0; $x < count($location); $x++) <dd class="col-sm-9">
+                <dl class="row">
+                    <dt class="col-sm-7">Tree Species ID:</dt>
+                    <dd class="col-sm-5">{{$location[$x]['tree_species_id']}}</dd>
 
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text">Land Parcel</span>
-            </div>
-            <input type="text" class="form-control" placeholder="{{$tree->land_parcel->title}}" readonly>
-        </div>
+                    <dt class="col-sm-7">Tree ID:</dt>
+                    <dd class="col-sm-5">{{$location[$x]['tree_id']}}</dd>
 
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text">Status</span>
-            </div>
-            <input type="text" class="form-control" placeholder="{{$tree->status->type}}" readonly>
-        </div>
+                    <dt class="col-sm-7">Width at Breast Height:</dt>
+                    <dd class="col-sm-5">{{$location[$x]['width_at_breast_height']}}</dd>
 
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text">Created at</span>
-            </div>
-            <input type="text" class="form-control" placeholder="{{$tree->created_at}}" readonly>
-        </div>
-        <hr>
-        <br>
+                    <dt class="col-sm-7">Height:</dt>
+                    <dd class="col-sm-5">{{$location[$x]['height']}}</dd>
 
-        @if($location==0)
-        <h1>No properties</h1>
-        @else
-        <h3>Properties</h3>
-        @for($x = 0; $x < count($location); $x++) <hr>
-            <div class="form-group row">
-                <div class="col-xs-2">
-                    <label for="tree_species_id">Tree Species ID</label>
-                    <input class="form-control" id="tree_species_id" type="text" readonly placeholder="{{$location[$x]['tree_species_id']}}">
-                </div>
-                <div class="col-xs-2">
-                    <label for="tree_id">Tree ID</label>
-                    <input class="form-control" id="tree_id" type="text" readonly placeholder="{{$location[$x]['tree_id']}}">
-                </div>
-            </div>
-            <div class="form-group row">
-                <div class="col-xs-2">
-                    <label for="width_at_breast_height">Width at Breast Height</label>
-                    <input class="form-control" id="width_at_breast_height" readonly placeholder="{{$location[$x]['width_at_breast_height']}}" type="text">
-                </div>
-                <div class="col-xs-2">
-                    <label for="height">Height</label>
-                    <input class="form-control" id="height" readonly placeholder="{{$location[$x]['height']}}" type="text">
-                </div>
-                <div class="col-xs-2">
-                    <label for="timber_volume">Timber Volume</label>
-                    <input class="form-control" id="timber_volume" readonly placeholder="{{$location[$x]['timber_volume']}}" type="text">
-                </div>
-                <div class="col-xs-2">
-                    <label for="timber_cubic">Timber Cubic</label>
-                    <input class="form-control" id="timber_cubic" readonly placeholder="{{$location[$x]['timber_cubic']}}" type="text">
-                </div>
-                <div class="col-xs-2">
-                    <label for="age">Age (Approximate)</label>
-                    <input class="form-control" id="age" readonly placeholder="{{$location[$x]['age']}}" type="text">
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="remarks">Remarks</label>
-                <textarea class="form-control" rows="5" id="remarks" readonly>{{$location[$x]['remark']}}</textarea>
-            </div>
-            @endfor
-            @endif
-            <div id="mapid" style="height:400px;" name="map"></div>
-    </form>
-    
+                    <dt class="col-sm-7">Timber Volume:</dt>
+                    <dd class="col-sm-5">{{$location[$x]['timber_volume']}}</dd>
+
+                    <dt class="col-sm-7">Cubic Feet:</dt>
+                    <dd class="col-sm-5">{{$location[$x]['timber_cubic']}}</dd>
+
+                    <dt class="col-sm-7">Age</dt>
+                    <dd class="col-sm-5">{{$location[$x]['age']}}</dd>
+
+                    <dt class="col-7">Remarks</dt>
+                    <dd class="col-5">{{$location[$x]['remark']}}</dd>
+                </dl>
+                </dd>
+                @endfor
+                @endif
+                </dl>
+        </div>
+    </div>
+
+
+
+    <div class="border border-dark border-rounded">
+        <div id="mapid" style="height:400px;" name="map"></div>
+    </div>
 </div>
 
 <script>
@@ -227,12 +156,12 @@
             maxZoom: 18
         }).addTo(map);
 
-    // add a marker in the given location
-    L.marker(center).addTo(map);
 
-    var polygon= @json($polygon);
-    L.geoJSON(JSON.parse(polygon)).addTo(map);
+    var polygon = @json($polygon);
+    var layer = L.geoJSON(JSON.parse(polygon)).addTo(map);
 
+    // Adjust map to show the kml
+    var bounds = layer.getBounds();
+    map.fitBounds(bounds);
 </script>
 @endsection
-

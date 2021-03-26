@@ -15,6 +15,9 @@ return [
 
     'paths' => [
         resource_path('views'),
+        realpath(base_path('modules/General/views')),
+        realpath(base_path('modules/Reporting/views')),
+        realpath(base_path('modules/Admin/views'))
     ],
 
     /*

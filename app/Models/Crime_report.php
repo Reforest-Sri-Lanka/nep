@@ -47,4 +47,9 @@ class Crime_report extends Model
     {
         return $this->belongsTo('App\Models\Status');
     }
+
+    public function Land_parcel()
+    {
+        return $this->belongsTo('App\Models\Land_Parcel');
+    }
 }
