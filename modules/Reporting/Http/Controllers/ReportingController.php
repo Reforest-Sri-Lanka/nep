@@ -75,6 +75,7 @@ class ReportingController extends Controller {
         $form_types = Form_Type::all()->pluck('type');
         $form_types_id = 1;
         $form_types = json_decode($form_types);
+        $form_type_array=array();
         foreach($form_types as $form_type){
             $form_type_array[$form_types_id] = $form_type;
             $form_types_id++;
