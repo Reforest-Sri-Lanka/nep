@@ -8,18 +8,18 @@
             <canvas id="myAreaChart"></canvas>
         </div>
     </div>
-    <div class="row p-4 bg-white">
-        <div class="col border border-muted rounded-lg mr-1 p-2">
+    <div class="row p-1 bg-white" style="height:auto">
+        <div class="col border border-muted rounded-lg mr-1 p-2 height:100%">
             <!-- middle left -->
             <canvas id="processItemTypeChart" ></canvas>
         </div>
-        <div class="col border border-muted rounded-lg mr-1 p-2">
+        <div class="col border border-muted rounded-lg mr-1 p-2 height:100%"">
             <!-- middle right -->
             <canvas id="AssignedOrganizationChart"></canvas>
         </div>
     </div>
     @if(Auth::user()->role_id!==6)
-    <div class="row p-4 bg-white">
+    <div class="row p-1 bg-white">
         <div class="col border border-muted rounded-lg mr-1 p-2" style="width:50vw">
             <h4>Customize your report for the requests assigned to your organization</h4>
             <table class="table table-striped mr-4">

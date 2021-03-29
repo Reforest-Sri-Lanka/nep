@@ -85,7 +85,19 @@
 					},
 					legend: {
 						display: true
-					}
+					},
+					responsive: {  
+						rules: [{  
+						  condition: {  
+							maxWidth: 500  
+						  },  
+						  chartOptions: {  
+							legend: {  
+							  enabled: false  
+							}  
+						  }  
+						}]  
+					  }
 				}
 			});
 		},
@@ -162,9 +174,22 @@
 					},
 					legend: {
 						display: true
-					}
+					},
+					responsive: {  
+						rules: [{  
+						  condition: {  
+							maxWidth: 500  
+						  },  
+						  chartOptions: {  
+							legend: {  
+							  enabled: false  
+							}  
+						  }  
+						}]  
+					  }
 				}
-			});
+			})
+			;
 		},
 
 
@@ -213,7 +238,19 @@
 						display: true
 					},
 					rotation: -0.7 * Math.PI
-				}
+				},
+				responsive: {  
+					rules: [{  
+					  condition: {  
+						maxWidth: 500  
+					  },  
+					  chartOptions: {  
+						legend: {  
+						  enabled: false  
+						}  
+					  }  
+					}]  
+				  }
 			});
 		},
 

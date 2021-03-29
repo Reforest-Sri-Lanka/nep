@@ -18,7 +18,7 @@
                 <a class="nav-link h4" href="{{ route('devproject') }}">Development Project</a>
             </li>
             <li class="nav-item {{ Route::currentRouteName() == 'envrestoration' ? 'active' : '' }}">
-                <a class="nav-link h4" href="#">Environment Restoration</a>
+                <a class="nav-link h4" href="{{ route('envrestoration') }}">Environment Restoration</a>
             </li>
             <li class="nav-item {{ Route::currentRouteName() == 'land' ? 'active' : '' }}">
                 <a class="nav-link h4" href="{{ route('land') }}">Register Land</a>

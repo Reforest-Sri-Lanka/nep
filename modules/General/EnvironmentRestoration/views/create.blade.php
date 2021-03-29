@@ -58,8 +58,10 @@
                     <div class="col border border-muted rounded-lg p-4">
                         <!-- ////////MAP GOES HERE -->
                         <div id="mapid" style="height:400px;" name="map"></div>
-                        <input id="polygon" type="hidden" name="polygon" value="{{request('polygon')}}">
-                        <br>
+                        @error('polygon')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
+                        <input id="polygon" type="hidden" name="polygon" class="form-control @error('polygon') is-invalid @enderror" value="{{request('polygon')}}" />                        <br>
                         <div class="custom-control custom-checkbox">
                             <input type="checkbox" class="custom-control-input" id="customCheck" value="1" name="isProtected">
                             <label class="custom-control-label" for="customCheck"><strong>Check if land is a protected area</strong></label>
