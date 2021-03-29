@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Mail;
 Use App\Notifications\StaffAssigned;
 Use App\Notifications\AssignOrg;
+use Illuminate\Support\Facades\Storage;
 use PDF;
 use Redirect;
 
@@ -120,13 +121,31 @@ class ApprovalItemController extends Controller
         $array->requestor_email=$request['email'];
         
         $process_item = $array->toarray();
+        if($array->form_type_id ==1){
+            $item=tree_removal_request::find($array->form_id);
+            dd($item);
+        }
+        else if($array->form_type_id ==4){
+            $item=crime_report::find($array->form_id);
+            $photos=Json_decode($item->photos);
+            //$i = count($photos);
+            //dd($photos,$i);
+            for($y=0;$y<count($photos);$y++){
+                //return Storage::disk('public')->download($photo);
+                $contents[$y] =  Storage::disk('public')->get($photos[$y]);
+            }
+            //dd($contents);
+        }
         
-        
-        Mail::send('emails.assignorg', $process_item, function($message) use ($pdf,$process_item){
+        Mail::send('emails.assignorg', $process_item, function($message) use ($pdf,$contents,$photos,$process_item){
             
             $message->to($process_item['requestor_email']);
             $message->subject('Assigning application');
             $message->attachData($pdf->output(),'document.pdf');
+            for($y=0;$y<count($contents);$y++){
+                $message->attachData($contents[$y],$photos[$y]);
+            }
+
         }); 
         
         return back()->with('message', 'Successfully forwarded the application through email'); 
