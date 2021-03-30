@@ -8,11 +8,11 @@
 
   <nav class="navbar navbar-expand-sm navbar-light">
     <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link h4" href="/user/index">Users</a>
+      <li class="nav-item {{ Route::currentRouteName() == 'userIndex' ? 'active' : '' }}">
+        <a class="nav-link h4" href="{{ route('userIndex') }}">Users</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link h4" href="/organization/index">Organizations</a>
+      <li class="nav-item {{ Route::currentRouteName() == 'orgIndex' ? 'active' : '' }}">
+        <a class="nav-link h4" href="{{ route('orgIndex') }}">Organizations</a>
       </li>
     </ul>
   </nav>

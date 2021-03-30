@@ -199,6 +199,9 @@ return [
         Environment\Providers\EnvironmentServiceProvider::class,
         LandParcel\Providers\RouteServiceProvider::class,
         LandParcel\Providers\LandServiceProvider::class,
+        Reporting\Providers\RouteServiceProvider::class,
+        Reporting\Providers\ReportingServiceProvider::class
+
     ],
     /*
     |--------------------------------------------------------------------------

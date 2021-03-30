@@ -53,7 +53,9 @@
             "CrimeReport\\": "modules/General/CrimeReport",
             "General\\": "modules/General",
             "Environment\\": "modules/Environment",
-            "LandParcel\\": "modules/LandParcel"
+            "LandParcel\\": "modules/LandParcel",
+            "Reporting\\": "modules/Reporting"
+
             
         }
     },
