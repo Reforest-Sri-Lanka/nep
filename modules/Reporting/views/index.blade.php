@@ -18,7 +18,7 @@
                 <a class="nav-link h4" href="/reporting/dev-proj">Development Project</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link h4" href="/reporting/env-restoration">Restoration</a>
+                <a class="nav-link h4" href="/reporting/restoration">Restoration</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link h4" href="/reporting/complaints">Complaints</a>

@@ -14,6 +14,9 @@
 			this.ajaxGetTreeRemovalProvincesData();
 			this.ajaxGetTreeRemovalDistrictsData();
 
+			this.ajaxGetRestorationsMonthlyData();
+			this.ajaxGetRestorationsTypesData();
+			this.ajaxGetRestorationsEcosystemsData();
 		},
 
 		ajaxGetProcessItemsMonthlyData: function () {
@@ -400,7 +403,7 @@
                 data: {
                     labels: response.district, // The response got from the ajax request containing all month names in the database
                     datasets: [{
-                        backgroundColor: ['#0275d8','#5cb85c','#5bc0de','#f0ad4e','#d9534f','#9933CC','#2BBBAD','#007E33','#FF8800'],   
+                        backgroundColor: response.district_color,   
                         pointRadius: 5,
                         pointBackgroundColor: "rgba(2,117,216,1)",
                         pointBorderColor: "rgba(255,255,255,0.8)",
@@ -423,7 +426,225 @@
                     rotation: -0.7 * Math.PI
                 }
             });
-        }
+        }, 
+
+        ajaxGetRestorationsMonthlyData: function () {
+            var request = $.ajax( {
+                method: 'GET',
+                url: 'get-restoration-chart-data'
+            } );
+
+            request.done( function ( response ) {
+                console.log( response );
+                charts.createRestorationsChart( response );
+            });
+        },
+
+        /**
+         * Created the Restorations Line Chart
+         */
+         createRestorationsChart: function ( response ) {
+
+            var ctx = document.getElementById("RestorationAreaChart");
+            var myLineChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: response.resto_months_years, // The response got from the ajax request containing all month names in the database
+                    datasets: [{
+                        label: "Restorations",
+                        lineTension: 0.3,
+                        backgroundColor: "#0275d8", 
+                        borderColor: "rgba(2,117,216,1)",
+                        pointRadius: 5,
+                        pointBackgroundColor: "rgba(2,117,216,1)",
+                        pointBorderColor: "rgba(255,255,255,0.8)",
+                        pointHoverRadius: 5,
+                        pointHoverBackgroundColor: "rgba(2,117,216,1)",
+                        pointHitRadius: 20,
+                        pointBorderWidth: 2,
+                        data: response.restoration_count_data // The response got from the ajax request containing data for the environment restorations in the corresponding months
+                    }],
+                },
+				options: {
+					scales: {
+						xAxes: [{
+							time: {
+								unit: 'date'
+							},
+							gridLines: {
+								display: false
+							},
+							ticks: {
+								maxTicksLimit: 7
+							}
+						}],
+						yAxes: [{
+							label:"No. of Restorations Requested for",
+							ticks: {
+								min: 0,
+								max: response.max, // The response got from the ajax request containing max limit for y axis
+								maxTicksLimit: 5
+							},
+							gridLines: {
+								color: "rgba(0, 0, 0, .125)",
+							}
+						}],
+					},
+					legend: {
+						display: true
+					}
+				}
+            });	
+        },
+
+        ajaxGetRestorationsTypesData: function () {
+            var request = $.ajax( {
+                method: 'GET',
+                url: 'get-restoration-type-chart-data'
+            } );
+
+            request.done( function ( response ) {
+                console.log( response );
+                charts.createRestorationsTypesChart( response );
+            });
+        },
+
+        /**
+         * Created the Process Items Types bar Chart
+         */
+        createRestorationsTypesChart: function ( response ) {
+
+            var ctx = document.getElementById("RestorationTypeChart");
+            var myLineChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: response.activity_type, // The response got from the ajax request containing all Restoration type names in the database
+                    datasets: [{
+                        label: "Requests",
+                        lineTension: 0.3,
+                        backgroundColor: "#0275d8", 
+                        borderColor: "rgba(2,117,216,1)",
+                        pointRadius: 5,
+                        pointBackgroundColor: "rgba(2,117,216,1)",
+                        pointBorderColor: "rgba(255,255,255,0.8)",
+                        pointHoverRadius: 5,
+                        pointHoverBackgroundColor: "rgba(2,117,216,1)",
+                        pointHitRadius: 20,
+                        pointBorderWidth: 2,
+                        data: response.restoration_type_count_data // The response got from the ajax request containing data 
+                    }],
+                },
+                options: {
+                    scales: {
+                        xAxes: [{
+                            time: {
+                                unit: 'date'
+                            },
+                            gridLines: {
+                                display: false
+                            },
+                            ticks: {
+                                maxTicksLimit: 7
+                            }
+                        }],
+                        yAxes: [{
+                            label:"No. of Restoration Requests",
+                            ticks: {
+                                min: 0,
+                                max: response.max, // The response got from the ajax request containing max limit for y axis
+                                maxTicksLimit: 5
+                            },
+                            gridLines: {
+                                color: "rgba(0, 0, 0, .125)",
+                            }
+                        }],
+                    },
+                    title:{
+                        display:true,
+                        text:'NUMBER OF REQUESTS MADE OF EACH TYPE',
+                        position:'top'
+                    },
+                    legend: {
+                        display: true
+                    },
+                    responsive: {  
+                        rules: [{  
+                          condition: {  
+                            maxWidth: 500  
+                          },  
+                          chartOptions: {  
+                            legend: {  
+                              enabled: false  
+                            }  
+                          }  
+                        }]  
+                      }
+                }
+            })
+            ;
+        },
+
+        ajaxGetRestorationsEcosystemsData: function () {
+            var request = $.ajax( {
+                method: 'GET',
+                url: 'get-restoration-ecosystem-chart-data'
+            } );
+
+            request.done( function ( response ) {
+                console.log( response );
+                charts.createRestorationsEcosystemChart( response );
+            });
+        },
+
+        /**
+         * Created the No. of restorations carried out per Ecosystem Ecosystem Chart
+         */
+         createRestorationsEcosystemChart: function ( response ) {
+
+            var ctx = document.getElementById("EcosystemChart");
+            var myLineChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: response.ecosystem_name, // The response got from the ajax request containing all month names in the database
+                    datasets: [{
+                        backgroundColor: ['#0275d8','#5cb85c','#5bc0de','#f0ad4e','#d9534f'],   
+                        pointRadius: 5,
+                        pointBackgroundColor: "rgba(2,117,216,1)",
+                        pointBorderColor: "rgba(255,255,255,0.8)",
+                        pointHoverRadius: 9,
+                        pointHoverBackgroundColor: "rgba(2,117,216,1)",
+                        pointHitRadius: 20,
+                        pointBorderWidth: 2,
+                        data: response.ecosystem_count_data // The response got from the ajax request containing data 
+                    }],
+                },
+                options: {
+                    title:{
+                        display:true,
+                        text:'THE NUMBER OF ENVIRONMENTAL RESTORATIONS CARRIED OUT FOR EACH ECOSYSTEM',
+                        position:'top'
+                    },
+                    legend: {
+                        display: true
+                    },
+                    rotation: -0.7 * Math.PI
+                },
+                responsive: {  
+                    rules: [{  
+                      condition: {  
+                        maxWidth: 500  
+                      },  
+                      chartOptions: {  
+                        legend: {  
+                          enabled: false  
+                        }  
+                      }  
+                    }]  
+                  }
+            });
+        },
+
+		
 
 
 		
