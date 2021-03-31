@@ -1,112 +1,124 @@
-@extends('home')
+@extends('general')
 
-@section('cont')
-<kbd><a href="/general/general" class="text-white font-weight-bolder"><i class="fas fa-chevron-left"></i></i> BACK</a></kbd>
+@section('general')
 <div class="container">
-    <span>
-        <h3 class="text-center bg-success text-light">{{session('message')}}</h3>
-    </span>
-    <span>
-        <h3 class="text-center bg-danger text-light">{{session('danger')}}</h3>
-    </span>
-    <div class='row justify-content-center'>
-        </br>
-        @error('create_by')
-            <div class="alert">                                   
-                <strong>{{ "You need to be be logged in first" }}</strong>
-            </div>
-        @enderror
-        <h2>Report a crime</h2>
-        </br>
-    </div>
-    <hr>
+<hr>
     <form action="\crime-report\crimecreate" method="post" enctype="multipart/form-data">
-      @csrf
-        <!-- <div class='row justify-content-between'>  -->
-            <h6>Crime type</h6>
-            <div class="input-group mb-3">
-                <select name="crime_type" class="custom-select" required>
-                    <option value="0" selected>Select Crime Type</option>
-                @foreach($crime_types as $crime_type)
-                    <option value="{{$crime_type->id}}">{{$crime_type->type}}</option>
-                @endforeach
-                </select>
-                @error('crime_type')
-                    <div class="alert">                                   
-                        <strong>{{ $message }}</strong>
+    @csrf
+        <div class="container bg-white">
+            <div class="row p-4 bg-white">
+                <div class="col border border-muted rounded-lg mr-2 p-4">
+                    <div class="form-group">
+                        <label for="crime_type">Crime type:</label>
+                        <select name="crime_type" class="custom-select" required>
+                            <option value="0" selected>Select Crime Type</option>
+                            @foreach($crime_types as $crime_type)
+                                <option value="{{$crime_type->id}}">{{$crime_type->type}}</option>
+                            @endforeach
+                        </select>
+                        @error('crime_type')
+                            <div class="alert">                                   
+                                <strong>{{ $message }}</strong>
+                            </div>
+                        @enderror
                     </div>
-                @enderror
-            </div>
-            </br>
-            <h6>Make complaint to</h6>
-            <div class="input-group mb-3">
-                <select name="organization" class="custom-select" required>
-                    <option value="0" selected>Select Organization</option>
-                @foreach($Organizations as $organization)
-                    <option value="{{$organization->id}}">{{$organization->title}}</option>
-                @endforeach
-                </select>
-                @error('organization')
-                    <div class="alert">                                   
-                        <strong>{{ $message }}</strong>
+                    <div class="form-group">
+                        <label for="organization">Make complaint to:</label>
+                            <input type="text" class="form-control typeahead3" placeholder="Search" name="organization" value="{{ old('organization') }}"/>
+                            
+                        @error('organization')
+                            <div class="alert">                                   
+                                <strong>{{ $message }}</strong>
+                            </div>
+                        @enderror    
                     </div>
-                @enderror                   
-            </div>
-            <h6>Photos</h6>
-            <div class="form-group" id="dynamicAddRemove">
-                <input type="file" id="images" name="images[0]">    
-            </div>
-            <button type="button" name="add" id="add-btn" class="btn btn-success">Add More</button>
-            </br>
-            <h6>Description</h6>
-            <div class="input-group mb-3">
-                <textarea  class="form-control" rows="5" name="description">
-                </textarea>
-                @error('description')
-                    <div class="alert">
-                        <strong>{{ $message }}</strong>
+                    <div class="form-group">
+                    <input type="checkbox" class="form-check-input" name="nonregorg" ><strong>Other</strong>
                     </div>
-                @enderror
-            </div>
-            </br>
-            <div class="input-group mb-3">
-				<input id="polygon" type="hidden" name="polygon" value="polygon">
-                <div class="input-group-prepend">
-                    <span class="input-group-text">Land Parcel Name</span>
+                    <div class="form-group" id="dynamicAddRemove">
+                        <label for="images">Photos:</label>
+                        <input type="file" id="images" name="images[0]">
+                        <button type="button" name="add" id="add-btn" class="btn btn-success">Add More</button>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description:</label>
+                        <textarea  class="form-control" rows="3" name="description">
+                        </textarea>
+                        @error('description')
+                            <div class="alert">
+                                <strong>{{ $message }}</strong>
+                            </div>
+                        @enderror
+                    </div>
+                    <hr>
+                    <div class="form-group">
+                        <input type="checkbox" name="nonreguser" value="1" ><strong>Creating on behalf of non registered user</strong>
+                        <input type="checkbox" name="nonreguser" value="1" ><strong>Creating on behalf of non registered user</strong>
+                        <label for="description">Inform investigation result to Mr/Ms:</label>
+                        <input type="text" class="form-control" placeholder="Enter complainant name" name="Requestor" value=""/>
+                        @error('confirm')
+                            <div class="alert">
+                                <strong>{{ $message }}</strong>
+                            </div>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Through email:</label>
+                        <input type="text" class="form-control" placeholder="Enter complainant's email" name="Requestor_email" value=""/>
+                        @error('confirm')
+                            <div class="alert">
+                                <strong>{{ $message }}</strong>
+                            </div>
+                        @enderror
+                    </div>
+                    <hr>
+                    <div class="form-check">
+                    <input type="hidden" class="form-control" name="create_by" value="{{ Auth::user()->id }}">  `   1
+                        <input id="polygon" type="hidden" name="polygon" value="{{request('polygon')}}">
+                        <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" name="confirm" ><strong>I confirm these information to be true</strong>
+                        @error('confirm')
+                            <div class="alert">
+                                <strong>{{ $message }}</strong>
+                            </div>
+                        @enderror
+                        </label>
+                        <button type="submit" class="btn btn-primary" >Submit</button>
+                    </div>
                 </div>
-                <input type="text" class="form-control" name="landTitle">
-                @error('landTitle')
-                <div class="alert">
-                    <strong>{{ $message }}</strong>
-                </div>
-                @enderror
-                <input type="hidden" class="form-control" name="create_by" value="{{ Auth::user()->id }}">
-            </div>    
-            <!-- ////////MAP GOES HERE -->
-            <div id="mapid" style="height:400px;" name="map"></div>
-            <div class="input-group mb-3">
-                @error('polygon')
-                <div class="alert">
-                    <strong>Mark the area on the map</strong>
-                </div>
-                @enderror
-            </div>
-            <br>
-            <div class="form-check">
-                <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" name="confirm" ><strong>I confirm these information to be true</strong>
-                @error('confirm')
-                    <div class="alert">
-                        <strong>{{ $message }}</strong>
+                <div class="col border border-muted rounded-lg p-4">
+                    <div class="form-group">
+                        <label for="landTitle">Area name:</label>
+                        <input type="text" class="form-control" placeholder="Enter Area name" id="landTitle" name="landTitle">
                     </div>
-                @enderror
-                </label>
-                </br>
-                <button type="submit" class="btn btn-primary" >Submit</button>
+                    <!-- ////////MAP GOES HERE -->
+                    <div id="mapid" style="height:400px;" name="map"></div>
+                    <br>
+                </div>
             </div>
+        </div>
     </form>
 </div>
 <script type="text/javascript">
+
+    //THIS USES THE AUTOMECOMPLETE FUNCTION IN TREE REMOVAL CONTROLLER
+    var path3 = "{{route('organization')}}";
+    $('input.typeahead3').typeahead({
+        source: function(terms, process) {
+
+            return $.get(path3, {
+                terms: terms
+            }, function(data) {
+                console.log(data);
+                objects = [];
+                data.map(i => {
+                    objects.push(i.title)
+                })
+                console.log(objects);
+                return process(objects);
+            })
+        },
+    });
 
     //photos add
     var i = 0;

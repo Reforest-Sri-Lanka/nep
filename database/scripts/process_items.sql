@@ -31,12 +31,12 @@ CREATE TABLE `process_items` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `form_id` int(11) NOT NULL,
   `created_by_user_id` int(11) NOT NULL,
-  `requst_organization` int(11) NOT NULL,
+  `request_organization` int(11) NOT NULL,
   `activity_organization` int(11) NOT NULL,
   `activity_user_id` int(11) NOT NULL,
   `remark` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `prerequisite` tinyint(1) NOT NULL,
-  `prerequsite_id` int(11) NOT NULL,
+  `prerequisite_id` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
@@ -48,7 +48,7 @@ CREATE TABLE `process_items` (
 -- Dumping data for table `process_items`
 --
 
-INSERT INTO `process_items` (`id`, `form_id`, `created_by_user_id`, `requst_organization`, `activity_organization`, `activity_user_id`, `remark`, `prerequisite`, `prerequsite_id`, `created_at`, `updated_at`, `deleted_at`, `form_type_id`, `status_id`) VALUES
+INSERT INTO `process_items` (`id`, `form_id`, `created_by_user_id`, `request_organization`, `activity_organization`, `activity_user_id`, `remark`, `prerequisite`, `prerequisite_id`, `created_at`, `updated_at`, `deleted_at`, `form_type_id`, `status_id`) VALUES
 (1, 9, 2, 2, 0, 0, '0', 0, 0, '2020-11-15 00:59:59', '2020-11-15 00:59:59', NULL, 2, 1),
 (2, 10, 3, 2, 0, 0, '0', 0, 0, '2020-11-15 01:06:26', '2020-11-15 01:06:26', NULL, 2, 1),
 (3, 11, 2, 2, 0, 0, '0', 0, 0, '2020-11-15 01:07:09', '2020-11-15 01:07:09', NULL, 2, 1),

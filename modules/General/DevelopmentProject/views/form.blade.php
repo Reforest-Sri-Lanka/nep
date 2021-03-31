@@ -58,6 +58,7 @@
             </div>
         </div>
         <input type="hidden" class="form-control" name="createdBy" value="{{Auth::user()->id}}">
+
     </form>
 </div>
 
@@ -114,6 +115,7 @@
             maxZoom: 18
         }).addTo(map);
 
+
     var drawnItems = new L.FeatureGroup();
     map.addLayer(drawnItems);
 
@@ -167,6 +169,9 @@
         var json = drawnItems.toGeoJSON();
         var kml = tokml(json);
         console.log(kml);
+
+
+
 
     });
 </script>

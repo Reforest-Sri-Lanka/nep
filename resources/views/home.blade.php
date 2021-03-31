@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw-src.css" integrity="sha512-vJfMKRRm4c4UupyPwGUZI8U651mSzbmmPgR3sdE3LcwBPsdGeARvUM5EcSTg34DK8YIRiIo+oJwNfZPMKEQyug==" crossorigin="anonymous" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js" integrity="sha512-ozq8xQKq6urvuU6jNgkfqAmT7jKN2XumbrX1JiB3TnF7tI48DPI4Gy1GXKD/V3EExgAs1V+pRO7vwtS1LHg0Gw==" crossorigin="anonymous"></script>
 
+
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
     <link href="{{ url('/css/app.css') }}" rel="stylesheet">
 
@@ -79,15 +80,17 @@
                             <h6 class="text-overflow m-0">Your Notifications:</h6>
                         </div>
                         @foreach(auth()->user()->unreadNotifications as $notification)
-                        <a href="#!" class="dropdown-item">
-                            <i class="ni ni-single-02"></i>
                             <ul>
-                                <span>
-                                    <li>ID:{{$notification->data['id']}} - Type:{{$notification->data['type']}}</li>
-
-                                </span>
+                            @if($notification->type == "App\Notifications\StaffAssigned")
+                            <a href="/approval-item/investigate/{{$notification->data['process_id']}}"><i class="ni ni-single-02"></i><span><li><p> {{$notification->data['type']}} application No {{$notification->data['form_id']}} {{$notification->data['action']}}</p></i></span></a>
+                            @endif
+                            @if($notification->type == "App\Notifications\AssignOrg")
+                            <a href="/approval-item/assignstaff/{{$notification->data['process_id']}}"><i class="ni ni-single-02"></i><span><li><p> {{$notification->data['type']}} application No {{$notification->data['form_id']}} {{$notification->data['action']}}</p></i></span></a>
+                            @endif
+                            @if($notification->type == "App\Notifications\ApplicationMade")
+                            <a href="/approval-item/assignorganization/{{$notification->data['process_id']}}"><i class="ni ni-single-02"></i><span><li><p>New {{$notification->data['type']}} application No {{$notification->data['form_id']}} has been made.</p></i></span></a>
+                            @endif
                             </ul>
-                        </a>
                         @endforeach
                         @if(auth()->user()->unreadNotifications->count())
                         <div class="dropdown-divider"></div>
