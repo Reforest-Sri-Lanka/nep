@@ -8,23 +8,23 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link h4" href="/general/pending">Pending Request<span class="sr-only">(current)</span></a>
+            <li class="nav-item {{ Route::currentRouteName() == 'pending' ? 'active' : '' }}">
+                <a class="nav-link h4" href="{{ route('pending') }}">Pending Request<span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link h4" href="/tree-removal/form">Tree Removal</a>
+            <li class="nav-item {{ Route::currentRouteName() == 'treeremoval' ? 'active' : '' }}">
+                <a class="nav-link h4" href="{{ route('treeremoval') }}">Tree Removal</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link h4" href="/dev-project/applicationForm">Development Project</a>
+            <li class="nav-item {{ Route::currentRouteName() == 'devproject' ? 'active' : '' }}">
+                <a class="nav-link h4" href="{{ route('devproject') }}">Development Project</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link h4" href="/env-restoration/create">Restoration</a>
+            <li class="nav-item {{ Route::currentRouteName() == 'envrestoration' ? 'active' : '' }}">
+                <a class="nav-link h4" href="{{ route('envrestoration') }}">Environment Restoration</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link h4" href="/land/form">Register Land</a>
+            <li class="nav-item {{ Route::currentRouteName() == 'land' ? 'active' : '' }}">
+                <a class="nav-link h4" href="{{ route('land') }}">Register Land</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link h4" href="/crime-report/crimehome">Complaints</a>
+            <li class="nav-item {{ Route::currentRouteName() == 'crime' ? 'active' : '' }}">
+                <a class="nav-link h4" href="{{ route('crime') }}">Crime Reporting</a>
             </li>
         </ul>
     </div>

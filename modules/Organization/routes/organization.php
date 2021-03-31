@@ -5,7 +5,7 @@ use Organization\Http\Controllers\OrganizationController;
 use Organization\Http\Controllers\UserController;
 use Organization\Http\Controllers\TypeController;
 
-Route::get('/index', [OrganizationController::class, 'index']); 
+Route::get('/index', [OrganizationController::class, 'index'])->name('orgIndex'); 
 
 // Open create view.
 Route::get('/create', [OrganizationController::class, 'create']);      

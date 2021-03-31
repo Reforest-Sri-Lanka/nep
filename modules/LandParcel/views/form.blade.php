@@ -176,7 +176,7 @@
         }
 
         drawnItems.addLayer(layer);
-        $('#polygon').val(JSON.stringify(layer.toGeoJSON()));
+        $('#polygon').val(JSON.stringify(drawnItems.toGeoJSON()));
     });
 
 
