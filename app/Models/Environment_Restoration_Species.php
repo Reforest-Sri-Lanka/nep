@@ -11,7 +11,7 @@ class Environment_Restoration_Species extends Model
     protected $table = "environment_restoration_species";
     protected $fillable = [
         'environment_restoration_activity_id',
-        'species_information_id',
+        'species_id',
         'height',
         'dimensions',
         'quantity',
@@ -32,10 +32,4 @@ class Environment_Restoration_Species extends Model
     public function environment_restorations(){
         return $this->belongsTo('App\Models\Environment_Restoration');
     }
-
-    public function species_information(){
-        return $this->belongsTo('App\Models\Species_Information');
-    }
-
-
 }
