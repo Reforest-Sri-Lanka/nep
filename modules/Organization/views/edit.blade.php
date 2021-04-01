@@ -15,7 +15,7 @@
                 @method('patch')
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                        <span class="input-group-text">Title</span>
+                        <span class="input-group-text">Organization Name</span>
                     </div>
                     <!-- Fill in the input fields with the current values of the organization -->
                     <input type="text" class="form-control" name="title" value="{{$organization->title}}">
@@ -36,22 +36,96 @@
 
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
+                        <span class="input-group-text">Organization Type</span>
+                    </div>
+                    <select name="org_type" class="custom-select">
+                    @switch($organization->type_id)
+                    @case('1')
+                    <option value="1" selected >Government</option>
+                    <option value="2" >Non-profit organization </option>
+                    <option value="3" >Semi-government</option>
+                    <option value="4" >Private</option>
+                    <option value="5" >Public</option>
+                    @break;
+                    @case('2')
+                    <option value="1"  >Government</option>
+                    <option value="2" selected >Non-profit organization </option>
+                    <option value="3" >Semi-government</option>
+                    <option value="4" >Private</option>
+                    <option value="5" >Public</option>
+                    @break;
+                    @case('3')
+                    <option value="1"  >Government</option>
+                    <option value="2"  >Non-profit organization </option>
+                    <option value="3" selected>Semi-government</option>
+                    <option value="4" >Private</option>
+                    <option value="5" >Public</option>
+                    @break;
+                    @case('4')
+                    <option value="1"  >Government</option>
+                    <option value="2"  >Non-profit organization </option>
+                    <option value="3" >Semi-government</option>
+                    <option value="4"selected >Private</option>
+                    <option value="5" >Public</option>
+                    @break;
+                    @case('5')
+                    <option value="1"  >Government</option>
+                    <option value="2"  >Non-profit organization </option>
+                    <option value="3" >Semi-government</option>
+                    <option value="4" >Private</option>
+                    <option value="5" selected>Public</option>
+                    @break;
+
+                    @endswitch                        
+                     </select>
+                </div>
+                @error('org_type')
+                <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Description</span>
+                    </div>
+                    <input type="text" class="form-control" name="description" value="{{$organization->description}}">
+                </div>
+                @error('description')
+                <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
+
+
+                {{-- <div class="input-group mb-3">
+                    <div class="input-group-prepend">
                         <span class="input-group-text">Country</span>
                     </div>
                     <input type="text" class="form-control" name="country" value="{{$organization->country}}">
                 </div>
                 @error('country')
                 <div class="alert alert-danger">{{ $message }}</div>
-                @enderror
+                @enderror --}}
+
+                
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                        <span class="input-group-text">Description</span>
+                        <span class="input-group-text">Organization Status</span>
                     </div>
-                    <input type="text" class="form-control" name="country" value="{{$organization->description}}">
+                    <select name="status" class="custom-select">
+                    @switch($organization->status)
+                    @case('0')
+                    <option value="0" selected >Inactive</option>
+                    <option value="1" >Active</option>
+                    @break;
+                    @case('1')
+                    <option value="1" selected>Active</option>
+                    <option value="0">Inactive</option>
+                    @break;
+                    @endswitch                        
+                     </select>
                 </div>
-                @error('description')
+                @error('status')
                 <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
+
                 <br>
                 <br>
                 <h6 style="text-align:left;" class="text-dark">Contact Details</h6>
@@ -62,12 +136,15 @@
                         <tr>
                         <th scope="col">Type</th>
                         <th scope="col">Signature</th>
+                        <th scope="col">Primary</th>
                     </thead>
                     <tbody>
                         @foreach ($contact as $key => $value)
                         <tr>
-                            <td><input type="text" class="form-control" name="city" value="{{$value->type}}"></td>
-                            <td><input type="text" class="form-control" name="city" value="{{$value->contact_signature}}"></td>
+                            <td><input type="text" class="form-control" name="type" value="{{$value->type}}"></td>
+                            <td><input type="text" class="form-control" name="contact_signature" value="{{$value->contact_signature}}"></td>
+                            <td><input type="text" class="form-control" name="primary" value="{{$value->primary}}"></td>
+
                         </tr>
                         @endforeach
 
