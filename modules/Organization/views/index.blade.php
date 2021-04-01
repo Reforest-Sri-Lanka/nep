@@ -34,9 +34,7 @@
                 <td>{{$organization->title}}</td>
                 <td>{{$organization->city}}</td>
                 {{-- <td>{{$organization->country}}</td> --}}
-
                 <!-- If the organization isnt null display the name of the organization else display unassigned -->
-                
                 @if($organization->type_id == NULL)
                     <td>Unassigned</td>
                 @else
