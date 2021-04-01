@@ -17,9 +17,9 @@
         <thead>
             <tr>
             <th scope="col">ID</th>
-            <th scope="col">Title</th>
+            <th scope="col">Organization</th>
             <th scope="col">City</th>
-            <th scope="col">Country</th>
+            {{-- <th scope="col">Country</th> --}}
             <th scope="col">Type</th>
             <th scope="col">Status</th>
             <th scope="col">More Details</th>
@@ -33,23 +33,23 @@
                 <td>{{$organization->id}}</td>
                 <td>{{$organization->title}}</td>
                 <td>{{$organization->city}}</td>
-                <td>{{$organization->country}}</td>
+                {{-- <td>{{$organization->country}}</td> --}}
 
                 <!-- If the organization isnt null display the name of the organization else display unassigned -->
                 
                 @if($organization->type_id == NULL)
-                <td>Unassigned</td>
+                    <td>Unassigned</td>
                 @else
-                <td>{{$organization->type->title}}</td>
+                    <td>{{$organization->type->title}}</td>
                 @endif
               
                 @switch($organization->status)
-                @case('0')
-                <td>Inactive</td>
-                @break;
-                @case('1')
-                <td>Active</td>
-                @break;
+                    @case('0')
+                        <td>Inactive</td>
+                        @break;
+                    @case('1')
+                        <td>Active</td>
+                        @break;
                 @endswitch
 
                  <!-- opens the more view -->
