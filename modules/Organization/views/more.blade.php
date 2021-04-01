@@ -86,6 +86,9 @@
                    
                     <th scope="col">Contact Type</th>
                     <th scope="col">Value</th>
+                    <th scope="col"></th>
+                    <th scope="col">Primary</th>
+
                 </thead>
                 <tbody>
                     @foreach ($contact as $key => $value)
@@ -93,6 +96,17 @@
                   
                         <td>{{$value->type}}</td>
                         <td>{{$value->contact_signature}}</td>
+                        <td>
+                            @switch($value->primary)
+                                @case('1')
+                                <td>Primary</td>
+                                @break;
+                                @case('0')
+                                <td></td>
+                                @break;
+                            @endswitch
+                        </td>
+                        
                     </tr>
                     @endforeach
 
