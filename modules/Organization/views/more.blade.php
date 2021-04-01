@@ -62,7 +62,6 @@
                     <td>Active</td>
                     @break;
                     @endswitch
-    
                 </div>
             </div>
             <br>
