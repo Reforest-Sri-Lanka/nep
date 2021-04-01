@@ -34,8 +34,7 @@
         <div class="row">
             <div class="col-lg-2 bd-navbar" style="height:100vh">
                 <div class="p-2 flex-shrink-3">
-                    <nav class="navbar">
-                        
+                    <nav class="navbar">   
                         <!-- Links -->
                         <ul class="navbar-nav">
                             <li class="nav-item mt-5">
