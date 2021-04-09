@@ -12,7 +12,9 @@ use Illuminate\Http\Request;
 use App\Models\Test_Map;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Notification;
-Use App\Notifications\StaffAssigned;
+Use App\Notifications\ApplicationMade;
+use Illuminate\Support\Facades\DB;
+
 
 
 class DevelopmentProjectController extends Controller
@@ -39,6 +41,7 @@ class DevelopmentProjectController extends Controller
             'polygon' => 'required'
         ]);
 
+        DB::transaction(function () use($request) {
         $land = new Land_Parcel();
         $land->title = request('landTitle');
         
@@ -82,14 +85,10 @@ class DevelopmentProjectController extends Controller
             $process->request_organization = Auth::user()->organization_id;
             $process->activity_organization = $governing_organization;
             $process->save();
-
-
-            //User::find(2)->notify(new StaffAssigned($process));
             $users = User::where('role_id', '<', 3)->get();
-            Notification::send($users, new StaffAssigned($process));
-        
-        
+            Notification::send($users, new ApplicationMade($process));
         }
+        });
         return redirect('/general/pending')->with('message', 'Request Created Successfully');
     }
 

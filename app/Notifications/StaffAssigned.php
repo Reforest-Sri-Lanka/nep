@@ -59,9 +59,13 @@ class StaffAssigned extends Notification
     public function toDatabase($notifiable)     //The function to database. As mentioned in the via method.
     {
         return [
-            'id'     => $this->processitem->id,
+
+            'form_id'     => $this->processitem->form_id,
+            'process_id'    =>$this->processitem->id,
             'type'   => $this->processitem->form_type->type,
             'requestor' => $this->processitem->created_by_user_id,
+            'action' =>$this->processitem->status->type,
+
         ];
     }
 

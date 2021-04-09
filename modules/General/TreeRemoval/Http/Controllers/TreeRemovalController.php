@@ -11,6 +11,10 @@ use App\Models\Organization;
 use App\Models\Process_Item;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification;
+Use App\Notifications\ApplicationMade;
+use App\Models\User;
 
 
 
@@ -23,6 +27,7 @@ class TreeRemovalController extends Controller
 
     public function save(Request $request)
     {
+
         if (request('checklandowner') && request('checkremovalrequestor')) {
             $request->validate([
                 'landTitle' => 'required',
@@ -95,6 +100,8 @@ class TreeRemovalController extends Controller
         //     'land_extent' => 'integer'
         // ]);
 
+        DB::transaction(function () use($request) {
+
         $land = new Land_Parcel();
         $land->title = request('landTitle');
 
@@ -154,6 +161,7 @@ class TreeRemovalController extends Controller
             $tree->species_special_notes = request('species_special_notes');
         }
         
+
         $tree->land_parcel_id = $landid;
         //$tree->district_id = request('district_id');
         //$tree->province_id = request('province_id');
@@ -165,12 +173,24 @@ class TreeRemovalController extends Controller
 
 
         $latest = Tree_Removal_Request::latest()->first();
+        if(request('images')){ 
+            //dd($request->images);
+            $i = count($request->images);
+            for($y=0;$y<$i;$y++){
+                $file = $request->images[$y];
+                $filename =$file->getClientOriginalName();
+                $newname = $latest->id.'NO'.$y.$filename;
+                $path = $file->storeAs('crimeEvidence',$newname,'public');
+                $photoarray[$y] = $path;            
+            }
+            $tree = Tree_Removal_Request::where('id',$latest->id)->update(['images' => json_encode($photoarray)]);
+        }
 
             $process = new Process_Item();
             $process->form_type_id = 1;
             $process->form_id = $latest->id;
             $process->created_by_user_id = request('createdBy');
-            //$process->requst_organization = Auth::user()->organization_id;
+            //$process->request_organization = Auth::user()->organization_id;
             //$process->activity_organization = $governing_organization;
             //Getting the IDs of organizations to create the activity_organization and request_organization in rocess item table
 
@@ -178,6 +198,7 @@ class TreeRemovalController extends Controller
                 $process->other_land_owner_name = request('land_owner');
                 $process->other_land_owner_type = request('landownertype');
             } else {
+                
                 $land_owner = Organization::where('title', request('land_owner'))->pluck('id');
                 $process->request_organization = $land_owner[0];
             }
@@ -189,7 +210,11 @@ class TreeRemovalController extends Controller
                 $process->activity_organization = $removal_requestor[0];
             }
             $process->save();
-        
+
+            $Users = User::where('role_id', '=', 2)->get();
+            Notification::send($Users, new ApplicationMade($process));
+        });
+
         return redirect('/general/pending')->with('message', 'Request Created Successfully');
     }
 

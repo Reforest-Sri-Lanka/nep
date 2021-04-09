@@ -96,7 +96,7 @@
         @foreach($Process_items as $process_item)<tr>
             <td>{{$process_item->form_type->type}}</td>
                 <td>{{date('d-m-Y',strtotime($process_item->created_at))}}</td>
-                @if($process_item->requst_organization==null)
+                @if($process_item->request_organization==null)
                     <td>{{$process_item->created_by_user->name}}</td>
                 @else
                     <td>{{$process_item->requsting_organization->title}}</td>

@@ -18,7 +18,7 @@ class Process_Item extends Model
         'activity_user_id',
         'remark',
         'prerequisite',
-        'prerequsite_id',
+        'prerequisite_id',
         'created_by_user_id',
         'status_id',
         'other_land_owner_type',
@@ -29,16 +29,13 @@ class Process_Item extends Model
 
     protected $attributes = [
         'prerequisite' => 0,
-        'prerequsite_id' => 0,
         'remark' => 0,
         'status_id' => 1,
-        'activity_organization' => 0,
-        'request_organization' => 0,
-        'activity_user_id' => 0,
         'other_land_owner_type' => 0,
         'other_land_owner_name' => '',
         'other_removal_requestor_type' => 0,
         'other_removal_requestor_name' => '',
+        'requestor_email' => '',
     ];
 
     public function form_type()
@@ -53,7 +50,7 @@ class Process_Item extends Model
 
     public function prerequisite_id()
     {
-        return $this->belongsTo('App\Models\Process_Item','prerequsite_id');
+        return $this->belongsTo('App\Models\Process_Item','prerequisite_id');
     }
 
     public function Activity_organization()
@@ -66,9 +63,9 @@ class Process_Item extends Model
         return $this->belongsTo('App\Models\User','activity_user_id');
     }
 
-    public function requsting_organization()
+    public function requesting_organization()
     {
-        return $this->belongsTo('App\Models\Organization','requst_organization');
+        return $this->belongsTo('App\Models\Organization','request_organization');
     }
 
     public function created_by_user()

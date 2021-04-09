@@ -23,8 +23,10 @@
             <li class="nav-item {{ Route::currentRouteName() == 'land' ? 'active' : '' }}">
                 <a class="nav-link h4" href="{{ route('land') }}">Register Land</a>
             </li>
+
             <li class="nav-item {{ Route::currentRouteName() == 'crime' ? 'active' : '' }}">
                 <a class="nav-link h4" href="{{ route('crime') }}">Crime Reporting</a>
+
             </li>
         </ul>
     </div>

@@ -106,7 +106,7 @@
                 <td>Crime Report</td>
             @endswitch
                 <td>{{date('d-m-Y',strtotime($row['created_at']))}}</td>
-                <td>{{$row['requst_organization']}}</td>
+                <td>{{$row['request_organization']}}</td>
                 <td>{{$row['remark']}}</td>
                 <td><a href="/approval-item/assignstaff/{{ $row['id'] }}" class="text-muted">Check</a></td>
             </tr>
