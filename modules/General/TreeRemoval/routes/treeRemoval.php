@@ -12,3 +12,4 @@ Route::get('/autocompleteProvince', [TreeRemovalController::class, 'provinceAuto
 Route::get('/autocompleteDistrict', [TreeRemovalController::class, 'districtAutocomplete'])->name('district');
 Route::get('/autocompleteOrgs', [TreeRemovalController::class, 'organizationAutocomplete'])->name('organization');
 Route::get('/autocompleteGSdiv', [TreeRemovalController::class, 'GSAutocomplete'])->name('gramasevaka');
+Route::get('/autocompleteSpecies', [TreeRemovalController::class, 'SpeciesAutocomplete'])->name('species');

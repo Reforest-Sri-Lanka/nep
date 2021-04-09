@@ -266,7 +266,7 @@
               <th>Age</th>
             </tr>
             <tr>
-              <td><input type="text" name="location[0][tree_species_id]" placeholder="Enter ID" class="form-control" /></td>
+              <td><input type="text" name="location[0][tree_species_id]" placeholder="Enter ID" class="form-control typeahead5" /></td>
               <td><input type="text" name="location[0][tree_id]" placeholder="Enter ID" class="form-control" /></td>
               <td><input type="text" name="location[0][width_at_breast_height]" placeholder="Enter Width" class="form-control" /></td>
               <td><input type="text" name="location[0][height]" placeholder="Enter Height" class="form-control" /></td>
@@ -455,6 +455,27 @@
       })
     },
   });
+
+
+  var path5 = "{{route('species')}}";
+  $('input.typeahead5').typeahead({
+    source: function(terms, process) {
+
+      return $.get(path5, {
+        terms: terms
+      }, function(data) {
+        console.log(data);
+        objects = [];
+        data.map(i => {
+          objects.push(i.title)
+        })
+        console.log(objects);
+        return process(objects);
+      })
+    },
+  });
+
+  
 
   /// SCRIPT FOR THE DYNAMIC COMPONENT
   var i = 0;
