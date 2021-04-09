@@ -179,7 +179,7 @@
                     @if (count($Photos) > 0)
                             @foreach($Photos as $photo)
                                 <div class="col border border-muted rounded-lg mr-2 p-4">
-                                    <img class="img-responsive" src="{{URL::asset('/storage/crimeEvidence/27NO041NO0oie_7M8XMhI9uOs1 (2).png')}}" alt="photo">
+                                    <img class="img-responsive" src="{{URL::asset('/storage/'.$photo)}}" alt="photo">
                                     <a class="nav-link text-dark font-italic p-2" href="/crime-report/downloadimage/{{$photo}}">Download Image</a>
                                 </div>
                             @endforeach

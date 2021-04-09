@@ -10,9 +10,9 @@
     <div class="container bg-white">
         <div class="row p-4 bg-white">
         @if($process_item->prerequisite == 0)
-            <h3>Investigation of {{$process_item->form_type->type}} application no {{$process_item->form_id}}</h3>
+            <h3>Investigation of {{$process_item->form_type->type}} application no {{$process_item->form_id}} logged on {{date('d-m-Y',strtotime($item->created_at))}}</h3>
         @elseif($process_item->prerequisite == 1)
-            <h3>Additional Investigation for {{$process_item->form_type->type}} application no {{$process_item->form_id}}</h3>
+            <h3>Additional Investigation for {{$process_item->form_type->type}} application no {{$process_item->form_id}} logged on {{date('d-m-Y',strtotime($item->created_at))}}</h3>
         @endif
         </div>   
         <div class="row p-4 bg-white">
@@ -56,7 +56,6 @@
                         <table class="table table-light table-striped border-secondary rounded-lg mr-4">
                             <thead>
                                 <tr>
-                                    <th>Date application made</th>
                                     <th>Land size</th>
                                     <th>unit</th>
                                     <th>No of Trees</th>
@@ -65,7 +64,6 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>{{date('d-m-Y',strtotime($item->created_at))}}</td>
                                     <td>{{$item->land_size}}</td>
                                     <td>Acres</td>
                                     <td>{{$item->no_of_trees}}</td>

@@ -6,7 +6,7 @@ Route::get('/home', [DevelopmentProjectController::class, 'home'])->name('develo
 
 Route::get('/check', [DevelopmentProjectController::class, 'test']);
 
-Route::get('/applicationForm', [DevelopmentProjectController::class, 'form']);
+Route::get('/applicationForm', [DevelopmentProjectController::class, 'form'])->name("devproject");
 
 Route::post('/saveForm', [DevelopmentProjectController::class, 'save']);
 

@@ -24,6 +24,8 @@
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
     <link href="{{ url('/css/app.css') }}" rel="stylesheet">
+
+    <script type="text/javascript" src="{{ URL::asset('js/tokml.js') }}"></script>
 </head>
 
 <body style="background-color:#f0f0f7">
@@ -36,28 +38,32 @@
                         <!-- Links -->
                         <ul class="navbar-nav">
                             <li class="nav-item mt-5">
-                                <a class="nav-link text-light" href="/general/pending"><i class="fa fa-home" aria-hidden="true"></i>  General Module</a>
+
+                                <a class="nav-link text-light" href="/general/pending"><i class="fa fa-home" aria-hidden="true"></i>   General Module</a>
+                            </li>
+                            <li class="nav-item mt-3">
+                                <a class="nav-link text-light" href="/user/index"><i class="fa fa-user" aria-hidden="true"></i>   User Management</a>
 
                             </li>
                             <li class="nav-item mt-3">
-                                <a class="nav-link text-light" href="/user/index"><i class="fa fa-user" aria-hidden="true"></i>  User Management</a>
+                                <a class="nav-link text-light" href="/environment/generalenv"><i class="fa fa-tree" aria-hidden="true"></i>   Environment Module</a>
                             </li>
                             <li class="nav-item mt-3">
-                                <a class="nav-link text-light" href="/environment/generalenv"><i class="fa fa-tree" aria-hidden="true"></i>  Environment Module</a>
+                                <a class="nav-link text-light" href="/approval-item/showRequests"><i class="fa fa-arrow-down" aria-hidden="true"></i>   Requests</a>
                             </li>
                             <li class="nav-item mt-3">
 
-                                <a class="nav-link text-light" href="/approval-item/showRequests"><i class="fa fa-arrow-down" aria-hidden="true"></i>  Requests</a>
+                                <a class="nav-link text-light" href="/reporting/overview"><i class="fa fa-book" aria-hidden="true"></i>   Reporting</a>
+
                             </li>
                         </ul>
                     </nav>
                 </div>
             </div>
-            <div class="col-lg">
+            <div class="col-lg" style="padding-left: 0; padding-right: 0;">
 
                 <!-- TOP NAV -->
-
-                <nav class="navbar navbar-expand-sm bd-navbar navbar-dark">
+                <nav class="navbar navbar-expand-sm bg-white navbar-dark">
                     <!-- Brand/logo -->
                     <a class="navbar-brand mr-auto" href="#">
                         <img src="/Logo.jpeg" alt="logo" style="width:70px;">
@@ -66,7 +72,7 @@
                     <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <div class="media align-items-center">
                             <div class="media-body  ml-2  d-none d-lg-block">
-                                <span class="mb-0 text-sm  text-white font-weight-bold"><i class="fas fa-bell mr-1"></i></span>
+                                <span class="mb-0 text-sm  text-dark font-weight-bold"><i class="fas fa-bell mr-1"></i></span>
                                 @if(auth()->user()->unreadNotifications->count())
                                 <span class="mb-0 text-sm  font-weight-bold"><span class="badge badge-light">{{auth()->user()->unreadNotifications->count()}}</span></span>
                                 @endif
@@ -102,18 +108,18 @@
                         <!-- Authentication Links -->
                         @guest
                         <li class="nav-item">
-                            <a class="nav-link text-light" href="{{ route('login') }}">{{ __('Login') }}</a>
+                            <a class="nav-link text-dark" href="{{ route('login') }}">{{ __('Login') }}</a>
                         </li>
                         @if (Route::has('register'))
                         <li class="nav-item">
-                            <a class="nav-link text-light" href="{{ route('register') }}">{{ __('Register') }}</a>
+                            <a class="nav-link text-dark" href="{{ route('register') }}">{{ __('Register') }}</a>
                         </li>
                         @endif
                         @else
                         <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <div class="media align-items-center">
                                 <div class="media-body  ml-2  d-none d-lg-block">
-                                    <span class="mb-0 text-sm  font-weight-bold">{{ Auth::user()->name }}</span>
+                                    <span class="mb-0 text-sm text-dark font-weight-bold">{{ Auth::user()->name }}</span>
                                 </div>
                             </div>
                         </a>
@@ -182,5 +188,9 @@
             </div>
         </footer>
     </div>
+  <!--chart js -->
+  <script src="{{ url('/vendor/chart.js/dist/Chart.min.js') }}"></script>
+  <script src="{{ url('/vendor/chart.js/dist/Chart.extension.js') }}"></script>
+  <script src="{{ url('/vendor/create-charts.js' ) }}"></script>
 </body>
 </html>

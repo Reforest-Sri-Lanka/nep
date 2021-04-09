@@ -113,7 +113,7 @@ class CrimeReportController extends Controller
 
     public function download_image($path,$file) 
     {   
-        dd($path,$file);    
+        //dd($path,$file);    
         return Storage::disk('public')->download($path.'/'.$file);
        
     }

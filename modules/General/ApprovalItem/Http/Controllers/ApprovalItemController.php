@@ -16,10 +16,13 @@ use App\Mail\RequestApproved;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use App\Mail\AssignOrganization;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Mail;
 Use App\Notifications\StaffAssigned;
 Use App\Notifications\AssignOrg;
+use Illuminate\Support\Facades\Storage;
+use PDF;
 use Redirect;
 
 
@@ -66,7 +69,86 @@ class ApprovalItemController extends Controller
                 ]);
             Notification::send($Users, new AssignOrg($Process_item));
         });
+        
         return back()->with('message', 'Assigned Organization Successfully'); 
+    }
+
+    public function assign_unregistered_organization(request $request)
+    {
+        $request -> validate([
+            'organization' => 'required',
+            'email' => 'required',
+        ]);
+        $array=DB::transaction(function () use($request){
+            
+            //$User = User::find($request['create_by']);
+            Process_item::where('id',$request['process_id'])->update([
+                'other_removal_requestor_name' => $request['organization'],
+                'status_id' => 2
+                ]);
+            $process_item =Process_item::find($request['process_id']);
+            return($process_item);
+        });
+        $user =User::find($request['create_by']);
+        if($array->form_type_id == '1'){ 
+            $item = Tree_Removal_Request::find($array->form_id);
+            $Photos=Json_decode($item->images);
+            $tree_data = $item->tree_locations;
+        } 
+        else if($array->form_type_id == '2'){
+            $item = Development_Project::find($array->form_id);
+            $Photos=null;
+            $tree_data = null;
+        }
+        else if($array->form_type_id == '4'){
+            $item = Crime_report::find($array->form_id);
+
+            $Photos=Json_decode($item->photos);
+            
+            $tree_data = null;
+        }
+        $land_parcel = Land_Parcel::find($item->land_parcel_id);
+        //dd($array);
+        
+
+        $pdf = PDF::loadView('approvalItem::index',[
+            'process_item' => $array,
+            'user' =>$user,
+            'item' => $item,
+            'polygon' => $land_parcel->polygon,
+            'tree_data' =>$tree_data,
+        ]);
+        $array->requestor_email=$request['email'];
+        
+        $process_item = $array->toarray();
+        if($array->form_type_id ==1){
+            $item=tree_removal_request::find($array->form_id);
+            dd($item);
+        }
+        else if($array->form_type_id ==4){
+            $item=crime_report::find($array->form_id);
+            $photos=Json_decode($item->photos);
+            //$i = count($photos);
+            //dd($photos,$i);
+            for($y=0;$y<count($photos);$y++){
+                //return Storage::disk('public')->download($photo);
+                $contents[$y] =  Storage::disk('public')->get($photos[$y]);
+            }
+            //dd($contents);
+        }
+        
+        Mail::send('emails.assignorg', $process_item, function($message) use ($pdf,$contents,$photos,$process_item){
+            
+            $message->to($process_item['requestor_email']);
+            $message->subject('Assigning application');
+            $message->attachData($pdf->output(),'document.pdf');
+            for($y=0;$y<count($contents);$y++){
+                $message->attachData($contents[$y],$photos[$y]);
+            }
+
+        }); 
+        
+        return back()->with('message', 'Successfully forwarded the application through email'); 
     }
 
     public function showRequests()

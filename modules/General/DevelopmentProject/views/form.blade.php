@@ -24,7 +24,7 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        Organization:<input type="text" class="form-control typeahead3" placeholder="Search" name="organization" value="{{ old('organization') }}"/>
+                        Organization:<input type="text" class="form-control typeahead3" placeholder="Search" name="organization" value="{{ old('organization') }}" />
                         @error('organization')
                         <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
@@ -49,7 +49,7 @@
                     <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
                     <br>
-                    <input id="polygon" type="hidden" name="polygon" value="{{request('polygon')}}">
+                    <input id="polygon" type="text" class="form-control" name="polygon" value="{{request('polygon')}}">
                     <div class="custom-control custom-checkbox">
                         <input type="checkbox" class="custom-control-input" id="customCheck" value="1" name="isProtected">
                         <label class="custom-control-label" for="customCheck"><strong>Check if land is a protected area</strong></label>
@@ -163,8 +163,12 @@
         }
 
         drawnItems.addLayer(layer);
-        $('#polygon').val(JSON.stringify(layer.toGeoJSON()));
+        $('#polygon').val(JSON.stringify(drawnItems.toGeoJSON()));
 
+        ///COnverting your layer to a KML
+        var json = drawnItems.toGeoJSON();
+        var kml = tokml(json);
+        console.log(kml);
 
 
 
