@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
   <title>National Environment Platform</title>
@@ -12,288 +13,338 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
   <style>
-    .inline{
-        display: inline;
-      }
+    .inline {
+      display: inline;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      outline: 0
+    }
+
+    body {
+      font: 11px/18px Georgia, Palatino, "Times New Roman", Times, Serif;
+      background: #f4f4f4 url(../images/bg.jpg) no-repeat center top;
+      color: #777;
+    }
+
+    a {
+      text-decoration: none;
+      color: #89A213;
+    }
+
+    a:hover {
+      color: #556314;
+    }
+
+    p {
+      margin: 0 0 15px;
+      line-height: 1.6em;
+    }
+
+    h1 {
+      float: left;
+      width: 320px;
+      line-height: 1.5em;
+      font-size: 2.7em;
+      color: #fff;
+      margin: 0 0 20px;
+      text-shadow: #89A213 1px 1px 1px;
+    }
+
+    h2 {
+      margin: 0 0 15px;
+      font-size: 1.6em;
+      color: #89A213;
+    }
+
+    h3 {
+      margin: 0 0 7px;
+      font-size: 1.3em;
+      clear: both;
+      color: #444;
+      line-height: 1.3em;
+    }
+
+    h4 {
+      margin: 0 0 10px;
+      font-size: 1.2em;
+    }
+
+    img {
+      border: 0;
+    }
+
+    .x {
+      clear: both;
+    }
+
+    #content {
+      margin: 0 auto;
+      width: 960px;
+    }
+
+    #header {
+      height: 350px;
+    }
+
+    #top {
+      padding: 13px 0 0;
+      margin: 0 0 40px;
+      color: #fff;
+      height: 31px;
+    }
+
+    #pitch {
+      clear: left;
+      float: left;
+      width: 610px;
+      font-size: 1.2em;
+      padding: 20px 0 0;
+      color: #59690C;
+      margin: 0 0 60px;
+    }
+
+    #menu {
+      float: right;
+      margin: 10px 15px 0 0;
+    }
+
+    #menu li {
+      display: inline;
+    }
+
+    #menu li a {
+      float: left;
+      color: #EFF4D7;
+      font-size: 1.2em;
+      margin: 0 0 0 20px;
+      padding: 4px;
+    }
+
+    #menu li a:hover,
+    #menu li a.current {
+      color: #fff;
+      border-bottom: 1px solid #A5BE2E;
+    }
+
+    #cols {
+      clear: both;
+    }
+
+    .col {
+      float: left;
+      width: 300px;
+      margin: 0 39px 30px 0;
+    }
+
+    .last {
+      position: relative;
+      float: right;
+      margin: -76px 0 0;
+      background: #fff;
+      width: 280px;
+    }
+
+    .col.last div {
+      padding: 12px;
+    }
+
+    .img {
+      clear: both;
+      margin: 0 0 15px;
+      border: 1px solid #ddd;
+      padding: 5px;
+    }
+
+    .date {
+      margin: 0 0 12px;
+      color: #444;
+    }
+
+    .col h4 {
+      background: #a46cb8;
+      padding: 15px;
+      color: #fff;
+    }
+
+    #main {
+      float: left;
+      clear: both;
+      width: 640px;
+      font-size: 1.2em;
+    }
+
+    #secondmain {
+      clear: both;
+      font-size: 1.2em;
+      margin: auto;
+      width: 75%;
+    }
+
+    .left {
+      float: left;
+      margin: 0 30px 10px 0;
+    }
+
+    #main p {
+      text-align: justify;
+    }
+
+    #footer {
+      clear: both;
+      border-top: 1px solid #ddd;
+      color: #999;
+      padding: 35px 0 15px 0;
+    }
+
+    #footer a {
+      margin: 0;
+      color: #999;
+    }
+
+    #footer .left {
+      float: left;
+    }
+
+    #footer .right {
+      float: right;
+    }
   </style>
 </head>
 
-<body class="bg-secondary">
+<body>
 
-<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-<!-- Brand/logo -->
-<a class="navbar-brand" href="#">
-  <img src="Logo.jpeg" alt="logo" style="width:70px;">
-</a>
-<!--Toggler-->
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="#">About</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Blogs</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Events</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Maps</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Project Approval</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Reports</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Volunteer</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Contact Us</a>
-        </li>
-        </ul>
-        <ul class="navbar-nav ml-auto">
-            <!-- Authentication Links -->
-            @guest
-                <li class="nav-item">
-                    <a class="nav-link text-light" href="{{ route('login') }}">{{ __('Login') }}</a>
-                </li>
-                @if (Route::has('register'))
-                    <li class="nav-item">
-                        <a class="nav-link text-light" href="{{ route('register') }}">{{ __('Register') }}</a>
-                    </li>
-                @endif
-            @else
-                <li class="nav-item dropdown">
-                    <a id="navbarDropdown" class="nav-link dropdown-toggle text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                        {{ Auth::user()->name }}
-                    </a>
+  <div id="content">
+    <p id="top"></p>
+    <h1>Welcome to the National Environment Platform</h1>
+    <ul id="menu">
+      <!-- Authentication Links -->
+      @guest
+      <li class="nav-item">
+        <a class="nav-link text-light" href="{{ route('login') }}">{{ __('Login') }}</a>
+      </li>
+      @if (Route::has('register'))
+      <li class="nav-item">
+        <a class="nav-link text-light" href="{{ route('register') }}">{{ __('Register') }}</a>
+      </li>
+      @endif
+      @else
+      <li class="nav-item dropdown">
+        <a id="navbarDropdown" class="nav-link dropdown-toggle text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+          {{ Auth::user()->name }}
+        </a>
 
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{{ route('logout') }}"
-                            onclick="event.preventDefault();
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                           document.getElementById('logout-form').submit();">
-                            {{ __('Logout') }}
-                        </a>
+            {{ __('Logout') }}
+          </a>
 
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                            @csrf
-                        </form>
-                    </div>
-                </li>
-            @endguest
-        </ul> 
-      </nav>
-
-<br>
-
-<div class="d-flex p-3">
-  <div class="p-2 border bg-light border-secondary rounded-lg flex-shrink-3">
-    <h5>Facts About the National Environment Platform</h5><br>
-    <ul>
-      <li>Is a volunteer initiative under the guidance and initiative of the Ministry of Environment</li>
-      <li>Promotes environmental protection and good governance by active citizen participation with public administration</li>
-      <li>Aims to stop devastations at the inceptions clearly identifying  protected areas </li>
-      <li>Aims to increase data clarity and remove information silos in environment public administration and policy making. </li>
+          <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+            @csrf
+          </form>
+        </div>
+      </li>
+      @endguest
     </ul>
-  </div>
-  <div class="p-2 border bg-light border-secondary rounded-lg ml-2">
-    <h5>Ministry of Environment</h5>
-    <p>The Minister of Environment and the government of Sri Lanka promotes a vision of environmental protection and the NEP is a core platform in achieving it. <br>We help automate:</p>
-    <ul>
-      <li>Land Parcel Mapping.</li>
-      <li>Protected Area Mapping.</li>
-      <li>Tree removal process automation.</li>
-      <li>Environmental restoration projects.</li>
-      <li>Development project process.</li>
-      <li>Species mapping.</li>
-    </ul>
-    <div class="d-flex p-2 justify-content-end">
-      <a href="#">Read More</a>
+
+
+    <div id="pitch">
+      <p class="text-light">Duis iaculis urna vel massa ultricies suscipit. Phasellus diam sapien, fermentum a eleifend non, luctus non augue. Quisque scelerisque purus quis eros sollicitudin gravida.</p>
     </div>
-  </div>
-</div>
-
-<br>
-
-<div class="container-fluid p-20">  
-  <div class="row">
-    <div class="col-7 bg-light border bg-light border-secondary rounded-lg ml-3 mr-2">
-      <h5 class="p-2">Blogs</h5><br>
-      <div class="card-columns">
-        <div class="card" style="background-color:#99A3A4">
-          <div class="card-body text-center">
-            <p class="card-text">Some text <br> inside the <br> first card</p>
-          </div>
-        </div>
-        <div class="card" style="background-color:#99A3A4">
-          <div class="card-body text-center">
-            <p class="card-text">Some text <br> inside the <br> second card</p>
-          </div>
-        </div>
-        <div class="card" style="background-color:#99A3A4">
-          <div class="card-body text-center">
-            <p class="card-text">Some text <br> inside the <br> third card</p>
-          </div>
-        </div>
-        <div class="card" style="background-color:#99A3A4">
-          <div class="card-body text-center">
-            <p class="card-text">Some text <br> inside the <br> fourth card</p>
-          </div>
-        </div>
-        <div class="card" style="background-color:#99A3A4">
-          <div class="card-body text-center">
-            <p class="card-text">Some text <br> inside the <br> fifth card</p>
-          </div>
-        </div>
-        <div class="card" style="background-color:#99A3A4">
-          <div class="card-body text-center">
-            <p class="card-text">Some text <br> inside the <br> sixth card</p>
-          </div>
-        </div>
+    <div id="main">
+      <h2><a href="#">Lorem ipsum dolor sit amet</a></h2>
+      <img src="images/img.gif" class="img left" alt="" />
+      <p>Nunc eget nunc libero. Nunc commodo euismod massa quis vestibulum. Proin mi nibh, dignissim a pellentesque at, ultricies sit amet sapien. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vel lorem eu libero laoreet facilisis. Aenean placerat, ligula quis placerat iaculis, mi magna luctus nibh, adipiscing pretium erat neque vitae augue. Quisque consectetur odio ut sem semper commodo. Maecenas iaculis leo a ligula euismod condimentum. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Ut enim risus, rhoncus sit amet ultricies vel, aliquet ut dolor. Duis iaculis urna vel massa ultricies suscipit. Phasellus diam sapien, fermentum a eleifend non, luctus non augue. Quisque scelerisque purus quis eros sollicitudin gravida. Aliquam erat volutpat. Donec a sem consequat tortor posuere dignissim sit amet at ipsum.</p>
+      <p>Aenean placerat, ligula quis placerat iaculis, mi magna luctus nibh, adipiscing pretium erat neque vitae augue. Quisque consectetur odio ut sem semper commodo. Maecenas iaculis leo a ligula euismod condimentum. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Ut enim risus, rhoncus sit amet ultricies vel, aliquet ut dolor. Duis iaculis urna vel massa ultricies suscipit. Phasellus diam sapien, fermentum a eleifend non, luctus non augue. Quisque scelerisque purus quis eros sollicitudin gravida. Aliquam erat volutpat. Donec a sem consequat tortor posuere dignissim sit amet at ipsum. </p>
+      <div class="x"></div>
     </div>
-    </div>
-
-
-    <div class="col border bg-light border-secondary rounded-lg bg-light mr-3">
-      <h5 class="p-2">Events</h5><br>
-      <div id="accordion">
-
-        <div class="card">
-          <div class="card-header">
-            <a class="card-link" data-toggle="collapse" href="#collapseOne">
-              Event #1
-            </a>
-          </div>
-          <div id="collapseOne" class="collapse show" data-parent="#accordion">
-            <div class="card-body">
-              event event event event event event event event event event event event event event event event event event
-            </div>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="card-header">
-            <a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo">
-            Event #2
-            </a>
-          </div>
-          <div id="collapseTwo" class="collapse" data-parent="#accordion">
-            <div class="card-body">
-            event event event event event event event event event event event event event event event event event event
-            </div>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="card-header">
-            <a class="collapsed card-link" data-toggle="collapse" href="#collapseThree">
-            Event #3
-            </a>
-          </div>
-          <div id="collapseThree" class="collapse" data-parent="#accordion">
-            <div class="card-body">
-            event event event event event event event event event event event event event event event event event event
-            </div>
-          </div>
-        </div>
-    </div>
-  </div>
-</div>
-
-<br><br>
-
-
-<div class="container-fluid p-20">  
-  <div class="row mb-3">
-    <div class="col bg-light border bg-light border-secondary rounded-lg mr-2">
-      <h5 class="p-2">Gazette Updates</h5><br>
-        <div class="list-group list-group-flush">
-          <a href="#" class="list-group-item list-group-item-action">Gazette Update1</a>
-          <a href="#" class="list-group-item list-group-item-action">Gazette Update2</a>
-          <a href="#" class="list-group-item list-group-item-action">Gazette Update3</a>
-        </div>
-    </div>
-
-
-    <div class="col border bg-light border-secondary rounded-lg bg-light mr-2">
-      <h5 class="p-2">Projects</h5><br>
-        <div class="list-group list-group-flush">
-          <a href="#" class="list-group-item list-group-item-action">Project1</a>
-          <a href="#" class="list-group-item list-group-item-action">Project2</a>
-          <a href="#" class="list-group-item list-group-item-action">Project3</a>
-        </div>
-    </div>
-
-    <div class="col border bg-light border-secondary rounded-lg bg-light">
-      <h5 class="p-2">Resolved Crimes</h5><br>
-      <div id="demo" class="carousel slide" data-ride="carousel">
-
-        <!-- Indicators -->
-        <ul class="carousel-indicators">
-          <li data-target="#demo" data-slide-to="0" class="active"></li>
-          <li data-target="#demo" data-slide-to="1"></li>
-          <li data-target="#demo" data-slide-to="2"></li>
-        </ul>
-
-        <!-- The slideshow -->
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            crime1 crime1 crime1 crime1 crime1 crime1 crime1 <br>
-            crime crime crime crime crime crime crime <br>
-            crime crime crime crime crime crime crime <br>
-            crime crime crime crime crime crime crime <br>
-          </div>
-          <div class="carousel-item">
-            crime2 crime2 crime2 crime2 crime2 crime2 crime2 <br>
-            crime crime crime crime crime crime crime <br>
-            crime crime crime crime crime crime crime <br>
-            crime crime crime crime crime crime crime <br>
-          </div>
-          <div class="carousel-item">
-            crime3 crime3 crime3 crime3 crime3 crime3 crime3 <br>
-            crime crime crime crime crime crime crime <br>
-            crime crime crime crime crime crime crime <br>
-            crime crime crime crime crime crime crime <br>
-          </div>
-        </div>
-
-        <!-- Left and right controls -->
-        <a class="carousel-control-prev" href="#demo" data-slide="prev">
-          <span class="carousel-control-prev-icon"></span>
-        </a>
-        <a class="carousel-control-next" href="#demo" data-slide="next">
-          <span class="carousel-control-next-icon"></span>
-        </a>
-
+    <div class="col last">
+      <h4>Lorem ipsum dolor sit amet</h4>
+      <div>
+        <p>Dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. <a href="#">&raquo;</a></p>
+        <p>Dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. <a href="#">&raquo;</a></p>
+        <p>Dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. <a href="#">&raquo;</a></p>
       </div>
-
     </div>
   </div>
-</div>
 
-<br>
-<div class="d-flex  bg-light justify-content-end">
-  <a href="#" class="text-secondary mr-2">
-    <i class="fab fa-facebook-square"></i> Facebook |
-  </a>
-  <a href="#" class="text-secondary mr-2">
-    <i class="fab fa-twitter-square"></i> Twitter |
-  </a>
-  <a href="#" class="text-secondary mr-2">
-    <i class="fab fa-instagram"></i>  Instagram
-  </a>
-</div>
-<div class="d-flex  bg-light justify-content-center">
-  <h5 class="text-secondary"><i class="far fa-copyright"></i> 2021 by RFSL-LSF-Ministry of Environment</h5><br>
-</div>
-<div class="d-flex  bg-light justify-content-center">
-  <h6>All rights reserved</h6>
-</div>
 
+  <div id="secondmain">
+    <div>
+      <br>
+      <hr><br>
+      <h2>Performance This Month</h2>
+      <div class="row">
+        <div class="card m-2" style="width: 18rem;">
+          <img class="card-img-top" style="height:250px; width:287px;" src="images/tree.jpg" alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title">Tree Removals</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+          </div>
+          <div class="card-body">
+            <a href="#" class="card-link">Submit a Tree Removal Request</a>
+          </div>
+        </div>
+
+        <div class="card m-2" style="width: 18rem;">
+          <img class="card-img-top" style="height:250px; width:287px;" src="images/dev.jpg" alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title">Development Projects</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+          </div>
+          <div class="card-body">
+            <a href="#" class="card-link">Submit a Development Form</a>
+          </div>
+        </div>
+
+        <div class="card m-2" style="width: 18rem;">
+          <img class="card-img-top" style="height:250px; width:287px;" src="/images/restore2.jpg" alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title">Restorations</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+          </div>
+          <div class="card-body">
+            <a href="#" class="card-link">Submit a Restoration Form</a>
+          </div>
+        </div>
+
+        <div class="card m-2" style="width: 18rem;">
+          <img class="card-img-top" style="height:250px; width:287px;" src="images/complain.jpg" alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title">Complaints Handled</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+          </div>
+          <div class="card-body">
+            <a href="#" class="card-link">Make a Complaint</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="footer">
+    <div class="d-flex  bg-light justify-content-end">
+      <br>
+      <a href="#" class="text-secondary mr-2">
+        <i class="fab fa-facebook-square"></i> Facebook |
+      </a>
+      <a href="#" class="text-secondary mr-2">
+        <i class="fab fa-twitter-square"></i> Twitter |
+      </a>
+      <a href="#" class="text-secondary mr-2">
+        <i class="fab fa-instagram"></i> Instagram
+      </a>
+    </div>
+    <div class="d-flex bg-light justify-content-center">
+      <h5 class="text-secondary"><i class="far fa-copyright"></i> 2021 by RFSL - LSF - Ministry of Environment</h5><br>
+    </div>
+    <div class="d-flex bg-light justify-content-center">
+      <h6>All rights reserved</h6>
+    </div>
+  </div>
 </body>
+
 </html>
