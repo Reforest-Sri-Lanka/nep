@@ -32,6 +32,7 @@ class SpeciesController extends Controller
             'description' => 'required',
             'createby' => 'required',
             'polygon' => 'required',
+            'district' => 'required|exists:districts,district',
         ]);
         $species = new Species;
         $species->type = $request->input('type');

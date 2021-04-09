@@ -17,16 +17,6 @@
                 <form action="/environment/newrequest" method="post">
                     @csrf
 
-                    @if(count($errors) >0)
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach($errors->all() as $error)
-                            <li>{{$error}}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                    @endif
-
                     @if(\Session::has('success'))
                     <div class="alert alert-success">
                         <p>{{\Session::get('success') }} </p>
@@ -42,28 +32,25 @@
                             <div class="form-group">
                                 <label for="title">Title:</label>
                                 <input type="text" class="form-control" placeholder="Enter Title" id="title" name="title" value="{{ old('title') }}">
-                                @error('title')
-                                <div class="alert alert-danger">{{ $message }}</div>
-                                @enderror
                             </div>
-
+                            @error('title')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
 
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Type</span>
-                                </diV>
-                                <select name="eco_type" class="custom-select">
-                                    <option disabled selected>Eco-System Type</option>
+                                </div>
+                                <select name="eco_type" class="custom-select @error('eco_type') is-invalid @enderror">
+                                    <option disabled selected value="">Select</option>
                                     @foreach ($data as $page)
                                     <option value="{{ $page->id }}">{{ $page->type }}</option>
                                     @endforeach
                                 </select>
                             </div>
-                            @error('type')
+                            @error('eco_type')
                             <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
-
-
 
                             </br>
 
@@ -74,26 +61,25 @@
                                 @enderror
                             </div>
 
-                            <h6>Description</h6>
-                            <div class="input-group mb-3">
-                                </br>
-                                <textarea class="form-control" rows="5" name="description">
-                           </textarea>
+                            <label for="description">Description:</label>
+                            <textarea class="form-control" rows="5" name="description"></textarea>
+                            @error('description')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
 
-                            </div>
 
 
                             </br>
                             <div class="col border border-muted rounded-lg p-4">
                                 <!-- ////////MAP GOES HERE -->
                                 <div id="mapid" style="height:400px;" name="map"></div>
+                                @error('polygon')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                                 <div class="custom-control custom-checkbox">
                                     <input type="checkbox" class="custom-control-input" id="customCheck" value="1" name="isProtected">
                                     <label class="custom-control-label" for="customCheck"><strong>Is Protected Area?</strong></label>
                                 </div>
-                                @error('polygon')
-                                <div class="alert alert-danger">{{ $message }}</div>
-                                @enderror
                                 <input id="polygon" type="hidden" name="polygon" class="form-control @error('polygon') is-invalid @enderror" value="{{request('polygon')}}" /> <br>
 
 
@@ -106,7 +92,7 @@
                                     <input type="file" id="images" name="images">
                                 </div>
                             </div>
-                            
+
                             <div style="float:right;">
                                 <button type="submit" name="submit" class="btn bd-navbar text-white">Submit</button>
                             </div>

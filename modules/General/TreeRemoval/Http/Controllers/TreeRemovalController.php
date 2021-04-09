@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\ApplicationMade;
 use App\Models\User;
+use App\Models\Species;
 
 
 
@@ -246,6 +247,15 @@ class TreeRemovalController extends Controller
     {
         $data = Province::select("province")
             ->where("province", "LIKE", "%{$request->terms}%")
+            ->get();
+
+        return response()->json($data);
+    }
+
+    public function SpeciesAutocomplete(Request $request)
+    {
+        $data = Species::select("title")
+            ->where("title", "LIKE", "%{$request->terms}%")
             ->get();
 
         return response()->json($data);

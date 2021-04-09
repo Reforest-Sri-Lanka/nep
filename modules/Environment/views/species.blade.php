@@ -14,17 +14,6 @@
             <form action='/environment/newspecies' method="post">
                 @csrf
 
-
-                @if(count($errors) >0)
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach($errors->all() as $error)
-                        <li>{{$error}}</li>
-                        @endforeach
-                    </ul>
-                </div>
-                @endif
-
                 @if(\Session::has('success'))
                 <div class="alert alert-success">
                     <p>{{\Session::get('success') }} </p>
@@ -32,30 +21,32 @@
                 </div>
                 @endif
 
-
-
                 <div class="row border rounded-lg p-4 bg-white">
                     <div class="col border border-muted rounded-lg mr-2 p-2">
                         <div class="form-group">
                             <label for="number_of_tree_species">Species Type</label>
-
                             <input type="text" class="form-control" name="type" placeholder="Enter Type">
-
+                            @error('type')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                         </div>
-                        <div>
 
+                        <div>
                             <label for="number_of_tree_species">Species Title</label>
                             <input type="text" class="form-control" name="title" placeholder="Enter Title">
+                            @error('title')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                         </div>
 
 
                         </br>
                         <h6>Scientific Name</h6>
                         <div class="form-group">
-
                             <input type="text" name="scientific_name" class="form-control" placeholder="Enter name">
-
-
+                            @error('scientific_name')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         </br>
@@ -85,8 +76,8 @@
                                         </fieldset>
                                     </div>
                                 </div>
-                                @error('taxa')
-                                <div class="alert alert-danger">Please Select at Least 1 taxanomy</div>
+                                @error('taxanomy')
+                                <div class="alert alert-danger">{{ $message }}</div>
                                 @enderror
                             </div>
 
@@ -107,18 +98,16 @@
                                         </fieldset>
                                     </div>
                                 </div>
-                                @error('habitats')
-                                <div class="alert alert-danger">Please Select at Least 1 Habitat</div>
+                                @error('habitat')
+                                <div class="alert alert-danger">{{ $message }}</div>
                                 @enderror
                             </div>
                         </div>
-                        <h6>Project Description</h6>
-                        <div class="input-group mb-3">
-                            </br>
-                            <textarea class="form-control" rows="5" name="description">
-                           </textarea>
-
-                        </div>
+                        <label>Project Description</label>
+                            <textarea class="form-control" rows="5" name="description"></textarea>
+                            @error('description')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                         </br>
                         </br>
 

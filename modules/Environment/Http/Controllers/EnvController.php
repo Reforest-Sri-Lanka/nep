@@ -22,10 +22,11 @@ class EnvController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'title' => 'required',
             'eco_type' => 'required',
             'description' => 'required',
-            'createby' => 'required',
-            'status' => 'required',
+            'polygon' => 'required',
+            'district' => 'required|exists:districts,district',
 
         ]);
         $ecosystems = new Env;
