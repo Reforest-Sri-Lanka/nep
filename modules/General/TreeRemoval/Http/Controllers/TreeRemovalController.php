@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
-Use App\Notifications\ApplicationMade;
+use App\Notifications\ApplicationMade;
 use App\Models\User;
 
 
@@ -41,7 +41,8 @@ class TreeRemovalController extends Controller
                 'polygon' => 'required',
                 'number_of_trees' => 'required|integer',
                 'description' => 'required',
-                'land_extent' => 'sometimes|integer'
+                'land_extent' => 'nullable|numeric|between:0,99.999',
+                'removal_requestor_email' => 'email|required'
             ]);
         } elseif (request('checkremovalrequestor')) {
             $request->validate([
@@ -55,7 +56,8 @@ class TreeRemovalController extends Controller
                 'polygon' => 'required',
                 'number_of_trees' => 'required|integer',
                 'description' => 'required',
-                'land_extent' => 'sometimes|integer'
+                'land_extent' => 'nullable|numeric|between:0,99.999',
+                'removal_requestor_email' => 'email|required'
             ]);
         } elseif (request('checklandowner')) {
             $request->validate([
@@ -69,7 +71,7 @@ class TreeRemovalController extends Controller
                 'polygon' => 'required',
                 'number_of_trees' => 'required|integer',
                 'description' => 'required',
-                'land_extent' => 'sometimes|integer'
+                'land_extent' => 'nullable|numeric|between:0,99.999',
             ]);
         } else {
             $request->validate([
@@ -82,11 +84,11 @@ class TreeRemovalController extends Controller
                 'polygon' => 'required',
                 'number_of_trees' => 'required|integer',
                 'description' => 'required',
-                'land_extent' => 'sometimes|integer'
+                'land_extent' => 'nullable|numeric|between:0,99.999',
             ]);
         }
-        
-            
+
+
         // $request->validate([
         //     'landTitle' => 'required',
         //     'province' => 'required|exists:provinces,province',
@@ -100,91 +102,99 @@ class TreeRemovalController extends Controller
         //     'land_extent' => 'integer'
         // ]);
 
-        DB::transaction(function () use($request) {
+        DB::transaction(function () use ($request) {
 
-        $land = new Land_Parcel();
-        $land->title = request('landTitle');
+            $land = new Land_Parcel();
+            $land->title = request('landTitle');
 
-        $governing_organizations1 = request('removal_requestor');
-        $land->governing_organizations = Organization::where('title', $governing_organizations1)->pluck('id');
-
-        $land->polygon = request('polygon');
-        $land->created_by_user_id = request('createdBy');
-        if (request('isProtected')) {
-            $land->protected_area = request('isProtected');
-        }
-        $land->save();
-
-        $landid = Land_Parcel::latest()->first()->id;
-
-        $tree = new Tree_Removal_Request();
-
-        //Required and/or filled in fields
-        $tree->created_by_user_id = request('createdBy');
-        $tree->description = request('description');
-        $tree->no_of_trees = request('number_of_trees');
-        $district_id1 = District::where('district', request('district'))->pluck('id');
-        $tree->district_id = $district_id1[0];
-
-        $province_id1 = Province::where('province', request('province'))->pluck('id');
-        $tree->province_id = $province_id1[0];
-
-        $gs_division_id1 = GS_Division::where('gs_division', request('gs_division'))->pluck('id');
-        $tree->gs_division_id = $gs_division_id1[0];
-
-        $tree->governing_organizations = Organization::where('title', $governing_organizations1)->pluck('id');
-
-
-        //Default value/ non-compulsory fields
-        if(request('land_extent')){
-            $tree->land_size = request('land_extent');
-        }
-        if(request('number_of_flora_species')){
-            $tree->no_of_flora_species = request('number_of_flora_species');
-        }
-        if(request('number_of_avian_species')){
-            $tree->no_of_avian_species = request('number_of_avian_species');
-        }
-        if(request('number_of_reptile_species')){
-            $tree->no_of_reptile_species = request('number_of_reptile_species');
-        }
-        if(request('number_of_reptile_species')){
-            $tree->no_of_amphibian_species = request('number_of_amphibian_species');
-        }
-        if(request('number_of_mammal_species')){
-            $tree->no_of_mammal_species = request('number_of_mammal_species');
-        }
-        if(request('number_of_tree_species')){
-            $tree->no_of_tree_species = request('number_of_tree_species');
-        }
-        if(request('species_special_notes')){
-            $tree->species_special_notes = request('species_special_notes');
-        }
-        
-
-        $tree->land_parcel_id = $landid;
-        //$tree->district_id = request('district_id');
-        //$tree->province_id = request('province_id');
-        //$tree->gs_division_id = request('gs_division_id');
-        //$tree->governing_organizations = request('governing_orgs');
-        $tree->tree_locations = request('location');
-
-        $tree->save();
-
-
-        $latest = Tree_Removal_Request::latest()->first();
-        if(request('images')){ 
-            //dd($request->images);
-            $i = count($request->images);
-            for($y=0;$y<$i;$y++){
-                $file = $request->images[$y];
-                $filename =$file->getClientOriginalName();
-                $newname = $latest->id.'NO'.$y.$filename;
-                $path = $file->storeAs('crimeEvidence',$newname,'public');
-                $photoarray[$y] = $path;            
+            if (!request('checkremovalrequestor')) {
+                $governing_organizations1 = request('removal_requestor');
+                $land->governing_organizations = Organization::where('title', $governing_organizations1)->pluck('id');
             }
-            $tree = Tree_Removal_Request::where('id',$latest->id)->update(['images' => json_encode($photoarray)]);
-        }
+
+            $land->polygon = request('polygon');
+
+            $land->created_by_user_id = request('createdBy');
+
+            if (request('isProtected')) {
+                $land->protected_area = request('isProtected');
+            }
+            $land->status_id = 1;
+            $land->save();
+
+            $landid = Land_Parcel::latest()->first()->id;
+
+
+            $tree = new Tree_Removal_Request();
+
+            //Required and/or filled in fields
+            $tree->created_by_user_id = request('createdBy');
+            $tree->description = request('description');
+            $tree->no_of_trees = request('number_of_trees');
+            $district_id1 = District::where('district', request('district'))->pluck('id');
+            $tree->district_id = $district_id1[0];
+
+            $province_id1 = Province::where('province', request('province'))->pluck('id');
+            $tree->province_id = $province_id1[0];
+
+            $gs_division_id1 = GS_Division::where('gs_division', request('gs_division'))->pluck('id');
+            $tree->gs_division_id = $gs_division_id1[0];
+
+            if (!request('checkremovalrequestor')) {
+                $tree->governing_organizations = Organization::where('title', $governing_organizations1)->pluck('id');
+            }
+
+
+            //Default value/ non-compulsory fields
+            if (request('land_extent')) {
+                $tree->land_size = request('land_extent');
+            }
+            if (request('number_of_flora_species')) {
+                $tree->no_of_flora_species = request('number_of_flora_species');
+            }
+            if (request('number_of_avian_species')) {
+                $tree->no_of_avian_species = request('number_of_avian_species');
+            }
+            if (request('number_of_reptile_species')) {
+                $tree->no_of_reptile_species = request('number_of_reptile_species');
+            }
+            if (request('number_of_reptile_species')) {
+                $tree->no_of_amphibian_species = request('number_of_amphibian_species');
+            }
+            if (request('number_of_mammal_species')) {
+                $tree->no_of_mammal_species = request('number_of_mammal_species');
+            }
+            if (request('number_of_tree_species')) {
+                $tree->no_of_tree_species = request('number_of_tree_species');
+            }
+            if (request('species_special_notes')) {
+                $tree->species_special_notes = request('species_special_notes');
+            }
+
+
+            $tree->land_parcel_id = $landid;
+            //$tree->district_id = request('district_id');
+            //$tree->province_id = request('province_id');
+            //$tree->gs_division_id = request('gs_division_id');
+            //$tree->governing_organizations = request('governing_orgs');
+            $tree->tree_locations = request('location');
+
+            $tree->save();
+
+
+            $latest = Tree_Removal_Request::latest()->first();
+            if (request('images')) {
+                //dd($request->images);
+                $i = count($request->images);
+                for ($y = 0; $y < $i; $y++) {
+                    $file = $request->images[$y];
+                    $filename = $file->getClientOriginalName();
+                    $newname = $latest->id . 'NO' . $y . $filename;
+                    $path = $file->storeAs('crimeEvidence', $newname, 'public');
+                    $photoarray[$y] = $path;
+                }
+                $tree = Tree_Removal_Request::where('id', $latest->id)->update(['images' => json_encode($photoarray)]);
+            }
 
             $process = new Process_Item();
             $process->form_type_id = 1;
@@ -198,13 +208,14 @@ class TreeRemovalController extends Controller
                 $process->other_land_owner_name = request('land_owner');
                 $process->other_land_owner_type = request('landownertype');
             } else {
-                
+
                 $land_owner = Organization::where('title', request('land_owner'))->pluck('id');
                 $process->request_organization = $land_owner[0];
             }
             if (request('checkremovalrequestor')) {
                 $process->other_removal_requestor_name = request('removal_requestor');
                 $process->other_removal_requestor_type = request('removalrequestortype');
+                $process->requestor_email = request('removal_requestor_email');
             } else {
                 $removal_requestor = Organization::where('title', request('removal_requestor'))->pluck('id');
                 $process->activity_organization = $removal_requestor[0];
