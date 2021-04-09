@@ -18,7 +18,7 @@
     <p>{{\Session::get('success') }}</p>
   </div>
   @endif -->
-  
+
 
   <form action="/tree-removal/save" method="post" id="regForm" enctype="multipart/form-data">
     @csrf
@@ -27,6 +27,8 @@
       <div class="container">
         <div class="row border rounded-lg p-4 bg-white">
           <div class="col border border-muted rounded-lg mr-2 p-2">
+
+
             <div class="form-group">
               <label for="title">Land Title:</label>
               <input type="text" class="form-control @error('landTitle') is-invalid @enderror" value="{{ old('landTitle') }}" placeholder="Enter Land Title" id="landTitle" name="landTitle">
@@ -38,21 +40,18 @@
             <div class="row p-2">
               <div class="col p-2">
                 <div class="form-group">
-                  Province:<input type="text" class="form-control typeahead @error('province') is-invalid @enderror" value="{{ old('province') }}" placeholder="Search" name="province" />
+                  <label for="province">Province:</label>
+                  <input type="text" class="form-control typeahead @error('province') is-invalid @enderror" value="{{ old('province') }}" placeholder="Search" name="province" />
                   @error('province')
                   <div class="alert alert-danger">{{ $message }}</div>
                   @enderror
                 </div>
 
-                <div class="form-group">
-                  District:<input type="text" class="form-control typeahead2 @error('district') is-invalid @enderror" value="{{ old('district') }}" placeholder="Search" name="district" />
-                  @error('district')
-                  <div class="alert alert-danger">{{ $message }}</div>
-                  @enderror
-                </div>
+
 
                 <div class="form-group">
-                  GS Division:<input type="text" class="form-control typeahead4 @error('gs_division') is-invalid @enderror" value="{{ old('gs_division') }}" placeholder="Search" name="gs_division" />
+                  <label for="gs_division">GS Division:</label>
+                  <input type="text" class="form-control typeahead4 @error('gs_division') is-invalid @enderror" value="{{ old('gs_division') }}" placeholder="Search" name="gs_division" />
                   @error('gs_division')
                   <div class="alert alert-danger">{{ $message }}</div>
                   @enderror
@@ -60,18 +59,92 @@
 
               </div>
               <div class="col p-2">
+
+                <div class="form-group">
+                  <label for="district">District:</label>
+                  <input type="text" class="form-control typeahead2 @error('district') is-invalid @enderror" value="{{ old('district') }}" placeholder="Search" name="district" />
+                  @error('district')
+                  <div class="alert alert-danger">{{ $message }}</div>
+                  @enderror
+                </div>
+
+                <div class="form-group">
+                  <label for="land_extent">Land Extent (In Acres)</label>
+                  <input type="text" class="form-control typeahead3 @error('removal_requestor') is-invalid @enderror" value="{{ old('land_extent') }}" id="land_extent" name="land_extent">
+                  @error('land_extent')
+                  <div class="alert alert-danger">{{ $message }}</div>
+                  @enderror
+                </div>
+
+              </div>
+            </div>
+
+
+
+
+
+            <!-- ////////MAP GOES HERE -->
+            <div id="mapid" style="height:400px;" name="map"></div>
+            @error('polygon')
+            <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
+            <input id="polygon" type="hidden" name="polygon" class="form-control @error('polygon') is-invalid @enderror" value="{{request('polygon')}}" />
+            <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" id="customCheck" value="1" name="isProtected">
+              <label class="custom-control-label" for="customCheck"><strong>Is Land a Protected Area?</strong></label>
+            </div>
+
+
+
+
+
+            <br>
+            <hr><br>
+            <div class="row p-2">
+              <div class="col p-2">
+                <div class="form-group">
+                  <label>Land Owner Type:</label>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="landownertype" id="landownertype1" value="1" {{(old('landownertype') == '1') ? 'checked' : ''}}>
+                    <label class="form-check-label" for="landownertype1">
+                      Government
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="landownertype" id="landownertype2" value="2" {{(old('landownertype') == '2') ? 'checked' : ''}}>
+                    <label class="form-check-label" for="landownertype2">
+                      Private
+                    </label>
+                  </div>
+                  @error('landownertype')
+                  <div class="alert alert-danger">Please Select the Type</div>
+                  @enderror
+                </div>
+
+                <div class="form-group">
+                  Land Owner:<input type="text" class="form-control typeahead3 @error('land_owner') is-invalid @enderror" value="{{ old('land_owner') }}" placeholder="Search" name="land_owner" />
+                  @error('land_owner')
+                  <div class="alert alert-danger">{{ $message }}</div>
+                  @enderror
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="customCheck1" value="1" name="checklandowner" {{ old('checklandowner') == "1" ? 'checked' : ''}}>
+                    <label class="custom-control-label" for="customCheck1"><strong>Is Unregistered</strong></label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col p-2">
                 <div class="form-group">
                   <label>Removal Requestor Type:</label>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="removalrequestortype" id="removalrequestortype1" value="1">
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="removalrequestortype" id="removalrequestortype1" value="1" {{(old('removalrequestortype') == '1') ? 'checked' : ''}}>
                     <label class="form-check-label" for="removalrequestortype1">
                       Government
                     </label>
                   </div>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="removalrequestortype" id="removalrequestortype2" value="2">
-                    <label class="form-check-label" for="removalrequestortype2">
-                      Private
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="removalrequestortype" id="removalrequestortype2" value="2" {{(old('removalrequestortype') == '2') ? 'checked' : ''}} <label class="form-check-label" for="removalrequestortype2">
+                    Private
                     </label>
                   </div>
                   @error('removalrequestortype')
@@ -85,61 +158,28 @@
                   <div class="alert alert-danger">{{ $message }}</div>
                   @enderror
                   <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="customCheck2" value="1" name="checkremovalrequestor">
-                    <label class="custom-control-label" for="customCheck2"><strong>Other</strong></label>
+                    <input type="checkbox" class="custom-control-input" id="customCheck2" value="1" name="checkremovalrequestor" {{ old('checkremovalrequestor') == "1" ? 'checked' : ''}}>
+                    <label class="custom-control-label" for="customCheck2"><strong>Is Unregistered</strong></label>
+                  </div>
+
+                  <div class="form-group">
+                    Removal Requestor Email:<input type="text" class="form-control @error('removal_requestor_email') is-invalid @enderror" value="{{ old('removal_requestor_email') }}" name="removal_requestor_email" placeholder="Enter Email" />
+                    @error('removal_requestor_email')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
                   </div>
                 </div>
               </div>
             </div>
 
 
-            <div class="form-group">
-              <label for="land_extent">Land Extent (In Acres)</label>
-              <input type="text" class="form-control typeahead3 @error('removal_requestor') is-invalid @enderror" value="{{ old('land_extent') }}" id="land_extent" name="land_extent">
-              @error('land_extent')
-              <div class="alert alert-danger">{{ $message }}</div>
-              @enderror
-            </div>
 
-            <div class="form-group">
-              <label>Land Owner Type:</label>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="landownertype" id="landownertype1" value="1" required>
-                <label class="form-check-label" for="landownertype1">
-                  Government
-                </label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="landownertype" id="landownertype2" value="2" required>
-                <label class="form-check-label" for="landownertype2">
-                  Private
-                </label>
-              </div>
-              @error('landownertype')
-              <div class="alert alert-danger">Please Select the Type</div>
-              @enderror
-            </div>
 
-            <div class="form-group">
-              Land Owner:<input type="text" class="form-control typeahead3 @error('land_owner') is-invalid @enderror" value="{{ old('land_owner') }}" placeholder="Search" name="land_owner" />
-              @error('land_owner')
-              <div class="alert alert-danger">{{ $message }}</div>
-              @enderror
-              <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="customCheck1" value="1" name="checklandowner">
-                <label class="custom-control-label" for="customCheck1"><strong>Other</strong></label>
-              </div>
-            </div>
-            <!-- ////////MAP GOES HERE -->
-            <div id="mapid" style="height:400px;" name="map"></div>
-            @error('polygon')
-            <div class="alert alert-danger">{{ $message }}</div>
-            @enderror
-            <input id="polygon" type="hidden" name="polygon" class="form-control @error('polygon') is-invalid @enderror" value="{{request('polygon')}}" />
-            <div class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input" id="customCheck" value="1" name="isProtected">
-              <label class="custom-control-label" for="customCheck"><strong>Check if land is a protected area</strong></label>
-            </div>
+
+
+
+
+
           </div>
           <div class="col border border-muted rounded-lg">
             <div class="row p-2 mt-2">
@@ -195,7 +235,7 @@
 
             <div class="form-group">
               <label for="description">Description</label>
-              <textarea class="form-control @error('description') is-invalid @enderror" rows="2" id="description" name="description" value="{{ old('description') }}"></textarea>
+              <textarea class="form-control @error('description') is-invalid @enderror" rows="2" id="description" name="description">{{{ old('description') }}}</textarea>
               @error('description')
               <div class="alert alert-danger">{{ $message }}</div>
               @enderror
@@ -260,14 +300,13 @@
 
 
 <script>
-
   //photos add
-    var i = 0;
-    $("#add-btn2").click(function() {
-        ++i;
-        $("#dynamicAddRemove2").append(
-        '<input type="file" id="images" name="images['+ i +']">');
-    });
+  var i = 0;
+  $("#add-btn2").click(function() {
+    ++i;
+    $("#dynamicAddRemove2").append(
+      '<input type="file" id="images" name="images[' + i + ']">');
+  });
 
   //STEPPER
   var currentTab = 0; // Current tab is set to be the first tab (0)
@@ -430,75 +469,104 @@
   });
 
   /// SCRIPT FOR THE MAP
-  var center = [7.2906, 80.6337];
+  var map = L.map('mapid', {
+    center: [7.2906, 80.6337], //if the location cannot be fetched it will be set to Kandy
+    zoom: 12
+  });
 
-  // Create the map
-  var map = L.map('mapid').setView(center, 10);
+  window.onload = function() {
+    var popup = L.popup();
+    //false,               ,popup, map.center
+    function geolocationErrorOccurred(geolocationSupported, popup, latLng) {
+      popup.setLatLng(latLng);
+      popup.setContent(geolocationSupported ?
+        '<b>Error:</b> Geolocation service failed. Enable Location.' :
+        '<b>Error:</b> This browser doesn\'t support geolocation.');
+      popup.openOn(map);
+    }
+    //If theres an error then 
+
+    if (navigator.geolocation) { //using an inbuilt function to get the lat and long of the user.
+      navigator.geolocation.getCurrentPosition(function(position) {
+        var latLng = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
+
+        popup.setLatLng(latLng);
+        popup.setContent('This is your current location');
+        popup.openOn(map);
+        //setting the map to the user location
+        map.setView(latLng);
+
+      }, function() {
+        geolocationErrorOccurred(true, popup, map.getCenter());
+      });
+    } else {
+      //No browser support geolocation service
+      geolocationErrorOccurred(false, popup, map.getCenter());
+    }
+  }
 
   // Set up the OSM layer 
+  //map tiles are “square bitmap graphics displayed in a grid arrangement to show a map.”
+  //There are a number of different tile providers (or tileservers), some are free and open source. We are using OSM
   L.tileLayer(
     'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: 'Data © <a href="http://osm.org/copyright">OpenStreetMap</a>',
       maxZoom: 18
     }).addTo(map);
+  //we’re calling tilelayer() to create the tile layer, passing in the OSM URL first, then the second argument is an object containing the options for our new tile 
+  //layer (including attribution is critical here to comply with licensing), and then the tile layer is added to the map using addTo().
 
-  // Initialise the FeatureGroup to store editable layers
-  var editableLayers = new L.FeatureGroup();
-  map.addLayer(editableLayers);
+  var drawnItems = new L.FeatureGroup();
+  map.addLayer(drawnItems);
 
-  var drawPluginOptions = {
+  var drawControl = new L.Control.Draw({
     position: 'topright',
     draw: {
       polygon: {
-        allowIntersection: false, // Restricts shapes to simple polygons
-        drawError: {
-          color: '#e1e100', // Color the shape will turn when intersects
-          message: '<strong>Oh snap!<strong> you can\'t draw that!' // Message that will show when intersect
-        },
         shapeOptions: {
-          color: '#97009c'
-        }
-      },
-      // disable toolbar item by setting it to false
-      polyline: true,
-      circle: false, // Turns off this drawing tool
-      rectangle: true,
-      marker: true,
-      circlemarker: false,
-      polygon: {
-        shapeOptions: {
-          color: 'green'
+          color: 'purple'
         },
         allowIntersection: false,
         drawError: {
           color: 'orange',
           timeout: 1000
         },
+        showArea: true,
+        metric: false,
+        repeatMode: true
       },
-
+      polyline: {
+        shapeOptions: {
+          color: 'red'
+        },
+      },
+      circlemarker: false,
+      rect: {
+        shapeOptions: {
+          color: 'green'
+        },
+      },
+      circle: false,
     },
     edit: {
-      featureGroup: editableLayers, //REQUIRED!!
-      remove: true
+      featureGroup: drawnItems
     }
-  };
-
-  // Initialise the draw control and pass it the FeatureGroup of editable layers
-  var drawControl = new L.Control.Draw(drawPluginOptions);
+  });
   map.addControl(drawControl);
 
   map.on('draw:created', function(e) {
     var type = e.layerType,
       layer = e.layer;
 
-    if (type === 'marker') {
-      layer.bindPopup('A popup!');
-    }
-    editableLayers.addLayer(layer);
 
-    //console.log(layer.toGeoJSON());
-    $('#polygon').val(JSON.stringify(editableLayers.toGeoJSON()));
+    drawnItems.addLayer(layer);
+    $('#polygon').val(JSON.stringify(drawnItems.toGeoJSON())); //geoJSON converts a layer to JSON
 
+    ///Converting your layer to a KML
+    //$('#kml').val(tokml(drawnItems.toGeoJSON()));
   });
 </script>
 @endsection

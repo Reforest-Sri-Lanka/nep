@@ -25,6 +25,7 @@ class Process_Item extends Model
         'other_land_owner_name',
         'other_removal_requestor_type',
         'other_removal_requestor_name',
+        'requestor_email'
     ];
 
     protected $attributes = [

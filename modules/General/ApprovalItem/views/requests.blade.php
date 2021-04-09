@@ -32,6 +32,8 @@
                 <td><a href="/dev-project/show/{{$item->id}}" class="text-dark">See full request</a></td>
                 @elseif($item->form_type_id == 4)
                 <td><a href="/crime-report/viewcrime/{{$item->id}}" class="text-dark">See full request</a></td>
+                @elseif($item->form_type_id == 5)
+                <td><a href="/land/show/{{$item->id}}" class="text-dark">See full request</a></td>
                 @endif
             </tr>
             @endforeach

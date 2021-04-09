@@ -35,10 +35,9 @@ class LandController extends Controller
     {
 
         $request->validate([
-            'title' => 'required',
             'landTitle' => 'required',
-            'governing_orgs' => 'required',
-            'gazettes' => 'required',
+            'governing_orgs' => 'nullable',
+            'gazettes' => 'nullable',
             'polygon' => 'required'
         ]);
 
@@ -56,24 +55,29 @@ class LandController extends Controller
 
         $landid = Land_Parcel::latest()->first()->id;
 
-        $governing_organizations = request('governing_orgs');
+        if (request('governing_orgs')) {
+            $governing_organizations = request('governing_orgs');
 
-        foreach ($governing_organizations as $governing_organization) {
-            $land_has_organization = new Land_Has_Organization();
-            $land_has_organization->land_parcel_id = $landid;
-            $land_has_organization->organization_id = $governing_organization;
-            $land_has_organization->status = 2;
-            $land_has_organization->save();
+            foreach ($governing_organizations as $governing_organization) {
+                $land_has_organization = new Land_Has_Organization();
+                $land_has_organization->land_parcel_id = $landid;
+                $land_has_organization->organization_id = $governing_organization;
+                $land_has_organization->status = 2;
+                $land_has_organization->save();
+            }
         }
 
-        $gazettes = request('gazettes');
+        if (request('gazettes')) {
 
-        foreach ($gazettes as $gazette) {
-            $land_has_gazette = new Land_Has_Gazette();
-            $land_has_gazette->land_parcel_id = $landid;
-            $land_has_gazette->gazette_id = $gazette;
-            $land_has_gazette->status = 2;
-            $land_has_gazette->save();
+            $gazettes = request('gazettes');
+
+            foreach ($gazettes as $gazette) {
+                $land_has_gazette = new Land_Has_Gazette();
+                $land_has_gazette->land_parcel_id = $landid;
+                $land_has_gazette->gazette_id = $gazette;
+                $land_has_gazette->status = 2;
+                $land_has_gazette->save();
+            }
         }
 
         foreach ($governing_organizations as $governing_organization) {
@@ -85,15 +89,11 @@ class LandController extends Controller
             $process->activity_organization = $governing_organization;
             $process->save();
         }
-        // if (request('file')) {
-        //     $fileloc = request('file');
-        //     Storage::delete('public/'.$fileloc);
-        //     File::delete(public_path($fileloc));
-        //     Storage::delete($fileloc);
-        // }
 
         return redirect('/general/pending')->with('message', 'Request Created Successfully');
     }
+
+
     public function show($id)
     {
         $item = Process_Item::find($id);
