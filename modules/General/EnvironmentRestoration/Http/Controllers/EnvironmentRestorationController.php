@@ -158,7 +158,7 @@ class EnvironmentRestorationController extends Controller
         $process->form_id = $latest->id;
         $process->created_by_user_id = request('created_by');
         $process->request_organization = Auth::user()->organization_id;
-        $process->activity_organization = request('organization');
+        $process->activity_organization = $activityorgid[0];
         $process->prerequisite_id=$latestprocess->id;
         $process->prerequisite=0;
         $process->save();
