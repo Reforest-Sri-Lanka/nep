@@ -63,6 +63,16 @@ class EnvironmentRestorationController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'title' => 'required',
+            'landparceltitle' => 'required',
+            'environment_restoration_activity' => 'required',
+            'environment_restoration_activity' => 'required',
+            'ecosystem' => 'required',            
+            'request_org' => 'required|exists:organizations,title',
+            'polygon' => 'required'
+        ]);
+
         $landparcel = new Land_Parcel();
         $landparcel->title = request('landparceltitle');
         $landparcel->polygon = request('polygon');
@@ -75,14 +85,16 @@ class EnvironmentRestorationController extends Controller
         $latest = Land_Parcel::latest()->first();
         $newland = $latest->id;
 
+        
         $orgs = request('govOrg');
+        if($orgs!=null){
         foreach($orgs as $org){
             $landhasorg = new Land_Has_Organization();
             $landhasorg->land_parcel_id = $newland;
             $landhasorg->organization_id = $org;
             $landhasorg->save();
         }
-
+    }
 
 
         $restoration = new Environment_Restoration();
@@ -113,9 +125,9 @@ class EnvironmentRestorationController extends Controller
         //Adding to Environment Restoration Species Table using ajax
         $rules = array(
             'statusSpecies.*'  => 'required',
-            'species_name.*'  => 'required',
-            'quantity.*'  => 'required',
-            'height.*'  => 'required',
+            'species_name.*'  => 'required|exists:species_information,title',
+            'quantity.*'  => 'required|integer',
+            'height.*'  => 'required|integer',
             'dimension.*'  => 'required',
             'remark.*'  => 'required'
         );
