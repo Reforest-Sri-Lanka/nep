@@ -33,7 +33,7 @@
 				data: {
 					labels: response.months_years, // The response got from the ajax request containing all month names in the database
 					datasets: [{
-						label: "Users",
+						label: "New Users",
 						lineTension: 0.3,
 						backgroundColor: "#A46CB8",	
 						borderColor: "#A46CB8",
