@@ -324,7 +324,21 @@
       </div>
     </div>
   </div>
-
+  
+  <br>
+  <hr><br>
+  <h2>Our Progress</h2>
+  <div class="row justify-content-center mb-3">
+    <div class="col-lg-11 card">
+      <canvas id="UserChart"></canvas>
+    </div>
+  </div>
+  <div class="row justify-content-center mb-3">
+    <div class="col-lg-11 card">
+      <canvas id="processItemTypeChart"></canvas>
+    </div>
+  </div>
+  </div>
   <div id="footer">
     <div class="d-flex  bg-light justify-content-end">
       <br>
@@ -345,6 +359,10 @@
       <h6>All rights reserved</h6>
     </div>
   </div>
+  <!--chart js -->
+  <script src="{{ url('/vendor/chart.js/dist/Chart.min.js') }}"></script>
+  <script src="{{ url('/vendor/chart.js/dist/Chart.extension.js') }}"></script>
+  <script src="{{ url('/vendor/welcomepage-charts.js' ) }}"></script>
 </body>
 
 </html>
