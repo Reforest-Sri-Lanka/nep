@@ -47,6 +47,7 @@
         <div class="row justify-content-center">
             <div class="col-md-4">
                 <select name="form_type" class="custom-select" required>
+                
                     <option value="0" selected>Select Request Type</option>
                     <option value="1">Tree Cutting permission Requests</option>
                     <option value="2">Development project permission Requests</option>

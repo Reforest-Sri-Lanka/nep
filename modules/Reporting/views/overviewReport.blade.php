@@ -24,7 +24,7 @@
     </div>
     <div class="row p-4 bg-white">
         <div class="col border border-muted rounded-lg mr-2 p-4">
-            <p>Your customized user request report where</p>
+            <p>Customized user request report for {{Auth::user()->name}}</p>
             <table class="table table-striped mr-4">
                 <thead>
                     <tr>
@@ -54,7 +54,11 @@
                         @else
                         <td>{{$process_item->requesting_organization->title}}</td>
                         @endif
+                        @if($process_item->remark == 0)
+                        <td>No remarks</td>
+                        @else
                         <td>{{$process_item->remark}}</td>
+                        @endif
                     </tr>
                     @endforeach
                 </tbody>

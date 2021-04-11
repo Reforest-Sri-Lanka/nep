@@ -24,6 +24,7 @@ use App\Models\Crime_type;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use PDF;
@@ -95,13 +96,13 @@ class ReportingController extends Controller
         if (Auth::user()->role_id < 3) {
             $process_items = Process_Item::all();
         } elseif (Auth::user()->role_id == 6) {
-            $process_items = Process_Item::where('created_by_user_id', Auth::user()->id);
+            $process_items = Process_Item::where('created_by_user_id', Auth::user()->id)->get();
         } else {
-            $process_items = Process_Item::where('activity_organization', Auth::user()->organization_id);
+            $process_items = Process_Item::where('activity_organization', Auth::user()->organization_id)->get();
+
         }
-        // $this->processItems=$process_items;
-        // ddd($this->processItems);
         session()->put('processItems',$process_items);
+  
         return view('reporting::overview', ['process_items' => $process_items]);
     }
     public function overviewReport()
