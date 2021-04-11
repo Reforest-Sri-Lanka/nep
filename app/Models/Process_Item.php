@@ -21,17 +21,22 @@ class Process_Item extends Model
         'prerequisite_id',
         'created_by_user_id',
         'status_id',
-        'ext_requestor',
-        'ext_requestor_email',
+        'other_land_owner_type',
+        'other_land_owner_name',
+        'other_removal_requestor_type',
+        'other_removal_requestor_name',
+        'requestor_email'
     ];
 
     protected $attributes = [
         'prerequisite' => 0,
         'remark' => 0,
         'status_id' => 1,
-        'ext_requestor' => '',
-        'ext_requestor_email' => '',
-        
+        'other_land_owner_type' => 0,
+        'other_land_owner_name' => '',
+        'other_removal_requestor_type' => 0,
+        'other_removal_requestor_name' => '',
+        'requestor_email' => '',
     ];
 
     public function form_type()
@@ -44,7 +49,7 @@ class Process_Item extends Model
         return $this->belongsTo('App\Models\Status');
     }
 
-    public function prerequisite_process()
+    public function prerequisite_id()
     {
         return $this->belongsTo('App\Models\Process_Item','prerequisite_id');
     }

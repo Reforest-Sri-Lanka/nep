@@ -14,21 +14,21 @@ class Land_Parcel extends Model
     protected $fillable = [
         'title',
         'governing_organizations',
+        'logs',
         'polygon',
         'protected_area',
         'created_by_user_id',
-        'status_id',
-        'district_id',
-        'province_id',
-        'gs_division_id',
-        'activity_organization',
+        'status',
     ];
 
     protected $attributes = [
+        'logs' => 0,
         'protected_area' => 0,
     ];
 
     protected $casts = [
+        'governing_organizations' => 'array',
+        'logs' => 'array',
         'polygon' => 'array',
     ];
 
@@ -43,16 +43,10 @@ class Land_Parcel extends Model
     public function environment_restorations(){
         return $this->hasMany('App\Models\EnvironmentRestoration');
     }
-    //relation for activity organization
-    public function organization()
-    {
-        return $this->belongsTo('App\Models\Organization','activity_organization');
-    }
 
-    //relation for m-m relationship between land_parcels and organizations
     public function organizations()
     {
-        return $this->belongsToMany('App\Models\Organization','land_has_organizations','land_parcel_id','organization_id');
+        return $this->belongsToMany(Organization::class, 'Land_Has_Organization');
     }
 
     public function gazettes()
@@ -67,16 +61,6 @@ class Land_Parcel extends Model
 
     public function crime_reports(){
         return $this->hasMany('App\Models\Crime_report');
-    }
 
-    public function gs_division()
-    {
-        return $this->belongsTo('App\Models\GS_Division');
     }
-
-    public function district()
-    {
-        return $this->belongsTo('App\Models\District');
-    }
-
 }
