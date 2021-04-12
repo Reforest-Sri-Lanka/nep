@@ -5,75 +5,61 @@
 <kbd><a href="/approval-item/showRequests" class="text-white font-weight-bolder"><i class="fas fa-chevron-left"></i></i> BACK</a></kbd>
 
 <div class="container border bg-light">
-    <form>
-        <div class="input-group mb-3 mt-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text">Crime Type</span>
-            </div>
-            <input type="text" class="form-control" placeholder="{{$crime->Crime_type->type}}" readonly>
-        </div>
+    <dl class="row">
 
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text">Description</span>
-            </div>
-            <input type="text" class="form-control" placeholder="{{$crime->description}}" readonly>
-        </div>
+        <dt class="col-sm-3">Category:</dt>
+        <dd class="col-sm-9">{{$process_item->form_type->type}}</dd>
 
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text">Photos</span>
-            </div>
-            
-            <div class="input-group-prepend">
-                @isset($Photos)
-                    @if (count($Photos) > 0)
-                            @foreach($Photos as $photo)
-                                <div class="col border border-muted rounded-lg mr-2 p-4">
-                                    <img class="img-responsive" src="{{URL::asset('/storage/crimeEvidence/27NO041NO0oie_7M8XMhI9uOs1 (2).png')}}" alt="photo">
-                                    <a class="nav-link text-dark font-italic p-2" href="/crime-report/downloadimage/{{$photo}}">Download Image</a>
-                                </div>
-                            @endforeach
-                    @endif
-                    @if (count($Photos) < 1)
-                            <p>No photos included in the application</p>
-                    @endif
-                @endisset
-                @empty($Photos)
-                    <p>No photos included in the application</p>
-                @endempty
-            </div>
-        </div>
+        <dt class="col-sm-3">Crime Type:</dt>
+        <dd class="col-sm-9">{{$crime->Crime_type->type}}</dd>
 
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text">Land Parcel</span>
-            </div>
-            <input type="text" class="form-control" placeholder="{{$crime->land_parcel->title}}" readonly>
-        </div>
 
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text">Status</span>
-            </div>
-            <input type="text" class="form-control" placeholder="{{$crime->status_id}}" readonly>
-        </div>
 
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text">Created at</span>
-            </div>
-            <input type="text" class="form-control" placeholder="{{$crime->created_at}}" readonly>
-        </div>
+        <dt class="col-sm-3">Land Parcel Title:</dt>
+        <dd class="col-sm-9">
+            <p>{{$crime->land_parcel->title}}</p>
+        </dd>
 
-        <div id="mapid" style="height:400px;" name="map"></div>
-    </form>
+        <dt class="col-sm-3">Activity Organization:</dt>
+        <dd class="col-sm-9">
+            <p>{{$process_item->Activity_organization->title}}</p>
+        </dd>
+
+        <dt class="col-sm-3">Status:</dt>
+        <dd class="col-sm-9">{{$process_item->status->type}}</dd>
+
+        <dt class="col-sm-3">Created at:</dt>
+        <dd class="col-sm-9">{{$crime->created_at}}</dd>
+    </dl>
+    <div id="mapid" style="height:400px;" name="map"></div>
+    <div class="row">
+        @isset($Photos)
+            <div class="row p-4 bg-white">
+                <div class="card-deck">
+                    @foreach($Photos as $photo)
+                    <div class="card" style="background-color:#99A3A4">
+                        <img class="card-img-top" src="{{asset('/storage/'.$photo)}}" alt="photo">
+                        <div class="card-body text-center">
+                        <a class="nav-link text-dark font-italic p-2" href="/crime-report/downloadimage/{{$photo}}">Download Image</a>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+        @endisset
+        @empty($Photos)
+            <p>No photos included in the application</p>
+        @endempty
+    </div>
 
 </div>
 
 
 
 <script type="text/javascript">
+    
+
+    /// MAP MODULE
     var center = [7.2906, 80.6337];
 
     // Create the map
@@ -87,12 +73,12 @@
         }).addTo(map);
 
 
-    //FROM LARAVEL THE COORDINATES ARE BEING TAKEN TO THE SCRIPT AND CONVERTED TO JSON
     var polygon = @json($polygon);
-    console.log(polygon);
+    var layer = L.geoJSON(JSON.parse(polygon)).addTo(map);
 
-    //ADDING THE JSOON COORDINATES TO MAP
-    L.geoJSON(JSON.parse(polygon)).addTo(map);
+    // Adjust map to show the kml
+    var bounds = layer.getBounds();
+    map.fitBounds(bounds);
     
 </script>
 @endsection

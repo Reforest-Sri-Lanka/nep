@@ -32,13 +32,15 @@
                             </div>
                         @enderror    
                     </div>
-                    <div class="form-group">
-                    <input type="checkbox" class="form-check-input" name="nonregorg" ><strong>Other</strong>
-                    </div>
                     <div class="form-group" id="dynamicAddRemove">
                         <label for="images">Photos:</label>
-                        <input type="file" id="images" name="images[0]">
-                        <button type="button" name="add" id="add-btn" class="btn btn-success">Add More</button>
+                        
+                        <input type="file" id="image" name="file[]" multiple>
+                        @if ($errors->has('file.*'))
+                            <div class="alert">
+                                <strong>{{ $errors->first('file.*') }}</strong>
+                            </div>
+                        @endif   
                     </div>
                     <div class="form-group">
                         <label for="description">Description:</label>
@@ -51,27 +53,7 @@
                         @enderror
                     </div>
                     <hr>
-                    <div class="form-group">
-                        <input type="checkbox" name="nonreguser" value="1" ><strong>Creating on behalf of non registered user</strong>
-                        <input type="checkbox" name="nonreguser" value="1" ><strong>Creating on behalf of non registered user</strong>
-                        <label for="description">Inform investigation result to Mr/Ms:</label>
-                        <input type="text" class="form-control" placeholder="Enter complainant name" name="Requestor" value=""/>
-                        @error('confirm')
-                            <div class="alert">
-                                <strong>{{ $message }}</strong>
-                            </div>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <label for="description">Through email:</label>
-                        <input type="text" class="form-control" placeholder="Enter complainant's email" name="Requestor_email" value=""/>
-                        @error('confirm')
-                            <div class="alert">
-                                <strong>{{ $message }}</strong>
-                            </div>
-                        @enderror
-                    </div>
-                    <hr>
+                    
                     <div class="form-check">
                     <input type="hidden" class="form-control" name="create_by" value="{{ Auth::user()->id }}">  `   1
                         <input id="polygon" type="hidden" name="polygon" value="{{request('polygon')}}">
@@ -120,83 +102,125 @@
         },
     });
 
-    //photos add
-    var i = 0;
-    $("#add-btn").click(function() {
-        ++i;
-        $("#dynamicAddRemove").append(
-        '<input type="file" id="images" name="images['+ i +']">');
-    });
     
+   
+// SCRIPT FOR THE MAP
+var map = L.map('mapid', {
+    center: [7.2906, 80.6337], //if the location cannot be fetched it will be set to Kandy
+    zoom: 12
+  });
 
+  window.onload = function() {
+    var popup = L.popup();
+    //false,               ,popup, map.center
+    function geolocationErrorOccurred(geolocationSupported, popup, latLng) {
+      popup.setLatLng(latLng);
+      popup.setContent(geolocationSupported ?
+        '<b>Error:</b> Geolocation service failed. Enable Location.' :
+        '<b>Error:</b> This browser doesn\'t support geolocation.');
+      popup.openOn(map);
+    }
+    //If theres an error then 
 
+    if (navigator.geolocation) { //using an inbuilt function to get the lat and long of the user.
+      navigator.geolocation.getCurrentPosition(function(position) {
+        var latLng = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
 
+        popup.setLatLng(latLng);
+        popup.setContent('This is your current location');
+        popup.openOn(map);
+        //setting the map to the user location
+        map.setView(latLng);
 
-  /// SCRIPT FOR THE MAP
-  var center = [7.2906, 80.6337];
-
-  // Create the map
-  var map = L.map('mapid').setView(center, 10);
+      }, function() {
+        geolocationErrorOccurred(true, popup, map.getCenter());
+      });
+    } else {
+      //No browser support geolocation service
+      geolocationErrorOccurred(false, popup, map.getCenter());
+    }
+  }
 
   // Set up the OSM layer 
+  //map tiles are “square bitmap graphics displayed in a grid arrangement to show a map.”
+  //There are a number of different tile providers (or tileservers), some are free and open source. We are using OSM
   L.tileLayer(
     'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: 'Data © <a href="http://osm.org/copyright">OpenStreetMap</a>',
       maxZoom: 18
     }).addTo(map);
+  //we’re calling tilelayer() to create the tile layer, passing in the OSM URL first, then the second argument is an object containing the options for our new tile 
+  //layer (including attribution is critical here to comply with licensing), and then the tile layer is added to the map using addTo().
 
-  // add a marker in the given location
-  L.marker(center).addTo(map);
+  var drawnItems = new L.FeatureGroup();
+  map.addLayer(drawnItems);
 
-  // Initialise the FeatureGroup to store editable layers
-  var editableLayers = new L.FeatureGroup();
-  map.addLayer(editableLayers);
-
-  var drawPluginOptions = {
+  var drawControl = new L.Control.Draw({
     position: 'topright',
     draw: {
       polygon: {
-        allowIntersection: false, // Restricts shapes to simple polygons
-        drawError: {
-          color: '#e1e100', // Color the shape will turn when intersects
-          message: '<strong>Oh snap!<strong> you can\'t draw that!' // Message that will show when intersect
-        },
         shapeOptions: {
-          color: '#97009c'
-        }
+          color: 'purple'
+        },
+        allowIntersection: false,
+        drawError: {
+          color: 'orange',
+          timeout: 1000
+        },
+        showArea: true,
+        metric: false,
+        repeatMode: true
       },
-      // disable toolbar item by setting it to false
-      polyline: true,
-      circle: false, // Turns off this drawing tool
-      rectangle: false,
-      marker: true,
+      polyline: {
+        shapeOptions: {
+          color: 'red'
+        },
+      },
+      circlemarker: false,
+      rect: {
+        shapeOptions: {
+          color: 'green'
+        },
+      },
+      circle: false,
     },
     edit: {
-      featureGroup: editableLayers, //REQUIRED!!
-      remove: false
+      featureGroup: drawnItems
     }
-  };
-
-  // Initialise the draw control and pass it the FeatureGroup of editable layers
-  var drawControl = new L.Control.Draw(drawPluginOptions);
+  });
   map.addControl(drawControl);
-
-  var editableLayers = new L.FeatureGroup();
-  map.addLayer(editableLayers);
 
   map.on('draw:created', function(e) {
     var type = e.layerType,
       layer = e.layer;
 
-    if (type === 'marker') {
-      layer.bindPopup('A popup!');
-    }
-    editableLayers.addLayer(layer);
-
-    //console.log(layer.toGeoJSON());
-    $('#polygon').val(JSON.stringify(layer.toGeoJSON()));
+    drawnItems.addLayer(layer);
+    $('#polygon').val(JSON.stringify(drawnItems.toGeoJSON())); //geoJSON converts a layer to JSON
 
   });
+
+  $(document).ready(function(){
+        $('#image').change(function(){
+            var fp = $("#image");
+            var lg = fp[0].files.length; // get length
+            var items = fp[0].files;
+            var fileSize = 0;
+           
+            if (lg > 0) {
+                for (var i = 0; i < lg; i++) {
+                    fileSize = fileSize+items[i].size; // get file size
+                }
+                if(fileSize > 5242880) {
+                    alert('File size must not be more than 4 MB');
+                    $('#image').val('');
+                }
+            }
+        });
+    });
+
 
 </script>
 @endsection
