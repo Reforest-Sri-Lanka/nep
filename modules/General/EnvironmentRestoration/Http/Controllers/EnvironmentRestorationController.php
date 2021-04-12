@@ -92,6 +92,7 @@ class EnvironmentRestorationController extends Controller
             $landhasorg = new Land_Has_Organization();
             $landhasorg->land_parcel_id = $newland;
             $landhasorg->organization_id = $org;
+            $landhasorg->status = 1;
             $landhasorg->save();
         }
     }

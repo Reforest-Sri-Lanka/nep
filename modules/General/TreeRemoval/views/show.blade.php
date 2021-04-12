@@ -24,6 +24,9 @@
 
                 <dt class="col-sm-3">Governing Organizations:</dt>
                 <dd class="col-sm-9">
+                    <!-- if other type, then will show that instead -->
+                    {{$other_removal_requestor}}
+
                     <ul class="list-unstyled">
                         @foreach($tree->governing_organizations as $governing_organization)
                         @switch($governing_organization)

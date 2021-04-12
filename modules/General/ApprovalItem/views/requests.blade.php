@@ -29,7 +29,7 @@
                 @elseif($item->form_type_id == 2)
                 <td><a href="/dev-project/show/{{$item->id}}" class="text-dark">See full request</a></td>
                 @elseif($item->form_type_id == 3)
-                <td><a href="/dev-project/show/{{$item->id}}" class="text-dark">See full request</a></td>
+                <td><a href="/env-restoration/show/{{$item->id}}" class="text-dark">See full request</a></td>
                 @elseif($item->form_type_id == 4)
                 <td><a href="/crime-report/viewcrime/{{$item->id}}" class="text-dark">See full request</a></td>
                 @elseif($item->form_type_id == 5)
