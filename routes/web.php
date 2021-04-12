@@ -27,7 +27,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/home', [GeneralController::class, 'pending']);
+Route::get('/home', [GeneralController::class, 'pending'])->middleware('auth','verified');
+
+Route::get('/home/main',  [UserController::class, 'home'])->middleware('auth','verified');
 
 //Route::get('/admin', 'AdministratorController@index');
 
