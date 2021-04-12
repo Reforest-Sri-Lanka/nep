@@ -241,12 +241,14 @@
               @enderror
             </div>
 
-            <div class="form-group" id="dynamicAddRemove2">
-              <label for="images">Image (Optional)</label>
-              <div class="custom-file mb-3">
-                <input type="file" id="images" name="images[0]">
-                <button type="button" name="add" id="add-btn2" class="btn btn-success">Add More</button>
-              </div>
+            <div class="form-group" id="dynamicAddRemove">
+              <label for="images">Photos: (Optional)</label>       
+                <input type="file" id="image" name="file[]" multiple>
+                @if ($errors->has('file.*'))
+                  <div class="alert">
+                    <strong>{{ $errors->first('file.*') }}</strong>
+                  </div>
+                @endif   
             </div>
           </div>
         </div>
@@ -589,5 +591,24 @@
     ///Converting your layer to a KML
     //$('#kml').val(tokml(drawnItems.toGeoJSON()));
   });
+
+  $(document).ready(function(){
+        $('#image').change(function(){
+            var fp = $("#image");
+            var lg = fp[0].files.length; // get length
+            var items = fp[0].files;
+            var fileSize = 0;
+           
+            if (lg > 0) {
+                for (var i = 0; i < lg; i++) {
+                    fileSize = fileSize+items[i].size; // get file size
+                }
+                if(fileSize > 5242880) {
+                    alert('You should not uplaod files exceeding 4 MB. Please compress files size and uplaod agian');
+                    $('#image').val('');
+                }
+            }
+        });
+    });
 </script>
 @endsection
