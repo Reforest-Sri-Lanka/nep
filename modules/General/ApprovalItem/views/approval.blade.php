@@ -172,9 +172,6 @@
             </div>
             <div class="col border border-muted rounded-lg mr-2 p-4">
                 <div id="mapid" style="height:400px;" name="map"></div>
-                @if($process_item->form_type_id ==7)
-                <button type="submit" class="btn btn-primary" ><a href="/approval-item/assignorganization/{{$land_process->id}}" class="text-dark">View More details</a></button>
-                @endif
             </div>
         </div>
         @if($process_item->form_type_id==1)
@@ -203,43 +200,59 @@
                         </tbody>
                     </table>
         </div>
-        @endif
-        @if($process_item->form_type_id==5)
-            <div class="row p-4 bg-white">
-                <table class="table table-light table-striped border-secondary rounded-lg mr-4">
-                    <thead>
-                        <tr>
-                            <th>Title</th>
-                            <th>Type</th>
-                            <th>Description</th>
-                            </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($LandOrganizations as $organization)
-                            <tr>
-                                <td>{{$organization->organization->title}}</td>
-                                <td>{{$organization->organization->type->title}}</td>
-                                <td>{{$organization->organization->Description}}</td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-        @endif
-        @isset($Photos)
         <div class="row p-4 bg-white">
-            <div class="card-deck">
-                @foreach($Photos as $photo)
-                <div class="card" style="background-color:#99A3A4">
-                    <img class="card-img-top" src="{{asset('/storage/'.$photo)}}" alt="photo">
-                    <div class="card-body text-center">
-                    <a class="nav-link text-dark font-italic p-2" href="/item-report/downloadimage/{{$photo}}">Download Image</a>
+                <h6>Tree Data</h6>
+                @if(count($data) < 1)
+                    <h1>No data</h1>
+                @else
+                    <table class="table table-light table-striped border-secondary rounded-lg mr-4">
+                        <thead>
+                            <tr>
+                                <th>Tree Species ID</th>
+                                <th>Tree ID</th>
+                                <th>Width at Breast Height</th>
+                                <th>Height</th>
+                                <th>Timber Volume</th>
+                                <th>Timber Cubic</th>
+                                <th>Age</th>
+                                <th>Remark</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for($x = 0; $x < count($tree_data); $x++)
+                            <tr>
+                                <td>{{$data[$x]['tree_species_id']}}</td>
+                                <td>{{$data[$x]['tree_id']}}</td>
+                                <td>{{$data[$x]['width_at_breast_height']}}</td>
+                                <td>{{$data[$x]['height']}}</td>
+                                <td>{{$data[$x]['timber_volume']}}</td>
+                                <td>{{$data[$x]['timber_cubic']}}</td>
+                                <td>{{$data[$x]['age']}}</td>
+                                <td>{{$data[$x]['remark']}}</td>
+                            </tr>
+                            @endfor
+                        </tbody>
+                    </table>
+                @endif             
+        </div>
+        @endif
+        
+        @if($process_item->form_type_id==2 || $process_item->form_type_id==4 )
+            @isset($Photos)
+                <div class="row p-4 bg-white">
+                    <div class="card-deck">
+                        @foreach($Photos as $photo)
+                        <div class="card" style="background-color:#99A3A4">
+                            <img class="card-img-top" src="{{asset('/storage/'.$photo)}}" alt="photo">
+                            <div class="card-body text-center">
+                            <a class="nav-link text-dark font-italic p-2" href="/item-report/downloadimage/{{$photo}}">Download Image</a>
+                            </div>
+                        </div>
+                        @endforeach
                     </div>
                 </div>
-                @endforeach
-            </div>
-        </div>
-        @endisset
+            @endisset
+        @endif
     </div>
 </div>
 <div class="col-md">
