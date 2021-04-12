@@ -101,6 +101,7 @@ class LandController extends Controller
         return view('land::show', [
             'land' => $land_data,
             'polygon' => $land_data->polygon,
+            'other_removal_requestor' => $item->other_removal_requestor_name,
         ]);
     }
 
