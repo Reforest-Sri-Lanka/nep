@@ -94,6 +94,9 @@
                             @if($notification->type == "App\Notifications\ApplicationMade")
                             <a href="/approval-item/assignorganization/{{$notification->data['process_id']}}"><i class="ni ni-single-02"></i><span><li><p>New {{$notification->data['type']}} application No {{$notification->data['form_id']}} has been made.</p></i></span></a>
                             @endif
+                            @if($notification->type == "App\Notifications\prereqmemo")
+                            <a href="/approval-item/investigate/{{$notification->data['prerequisite_id']}}"><i class="ni ni-single-02"></i><span><li><p>Prerequisite no {{$notification->data['prerequisite_id']}} {{$notification->data['remark']}} .</p></i></li></span></a>
+                            @endif
                             </ul>
                         @endforeach
                         @if(auth()->user()->unreadNotifications->count())
