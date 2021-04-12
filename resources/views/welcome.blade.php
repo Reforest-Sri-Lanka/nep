@@ -89,13 +89,6 @@
       height: 350px;
     }
 
-    #top {
-      padding: 13px 0 0;
-      margin: 0 0 40px;
-      color: #fff;
-      height: 31px;
-    }
-
     #pitch {
       clear: left;
       float: left;
@@ -119,7 +112,7 @@
       float: left;
       color: #EFF4D7;
       font-size: 1.2em;
-      margin: 0 0 0 20px;
+      margin: 0 0 0 0px;
       padding: 4px;
     }
 
@@ -193,6 +186,7 @@
     }
 
     #footer {
+      font: 15px/22px Georgia, Palatino, "Times New Roman", Times, Serif;
       clear: both;
       border-top: 1px solid #ddd;
       color: #999;
@@ -211,23 +205,30 @@
     #footer .right {
       float: right;
     }
+
+    .lightpurp {
+      background-color: #A46CB8;
+    }
   </style>
 </head>
 
 <body>
 
   <div id="content">
-    <p id="top"></p>
     <h1>Welcome to the National Environment Platform</h1>
     <ul id="menu">
       <!-- Authentication Links -->
       @guest
       <li class="nav-item">
-        <a class="nav-link text-light" href="{{ route('login') }}">{{ __('Login') }}</a>
+        <a class="nav-link text-light" href="{{ route('login') }}">
+          <p class="h5">{{ __('Login') }}</p>
+        </a>
       </li>
       @if (Route::has('register'))
       <li class="nav-item">
-        <a class="nav-link text-light" href="{{ route('register') }}">{{ __('Register') }}</a>
+        <a class="nav-link text-light ml-3" href="{{ route('register') }}">
+          <p class="h5">{{ __('Register') }}</p>
+        </a>
       </li>
       @endif
       @else
@@ -237,7 +238,7 @@
         </a>
 
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+          <a class="dropdown-item text-dark" href="{{ route('logout') }}" onclick="event.preventDefault();
                                           document.getElementById('logout-form').submit();">
             {{ __('Logout') }}
           </a>
@@ -252,7 +253,6 @@
 
 
     <div id="pitch">
-      <p class="text-light">Duis iaculis urna vel massa ultricies suscipit. Phasellus diam sapien, fermentum a eleifend non, luctus non augue. Quisque scelerisque purus quis eros sollicitudin gravida.</p>
     </div>
     <div id="main">
       <h2><a href="#">Lorem ipsum dolor sit amet</a></h2>
@@ -273,70 +273,134 @@
 
 
   <div id="secondmain">
-    <div>
-      <br>
-      <hr><br>
-      <h2>Performance This Month</h2>
-      <div class="row">
-        <div class="card m-2" style="width: 18rem;">
-          <img class="card-img-top" style="height:250px; width:287px;" src="images/tree.jpg" alt="Card image cap">
-          <div class="card-body">
-            <h5 class="card-title">Tree Removals</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          </div>
-          <div class="card-body">
-            <a href="#" class="card-link">Submit a Tree Removal Request</a>
-          </div>
+    <br>
+    <hr><br>
+    <h2 style="text-align: center;">Performance This Month</h2>
+    <div class="row justify-content-center">
+      <div class="card m-2" style="width: 18rem;">
+        <img class="card-img-top" style="height:250px; width:287px;" src="images/tree.jpg" alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title">Tree Removals</h5>
+          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
         </div>
-
-        <div class="card m-2" style="width: 18rem;">
-          <img class="card-img-top" style="height:250px; width:287px;" src="images/dev.jpg" alt="Card image cap">
-          <div class="card-body">
-            <h5 class="card-title">Development Projects</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          </div>
-          <div class="card-body">
-            <a href="#" class="card-link">Submit a Development Form</a>
-          </div>
+        <div class="card-body">
+          @if(auth()->user())
+          @if(auth()->user()->role_id)
+          <a href="{{ route('treeremoval') }}" class="btn lightpurp text-light">Submit a Tree Removal Form</a>
+          @endif
+          @else
+          <a href="{{ route('login') }}" class="btn lightpurp text-light">Submit a Tree Removal Form</a>
+          @endif
         </div>
+      </div>
 
-        <div class="card m-2" style="width: 18rem;">
-          <img class="card-img-top" style="height:250px; width:287px;" src="/images/restore2.jpg" alt="Card image cap">
-          <div class="card-body">
-            <h5 class="card-title">Restorations</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          </div>
-          <div class="card-body">
-            <a href="#" class="card-link">Submit a Restoration Form</a>
-          </div>
+      <div class="card m-2" style="width: 18rem;">
+        <img class="card-img-top" style="height:250px; width:287px;" src="images/dev.jpg" alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title">Development Projects</h5>
+          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
         </div>
+        <div class="card-body">
+          @if(auth()->user())
+          @if(auth()->user()->role_id)
+          <a href="{{ route('devproject') }}" class="btn lightpurp text-light">Submit a Development Form</a>
+          @endif
+          @else
+          <a href="{{ route('login') }}" class="btn lightpurp text-light">Submit a Development Form</a>
+          @endif
+        </div>
+      </div>
 
-        <div class="card m-2" style="width: 18rem;">
-          <img class="card-img-top" style="height:250px; width:287px;" src="images/complain.jpg" alt="Card image cap">
-          <div class="card-body">
-            <h5 class="card-title">Complaints Handled</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          </div>
-          <div class="card-body">
-            <a href="#" class="card-link">Make a Complaint</a>
-          </div>
+      <div class="card m-2" style="width: 18rem;">
+        <img class="card-img-top" style="height:250px; width:287px;" src="/images/restore2.jpg" alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title">Restorations</h5>
+          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        </div>
+        <div class="card-body">
+          @if(auth()->user())
+          @if(auth()->user()->role_id)
+          <a href="{{ route('envrestoration') }}" class="btn lightpurp text-light">Submit a Restoration Form</a>
+          @endif
+          @else
+          <a href="{{ route('login') }}" class="btn lightpurp text-light">Submit a Restoration Form</a>
+          @endif
+        </div>
+      </div>
+
+      <div class="card m-2" style="width: 18rem;">
+        <img class="card-img-top" style="height:250px; width:287px;" src="images/complain.jpg" alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title">Complaints Handled</h5>
+          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        </div>
+        <div class="card-body">
+          @if(auth()->user())
+          @if(auth()->user()->role_id)
+          <a href="{{ route('crime') }}" class="btn lightpurp text-light">Make a Complaint</a>
+          @endif
+          @else
+          <a href="{{ route('login') }}" class="btn lightpurp text-light">Make a Complaint</a>
+          @endif
         </div>
       </div>
     </div>
+    <br>
+    <hr><br>
+
+    <h2 style="text-align: center;">Blogs</h2>
+    @for($i=0; $i<3; $i++) <div class="row justify-content-center mb-3">
+      <div class="col-lg-11 card">
+        <div class="row no-gutters">
+          <div class="col-auto">
+            <img src="//placehold.it/200" class="img-fluid" alt="">
+          </div>
+          <div class="col">
+            <div class="card-block px-3">
+              <p class="card-title h3 p-2">Title</p>
+              <p class="card-text">Some quick example text to build on the carSome quick example text to build on the card title and make up the bulk of the card's content.d title and make up the bulk of the card's content.Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              <a href="#" class="btn lightpurp text-white float-right">Read More</a>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer bg-white w-100 text-muted">
+          Author: Daniel Farst | Category: Illustration | Likes: 21
+        </div>
+      </div>
+  </div>
+  @endfor
+
+  <br>
+  <hr><br>
+  <h2 style="text-align: center;">Our Progress</h2>
+  <div class="row justify-content-center mb-3">
+    <div class="col-lg-11 card">
+      <canvas id="UserChart"></canvas>
+    </div>
+  </div>
+  <div class="row justify-content-center mb-3">
+    <div class="col-lg-11 card">
+      <canvas id="processItemTypeChart"></canvas>
+    </div>
+  </div>
   </div>
 
   <div id="footer">
     <div class="d-flex  bg-light justify-content-end">
       <br>
-      <a href="#" class="text-secondary mr-2">
+      <a href="https://www.facebook.com/reforestsrilanka/" class="text-secondary mr-2">
         <i class="fab fa-facebook-square"></i> Facebook |
       </a>
-      <a href="#" class="text-secondary mr-2">
-        <i class="fab fa-twitter-square"></i> Twitter |
+      <a href="https://www.linkedin.com/company/reforest-sri-lanka/" class="text-secondary mr-2">
+        <i class="fab fa-linkedin"></i> LinkedIn |
       </a>
-      <a href="#" class="text-secondary mr-2">
-        <i class="fab fa-instagram"></i> Instagram
+      <a href="https://www.instagram.com/reforest_srilanka/?hl=en" class="text-secondary mr-2">
+        <i class="fab fa-instagram"></i> Instagram |
       </a>
+      <a href="https://medium.com/@achalaarunalu/reforest-sri-lanka-8e16cf5749de" class="text-secondary mr-2">
+        <i class="fab fa-medium"></i> Medium |
+      </a>
+      <a href="http://www.reforestsrilanka.com/" class="text-secondary mr-2">ReforestSL</a>
     </div>
     <div class="d-flex bg-light justify-content-center">
       <h5 class="text-secondary"><i class="far fa-copyright"></i> 2021 by RFSL - LSF - Ministry of Environment</h5><br>
@@ -345,6 +409,10 @@
       <h6>All rights reserved</h6>
     </div>
   </div>
+  <!--chart js -->
+  <script src="{{ url('/vendor/chart.js/dist/Chart.min.js') }}"></script>
+  <script src="{{ url('/vendor/chart.js/dist/Chart.extension.js') }}"></script>
+  <script src="{{ url('/vendor/welcomepage-charts.js' ) }}"></script>
 </body>
 
 </html>
