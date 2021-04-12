@@ -28,7 +28,8 @@ class access_control
             $access1 = Role_has_access::where('role_id',$role)->where('access_id',$access)->first();;
             if($access1 == null)
             {
-                return redirect('/home/main')->with('warning', 'You do not have access permision to '.$accesstitle->access); 
+                $accesstitle=Access::find($access);
+                return redirect('/home/main')->with('danger', 'You do not have access permision to '.$accesstitle->access); 
             }
         }
         return $next($request);

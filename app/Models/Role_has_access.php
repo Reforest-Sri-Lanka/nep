@@ -9,6 +9,10 @@ class Role_has_access extends Model
 {
     use HasFactory;
     protected $table = "role_has_access";
+
+    protected $attributes = [
+        'status' => 7,
+    ];
     
     public function access()
     {
