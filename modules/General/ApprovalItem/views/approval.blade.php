@@ -172,6 +172,9 @@
             </div>
             <div class="col border border-muted rounded-lg mr-2 p-4">
                 <div id="mapid" style="height:400px;" name="map"></div>
+                @if($process_item->form_type_id!=5 && $process_item->status_id > 2)
+                    <button type="submit" class="btn btn-primary" ><a href="/approval-item/investigate/{{$land_process->id}}" class="text-dark">View More details</a></button>
+                @endif
             </div>
         </div>
         @if($process_item->form_type_id==1)
@@ -252,6 +255,36 @@
                     </div>
                 </div>
             @endisset
+        @endif
+        @if($process_item->form_type_id==5)
+            @if (count($LandOrganizations) > 0)
+                <div class="row p-4 bg-white">
+                    <h6>Governing Organizations related to the Land Parcel</h6>
+                    <table class="table table-light table-striped border-secondary rounded-lg mr-4">
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Type</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($LandOrganizations as $organization)
+                                <tr>
+                                    <td>{{$organization->organization->title}}</td>
+                                    <td>{{$organization->organization->type->title}}</td>
+                                    <td>{{$organization->organization->Description}}</td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                    </table>
+                </div>
+            @endif
+            @if(count($Process_item_progresses) < 1)
+                <div class="row p-4 bg-white">
+                    <p>No Governing organization data</p>
+                </div>
+            @endif
         @endif
     </div>
 </div>
