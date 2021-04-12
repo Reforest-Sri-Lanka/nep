@@ -67,9 +67,9 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="request_org">Organization to submit request to :</label>
-                            <input type="text" class="form-control typeahead1" placeholder="Enter Organization" id="request_org" name="request_org" value="{{ old('organization') }}" />
-                            @error('request_org')
+                            <label for="activity_org">Organization to submit request to :</label>
+                            <input type="text" class="form-control typeahead1" placeholder="Enter Organization" id="activity_org" name="activity_org" value="{{ old('organization') }}" />
+                            @error('activity_org')
                             <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
                         </div>
