@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Mail;
 Use App\Notifications\StaffAssigned;
 Use App\Notifications\AssignOrg;
+Use App\Notifications\prereqmemo;
 use Illuminate\Support\Facades\Storage;
 use PDF;
 use Redirect;
@@ -168,8 +169,8 @@ class ApprovalItemController extends Controller
 
     public function choose_assign_staff($id)
     {
-        $Process_item =Process_item::find($id);
-        if($Process_item->status_id>2){
+        $process_item =Process_item::find($id);
+        if($process_item->status_id>2){
             return redirect()->action(
                 [ApprovalItemController::class, 'investigate'], ['id' => $id]
             );
@@ -405,11 +406,19 @@ class ApprovalItemController extends Controller
     public function cancel_prerequisite($id,$userid)
     {
         $Process_item =Process_item::find($id);
+        $User=User::find($userid);
+        $remark=$Process_item->remark.' cancelled by '.$User->name.' (userId: '.$User->id.')';
+        $Process_item->update([
+            'status_id' => 8,
+            'remark' => $remark,
+        ]);
         if($Process_item->created_by_user_id==$userid){
-            $Process_item->update(['status_id' => 8]);
             return back()->with('message', 'Prerequisite is removed successfully');
         }
-        return back()->with('message', 'Prerequisite logged by someone else');  
+        $user=User::find($Process_item->created_by_user_id);
+        $Process_item->created_by_user_id=$userid;
+        Notification::send($user, new prereqmemo($Process_item)); 
+        return back()->with('message', 'Prerequisite removed and requestor notified'); 
     }
 
     public function progress_update(Request $request)
