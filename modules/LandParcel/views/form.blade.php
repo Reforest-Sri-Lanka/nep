@@ -44,7 +44,7 @@
                                     <strong>Select 1 or More</strong>
                                     <fieldset>
                                         @foreach($organizations as $organization)
-                                        <input type="checkbox" name="land_governing_orgs[]" value="{{$organization->id}}" @if( is_array(old('land_governing_orgs')) && in_array($organization->id, old('land_governing_orgs'))) checked @endif><label class="ml-2">{{$organization->title}}</label> <br>
+                                        <input type="checkbox" name="governing_orgs[]" value="{{$organization->id}}" @if( is_array(old('governing_orgs')) && in_array($organization->id, old('governing_orgs'))) checked @endif><label class="ml-2">{{$organization->title}}</label> <br>
                                         @endforeach
                                     </fieldset>
                                 </div>
@@ -62,7 +62,7 @@
                                     <strong>Select 1 or More</strong>
                                     <fieldset>
                                         @foreach($gazettes as $gazette)
-                                        <input type="checkbox" name="land_gazettes[]" value="{{$gazette->id}}" @if( is_array(old('land_gazettes')) && in_array($gazette->id, old('land_gazettes'))) checked @endif> <label class="ml-2">{{$gazette->title}}</label> <br>
+                                        <input type="checkbox" name="gazettes[]" value="{{$gazette->id}}" @if( is_array(old('gazettes')) && in_array($gazette->id, old('gazettes'))) checked @endif> <label class="ml-2">{{$gazette->title}}</label> <br>
                                         @endforeach
                                     </fieldset>
                                 </div>
