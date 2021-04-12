@@ -44,7 +44,11 @@ class LandController extends Controller
         $land = new Land_Parcel();
         $land->title = request('landTitle');
         //$land->governing_organizations = request('governing_orgs');
-        $land->governing_organizations = request('governing_orgs');
+        if (request('governing_orgs')) {
+            $land->governing_organizations = request('governing_orgs');
+        } else {
+            $land->governing_organizations = [];
+        }
         $land->polygon = request('polygon');
         $land->created_by_user_id = request('createdBy');
         if (request('isProtected')) {
@@ -64,6 +68,14 @@ class LandController extends Controller
                 $land_has_organization->organization_id = $governing_organization;
                 $land_has_organization->status = 2;
                 $land_has_organization->save();
+
+                $process = new Process_Item();
+                $process->form_type_id = 5;
+                $process->form_id = $landid;
+                $process->created_by_user_id = request('createdBy');
+                $process->request_organization = Auth::user()->organization_id;
+                $process->activity_organization = $governing_organization;
+                $process->save();
             }
         }
 
@@ -78,16 +90,6 @@ class LandController extends Controller
                 $land_has_gazette->status = 2;
                 $land_has_gazette->save();
             }
-        }
-
-        foreach ($governing_organizations as $governing_organization) {
-            $process = new Process_Item();
-            $process->form_type_id = 5;
-            $process->form_id = $landid;
-            $process->created_by_user_id = request('createdBy');
-            $process->request_organization = Auth::user()->organization_id;
-            $process->activity_organization = $governing_organization;
-            $process->save();
         }
 
         return redirect('/general/pending')->with('message', 'Request Created Successfully');
