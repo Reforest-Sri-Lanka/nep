@@ -214,7 +214,7 @@ var map = L.map('mapid', {
                     fileSize = fileSize+items[i].size; // get file size
                 }
                 if(fileSize > 5242880) {
-                    alert('File size must not be more than 4 MB');
+                    alert('You should not uplaod files exceeding 4 MB. Please compress files size and uplaod agian');
                     $('#image').val('');
                 }
             }
