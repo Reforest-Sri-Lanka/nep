@@ -3,7 +3,7 @@
 @section('general')
 
 <div class="container">
-    <form action="/env-restoration/store" id="envForm" method="post">
+    <form action="/env-restoration/store" id="envForm" method="post" autocomplete="off">
         @csrf
         <!-- One "tab" for each step in the form: -->
         <div class="tab">
@@ -13,10 +13,16 @@
                         <div class="form-group">
                             <label for="title">Title:</label>
                             <input type="text" class="form-control" placeholder="Enter Title" id="title" name="title">
+                            @error('title')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label for="title">Restored Land Parcel Name:</label>
                             <input type="text" class="form-control" placeholder="Enter Land Parcel Name" name="landparceltitle">
+                            @error('landparceltitle')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <div class="form-group">
@@ -27,6 +33,9 @@
                                 <option value="{{$restoration_activity->id}}">{{$restoration_activity->title}}</option>
                                 @endforeach
                             </select>
+                            @error('environment_restoration_activity')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <div class="form-group">
@@ -37,6 +46,9 @@
                                 <option value="{{$ecosystem->id}}">{{$ecosystem->type}}</option>
                                 @endforeach
                             </select>
+                            @error('ecosystem')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="card">
                             <div class="card-header">
@@ -57,6 +69,9 @@
                         <div class="form-group">
                             <label for="request_org">Organization to submit request to :</label>
                             <input type="text" class="form-control typeahead1" placeholder="Enter Organization" id="request_org" name="request_org" value="{{ old('organization') }}" />
+                            @error('request_org')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
                     <div class="col border border-muted rounded-lg p-4">
@@ -90,7 +105,7 @@
                                     <tr>
                                         <th>Name</th>
                                         <th>Quantity</th>
-                                        <th>Height</th>
+                                        <th>Height (in cm)</th>
                                         <th>Dimensions</th>
                                         <th>Remarks</th>
                                         <th></th>
@@ -297,106 +312,106 @@
         x[n].className += " active";
     }
     ///SCRIPT FOR THE MAP
-  /// SCRIPT FOR THE MAP
-  var map = L.map('mapid', {
-    center: [7.2906, 80.6337], //if the location cannot be fetched it will be set to Kandy
-    zoom: 12
-  });
+    /// SCRIPT FOR THE MAP
+    var map = L.map('mapid', {
+        center: [7.2906, 80.6337], //if the location cannot be fetched it will be set to Kandy
+        zoom: 12
+    });
 
-  window.onload = function() {
-    var popup = L.popup();
-    //false,               ,popup, map.center
-    function geolocationErrorOccurred(geolocationSupported, popup, latLng) {
-      popup.setLatLng(latLng);
-      popup.setContent(geolocationSupported ?
-        '<b>Error:</b> Geolocation service failed. Enable Location.' :
-        '<b>Error:</b> This browser doesn\'t support geolocation.');
-      popup.openOn(map);
+    window.onload = function() {
+        var popup = L.popup();
+        //false,               ,popup, map.center
+        function geolocationErrorOccurred(geolocationSupported, popup, latLng) {
+            popup.setLatLng(latLng);
+            popup.setContent(geolocationSupported ?
+                '<b>Error:</b> Geolocation service failed. Enable Location.' :
+                '<b>Error:</b> This browser doesn\'t support geolocation.');
+            popup.openOn(map);
+        }
+        //If theres an error then 
+
+        if (navigator.geolocation) { //using an inbuilt function to get the lat and long of the user.
+            navigator.geolocation.getCurrentPosition(function(position) {
+                var latLng = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
+
+                popup.setLatLng(latLng);
+                popup.setContent('This is your current location');
+                popup.openOn(map);
+                //setting the map to the user location
+                map.setView(latLng);
+
+            }, function() {
+                geolocationErrorOccurred(true, popup, map.getCenter());
+            });
+        } else {
+            //No browser support geolocation service
+            geolocationErrorOccurred(false, popup, map.getCenter());
+        }
     }
-    //If theres an error then 
 
-    if (navigator.geolocation) { //using an inbuilt function to get the lat and long of the user.
-      navigator.geolocation.getCurrentPosition(function(position) {
-        var latLng = {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude
-        };
+    // Set up the OSM layer 
+    //map tiles are “square bitmap graphics displayed in a grid arrangement to show a map.”
+    //There are a number of different tile providers (or tileservers), some are free and open source. We are using OSM
+    L.tileLayer(
+        'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: 'Data © <a href="http://osm.org/copyright">OpenStreetMap</a>',
+            maxZoom: 18
+        }).addTo(map);
+    //we’re calling tilelayer() to create the tile layer, passing in the OSM URL first, then the second argument is an object containing the options for our new tile 
+    //layer (including attribution is critical here to comply with licensing), and then the tile layer is added to the map using addTo().
 
-        popup.setLatLng(latLng);
-        popup.setContent('This is your current location');
-        popup.openOn(map);
-        //setting the map to the user location
-        map.setView(latLng);
+    var drawnItems = new L.FeatureGroup();
+    map.addLayer(drawnItems);
 
-      }, function() {
-        geolocationErrorOccurred(true, popup, map.getCenter());
-      });
-    } else {
-      //No browser support geolocation service
-      geolocationErrorOccurred(false, popup, map.getCenter());
-    }
-  }
-
-  // Set up the OSM layer 
-  //map tiles are “square bitmap graphics displayed in a grid arrangement to show a map.”
-  //There are a number of different tile providers (or tileservers), some are free and open source. We are using OSM
-  L.tileLayer(
-    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: 'Data © <a href="http://osm.org/copyright">OpenStreetMap</a>',
-      maxZoom: 18
-    }).addTo(map);
-  //we’re calling tilelayer() to create the tile layer, passing in the OSM URL first, then the second argument is an object containing the options for our new tile 
-  //layer (including attribution is critical here to comply with licensing), and then the tile layer is added to the map using addTo().
-
-  var drawnItems = new L.FeatureGroup();
-  map.addLayer(drawnItems);
-
-  var drawControl = new L.Control.Draw({
-    position: 'topright',
-    draw: {
-      polygon: {
-        shapeOptions: {
-          color: 'purple'
+    var drawControl = new L.Control.Draw({
+        position: 'topright',
+        draw: {
+            polygon: {
+                shapeOptions: {
+                    color: 'purple'
+                },
+                allowIntersection: false,
+                drawError: {
+                    color: 'orange',
+                    timeout: 1000
+                },
+                showArea: true,
+                metric: false,
+                repeatMode: true
+            },
+            polyline: {
+                shapeOptions: {
+                    color: 'red'
+                },
+            },
+            circlemarker: false,
+            rect: {
+                shapeOptions: {
+                    color: 'green'
+                },
+            },
+            circle: false,
         },
-        allowIntersection: false,
-        drawError: {
-          color: 'orange',
-          timeout: 1000
-        },
-        showArea: true,
-        metric: false,
-        repeatMode: true
-      },
-      polyline: {
-        shapeOptions: {
-          color: 'red'
-        },
-      },
-      circlemarker: false,
-      rect: {
-        shapeOptions: {
-          color: 'green'
-        },
-      },
-      circle: false,
-    },
-    edit: {
-      featureGroup: drawnItems
-    }
-  });
-  map.addControl(drawControl);
+        edit: {
+            featureGroup: drawnItems
+        }
+    });
+    map.addControl(drawControl);
 
-  map.on('draw:created', function(e) {
-    var type = e.layerType,
-      layer = e.layer;
+    map.on('draw:created', function(e) {
+        var type = e.layerType,
+            layer = e.layer;
 
 
-    drawnItems.addLayer(layer);
-    $('#polygon').val(JSON.stringify(drawnItems.toGeoJSON())); //geoJSON converts a layer to JSON
+        drawnItems.addLayer(layer);
+        $('#polygon').val(JSON.stringify(drawnItems.toGeoJSON())); //geoJSON converts a layer to JSON
 
-    ///Converting your layer to a KML
-    //$('#kml').val(tokml(drawnItems.toGeoJSON()));
-  });
+        ///Converting your layer to a KML
+        //$('#kml').val(tokml(drawnItems.toGeoJSON()));
+    });
 </script>
 
 @endsection

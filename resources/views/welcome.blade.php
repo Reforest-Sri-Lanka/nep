@@ -384,7 +384,6 @@
     </div>
   </div>
   </div>
-
   <div id="footer">
     <div class="d-flex  bg-light justify-content-end">
       <br>

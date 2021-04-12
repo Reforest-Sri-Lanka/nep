@@ -46,7 +46,7 @@ class Land_Parcel extends Model
 
     public function organizations()
     {
-        return $this->belongsToMany('App\Models\Organization','land_has_organizations','land_parcel_id','organization_id');
+        return $this->belongsToMany(Organization::class, 'Land_Has_Organization');
     }
 
     public function gazettes()
