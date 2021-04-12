@@ -67,6 +67,13 @@ class ApprovalItemController extends Controller
                 'activity_organization' => $id ,
                 'status_id' => 2
                 ]);
+            Process_item::where([
+                ['prerequisite_id','=',$Process_item],
+                ['prerequisite', '=' ,0],
+            ])->update([
+                'activity_organization' => $id ,
+                        'status_id' => 2
+            ]);
             Notification::send($Users, new AssignOrg($Process_item));
         });
         
@@ -251,25 +258,38 @@ class ApprovalItemController extends Controller
         else if($process_item->form_type_id == '4'){
             $item = Crime_report::find($process_item->form_id);
         }
-        $land_parcel = Land_Parcel::find($item->land_parcel_id);
+        
         if($process_item->form_type_id == '2' || $process_item->form_type_id == '3'){
-            return view('approvalItem::assignOrg',[
-                'Organizations' => $Organizations,
-                'process_item' =>$process_item,
-                'polygon' => $land_parcel->polygon,
-                'item' =>$treecut,
-            ]);
-        }
-        elseif($process_item->form_type_id == '5'){
+            $land_parcel = Land_Parcel::find($item->land_parcel_id);
+            $landProcess=Process_item::where([
+                ['prerequisite_id', '=' , $process_item->id],           
+                ['prerequisite', '=', 0], 
+            ])->first();
             return view('approvalItem::assignOrg',[
                 'Organizations' => $Organizations,
                 'process_item' =>$process_item,
                 'polygon' => $land_parcel->polygon,
                 'item' =>$item,
+                'landProcess' => $landProcess,
+            ]);
+        }
+        elseif($process_item->form_type_id == '5'){
+            $item = Land_Parcel::find($id);
+            $Land_Organizations =null;
+            return view('approvalItem::assignOrg',[
+                'Organizations' => $Organizations,
+                'process_item' =>$process_item,
+                'polygon' => $item->polygon,
+                'item' =>$item,
             ]);
         }
         else{
             $Photos=Json_decode($item->photos);
+            $land_parcel = Land_Parcel::find($item->land_parcel_id);
+            $landProcess=Process_item::where([
+                ['prerequisite_id', '=' , $process_item->id],           
+                ['prerequisite', '=', 1], 
+            ])->first();
             return view('approvalItem::assignOrg',[
                 'process_item' =>$process_item,
                 'Organizations' => $Organizations,
@@ -337,7 +357,7 @@ class ApprovalItemController extends Controller
                 'Photos' =>$Photos,
                 'data' =>$data,
                 'Users' => $Users,
-                'landProcess' => $landProcess,
+                'land_process' => $landProcess,
             ]);
         }
         else{

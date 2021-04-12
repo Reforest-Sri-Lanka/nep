@@ -96,10 +96,20 @@ class CrimeReportController extends Controller
                 $Process_item->other_removal_requestor_name = $request['Requestor'];
             }
             $Process_item->save();
-            $Process_itemnew =Process_item::latest()->first()->id;
-            $successmessage='Crime report logged Successfully the ID of the application is '.$Process_itemnew;
+            $latestcrimeProcess = Process_Item::latest()->first();
+            $landProcess = new Process_Item();
+            $landProcess->form_id = $landid;
+            $landProcess->remark = "Verify these land details";
+            $landProcess->prerequisite = 0;
+            $landProcess->activity_organization =$org->id;
+            $landProcess->status_id = 1;
+            $landProcess->form_type_id = 5;
+            $landProcess->created_by_user_id = $request['create_by'];
+            $landProcess->prerequisite_id = $latestcrimeProcess->id;
+            $landProcess->save();
+            $successmessage='Crime report logged Successfully the ID of the application is '.$latestcrimeProcess->id;
             $Users = User::where('role_id', '=', 2)->get();
-            Notification::send($Users, new ApplicationMade($Process_item));
+            Notification::send($Users, new ApplicationMade($latestcrimeProcess));
             return $successmessage;
             
         });
