@@ -278,43 +278,43 @@ class ApprovalItemController extends Controller
         $process_item =Process_item::find($id);
         $Organizations=Organization::all();
         if($process_item->form_type_id == '1'){ 
-            $treecut = Tree_Removal_Request::find($process_item->form_id);
-            $land_parcel = Land_Parcel::find($treecut->land_parcel_id);
-            return view('approvalItem::assignOrg',[
-                'treecut' => $treecut,
-                'Organizations' => $Organizations,
-                'process_item' =>$process_item,
-                'polygon' => $land_parcel->polygon,
-            ]);
-        } 
+            $item = Tree_Removal_Request::find($process_item->form_id);
+            
+        }
         else if($process_item->form_type_id == '2'){
-            $devp = Development_Project::find($process_item->form_id);
-            $land_parcel = Land_Parcel::find($devp->land_parcel_id);
-            return view('approvalItem::assignOrg',[
-                'devp' => $devp,
-                'Organizations' => $Organizations,
-                'process_item' =>$process_item,
-                'polygon' => $land_parcel->polygon,
-            ]);
+            $item = Development_Project::find($process_item->form_id);
         }
         else if($process_item->form_type_id == '3'){
-            $reforest = Environment_Restoration_Activity::find($process_item->form_id);
-            return view('approvalItem::assignOrg',[
-                'reforest' => $reforest,
-                'Organizations' => $Organizations,
-                'process_item' =>$process_item,
-            ]);
+            $item = Environment_Restoration_Activity::find($process_item->form_id);
         }
         else if($process_item->form_type_id == '4'){
-            $crime = Crime_report::find($process_item->form_id);
-            $Photos=Json_decode($crime->photos);
-            $land_parcel = Land_Parcel::find($crime->land_parcel_id);
+            $item = Crime_report::find($process_item->form_id);
+        }
+        $land_parcel = Land_Parcel::find($item->land_parcel_id);
+        if($process_item->form_type_id == '2' || $process_item->form_type_id == '3'){
             return view('approvalItem::assignOrg',[
-                'crime' => $crime,
+                'Organizations' => $Organizations,
+                'process_item' =>$process_item,
+                'polygon' => $land_parcel->polygon,
+                'item' =>$treecut,
+            ]);
+        }
+        elseif($process_item->form_type_id == '5'){
+            return view('approvalItem::assignOrg',[
+                'Organizations' => $Organizations,
+                'process_item' =>$process_item,
+                'polygon' => $land_parcel->polygon,
+                'item' =>$item,
+            ]);
+        }
+        else{
+            $Photos=Json_decode($item->photos);
+            return view('approvalItem::assignOrg',[
                 'process_item' =>$process_item,
                 'Organizations' => $Organizations,
                 'polygon' => $land_parcel->polygon,
                 'Photos' => $Photos,
+                'item' =>$item,
             ]);
         } 
     }

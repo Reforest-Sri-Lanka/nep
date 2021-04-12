@@ -34,10 +34,11 @@ class CrimeReportController extends Controller
             'organization' => 'required|not_in:0',
             'polygon' => 'required',
         ]);
-        if($request->has('nonreguser')){
-            $request -> validate([
-                'Requestor_email' => 'required',
-                'Requestor' => 'required',
+        if($request->hasfile('file')){
+            
+            request()->validate([
+                'file' => 'required',
+                'file.*' => 'mimes:jpeg,jpg,png|max:40000'
             ]);
         }
         $array=DB::transaction(function () use($request) {
@@ -67,15 +68,16 @@ class CrimeReportController extends Controller
             $Crime_report->status = "1";
             $Crime_report->save();
             $id = Crime_report::latest()->first()->id;
-            if($request->hasFile('images')){ 
-                $i = count($request->images);
-                for($y=0;$y<$i;$y++){
-                    $file = $request->images[$y];
+            if($request->hasfile('file')) { 
+                $y=0;
+                foreach($request->file('file') as $file){
                     $filename =$file->getClientOriginalName();
-                    $newname = $id.'NO'.$y.$filename;
+                    $newname = $id.'No'.$y.$filename;
                     $path = $file->storeAs('crimeEvidence',$newname,'public');
-                    $photoarray[$y] = $path;            
+                    $photoarray[$y] = $path;  
+                    $y++;          
                 }
+                //dd($photoarray);
                 $crime_rep = Crime_report::where('id',$id)->update(['photos' => json_encode($photoarray)]);
             }
             $org=Organization::where('title', $request['organization'])->first();
@@ -138,6 +140,7 @@ class CrimeReportController extends Controller
         $land_parcel = Land_Parcel::find($crime->land_parcel_id);
         return view('crimeReport::crimeview',[
             'crime' => $crime,
+            'process_item' => $process_item,
             'Photos' =>$Photos,
             'polygon' =>$land_parcel->polygon,
         ]);

@@ -28,7 +28,13 @@ class TreeRemovalController extends Controller
 
     public function save(Request $request)
     {
-
+        if($request->hasfile('file')){
+            
+            request()->validate([
+                'file' => 'required',
+                'file.*' => 'mimes:jpeg,jpg,png|max:40000'
+            ]);
+        }
         if (request('checklandowner') && request('checkremovalrequestor')) {
             $request->validate([
                 'landTitle' => 'required',
