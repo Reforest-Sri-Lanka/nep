@@ -21,7 +21,7 @@ use App\Models\Ecosystem;
 
 use App\Models\Crime_report;
 use App\Models\Crime_type;
-
+use App\Models\Env_type;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -99,10 +99,9 @@ class ReportingController extends Controller
             $process_items = Process_Item::where('created_by_user_id', Auth::user()->id)->get();
         } else {
             $process_items = Process_Item::where('activity_organization', Auth::user()->organization_id)->get();
-
         }
-        session()->put('processItems',$process_items);
-  
+        session()->put('processItems', $process_items);
+
         return view('reporting::overview', ['process_items' => $process_items]);
     }
     public function overviewReport()
@@ -110,8 +109,8 @@ class ReportingController extends Controller
         $chart1 = request('chart1');
         $chart2 = request('chart2');
         $chart3 = request('chart3');
-        $process_items=session('processItems');
-        $pdf = PDF::loadView('reporting::overviewReport', ['process_items'=>$process_items,'chart1' => $chart1, 'chart2' => $chart2, 'chart3' => $chart3]);
+        $process_items = session('processItems');
+        $pdf = PDF::loadView('reporting::overviewReport', ['process_items' => $process_items, 'chart1' => $chart1, 'chart2' => $chart2, 'chart3' => $chart3]);
         return $pdf->stream('report.pdf');
     }
     public function filterOverview()
@@ -120,14 +119,14 @@ class ReportingController extends Controller
         $time = request('time');
         switch ($time) {
             case 1:
-                $process_items = Process_Item::whereMonth('created_at',now()->month)->get();
+                $process_items = Process_Item::whereMonth('created_at', now()->month)->get();
                 break;
             case 2:
                 $month = (now()->month) - 03;
-                $process_items = Process_Item::whereMonth('created_at','>', $month)->get();
+                $process_items = Process_Item::whereMonth('created_at', '>', $month)->get();
                 break;
             case 3:
-                $process_items = Process_Item::whereMonth('created_at',now()->year)->get();
+                $process_items = Process_Item::whereMonth('created_at', now()->year)->get();
                 break;
             default:
                 $process_items = Process_Item::all();
@@ -137,14 +136,13 @@ class ReportingController extends Controller
         }
 
         if (Auth::user()->role_id < 3) {
-            
         } elseif (Auth::user()->role_id == 6) {
             $process_items = $process_items->where('created_by_user_id', Auth::user()->id);
         } else {
             $process_items = $process_items->where('activity_organization', Auth::user()->organization_id);
         }
-        session()->put('processItems',$process_items);
-        return view('reporting::overview', ['process_items'=>$process_items]);
+        session()->put('processItems', $process_items);
+        return view('reporting::overview', ['process_items' => $process_items]);
     }
     //Process Item per month Line Chart
     public function getAllProcessItems()
@@ -365,11 +363,7 @@ class ReportingController extends Controller
 
     function getTreeRemovalProvinceCount($pid)
     {
-        $province_count = 0;
-        $districts = District::where('province_id', $pid)->pluck('id');
-        foreach ($districts as $district) {
-            $province_count += Tree_Removal_Request::where('district_id', $district)->pluck('no_of_trees')->sum();
-        }
+        $province_count = Tree_Removal_Request::where('province_id', $pid)->pluck('no_of_trees')->sum();
         return $province_count;
     }
 
@@ -378,6 +372,7 @@ class ReportingController extends Controller
         $tree_removal_province_count_array = array();
         $tree_removal_province_array = $this->getTreeRemovalProvinceNames();
         $tree_removal_province_name_array = array();
+
         $province_id = 1;
         if (!empty($tree_removal_province_array)) {
             foreach ($tree_removal_province_array as $province) {
@@ -389,6 +384,7 @@ class ReportingController extends Controller
         }
         $tree_removal_province_data_array = array(
             'province' => $tree_removal_province_name_array,
+
             'tree_removal_province_count_data' => $tree_removal_province_count_array
         );
         return $tree_removal_province_data_array;
@@ -556,7 +552,7 @@ class ReportingController extends Controller
     //number of Restoration Requests per assigned Ecosystem pie chart
     function getRestorationEcosystemNames()
     {
-        $ecosystems = Ecosystem::all()->pluck('ecosystem_type');
+        $ecosystems = Env_type::all()->pluck('type');
         $ecosystems_id = 1;
         $ecosystems = json_decode($ecosystems);
         foreach ($ecosystems as $ecosystem) {
@@ -674,7 +670,14 @@ class ReportingController extends Controller
 
     function getDevelopmentProjectOrganizationCount($oid)
     {
-        $organization_count = Development_Project::where('organization_id', $oid)->count();
+        $developmentprojs=Development_Project::all()->pluck('governing_organizations');
+        $organization_count=0;
+        foreach($developmentprojs as $developmentproj){
+            foreach($developmentproj as $arrayval){
+                if($arrayval==$oid)
+                $organization_count++;
+            }
+        }
         return $organization_count;
     }
 

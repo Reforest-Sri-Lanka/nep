@@ -15,4 +15,8 @@ class Env_type extends Model
     {
         return $this->hasMany('App\Models\Env');
     }
+    public function environment_restorations()
+    {
+        return $this->hasMany('App\Models\Environment_Restoration');
+    }
 }
