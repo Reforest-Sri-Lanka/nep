@@ -23,6 +23,10 @@ Route::get('/leaflet', function () {
     return view('leafletmap');
 });
 
+Route::get('/glad', function () {
+    return view('glad');
+});
+
 Route::get('/', function () {
     return view('welcome');
 });
