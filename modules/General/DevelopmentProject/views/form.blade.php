@@ -49,7 +49,7 @@
                     <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
                     <br>
-                    <input id="polygon" type="text" class="form-control" name="polygon" value="{{request('polygon')}}">
+                    <input id="polygon" type="hidden" class="form-control" name="polygon" value="{{request('polygon')}}">
                     <div class="custom-control custom-checkbox">
                         <input type="checkbox" class="custom-control-input" id="customCheck" value="1" name="isProtected">
                         <label class="custom-control-label" for="customCheck"><strong>Check if land is a protected area</strong></label>
