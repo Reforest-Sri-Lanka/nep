@@ -76,5 +76,6 @@ Route::get('/markAsRead', function(){
 Route::post('/ajax_upload/action', [UserController::class, 'action'])->name('ajaxupload.action');
 
 // Chart Routes
-Route::get('/get-user-chart-data',[ReportingController::class, 'getMonthlyUserData']);
+Route::get('/get-treeRemoval-chart-data',[ReportingController::class, 'getMonthlyTreeRemovalData']);
+Route::get('/get-restoration-chart-data',[ReportingController::class, 'getMonthlyRestorationData']);
 Route::get('/get-processItem-formType-chart-data',[ReportingController::class, 'getProcessItemFormTypeData']);
