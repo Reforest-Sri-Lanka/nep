@@ -11,6 +11,8 @@ use App\Models\Form_Type;
 use App\Models\Process_item_progress;
 use App\Models\Process_item_status;
 use App\Models\land_parcel;
+use App\Models\Land_Has_Organization;
+use App\Models\Land_Has_Gazette;
 use App\Models\Environment_Restoration_Activity;
 use App\Mail\RequestApproved;
 use Illuminate\Support\Facades\Auth;
@@ -73,7 +75,7 @@ class ApprovalItemController extends Controller
                 ['prerequisite', '=' ,0],
             ])->update([
                 'activity_organization' => $id ,
-                        'status_id' => 2
+                'status_id' => 2
             ]);
             Notification::send($Users, new AssignOrg($Process_item));
         });
@@ -210,7 +212,6 @@ class ApprovalItemController extends Controller
         }
         if($process_item->form_type_id != '5'){
             $land_parcel = Land_Parcel::find($item->land_parcel_id);
-            
             $landProcess=Process_item::where([
                 ['prerequisite_id', '=' , $process_item->id],           
                 ['prerequisite', '=', 0], 
@@ -246,6 +247,7 @@ class ApprovalItemController extends Controller
     {
         $process_item =Process_item::find($id);
         $Organizations=Organization::all();
+        //dd($process_item);
         if($process_item->form_type_id == '1'){ 
             $item = Tree_Removal_Request::find($process_item->form_id);
             
@@ -266,22 +268,24 @@ class ApprovalItemController extends Controller
                 ['prerequisite_id', '=' , $process_item->id],           
                 ['prerequisite', '=', 0], 
             ])->first();
+            dd($process_item,$landProcess);
             return view('approvalItem::assignOrg',[
                 'Organizations' => $Organizations,
                 'process_item' =>$process_item,
                 'polygon' => $land_parcel->polygon,
                 'item' =>$item,
-                'landProcess' => $landProcess,
+                'land_process' => $landProcess,
             ]);
         }
         elseif($process_item->form_type_id == '5'){
-            $item = Land_Parcel::find($id);
-            $Land_Organizations =null;
+            $item = Land_Parcel::find($process_item->form_id);
+            $Land_Organizations =Land_Has_Organization::where('land_parcel_id',$item->id)->get();
             return view('approvalItem::assignOrg',[
-                'Organizations' => $Organizations,
+                'item' => $item,
                 'process_item' =>$process_item,
+                'Organizations' => $Organizations,
                 'polygon' => $item->polygon,
-                'item' =>$item,
+                'LandOrganizations' =>$Land_Organizations,
             ]);
         }
         else{
@@ -289,14 +293,16 @@ class ApprovalItemController extends Controller
             $land_parcel = Land_Parcel::find($item->land_parcel_id);
             $landProcess=Process_item::where([
                 ['prerequisite_id', '=' , $process_item->id],           
-                ['prerequisite', '=', 1], 
+                ['prerequisite', '=', 0], 
             ])->first();
+            //dd($process_item,$landProcess);
             return view('approvalItem::assignOrg',[
                 'process_item' =>$process_item,
                 'Organizations' => $Organizations,
                 'polygon' => $land_parcel->polygon,
                 'Photos' => $Photos,
                 'item' =>$item,
+                'land_process' => $landProcess,
             ]);
         } 
     }
@@ -364,17 +370,16 @@ class ApprovalItemController extends Controller
         else{
             $item = Land_Parcel::find($process_item->form_id);
             $Land_Organizations =Land_Has_Organization::where('land_parcel_id',$item->id)->get();
-            //dd($process_item,$item);
             return view('approvalItem::investigate',[
                 'item' => $item,
                 'process_item' =>$process_item,
                 'Organizations' => $Organizations,
                 'polygon' => $item->polygon,
-                'LandOrganizations' =>$Land_Organizations,
                 'Users' => $Users,
                 'Process_item_statuses' =>$Process_item_statuses,
                 'Process_item_progresses' =>$Process_item_progresses,
                 'Prerequisites' => $Prerequisites,
+                'LandOrganizations' =>$Land_Organizations,
             ]);
         }
         
