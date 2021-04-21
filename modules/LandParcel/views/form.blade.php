@@ -16,76 +16,62 @@
             <div class="row p-4 bg-white">
                 <div class="col border border-muted rounded-lg mr-2 p-4">
                     <div class="form-group">
-                        <label for="title">Title:</label>
-                        <input type="text" class="form-control @error('title') is-invalid @enderror" placeholder="Enter Title" value="{{ old('title') }}" id="title" name="title">
-                        @error('title')
+                        <label for="title">Land Title:</label>
+                        <input type="text" class="form-control @error('landTitle') is-invalid @enderror" value="{{ old('landTitle') }}" placeholder="Enter Land Title" id="landTitle" name="landTitle">
+                        @error('landTitle')
                         <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                     </div>
-
-
                     <div class="form-group">
-                        Province:<input type="text" class="form-control typeahead" placeholder="Search" name="province" />
+                        Province:<input type="text" class="form-control typeahead @error('province') is-invalid @enderror" value="{{ old('province') }}" placeholder="Search" name="province" />
                     </div>
                     <div class="form-group">
-                        District:<input type="text" class="form-control typeahead2" placeholder="Search" name="district" />
+                        District:<input type="text" class="form-control typeahead2 @error('district') is-invalid @enderror" value="{{ old('district') }}" placeholder="Search" name="district" />
                     </div>
                     <div class="form-group">
-                        GS Division:<input type="text" class="form-control typeahead4" placeholder="Search" name="gs_division" />
+                        GS Division:<input type="text" class="form-control typeahead4 @error('gs_division') is-invalid @enderror" value="{{ old('gs_division') }}" placeholder="Search" name="gs_division" />
                     </div>
 
                     <div id="accordion" class="mb-3">
                         <div class="card mb-3">
                             <div class="card-header bg-white">
                                 <a class="collapsed card-link text-dark" data-toggle="collapse" href="#collapseone">
-                                    Organizations
+                                    Organizations Governing Land (Optional)
                                 </a>
                             </div>
                             <div id="collapseone" class="collapse" data-parent="#accordion">
                                 <div class="card-body">
-                                    <strong>Select Multiple</strong>
+                                    <strong>Select 1 or More</strong>
                                     <fieldset>
                                         @foreach($organizations as $organization)
-                                        <input type="checkbox" name="governing_orgs[]" value="{{$organization->id}}"><label class="ml-2">{{$organization->title}}</label> <br>
+                                        <input type="checkbox" name="governing_orgs[]" value="{{$organization->id}}" @if( is_array(old('governing_orgs')) && in_array($organization->id, old('governing_orgs'))) checked @endif><label class="ml-2">{{$organization->title}}</label> <br>
                                         @endforeach
                                     </fieldset>
                                 </div>
                             </div>
-                            @error('governing_orgs')
-                            <div class="alert alert-danger">Please Select at Least 1 Organization</div>
-                            @enderror
                         </div>
 
                         <div class="card">
                             <div class="card-header bg-white">
                                 <a class="collapsed card-link text-dark" data-toggle="collapse" href="#collapsetwo">
-                                    Gazettes
+                                    Gazettes Relavant to Land (Optional)
                                 </a>
                             </div>
                             <div id="collapsetwo" class="collapse" data-parent="#accordion">
                                 <div class="card-body">
-                                    <strong>Select Multiple</strong>
+                                    <strong>Select 1 or More</strong>
                                     <fieldset>
                                         @foreach($gazettes as $gazette)
-                                        <input type="checkbox" name="gazettes[]" value="{{$gazette->id}}"><label class="ml-2">{{$gazette->title}}</label> <br>
+                                        <input type="checkbox" name="gazettes[]" value="{{$gazette->id}}" @if( is_array(old('gazettes')) && in_array($gazette->id, old('gazettes'))) checked @endif> <label class="ml-2">{{$gazette->title}}</label> <br>
                                         @endforeach
                                     </fieldset>
                                 </div>
                             </div>
-                            @error('gazettes')
-                            <div class="alert alert-danger">Please Select at Least 1 Gazette</div>
-                            @enderror
                         </div>
                     </div>
                 </div>
                 <div class="col border border-muted rounded-lg p-4">
-                    <div class="form-group">
-                        <label for="title">Land Title:</label>
-                        <input type="text" class="form-control @error('landTitle') is-invalid @enderror" value="{{ old('title') }}" placeholder="Enter Land Title" id="landTitle" name="landTitle">
-                        @error('landTitle')
-                        <div class="alert alert-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
+
 
                     <div>
                         <label>Upload KML File</label>
@@ -110,24 +96,62 @@
             </div>
         </div>
         <input id="polygon" type="hidden" name="polygon" value="{{request('polygon')}}">
-        <input id="loc" type="text" name="file" value="{{request('loc')}}">
+        <input id="loc" type="hidden" name="file" value="{{request('loc')}}">
         <input type="hidden" class="form-control" name="createdBy" value="{{Auth::user()->id}}">
     </form>
 </div>
 
 <script type="text/javascript">
-    ///SCRIPT FOR THE MAP
-    var center = [7.2906, 80.6337];
+    /// SCRIPT FOR THE MAP
+    var map = L.map('mapid', {
+        center: [7.2906, 80.6337], //if the location cannot be fetched it will be set to Kandy
+        zoom: 12
+    });
 
-    // Create the map
-    var map = L.map('mapid').setView(center, 10);
+    window.onload = function() {
+        var popup = L.popup();
+        //false,               ,popup, map.center
+        function geolocationErrorOccurred(geolocationSupported, popup, latLng) {
+            popup.setLatLng(latLng);
+            popup.setContent(geolocationSupported ?
+                '<b>Error:</b> Geolocation service failed. Enable Location.' :
+                '<b>Error:</b> This browser doesn\'t support geolocation.');
+            popup.openOn(map);
+        }
+        //If theres an error then 
+
+        if (navigator.geolocation) { //using an inbuilt function to get the lat and long of the user.
+            navigator.geolocation.getCurrentPosition(function(position) {
+                var latLng = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
+
+                popup.setLatLng(latLng);
+                popup.setContent('This is your current location');
+                popup.openOn(map);
+                //setting the map to the user location
+                map.setView(latLng);
+
+            }, function() {
+                geolocationErrorOccurred(true, popup, map.getCenter());
+            });
+        } else {
+            //No browser support geolocation service
+            geolocationErrorOccurred(false, popup, map.getCenter());
+        }
+    }
 
     // Set up the OSM layer 
+    //map tiles are “square bitmap graphics displayed in a grid arrangement to show a map.”
+    //There are a number of different tile providers (or tileservers), some are free and open source. We are using OSM
     L.tileLayer(
         'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: 'Data © <a href="http://osm.org/copyright">OpenStreetMap</a>',
             maxZoom: 18
         }).addTo(map);
+    //we’re calling tilelayer() to create the tile layer, passing in the OSM URL first, then the second argument is an object containing the options for our new tile 
+    //layer (including attribution is critical here to comply with licensing), and then the tile layer is added to the map using addTo().
 
     var drawnItems = new L.FeatureGroup();
     map.addLayer(drawnItems);
@@ -143,7 +167,6 @@
                 drawError: {
                     color: 'orange',
                     timeout: 1000
-
                 },
                 showArea: true,
                 metric: false,
@@ -153,7 +176,6 @@
                 shapeOptions: {
                     color: 'red'
                 },
-
             },
             circlemarker: false,
             rect: {
@@ -173,13 +195,14 @@
         var type = e.layerType,
             layer = e.layer;
 
-        if (type === 'marker') {
-            layer.bindPopup('A popup!');
-        }
 
         drawnItems.addLayer(layer);
-        $('#polygon').val(JSON.stringify(drawnItems.toGeoJSON()));
+        $('#polygon').val(JSON.stringify(drawnItems.toGeoJSON())); //geoJSON converts a layer to JSON
+
+        ///Converting your layer to a KML
+        //$('#kml').val(tokml(drawnItems.toGeoJSON()));
     });
+
 
 
     ///UPLOADING A FILE AND RETRIEVING AND CREATING A LAYER FROM IT.

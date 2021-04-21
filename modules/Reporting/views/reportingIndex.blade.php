@@ -18,19 +18,23 @@
                 <a class="nav-link h4" href="/reporting/dev-proj">Development Project</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link h4" href="/reporting/env-restoration">Restoration</a>
+
+                <a class="nav-link h4" href="/reporting/restoration">Restoration</a>
+
             </li>
             <li class="nav-item">
                 <a class="nav-link h4" href="/reporting/complaints">Complaints</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link h4" href="">Other</a>
-            </li>
+
         </ul>
     </div>
 </nav>
 <div class="col-md">
     @yield('reporting')
 </div>
-
+<!--chart js -->
+<script src="{{ url('/vendor/chart.js/dist/Chart.min.js') }}"></script>
+<script src="{{ url('/vendor/chart.js/dist/Chart.extension.js') }}"></script>
+<script src="{{ url('/vendor/create-charts.js' ) }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.js" integrity="sha512-UNbeFrHORGTzMn3HTt00fvdojBYHLPxJbLChmtoyDwB6P9hX5mah3kMKm0HHNx/EvSPJt14b+SlD8xhuZ4w9Lg==" crossorigin="anonymous"></script>
 @endsection

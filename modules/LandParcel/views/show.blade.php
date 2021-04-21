@@ -12,6 +12,8 @@
 
         <dt class="col-sm-3">Governing Organizations:</dt>
         <dd class="col-sm-9">
+            <!-- if other type, then will show that instead -->
+            {{$other_removal_requestor}}
             <ul class="list-unstyled">
                 @foreach($land->governing_organizations as $governing_organization)
                 @switch($governing_organization)
@@ -43,7 +45,9 @@
         <dt class="col-sm-3 text-truncate">Created at:</dt>
         <dd class="col-sm-9">{{$land->created_at}}</dd>
     </dl>
-    <div class="container border border-dark border-rounded"><div id="mapid" style="height:400px;" name="map"></div></div>
+    <div class="container border border-dark border-rounded">
+        <div id="mapid" style="height:400px;" name="map"></div>
+    </div>
 </div>
 
 <script>

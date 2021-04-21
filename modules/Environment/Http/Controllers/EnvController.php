@@ -5,117 +5,113 @@ namespace Environment\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Env;
+use App\Models\Env_type;
+use App\Models\District;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class EnvController extends Controller
 {
-    public function home()
-    {
-        $name = 'Yashod';
-        return view('environment::home', compact('name'));
-    }
-
     public function show($id)           //show one record for moreinfo button
     {
         $ecosystems = Env::find($id);
-        return view('environment/checkstatuseco',compact('ecosystems','id'));
-            
-        
+        return view('environment/Envindex', compact('ecosystems', 'id'));
     }
-    
-    
-    public function store(Request $request){
+
+
+    public function store(Request $request)
+    {
         $request->validate([
-            'type' => 'required',
+            'title' => 'required',
+            'eco_type' => 'required',
             'description' => 'required',
-            'createby' => 'required', 
-            'status' => 'required', 
-            
-            
+            'polygon' => 'required',
+            'district' => 'required|exists:districts,district',
+
         ]);
         $ecosystems = new Env;
-        $ecosystems->ecosystem_type=$request->input('type');
-        $ecosystems->description=$request->input('description');
-        $ecosystems ->created_by_user_id=$request->input('createby');
-        $ecosystems ->status=$request->input('status');
-        
-        
+        $ecosystems->type_id = $request->input('eco_type');
+        if (request('isProtected')) {
+            $ecosystems->protected_area = request('isProtected');
+        }
+        else{
+            $ecosystems->protected_area = 0;
+        }
+        $district_id1 = District::where('district', request('district'))->pluck('id');
+        $ecosystems->district_id = $district_id1[0];
+        $ecosystems->title = $request->input('title');
+        $ecosystems->polygon = request('polygon');
+        $ecosystems->description = $request->input('description');
+        $ecosystems->created_by_user_id = $request->input('createby');
+        $ecosystems->status = $request->input('status');
+
+
         $ecosystems->save();
 
-        
-        return redirect('/environment/createrequest')->with('success', 'Data added successfully');
 
-
-
-
-
-
-
+        return redirect('/environment/createrequest')->with('success', 'Data Added successfully');
     }
 
-    public function index(){
-        $ecosystems=Env::all();
-        return view('environment::checkstatuseco',compact('ecosystems',$ecosystems));
+    public function index()
+    {
+        $ecosystems = Env::all();
+        return view('environment::Envindex', compact('ecosystems', $ecosystems));
+    }
+    //Get eco system types from database.
+    public function loadform()
+    {
 
-
-
-
+        $data = Env_type::all();
+        return view('environment::request')->with('data', $data);
     }
 
-/* public function edit($id){
+
+    /* public function edit($id){
     $ecosystems= Env::select ('select * from eco_systems where id = ?',[$id]);
 
-return view('')
+    return view('')
 
  */
+    // Delete the request when the authorized parties click the delete button
 
     public function delete($id)
-{
+    {
 
-    $ecosystems=Env::find($id);
+        $ecosystems = Env::find($id);
 
-    $ecosystems->delete();
-
-    
-    
-    return redirect()->back()->with('success', 'User Successfully Deleted');
-
-}
+        $ecosystems->delete();
 
 
-
-
-public function track(){
-
-    $items=Env::where('created_by_user_id','=', Auth::user()->id)->get();
-    return view('environment::trackrequesteco')->with('items', $items);
-   
-    
-    
+        return redirect()->back()->with('success', 'Request  Successfully Deleted');
     }
 
-    public function statusupdate( Request $request, $id){
+    /* public function track()
+    {
+
+        $items = Env::where('created_by_user_id', '=', Auth::user()->id)->get();
+        return view('environment::trackrequesteco')->with('items', $items);
+    } */
+    // Return the more view option. 
+    public function more($id)
+    {
+
+        $ecosystems = Env::find($id);
+        $polygon = Env::find($id)->polygon;
+        return view('environment::moreeco', [
+            'ecosystems' => $ecosystems,
+            'polygon' => $polygon,
+        ]);
+    }
+    // Update the status of the request when the authorized parties click the Approve button
+    public function statusupdate(Request $request, $id)
+    {
         $ecosystems = Env::find($id);
         $ecosystems->update([
-            
+
             'status' => $request->status
-        
+
         ]);
-        
+
         return redirect()->back()->with('success', 'Request Approved Succesfully');
-
-
-
     }
-
-
-
-
-
-
-
-
-
 }
-

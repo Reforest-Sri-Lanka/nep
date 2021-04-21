@@ -66,6 +66,7 @@
         </thead>
         <tbody>
             @foreach($Process_items as $process_item)<tr>
+            @if($process_item->form_type_id != 5)
                 <td>{{$process_item->form_type->type}}</td>
                 <td>{{date('d-m-Y',strtotime($process_item->created_at))}}</td>
                 @if($process_item->request_organization==null && $process_item->other_land_owner_name==null)
@@ -85,6 +86,7 @@
                 @elseif(Auth::user()->role_id == 6)
                 <td><a href="#" class="text-muted">View More Details</a></td>
                 @endif
+            @endif
             </tr>
             @endforeach
         </tbody>

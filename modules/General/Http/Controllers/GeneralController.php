@@ -28,6 +28,7 @@ class GeneralController extends Controller
         //IF ADMIN DISPLAYS ALL THE PENDING REQUESTS TO BE ASSIGNED
         if ($role == 1 || $role == 2 ) {
             $Process_items = Process_Item::all()->where('status_id', 1);
+            
             return view('general::generalA', [
                 'Process_items' => $Process_items,
             ]);
