@@ -10,7 +10,7 @@ use App\Models\Process_Item;
 use App\Models\Form_Type;
 use App\Models\Process_item_progress;
 use App\Models\Process_item_status;
-use App\Models\land_parcel;
+use App\Models\Land_Parcel;
 use App\Models\Land_Has_Organization;
 use App\Models\Land_Has_Gazette;
 use App\Models\Environment_Restoration_Activity;
@@ -35,13 +35,13 @@ class ApprovalItemController extends Controller
     public function confirm_assign_staff($id,$pid)
     {
         $array=DB::transaction(function () use($id,$pid){
-            $Process_item =Process_item::find($pid);
+            $Process_item =Process_Item::find($pid);
         $new_assign=1;
         if($Process_item->activity_user_id != null){
             $new_assign='0';
         } 
         
-        Process_item::where('id',$pid)->update([
+        Process_Item::where('id',$pid)->update([
             'activity_user_id' => $id,
             'status_id' => 3
             ]);
@@ -58,7 +58,7 @@ class ApprovalItemController extends Controller
     public function change_assign_organization($id,$pid)
     {
         DB::transaction(function () use($id,$pid){
-            $Process_item =Process_item::find($pid);
+            $Process_item =Process_Item::find($pid);
             $Users = User::where([
                 ['role_id', '=' , 3],           
                 ['organization_id', '=', $id], 
@@ -66,11 +66,11 @@ class ApprovalItemController extends Controller
                 ['role_id', '=' , 4],           
                 ['organization_id', '=', $id], 
             ])->get();
-            Process_item::where('id',$pid)->update([
+            Process_Item::where('id',$pid)->update([
                 'activity_organization' => $id ,
                 'status_id' => 2
                 ]);
-            Process_item::where([
+            Process_Item::where([
                 ['prerequisite_id','=',$Process_item],
                 ['prerequisite', '=' ,0],
             ])->update([
@@ -92,11 +92,11 @@ class ApprovalItemController extends Controller
         $array=DB::transaction(function () use($request){
             
             //$User = User::find($request['create_by']);
-            Process_item::where('id',$request['process_id'])->update([
+            Process_Item::where('id',$request['process_id'])->update([
                 'other_removal_requestor_name' => $request['organization'],
                 'status_id' => 2
                 ]);
-            $process_item =Process_item::find($request['process_id']);
+            $process_item =Process_Item::find($request['process_id']);
             return($process_item);
         });
         $user =User::find($request['create_by']);
@@ -171,7 +171,7 @@ class ApprovalItemController extends Controller
 
     public function choose_assign_staff($id)
     {
-        $process_item =Process_item::find($id);
+        $process_item =Process_Item::find($id);
         if($process_item->status_id>2){
             return redirect()->action(
                 [ApprovalItemController::class, 'investigate'], ['id' => $id]
@@ -212,7 +212,7 @@ class ApprovalItemController extends Controller
         }
         if($process_item->form_type_id != '5'){
             $land_parcel = Land_Parcel::find($item->land_parcel_id);
-            $landProcess=Process_item::where([
+            $landProcess=Process_Item::where([
                 ['prerequisite_id', '=' , $process_item->id],           
                 ['prerequisite', '=', 0], 
             ])->first();
@@ -245,7 +245,7 @@ class ApprovalItemController extends Controller
 
     public function choose_assign_organization($id)
     {
-        $process_item =Process_item::find($id);
+        $process_item =Process_Item::find($id);
         $Organizations=Organization::all();
         //dd($process_item);
         if($process_item->form_type_id == '1'){ 
@@ -264,7 +264,7 @@ class ApprovalItemController extends Controller
         
         if($process_item->form_type_id == '2' || $process_item->form_type_id == '3'){
             $land_parcel = Land_Parcel::find($item->land_parcel_id);
-            $landProcess=Process_item::where([
+            $landProcess=Process_Item::where([
                 ['prerequisite_id', '=' , $process_item->id],           
                 ['prerequisite', '=', 0], 
             ])->first();
@@ -291,7 +291,7 @@ class ApprovalItemController extends Controller
         else{
             $Photos=Json_decode($item->photos);
             $land_parcel = Land_Parcel::find($item->land_parcel_id);
-            $landProcess=Process_item::where([
+            $landProcess=Process_Item::where([
                 ['prerequisite_id', '=' , $process_item->id],           
                 ['prerequisite', '=', 0], 
             ])->first();
@@ -309,9 +309,9 @@ class ApprovalItemController extends Controller
 
     public function investigate($id)
     {
-        $process_item =Process_item::find($id);
+        $process_item =Process_Item::find($id);
         $Organizations=Organization::all();
-        $Prerequisites=Process_item::all()->where('prerequisite_id',$process_item->id);
+        $Prerequisites=Process_Item::all()->where('prerequisite_id',$process_item->id);
         $Process_item_statuses=Process_item_status::all();
         $Process_item_progresses=Process_item_progress::all()->where('process_item_id',$id);
         $organization=Auth::user()->organization_id;
@@ -349,7 +349,7 @@ class ApprovalItemController extends Controller
         if($process_item->form_type_id != '5'){
             //dd($process_item);
             $land_parcel = Land_Parcel::find($item->land_parcel_id);
-            $landProcess=Process_item::where([
+            $landProcess=Process_Item::where([
                 ['prerequisite_id', '=' , $process_item->id],           
                 ['prerequisite', '=', 0], 
             ])->first();
@@ -392,37 +392,37 @@ class ApprovalItemController extends Controller
             'request' => 'required',
         ]);
         $id=$request['process_id'];
-        $Process_item_old =Process_item::find($id);
+        $Process_item_old =Process_Item::find($id);
         
-        $Process_item =new Process_item;
-        $Process_item->created_by_user_id = $request['create_by'];
-        $Process_item->request_organization = $request['create_organization'];
-        $Process_item->activity_organization = $request['organization'];
-        $Process_item->form_id = $Process_item_old['form_id'];
-        $Process_item->form_type_id = $Process_item_old['form_type_id'];   
-        $Process_item->status_id = "2";
-        $Process_item->prerequisite= "1";
-        $Process_item->prerequisite_id = $Process_item_old['id'];
-        $Process_item->remark = $request['request'];
-        $Process_item->save();
+        $Process_Item =new Process_Item;
+        $Process_Item->created_by_user_id = $request['create_by'];
+        $Process_Item->request_organization = $request['create_organization'];
+        $Process_Item->activity_organization = $request['organization'];
+        $Process_Item->form_id = $Process_item_old['form_id'];
+        $Process_Item->form_type_id = $Process_item_old['form_type_id'];   
+        $Process_Item->status_id = "2";
+        $Process_Item->prerequisite= "1";
+        $Process_Item->prerequisite_id = $Process_item_old['id'];
+        $Process_Item->remark = $request['request'];
+        $Process_Item->save();
         return back()->with('message', 'Prerequisite logged Successfully');  
     }
 
     public function cancel_prerequisite($id,$userid)
     {
-        $Process_item =Process_item::find($id);
+        $Process_Item =Process_Item::find($id);
         $User=User::find($userid);
-        $remark=$Process_item->remark.' cancelled by '.$User->name.' (userId: '.$User->id.')';
-        $Process_item->update([
+        $remark=$Process_Item->remark.' cancelled by '.$User->name.' (userId: '.$User->id.')';
+        $Process_Item->update([
             'status_id' => 8,
             'remark' => $remark,
         ]);
-        if($Process_item->created_by_user_id==$userid){
+        if($Process_Item->created_by_user_id==$userid){
             return back()->with('message', 'Prerequisite is removed successfully');
         }
-        $user=User::find($Process_item->created_by_user_id);
-        $Process_item->created_by_user_id=$userid;
-        Notification::send($user, new prereqmemo($Process_item)); 
+        $user=User::find($Process_Item->created_by_user_id);
+        $Process_Item->created_by_user_id=$userid;
+        Notification::send($user, new prereqmemo($Process_Item)); 
         return back()->with('message', 'Prerequisite removed and requestor notified'); 
     }
 
@@ -434,7 +434,7 @@ class ApprovalItemController extends Controller
             'request' => 'required',
         ]);
         $id=$request['process_id'];
-        Process_item::where('id',$id)->update(['status_id' => 4]);
+        Process_Item::where('id',$id)->update(['status_id' => 4]);
         $Process_item_progress =new Process_item_progress;
         $Process_item_progress->created_by_user_id = $request['create_by'];
         $Process_item_progress->process_item_id = $request['process_id'];
@@ -457,7 +457,7 @@ class ApprovalItemController extends Controller
         $id=$request['process_id'];
         $title=Process_item_status::where('id',$request['status'])->first()->status_title;
         if($request['status']==5){
-            $Incomplete_prerequisites2=Process_item::all()->where(
+            $Incomplete_prerequisites2=Process_Item::all()->where(
                 'status_id','!=','5',
             )->where(
                 'status_id','!=','8',
@@ -469,7 +469,7 @@ class ApprovalItemController extends Controller
             }
             else{
                 
-                Process_item::where('id',$id)->update(['status_id' => 5]);
+                Process_Item::where('id',$id)->update(['status_id' => 5]);
                 $Process_item_progress =new Process_item_progress;
                 $Process_item_progress->created_by_user_id = $request['create_by'];
                 $Process_item_progress->process_item_id = $request['process_id'];
@@ -479,7 +479,7 @@ class ApprovalItemController extends Controller
             }
         }
         else{
-                Process_item::where('id',$id)->update(['status_id' => 6]);
+                Process_Item::where('id',$id)->update(['status_id' => 6]);
                 $Process_item_progress =new Process_item_progress;
                 $Process_item_progress->created_by_user_id = $request['create_by'];
                 $Process_item_progress->process_item_id = $request['process_id'];
