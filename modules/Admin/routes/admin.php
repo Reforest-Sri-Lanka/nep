@@ -9,6 +9,7 @@ Route::get('/passwordReset', function() {       // Open view to reset password.
 });
 Route::patch('/alterPassword', [UserController::class, 'alterPassword']);       // Save data to the db.
 
+Route::middleware(['auth'])->group(function () {
 // user/index route will route to the UserController to route based on the user's role  
 Route::get('/index', [UserController::class, 'index'])->name('userIndex'); 
 
@@ -41,4 +42,5 @@ Route::get('/searchUsers', [UserController::class, 'searchUsers']);
 //search - activate users
 Route::get('/searchSelfRegistered', [UserController::class, 'searchSelfRegistered']);
 
+});
 

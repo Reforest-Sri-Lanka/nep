@@ -222,7 +222,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @for($x = 0; $x < count($tree_data); $x++)
+                            @for($x = 0; $x < count($data); $x++)
                             <tr>
                                 <td>{{$data[$x]['tree_species_id']}}</td>
                                 <td>{{$data[$x]['tree_id']}}</td>
@@ -240,7 +240,9 @@
         </div>
         @endif
         
-        @if($process_item->form_type_id==2 || $process_item->form_type_id==4 )
+        @if($process_item->form_type_id==1 || $process_item->form_type_id==4 )
+        <div class="row p-4 bg-white">
+        </div>
             @isset($Photos)
                 <div class="row p-4 bg-white">
                     <div class="card-deck">
@@ -265,24 +267,23 @@
                                 <tr>
                                     <th>Title</th>
                                     <th>Type</th>
-                                    <th>Description</th>
+                                    <th>City</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($LandOrganizations as $organization)
                                 <tr>
                                     <td>{{$organization->organization->title}}</td>
+                                    @if($organization->type_id == NULL)
+                                    <td>Not specified</td>
+                                    @else
                                     <td>{{$organization->organization->type->title}}</td>
-                                    <td>{{$organization->organization->Description}}</td>
+                                    @endif
+                                    <td>{{$organization->organization->city}}</td>
                                 </tr>
                                 @endforeach
                             </tbody>
                     </table>
-                </div>
-            @endif
-            @if(count($Process_item_progresses) < 1)
-                <div class="row p-4 bg-white">
-                    <p>No Governing organization data</p>
                 </div>
             @endif
         @endif

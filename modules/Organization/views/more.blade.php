@@ -35,9 +35,15 @@
                 <div class="col">
                 <strong>Organization Type :</strong>
                 </div>
+                @if($organization->type_id == NULL)
+                <div class="col">
+                    Not assigned
+                </div> 
+                @else
                 <div class="col">
                     {{$organization->type->title}}
                 </div> 
+                @endif
             </div>
             <br>
             <div class="row">

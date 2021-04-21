@@ -16,7 +16,7 @@ use App\Models\Crime_type;
 use App\Models\User;
 use App\Models\Process_Item;
 use App\Models\Organization;
-use App\Models\tree_removal_request;
+
 
 
 class CrimeReportController extends Controller
@@ -24,7 +24,7 @@ class CrimeReportController extends Controller
 
     
     public function create_crime_report(Request $request)
-    {  
+    {   
         $request -> validate([
             'crime_type' => 'required|not_in:0',
             'description' => 'required',
@@ -108,7 +108,7 @@ class CrimeReportController extends Controller
             $landProcess->prerequisite_id = $latestcrimeProcess->id;
             $landProcess->save();
             $successmessage='Crime report logged Successfully the ID of the application is '.$latestcrimeProcess->id;
-            $Users = User::where('role_id', '=', 2)->get();
+            $Users = User::where('role_id', '=', 2)->where('id', '!=', $request['create_by'])->get();
             Notification::send($Users, new ApplicationMade($latestcrimeProcess));
             return $successmessage;
             
