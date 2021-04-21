@@ -3,22 +3,6 @@
 @section('general')
 
 <div class="container">
-  <!-- @if(count($errors) >0)
-  <div class="alert alert-danger">
-    <ul>
-      @foreach($errors->all() as $error)
-      <li>{{$error}}</li>
-      @endforeach
-    </ul>
-  </div>
-  @endif
-
-  @if(\Session::has('success'))
-  <div class="alert alert-success">
-    <p>{{\Session::get('success') }}</p>
-  </div>
-  @endif -->
-
 
   <form action="/tree-removal/save" method="post" id="regForm" enctype="multipart/form-data">
     @csrf
@@ -80,9 +64,6 @@
             </div>
 
 
-
-
-
             <!-- ////////MAP GOES HERE -->
             <div id="mapid" style="height:400px;" name="map"></div>
             @error('polygon')
@@ -95,32 +76,10 @@
             </div>
 
 
-
-
-
             <br>
             <hr><br>
             <div class="row p-2">
               <div class="col p-2">
-                <div class="form-group">
-                  <label>Land Owner Type:</label>
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" name="landownertype" id="landownertype1" value="1" {{(old('landownertype') == '1') ? 'checked' : ''}}>
-                    <label class="form-check-label" for="landownertype1">
-                      Government
-                    </label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" name="landownertype" id="landownertype2" value="2" {{(old('landownertype') == '2') ? 'checked' : ''}}>
-                    <label class="form-check-label" for="landownertype2">
-                      Private
-                    </label>
-                  </div>
-                  @error('landownertype')
-                  <div class="alert alert-danger">Please Select the Type</div>
-                  @enderror
-                </div>
-
                 <div class="form-group">
                   Land Owner:<input type="text" class="form-control typeahead3 @error('land_owner') is-invalid @enderror" value="{{ old('land_owner') }}" placeholder="Search" name="land_owner" />
                   @error('land_owner')
@@ -131,27 +90,30 @@
                     <label class="custom-control-label" for="customCheck1"><strong>Is Unregistered</strong></label>
                   </div>
                 </div>
+                <div class="extLandOwner" style="display:none;">
+                  <div class="form-group">
+                    <label>Land Owner Type:</label>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="landownertype" id="landownertype1" value="1" {{(old('landownertype') == '1') ? 'checked' : ''}}>
+                      <label class="form-check-label" for="landownertype1">
+                        Government
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="landownertype" id="landownertype2" value="2" {{(old('landownertype') == '2') ? 'checked' : ''}}>
+                      <label class="form-check-label" for="landownertype2">
+                        Private
+                      </label>
+                    </div>
+                    @error('landownertype')
+                    <div class="alert alert-danger">Please Select the Type</div>
+                    @enderror
+                  </div>
+                </div>
               </div>
 
-              <div class="col p-2">
-                <div class="form-group">
-                  <label>Removal Requestor Type:</label>
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" name="removalrequestortype" id="removalrequestortype1" value="1" {{(old('removalrequestortype') == '1') ? 'checked' : ''}}>
-                    <label class="form-check-label" for="removalrequestortype1">
-                      Government
-                    </label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" name="removalrequestortype" id="removalrequestortype2" value="2" {{(old('removalrequestortype') == '2') ? 'checked' : ''}} <label class="form-check-label" for="removalrequestortype2">
-                    Private
-                    </label>
-                  </div>
-                  @error('removalrequestortype')
-                  <div class="alert alert-danger">Please Select the Type</div>
-                  @enderror
-                </div>
 
+              <div class="col p-2">
                 <div class="form-group">
                   Removal Requestor:<input type="text" class="form-control typeahead3 @error('removal_requestor') is-invalid @enderror" value="{{ old('removal_requestor') }}" name="removal_requestor" placeholder="Search" />
                   @error('removal_requestor')
@@ -160,6 +122,27 @@
                   <div class="custom-control custom-checkbox">
                     <input type="checkbox" class="custom-control-input" id="customCheck2" value="1" name="checkremovalrequestor" {{ old('checkremovalrequestor') == "1" ? 'checked' : ''}}>
                     <label class="custom-control-label" for="customCheck2"><strong>Is Unregistered</strong></label>
+                  </div>
+                </div>
+
+
+                <div class="extRequestor" style="display:none">
+                  <div class="form-group">
+                    <label>Removal Requestor Type:</label>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="removalrequestortype" id="removalrequestortype1" value="1" {{(old('removalrequestortype') == '1') ? 'checked' : ''}}>
+                      <label class="form-check-label" for="removalrequestortype1">
+                        Government
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="removalrequestortype" id="removalrequestortype2" value="2" {{(old('removalrequestortype') == '2') ? 'checked' : ''}} <label class="form-check-label" for="removalrequestortype2">
+                      Private
+                      </label>
+                    </div>
+                    @error('removalrequestortype')
+                    <div class="alert alert-danger">Please Select the Type</div>
+                    @enderror
                   </div>
 
                   <div class="form-group">
@@ -242,13 +225,13 @@
             </div>
 
             <div class="form-group" id="dynamicAddRemove">
-              <label for="images">Photos: (Optional)</label>       
-                <input type="file" id="image" name="file[]" multiple>
-                @if ($errors->has('file.*'))
-                  <div class="alert">
-                    <strong>{{ $errors->first('file.*') }}</strong>
-                  </div>
-                @endif   
+              <label for="images">Photos: (Optional)</label>
+              <input type="file" id="image" name="file[]" multiple>
+              @if ($errors->has('file.*'))
+              <div class="alert">
+                <strong>{{ $errors->first('file.*') }}</strong>
+              </div>
+              @endif
             </div>
           </div>
         </div>
@@ -477,7 +460,7 @@
     },
   });
 
-  
+
 
   /// SCRIPT FOR THE DYNAMIC COMPONENT
   var i = 0;
@@ -592,23 +575,37 @@
     //$('#kml').val(tokml(drawnItems.toGeoJSON()));
   });
 
-  $(document).ready(function(){
-        $('#image').change(function(){
-            var fp = $("#image");
-            var lg = fp[0].files.length; // get length
-            var items = fp[0].files;
-            var fileSize = 0;
-           
-            if (lg > 0) {
-                for (var i = 0; i < lg; i++) {
-                    fileSize = fileSize+items[i].size; // get file size
-                }
-                if(fileSize > 5242880) {
-                    alert('You should not upload files exceeding 4 MB. Compress image size and try again.');
-                    $('#image').val('');
-                }
-            }
-        });
+  $(document).ready(function() {
+    $('#image').change(function() {
+      var fp = $("#image");
+      var lg = fp[0].files.length; // get length
+      var items = fp[0].files;
+      var fileSize = 0;
+
+      if (lg > 0) {
+        for (var i = 0; i < lg; i++) {
+          fileSize = fileSize + items[i].size; // get file size
+        }
+        if (fileSize > 5242880) {
+          alert('You should not upload files exceeding 4 MB. Compress image size and try again.');
+          $('#image').val('');
+        }
+      }
     });
+  });
+
+  //toggle extra details for external land owner
+  $(document).ready(function() {
+    $('input[id="customCheck1"]').click(function() {
+      $("." + "extLandOwner").toggle();
+    });
+  });
+
+  //toggle extra details for external requestor
+  $(document).ready(function() {
+    $('input[id="customCheck2"]').click(function() {
+      $("." + "extRequestor").toggle();
+    });
+  });
 </script>
 @endsection
