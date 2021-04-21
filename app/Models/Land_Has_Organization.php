@@ -19,4 +19,9 @@ class Land_Has_Organization extends Model
     protected $attributes = [
         
     ];
+
+    public function organization()
+    {
+        return $this->belongsTo('App\Models\Organization');
+    }
 }

@@ -105,7 +105,7 @@
                                     <tr>
                                         <th>Name</th>
                                         <th>Quantity</th>
-                                        <th>Height (in cm)</th>
+                                        <th>Height (in m)</th>
                                         <th>Dimensions</th>
                                         <th>Remarks</th>
                                         <th></th>

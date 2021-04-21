@@ -133,7 +133,7 @@ class EnvironmentRestorationController extends Controller
             $latestprocess = Process_Item::latest()->first();
 
             //creating a notification for restoration made
-            $users = User::where('role_id', '<', 3)->get();
+            $users = User::where('role_id', '=', 2)->where('id', '!=', $request['created_by'])->get();
             Notification::send($users, new ApplicationMade($Process_item));
 
             //Adding to Environment Restoration Species Table using ajax

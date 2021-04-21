@@ -55,7 +55,7 @@
                     <hr>
                     
                     <div class="form-check">
-                    <input type="hidden" class="form-control" name="create_by" value="{{ Auth::user()->id }}">  `   1
+                    <input type="hidden" class="form-control" name="create_by" value="{{ Auth::user()->id }}">  
                         <input id="polygon" type="hidden" name="polygon" value="{{request('polygon')}}">
                         <label class="form-check-label">
                         <input type="checkbox" class="form-check-input" name="confirm" ><strong>I confirm these information to be true</strong>
