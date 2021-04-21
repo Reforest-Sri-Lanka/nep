@@ -15,7 +15,7 @@ class UserController extends Controller
         $dev_projects = Process_Item::where('form_type_id',2)
         ->whereMonth('created_at', Carbon::now()->month)
         ->count(); 
-        return view('Unauthorized', [
+        return view('unauthorized', [
             'tree_removals' =>$tree_removals,
             'dev_projects'=>$dev_projects
         ]);

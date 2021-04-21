@@ -38,13 +38,13 @@
                         <!-- Links -->
                         <ul class="navbar-nav">
                             <li class="nav-item mt-5">
-                                <a class="nav-link text-light" href="/general/pending"><i class="fa fa-home mr-3" aria-hidden="true"></i> General Module</a>
+                                <a class="nav-link text-light" href="/general/pending"><i class="fa fa-home mr-3" aria-hidden="true"></i> General</a>
                             </li>
                             <li class="nav-item mt-3">
-                                <a class="nav-link text-light" href="/user/index"><i class="fa fa-user mr-3" aria-hidden="true"></i> User Management</a>
+                                <a class="nav-link text-light" href="/user/index"><i class="fa fa-user mr-3" aria-hidden="true"></i> Users</a>
                             </li>
                             <li class="nav-item mt-3">
-                                <a class="nav-link text-light" href="/environment/updatedata"><i class="fa fa-tree mr-3" aria-hidden="true"></i> Environment Module</a>
+                                <a class="nav-link text-light" href="/environment/updatedata"><i class="fa fa-tree mr-3" aria-hidden="true"></i> Environment</a>
                             </li>
                             <li class="nav-item mt-3">
                                 <a class="nav-link text-light" href="/glad"><i class="fa fa-globe mr-3" aria-hidden="true"></i> Tracking</a>
