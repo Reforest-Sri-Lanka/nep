@@ -30,3 +30,9 @@ Route::patch('/activate/{id}', [AdminController::class, 'activate']);           
 ///////More details button for all users - Admin, HoO and Manager - One route because same functionality
 Route::get('/more/{id}', [UserController::class, 'more']);
 
+//search active users
+Route::get('/searchUsers', [UserController::class, 'searchUsers']);
+//search - activate users
+Route::get('/searchSelfRegistered', [UserController::class, 'searchSelfRegistered']);
+
+

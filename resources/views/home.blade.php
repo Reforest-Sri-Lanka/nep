@@ -52,9 +52,10 @@
                             <li class="nav-item mt-3">
                                 <a class="nav-link text-light" href="/approval-item/showRequests"><i class="fa fa-arrow-down mr-3" aria-hidden="true"></i> Requests</a>
                             </li>
-                            <li class="nav-item mt-3">
+                            <li class="nav-item mt-3" style="margin-bottom:400px;">
                                 <a class="nav-link text-light" href="/reporting/overview"><i class="fa fa-book mr-3" aria-hidden="true"></i> Reporting</a>
                             </li>
+                            <li class="nav-item mt-3"></li>
                         </ul>
                     </nav>
                 </div>
@@ -173,6 +174,12 @@
                     </ul>
                 </nav>
                 <div style="background-color:#f0f0f7" class="col-md">
+                    <span>
+                        <h4 class="text-center bg-success text-light">{{session('message')}}</h4>
+                    </span>
+                    <span>
+                        <h4 class="text-center bg-danger text-light">{{session('warning')}}</h4>
+                    </span>
                     @yield('cont')
                     <br>
                 </div>
