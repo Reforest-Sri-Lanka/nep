@@ -165,7 +165,6 @@
     #main {
       float: left;
       clear: both;
-      width: 640px;
       font-size: 1.2em;
     }
 
