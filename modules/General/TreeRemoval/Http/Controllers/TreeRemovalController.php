@@ -190,19 +190,17 @@ class TreeRemovalController extends Controller
 
 
             $latest = Tree_Removal_Request::latest()->first();
-            if (request('images')) {
-                //dd($request->images);
-                $i = count($request->images);
-                for ($y = 0; $y < $i; $y++) {
-                    $file = $request->images[$y];
-                    $filename = $file->getClientOriginalName();
-                    $newname = $latest->id . 'NO' . $y . $filename;
-                    $path = $file->storeAs('crimeEvidence', $newname, 'public');
-                    $photoarray[$y] = $path;
+            if($request->hasfile('file')) { 
+                $y=0;
+                foreach($request->file('file') as $file){
+                    $filename =$file->getClientOriginalName();
+                    $newname = $latest->id.'No'.$y.$filename;
+                    $path = $file->storeAs('treeremoval',$newname,'public');
+                    $photoarray[$y] = $path;  
+                    $y++;          
                 }
-                $tree = Tree_Removal_Request::where('id', $latest->id)->update(['images' => json_encode($photoarray)]);
+                $tree = Tree_Removal_Request::where('id',$latest->id)->update(['images' => json_encode($photoarray)]);
             }
-
             $process = new Process_Item();
             $process->form_type_id = 1;
             $process->form_id = $latest->id;

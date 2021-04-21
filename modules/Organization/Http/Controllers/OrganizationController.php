@@ -47,7 +47,6 @@ class OrganizationController extends Controller {
     // Return the View more details window for organization.
     public function more(Request $request){ 
         $organization = Organization::find($request->id); 
-        //dd($organization,$organization->type);
         //$contact = Contact::all();   
         $contact = Contact::Where('org_id',$request->id)->get(); 
         //dd($contact);   
