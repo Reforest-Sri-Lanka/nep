@@ -14,7 +14,7 @@ use App\Models\Land_Parcel;
 use App\Models\Crime_report;
 use App\Models\Crime_type;
 use App\Models\User;
-use App\Models\Process_item;
+use App\Models\Process_Item;
 use App\Models\Organization;
 use App\Models\tree_removal_request;
 
@@ -81,7 +81,7 @@ class CrimeReportController extends Controller
                 $crime_rep = Crime_report::where('id',$id)->update(['photos' => json_encode($photoarray)]);
             }
             $org=Organization::where('title', $request['organization'])->first();
-            $Process_item =new Process_item;
+            $Process_item =new Process_Item;
             $Process_item->created_by_user_id = $request['create_by'];
             $Process_item->request_organization = "1";
             //dd($org->city);
@@ -144,7 +144,7 @@ class CrimeReportController extends Controller
 
     public function view_crime_reports($id)
     {
-        $process_item=Process_item::find($id);
+        $process_item=Process_Item::find($id);
         $crime = Crime_report::find($process_item->form_id);
         $Photos=Json_decode($crime->photos);
         $land_parcel = Land_Parcel::find($crime->land_parcel_id);
