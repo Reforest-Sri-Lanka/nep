@@ -1,9 +1,6 @@
 @extends('general')
 
 @section('general')
-<span>
-    <h3 class="text-center bg-success text-light">{{session('message')}}</h3>
-</span>
 <hr>
 <div class="row justify-content-center">
     <div class="col-md-3">
