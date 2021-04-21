@@ -49,7 +49,7 @@ class Process_Item extends Model
         return $this->belongsTo('App\Models\Status');
     }
 
-    public function prerequisite_id()
+    public function prerequisite_process()
     {
         return $this->belongsTo('App\Models\Process_Item','prerequisite_id');
     }

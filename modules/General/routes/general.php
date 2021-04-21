@@ -2,6 +2,8 @@
 
 use General\Http\Controllers\GeneralController;
 
+Route::middleware(['access.control:1'])->group(function () {
+
 Route::get('/home', [ApprovalItemController::class, 'home'])->name('approvalitem.home');
 
 Route::get('/showRequests', [ApprovalItemController::class, 'showRequests']);
@@ -11,3 +13,5 @@ Route::get('/showRequests', [ApprovalItemController::class, 'showRequests']);
 Route::get('/pending', [GeneralController::class, 'pending'])->name("pending");
 
 Route::get('/filterItems', [GeneralController::class, 'filter_process_items']);
+
+});
