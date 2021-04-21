@@ -126,7 +126,7 @@ class EnvironmentRestorationController extends Controller
             $Process_item->activity_organization = $activityorgid[0];
             $Process_item->request_organization = request('organization');
             $Process_item->activity_user_id = 0;
-            $Process_item->prerequisite_id = 0;
+            $Process_item->prerequisite_id = null;
             $Process_item->prerequisite = 0;
             $Process_item->status_id = 1;
             $Process_item->save();
