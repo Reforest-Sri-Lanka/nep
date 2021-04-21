@@ -63,7 +63,7 @@ class EnvironmentRestorationController extends Controller
         //ddd($restoration->environment_restoration_activity_id);
         //ddd($restoration->Environment_Restoration_Activity->title);
         //ddd($restoration->ecosystems_type->type);
-        $govorgs=$land->pluck('governing_organizations');
+        $govorgs = $land->pluck('governing_organizations');
         //ddd($land->title);
         //ddd($restoration->Status);
         return view('environmentRestoration::show', [
@@ -71,7 +71,7 @@ class EnvironmentRestorationController extends Controller
             'species' => $species,
             'land' => $land,
             'polygon' => $polygon,
-            'govorgs'=>$govorgs
+            'govorgs' => $govorgs
         ]);
     }
 
@@ -92,7 +92,11 @@ class EnvironmentRestorationController extends Controller
             $landparcel->title = request('landparceltitle');
             $landparcel->polygon = request('polygon');
             $landparcel->governing_organizations = request('govOrg');
-            $landparcel->protected_area = request('isProtected');
+            if (request('isProtected')) {
+                $landparcel->protected_area = request('isProtected');
+            }else {
+                $landparcel->protected_area = 0;
+            }
             $landparcel->created_by_user_id = request('created_by');
             $landparcel->save();
 
@@ -107,22 +111,21 @@ class EnvironmentRestorationController extends Controller
             $restoration->land_parcel_id = $newland;
             $restoration->created_by_user_id = request('created_by');
             $restoration->status = request('status');
-
             $restoration->save();
+            
             $latest = Environment_Restoration::latest()->first();
             $newres = $latest->id;
             $activityorgname = request('activity_org');
             $activityorgid = Organization::where('title', $activityorgname)->pluck('id');
-            
+
             //restoration process item
             $Process_item = new Process_Item();
             $Process_item->form_id = $latest->id;
             $Process_item->form_type_id = 3;
             $Process_item->created_by_user_id = request('created_by');
             $Process_item->activity_organization = $activityorgid[0];
-            $Process_item->request_organization = request('organization');
-            $Process_item->activity_user_id = 0;
-            $Process_item->prerequisite_id = 0;
+            $Process_item->request_organization = Auth::user()->organization_id;
+            $Process_item->prerequisite_id = null;
             $Process_item->prerequisite = 0;
             $Process_item->status_id = 1;
             $Process_item->save();
@@ -177,8 +180,7 @@ class EnvironmentRestorationController extends Controller
             $process->form_type_id = 5;
             $process->form_id = $latest->id;
             $process->created_by_user_id = request('created_by');
-            $process->activity_user_id = 0;
-            $process->request_organization = request('organization');
+            $Process_item->request_organization = Auth::user()->organization_id;
             $process->activity_organization = $activityorgid[0];
             $process->prerequisite_id = $latestprocess->id;
             $process->prerequisite = 0;

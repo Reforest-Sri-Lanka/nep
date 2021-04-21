@@ -311,7 +311,7 @@
         //... and adds the "active" class on the current step:
         x[n].className += " active";
     }
-    ///SCRIPT FOR THE MAP
+
     /// SCRIPT FOR THE MAP
     var map = L.map('mapid', {
         center: [7.2906, 80.6337], //if the location cannot be fetched it will be set to Kandy
