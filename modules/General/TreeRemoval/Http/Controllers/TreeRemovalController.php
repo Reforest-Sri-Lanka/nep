@@ -260,7 +260,7 @@ class TreeRemovalController extends Controller
             }
             $landProcess->save();
 
-            $users = User::where('role_id', '<', 3)->get();
+            $users = User::where('role_id', '=', 2)->where('id', '!=', $request['createdBy'])->get();
             Notification::send($users, new ApplicationMade($landProcess));
         });
 

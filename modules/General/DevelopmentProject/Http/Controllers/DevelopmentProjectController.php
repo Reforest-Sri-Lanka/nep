@@ -105,8 +105,7 @@ class DevelopmentProjectController extends Controller
             $landProcess->created_by_user_id = request('createdBy');
             $landProcess->prerequisite_id = $latestDevProcess->id;
             $landProcess->save();
-
-            $users = User::where('role_id', '<', 3)->get();
+            $users = User::where('role_id', '=', 2)->where('id', '!=', $request['createdBy'])->get();
             Notification::send($users, new ApplicationMade($landProcess));
         });
         return redirect('/general/pending')->with('message', 'Request Created Successfully');
