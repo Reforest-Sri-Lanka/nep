@@ -34,10 +34,11 @@ class CrimeReportController extends Controller
             'organization' => 'required|not_in:0',
             'polygon' => 'required',
         ]);
-        if($request->has('nonreguser')){
-            $request -> validate([
-                'Requestor_email' => 'required',
-                'Requestor' => 'required',
+        if($request->hasfile('file')){
+            
+            request()->validate([
+                'file' => 'required',
+                'file.*' => 'mimes:jpeg,jpg,png|max:40000'
             ]);
         }
         $array=DB::transaction(function () use($request) {
@@ -67,15 +68,16 @@ class CrimeReportController extends Controller
             $Crime_report->status = "1";
             $Crime_report->save();
             $id = Crime_report::latest()->first()->id;
-            if($request->hasFile('images')){ 
-                $i = count($request->images);
-                for($y=0;$y<$i;$y++){
-                    $file = $request->images[$y];
+            if($request->hasfile('file')) { 
+                $y=0;
+                foreach($request->file('file') as $file){
                     $filename =$file->getClientOriginalName();
-                    $newname = $id.'NO'.$y.$filename;
+                    $newname = $id.'No'.$y.$filename;
                     $path = $file->storeAs('crimeEvidence',$newname,'public');
-                    $photoarray[$y] = $path;            
+                    $photoarray[$y] = $path;  
+                    $y++;          
                 }
+                //dd($photoarray);
                 $crime_rep = Crime_report::where('id',$id)->update(['photos' => json_encode($photoarray)]);
             }
             $org=Organization::where('title', $request['organization'])->first();
@@ -94,10 +96,20 @@ class CrimeReportController extends Controller
                 $Process_item->other_removal_requestor_name = $request['Requestor'];
             }
             $Process_item->save();
-            $Process_itemnew =Process_item::latest()->first()->id;
-            $successmessage='Crime report logged Successfully the ID of the application is '.$Process_itemnew;
+            $latestcrimeProcess = Process_Item::latest()->first();
+            $landProcess = new Process_Item();
+            $landProcess->form_id = $landid;
+            $landProcess->remark = "Verify these land details";
+            $landProcess->prerequisite = 0;
+            $landProcess->activity_organization =$org->id;
+            $landProcess->status_id = 1;
+            $landProcess->form_type_id = 5;
+            $landProcess->created_by_user_id = $request['create_by'];
+            $landProcess->prerequisite_id = $latestcrimeProcess->id;
+            $landProcess->save();
+            $successmessage='Crime report logged Successfully the ID of the application is '.$latestcrimeProcess->id;
             $Users = User::where('role_id', '=', 2)->get();
-            Notification::send($Users, new ApplicationMade($Process_item));
+            Notification::send($Users, new ApplicationMade($latestcrimeProcess));
             return $successmessage;
             
         });
@@ -138,6 +150,7 @@ class CrimeReportController extends Controller
         $land_parcel = Land_Parcel::find($crime->land_parcel_id);
         return view('crimeReport::crimeview',[
             'crime' => $crime,
+            'process_item' => $process_item,
             'Photos' =>$Photos,
             'polygon' =>$land_parcel->polygon,
         ]);

@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use General\Http\Controllers\GeneralController;
+use Reporting\Http\Controllers\ReportingController;
+
 use App\Http\Controllers\RoleController;
 //use App\Http\Controllers\Crime_reportController;
 
@@ -19,6 +21,10 @@ use App\Http\Controllers\RoleController;
 
 Route::get('/leaflet', function () {
     return view('leafletmap');
+});
+
+Route::get('/glad', function () {
+    return view('glad');
 });
 
 Route::get('/', function () {
@@ -66,3 +72,7 @@ Route::get('/markAsRead', function(){
 });
 
 Route::post('/ajax_upload/action', [UserController::class, 'action'])->name('ajaxupload.action');
+
+// Chart Routes
+Route::get('/get-user-chart-data',[ReportingController::class, 'getMonthlyUserData']);
+Route::get('/get-processItem-formType-chart-data',[ReportingController::class, 'getProcessItemFormTypeData']);

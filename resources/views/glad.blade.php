@@ -1,0 +1,8 @@
+@extends('home')
+
+@section('cont')
+<br>
+    <div style="height:800px; width:100%;">
+        <iframe width="100%" height="100%" frameborder="0" src="https://www.globalforestwatch.org/embed/map/?map=eyJjZW50ZXIiOnsibGF0Ijo3Ljg3MDQzMDkxNzk4MjY2LCJsbmciOjgxLjA1MzQ0MjU4MDQxMzU5fSwiem9vbSI6Ni40NTU4MDIxNDU4MTEyMjcsImRhdGFzZXRzIjpbeyJkYXRhc2V0IjoiZmlyZS1hbGVydHMtdmlpcnMiLCJvcGFjaXR5IjoxLCJ2aXNpYmlsaXR5Ijp0cnVlLCJsYXllcnMiOlsiZmlyZS1hbGVydHMtdmlpcnMiXX0seyJkYXRhc2V0IjoiZ2xhZC1kZWZvcmVzdGF0aW9uLWFsZXJ0cyIsIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWUsImxheWVycyI6WyJkZWZvcmVzdGF0aW9uLWFsZXJ0cy1nbGFkIl19LHsiZGF0YXNldCI6InBvbGl0aWNhbC1ib3VuZGFyaWVzIiwibGF5ZXJzIjpbImRpc3B1dGVkLXBvbGl0aWNhbC1ib3VuZGFyaWVzIiwicG9saXRpY2FsLWJvdW5kYXJpZXMiXSwib3BhY2l0eSI6MSwidmlzaWJpbGl0eSI6dHJ1ZX1dfQ%3D%3D&mapPrompts=eyJvcGVuIjp0cnVlLCJzdGVwc0tleSI6InN1YnNjcmliZVRvQXJlYSIsImZvcmNlIjp0cnVlfQ%3D%3D"></iframe>
+    </div>
+@endsection

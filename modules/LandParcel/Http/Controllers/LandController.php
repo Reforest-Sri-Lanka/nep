@@ -35,17 +35,20 @@ class LandController extends Controller
     {
 
         $request->validate([
-            'title' => 'required',
             'landTitle' => 'required',
-            'governing_orgs' => 'required',
-            'gazettes' => 'required',
+            'governing_orgs' => 'nullable',
+            'gazettes' => 'nullable',
             'polygon' => 'required'
         ]);
 
         $land = new Land_Parcel();
         $land->title = request('landTitle');
         //$land->governing_organizations = request('governing_orgs');
-        $land->governing_organizations = request('governing_orgs');
+        if (request('governing_orgs')) {
+            $land->governing_organizations = request('governing_orgs');
+        } else {
+            $land->governing_organizations = [];
+        }
         $land->polygon = request('polygon');
         $land->created_by_user_id = request('createdBy');
         if (request('isProtected')) {
@@ -56,44 +59,43 @@ class LandController extends Controller
 
         $landid = Land_Parcel::latest()->first()->id;
 
-        $governing_organizations = request('governing_orgs');
+        if (request('governing_orgs')) {
+            $governing_organizations = request('governing_orgs');
 
-        foreach ($governing_organizations as $governing_organization) {
-            $land_has_organization = new Land_Has_Organization();
-            $land_has_organization->land_parcel_id = $landid;
-            $land_has_organization->organization_id = $governing_organization;
-            $land_has_organization->status = 2;
-            $land_has_organization->save();
+            foreach ($governing_organizations as $governing_organization) {
+                $land_has_organization = new Land_Has_Organization();
+                $land_has_organization->land_parcel_id = $landid;
+                $land_has_organization->organization_id = $governing_organization;
+                $land_has_organization->status = 2;
+                $land_has_organization->save();
+
+                $process = new Process_Item();
+                $process->form_type_id = 5;
+                $process->form_id = $landid;
+                $process->created_by_user_id = request('createdBy');
+                $process->request_organization = Auth::user()->organization_id;
+                $process->activity_organization = $governing_organization;
+                $process->save();
+            }
         }
 
-        $gazettes = request('gazettes');
+        if (request('gazettes')) {
 
-        foreach ($gazettes as $gazette) {
-            $land_has_gazette = new Land_Has_Gazette();
-            $land_has_gazette->land_parcel_id = $landid;
-            $land_has_gazette->gazette_id = $gazette;
-            $land_has_gazette->status = 2;
-            $land_has_gazette->save();
-        }
+            $gazettes = request('gazettes');
 
-        foreach ($governing_organizations as $governing_organization) {
-            $process = new Process_Item();
-            $process->form_type_id = 5;
-            $process->form_id = $landid;
-            $process->created_by_user_id = request('createdBy');
-            $process->request_organization = Auth::user()->organization_id;
-            $process->activity_organization = $governing_organization;
-            $process->save();
+            foreach ($gazettes as $gazette) {
+                $land_has_gazette = new Land_Has_Gazette();
+                $land_has_gazette->land_parcel_id = $landid;
+                $land_has_gazette->gazette_id = $gazette;
+                $land_has_gazette->status = 2;
+                $land_has_gazette->save();
+            }
         }
-        // if (request('file')) {
-        //     $fileloc = request('file');
-        //     Storage::delete('public/'.$fileloc);
-        //     File::delete(public_path($fileloc));
-        //     Storage::delete($fileloc);
-        // }
 
         return redirect('/general/pending')->with('message', 'Request Created Successfully');
     }
+
+
     public function show($id)
     {
         $item = Process_Item::find($id);
@@ -101,6 +103,7 @@ class LandController extends Controller
         return view('land::show', [
             'land' => $land_data,
             'polygon' => $land_data->polygon,
+            'other_removal_requestor' => $item->other_removal_requestor_name,
         ]);
     }
 

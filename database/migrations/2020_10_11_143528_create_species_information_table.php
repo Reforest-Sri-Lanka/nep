@@ -20,12 +20,15 @@ class CreateSpeciesInformationTable extends Migration
             $table->string('scientefic_name');
             $table->json('habitats');
             $table->json('taxa');
-            $table->json('photos');
             $table->text('description');
             $table->integer('created_by_user_id');
             $table->timestampsTz(); //time stamp with timezone in UTC
             $table->integer('status_id'); // ref process_item_statuses
             $table->softDeletesTz('deleted_at', 0);
+            $table->unsignedBigInteger('district_id')->nullable();
+            $table->foreign('district_id')->references('id')->on('districts')->onDelete('cascade');
+            $table->string('images');
+            $table->json('polygon');
         });
     }
 

@@ -2,80 +2,93 @@
 
 @section('cont')
 
-<kbd><a href="{{ url()->previous() }}" class="text-white font-weight-bolder"><i class="fas fa-chevron-left"></i></i> BACK</a></kbd>
+<kbd><a href="/approval-item/showRequests" class="text-white font-weight-bolder"><i class="fas fa-chevron-left"></i></i> BACK</a></kbd>
+<hr>
 <div class="container">
-    <h2 style="text-align:center;" class="text-dark">Details of {{$restoration->title}}</h2><hr>
-    <div class="row justify-content-md-center border p-4 bg-white">
-        <div class="col-6 ml-3">
-            <form>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">Title</span>
-                    </div>
-                    <input type="text" class="form-control" placeholder="{{$restoration->title}}" readonly>
-                </div>
+    <dl class="row">
+        <dt class="col-sm-3">Title:</dt>
+        <dd class="col-sm-9">{{$restoration->title}}</dd>
 
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">Restoration Type</span>
-                    </div>
-                    <input type="text" class="form-control" placeholder="{{$restoration->environment_restoration_activity->title}}" readonly>
-                </div>
+        <dt class="col-sm-3">Category:</dt>
+        <dd class="col-sm-9">Environment Restoration Project</dd>
 
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">Eco-System</span>
-                    </div>
-                        <input type="text" class="form-control" placeholder="{{$restoration->eco_system->title}}" readonly>
-                </div>
+        <dt class="col-sm-3">Restoration Type:</dt>
+        <dd class="col-sm-9">{{$restoration->Environment_Restoration_Activity->title}}</dd>
+        
+        <dt class="col-sm-3">Ecosystem :</dt>
+        <dd class="col-sm-9">{{$restoration->ecosystems_type->type}}</dd>
 
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">Organization</span>
-                    </div>
-                    @if($restoration->organization == NULL)
-                        <input type="text" class="form-control" placeholder="Unassigned" readonly>
-                    @else
-                        <input type="text" class="form-control" placeholder="{{$restoration->organization->title}}" readonly>
-                    @endif
-                </div>
+        <dt class="col-sm-3">Governing Organizations:</dt>
+        <dd class="col-sm-9">
+            <ul class="list-unstyled">
+                @foreach($govorgs as $govorg)
+                @switch($govorg)
+                @case(1)
+                <li>Reforest Sri Lanka</li>
+                @break
+                @case(2)
+                <li>Ministry of Environment</li>
+                @break
+                @case(3)
+                <li>Central Environmental Authority</li>
+                @break
+                @case(4)
+                <li>Ministry of Wildlife</li>
+                @break
+                @case(5)
+                <li>Road Development Authority</li>
+                @break
+                @endswitch
+                @endforeach
+            </ul>
+        </dd>
 
+        <dt class="col-sm-3">Logs:</dt>
+        @if($restoration->logs == 0)
+        <dd class="col-sm-9">No Logs</dd>
+        @else
+        <dd class="col-sm-9">CONFIGURE CODE TO SHOW LOGS NOT DONE - CURRENTLY SAVING COORDINATES HERE</dd>
+        @endif
 
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">Status</span>
-                    </div>
-                    @switch($restoration->status)
-                    @case('1')
-                    <input type="text" class="form-control" placeholder="Pending" readonly>
-                    @break;
-                    @case('3')
-                    <input type="text" class="form-control" placeholder="Completed" readonly>
-                    @break;
-                    @endswitch
-                </div>
-                <div class="form-check border-secondary rounded-lg" style="background-color:#ebeef0">
-                    <label class="mt-2"> Plant Species Grown </label>
-                    <hr>
-                    <ul class="list-unstyled">
-                        @foreach($species as $species_id)
-                            @switch($species_id->species_id)
-                                @case(1)
-                                    <li class="ml-5">SpeciesName 1</li>
-                                    @break
-                                @case(2)
-                                    <li class="ml-5">SpeciesName 2</li>
-                                    @break
-                                @case(3)
-                                    <li class="ml-5">SpeciesName 3</li>
-                                    @break
-                            @endswitch
-                        @endforeach
-                    </ul>
-                </div>
-            </form>
-        </div>
+        <dt class="col-sm-3">Land Parcel:</dt>
+        <dd class="col-sm-9">{{$land[0]->title}}</dd>
+
+        <dt class="col-sm-3">Status:</dt>
+        <dd class="col-sm-9">{{$restoration->Status->type}}</dd>
+
+        <dt class="col-sm-3">Created at:</dt>
+        <dd class="col-sm-9">{{$restoration->created_at}}</dd>
+    </dl>
+    <div class="border border-dark border-rounded">
+        <div id="mapid" style="height:400px;" name="map"></div>
     </div>
 </div>
 
+
+
+<script type="text/javascript">
+    var center = [7.2906, 80.6337];
+
+    // Create the map
+    var map = L.map('mapid').setView(center, 10);
+
+    // Set up the OSM layer 
+    L.tileLayer(
+        'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: 'Data © <a href="http://osm.org/copyright">OpenStreetMap</a>',
+            maxZoom: 18
+        }).addTo(map);
+
+
+    //FROM LARAVEL THE COORDINATES ARE BEING TAKEN TO THE SCRIPT AND CONVERTED TO JSON
+    var polygon = @json($polygon);
+    console.log(polygon);
+
+    //ADDING THE JSOON COORDINATES TO MAP
+    var layer = L.geoJSON(JSON.parse(polygon)).addTo(map);
+
+    // Adjust map to show the kml
+    var bounds = layer.getBounds();
+    map.fitBounds(bounds);
+</script>
 @endsection
