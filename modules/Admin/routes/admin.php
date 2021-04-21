@@ -39,12 +39,12 @@ Route::get('/searchSelfRegistered', [UserController::class, 'searchSelfRegistere
 
 });
 
-Route::middleware(['access.control:3'])->group(function () {
+
 //Role Based Access control management
 Route::get('/roleindex',[AdminController::class, 'index'])->name('roleIndex');
 Route::get('/roleedit/{id}',[AdminController::class, 'roleedit'])->name('roleedit');
 Route::post('/rolePriviledge/{id}',[AdminController::class, 'roleupdate']);
 Route::get('/removeAccess/{id}',[AdminController::class, 'accessremove']);
 
-});
+
 
