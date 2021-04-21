@@ -13,11 +13,9 @@
       <li class="nav-item {{ Route::currentRouteName() == 'orgIndex' ? 'active' : '' }}">
         <a class="nav-link h4" href="{{ route('orgIndex') }}">Organizations</a>
       </li>
-      @if(Auth::user()->role_id < 3)
       <li class="nav-item {{ Route::currentRouteName() == 'roleIndex' ? 'active' : '' }}">
         <a class="nav-link h4" href="{{ route('roleIndex') }}">Roles</a>
       </li>
-      @endif
     </ul>
   </nav>
   <div class="col-md">
