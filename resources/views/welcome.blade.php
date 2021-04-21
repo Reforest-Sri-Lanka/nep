@@ -370,8 +370,8 @@
           Author: Daniel Farst | Category: Illustration | Likes: 21
         </div>
       </div> -->
-  </div>
-  @endfor
+  <!-- </div>
+  @endfor -->
 
   <br>
   <hr><br>
