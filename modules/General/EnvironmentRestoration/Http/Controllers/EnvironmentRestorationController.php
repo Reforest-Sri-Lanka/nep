@@ -63,7 +63,7 @@ class EnvironmentRestorationController extends Controller
         //ddd($restoration->environment_restoration_activity_id);
         //ddd($restoration->Environment_Restoration_Activity->title);
         //ddd($restoration->ecosystems_type->type);
-        $govorgs=$land->pluck('governing_organizations');
+        $govorgs = $land->pluck('governing_organizations');
         //ddd($land->title);
         //ddd($restoration->Status);
         return view('environmentRestoration::show', [
@@ -71,7 +71,7 @@ class EnvironmentRestorationController extends Controller
             'species' => $species,
             'land' => $land,
             'polygon' => $polygon,
-            'govorgs'=>$govorgs
+            'govorgs' => $govorgs
         ]);
     }
 
@@ -92,7 +92,11 @@ class EnvironmentRestorationController extends Controller
             $landparcel->title = request('landparceltitle');
             $landparcel->polygon = request('polygon');
             $landparcel->governing_organizations = request('govOrg');
-            $landparcel->protected_area = request('isProtected');
+            if (request('isProtected')) {
+                $landparcel->protected_area = request('isProtected');
+            }else {
+                $landparcel->protected_area = 0;
+            }
             $landparcel->created_by_user_id = request('created_by');
             $landparcel->save();
 
@@ -107,13 +111,13 @@ class EnvironmentRestorationController extends Controller
             $restoration->land_parcel_id = $newland;
             $restoration->created_by_user_id = request('created_by');
             $restoration->status = request('status');
-
             $restoration->save();
+            
             $latest = Environment_Restoration::latest()->first();
             $newres = $latest->id;
             $activityorgname = request('activity_org');
             $activityorgid = Organization::where('title', $activityorgname)->pluck('id');
-            
+
             //restoration process item
             $Process_item = new Process_Item();
             $Process_item->form_id = $latest->id;
