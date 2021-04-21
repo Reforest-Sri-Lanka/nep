@@ -13,6 +13,9 @@
       <li class="nav-item {{ Route::currentRouteName() == 'orgIndex' ? 'active' : '' }}">
         <a class="nav-link h4" href="{{ route('orgIndex') }}">Organizations</a>
       </li>
+      <li class="nav-item {{ Route::currentRouteName() == 'roleIndex' ? 'active' : '' }}">
+        <a class="nav-link h4" href="{{ route('roleIndex') }}">Roles</a>
+      </li>
     </ul>
   </nav>
   <div class="col-md">
