@@ -258,10 +258,12 @@
     <div id="pitch">
     </div>
     <div id="main">
-      <h2><a href="#">Lorem ipsum dolor sit amet</a></h2>
-      <img src="images/img.gif" class="img left" alt="" />
-      <p>Nunc eget nunc libero. Nunc commodo euismod massa quis vestibulum. Proin mi nibh, dignissim a pellentesque at, ultricies sit amet sapien. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vel lorem eu libero laoreet facilisis. Aenean placerat, ligula quis placerat iaculis, mi magna luctus nibh, adipiscing pretium erat neque vitae augue. Quisque consectetur odio ut sem semper commodo. Maecenas iaculis leo a ligula euismod condimentum. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Ut enim risus, rhoncus sit amet ultricies vel, aliquet ut dolor. Duis iaculis urna vel massa ultricies suscipit. Phasellus diam sapien, fermentum a eleifend non, luctus non augue. Quisque scelerisque purus quis eros sollicitudin gravida. Aliquam erat volutpat. Donec a sem consequat tortor posuere dignissim sit amet at ipsum.</p>
-      <p>Aenean placerat, ligula quis placerat iaculis, mi magna luctus nibh, adipiscing pretium erat neque vitae augue. Quisque consectetur odio ut sem semper commodo. Maecenas iaculis leo a ligula euismod condimentum. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Ut enim risus, rhoncus sit amet ultricies vel, aliquet ut dolor. Duis iaculis urna vel massa ultricies suscipit. Phasellus diam sapien, fermentum a eleifend non, luctus non augue. Quisque scelerisque purus quis eros sollicitudin gravida. Aliquam erat volutpat. Donec a sem consequat tortor posuere dignissim sit amet at ipsum. </p>
+      <h2>What is the National Environment Platform (NEP)? </h2>
+      <p>A government cloud aimed for sustainable management of envrionmental resources of Sri Lanka. It automates:</p>
+      <p>1. Tree removal process : Trees are removed at different locations under different authorities. Effective management shoud be aware of the loss of trees, why they are removed, which species are removed etc. better manage and monitor green cover. </p>
+      <p>2. Ecosystem restoration activities: Reforestation, Coral restoration, mangrove planting, Garbage clean ups etc. can be geographically added with the ability to log progress of sites for better monitoring and evaluation. Scientefic data analysis is a long term objective.</p>
+      <p>3. Development project site approvals: Add relevant development projects and log its life cycle. Better understand where protected areas exist via GIS mapping  and connect gazette notifications for transparent open governance. </p>
+      <p>In addition NEP has a species database, ecosystems database and a module to manage system admin tasks. </p>
       <div class="x"></div>
     </div>
     <div class="col last">
