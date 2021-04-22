@@ -1,16 +1,6 @@
 @extends('general')
 
 @section('general')
-<div class="flex row border-secondary rounded-lg ml-3 justify-content-between">
-    <!-- Sessions to display success or failure -->
-    <span>
-        <h3 class="text-center bg-success text-light">{{session('message')}}</h3>
-    </span>
-    <span>
-        <h3 class="text-center bg-danger text-light">{{session('warning')}}</h3>
-    </span>
-    <span>
-</div>
 <h4>Application Information</h4>
 <hr>
 <div class="container">
