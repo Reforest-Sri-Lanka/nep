@@ -7,10 +7,10 @@
   <nav class="navbar navbar-expand-sm navbar-light">
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link h5" href="/environment/updatedata">Eco-System Management</a>
+        <a class="nav-link" href="/environment/updatedata">Eco-System Management</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link h5" href="/environment/updatedataspecies">Species Management</a>
+        <a class="nav-link" href="/environment/updatedataspecies">Species Management</a>
       </li>
     </ul>
   </nav>

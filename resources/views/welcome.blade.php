@@ -183,6 +183,7 @@
 
     #main p {
       text-align: justify;
+      font: 18px "Helvetica Neue";
     }
 
     #footer {
@@ -221,13 +222,13 @@
       @guest
       <li class="nav-item">
         <a class="nav-link text-light" href="{{ route('login') }}">
-          <p class="h5">{{ __('Login') }}</p>
+          <p class="h6">{{ __('Login') }}</p>
         </a>
       </li>
       @if (Route::has('register'))
       <li class="nav-item">
         <a class="nav-link text-light ml-3" href="{{ route('register') }}">
-          <p class="h5">{{ __('Register') }}</p>
+          <p class="h6">{{ __('Register') }}</p>
         </a>
       </li>
       @endif

@@ -8,13 +8,13 @@
   <nav class="navbar navbar-expand-sm navbar-light">
     <ul class="navbar-nav">
       <li class="nav-item {{ Route::currentRouteName() == 'userIndex' ? 'active' : '' }}">
-        <a class="nav-link h5" href="{{ route('userIndex') }}">Users</a>
+        <a class="nav-link" href="{{ route('userIndex') }}">Users</a>
       </li>
       <li class="nav-item {{ Route::currentRouteName() == 'orgIndex' ? 'active' : '' }}">
-        <a class="nav-link h5" href="{{ route('orgIndex') }}">Organizations</a>
+        <a class="nav-link" href="{{ route('orgIndex') }}">Organizations</a>
       </li>
       <li class="nav-item {{ Route::currentRouteName() == 'roleIndex' ? 'active' : '' }}">
-        <a class="nav-link h5" href="{{ route('roleIndex') }}">Roles</a>
+        <a class="nav-link" href="{{ route('roleIndex') }}">Roles</a>
       </li>
     </ul>
   </nav>
