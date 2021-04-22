@@ -165,7 +165,6 @@
     #main {
       float: left;
       clear: both;
-      width: 640px;
       font-size: 1.2em;
     }
 
@@ -265,16 +264,15 @@
       <p>2. Ecosystem restoration activities: Reforestation, Coral restoration, mangrove planting, Garbage clean ups etc. can be geographically added with the ability to log progress of sites for better monitoring and evaluation. Scientefic data analysis is a long term objective.</p>
       <p>3. Development project site approvals: Add relevant development projects and log its life cycle. Better understand where protected areas exist via GIS mapping  and connect gazette notifications for transparent open governance. </p>
       <p>In addition NEP has a species database, ecosystems database and a module to manage system admin tasks. </p>
-      <div class="x"></div>
     </div>
-    <div class="col last">
+    <!-- <div class="col last">
       <h4>Lorem ipsum dolor sit amet</h4>
       <div>
         <p>Dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. <a href="#">&raquo;</a></p>
         <p>Dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. <a href="#">&raquo;</a></p>
         <p>Dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. <a href="#">&raquo;</a></p>
       </div>
-    </div>
+    </div> -->
   </div>
 
 
@@ -354,7 +352,7 @@
     <br>
     <hr><br>
 
-    <h2 style="text-align: center;">Blogs</h2>
+    <!-- <h2 style="text-align: center;">Blogs</h2>
     @for($i=0; $i<3; $i++) <div class="row justify-content-center mb-3">
       <div class="col-lg-11 card">
         <div class="row no-gutters">
@@ -372,16 +370,21 @@
         <div class="card-footer bg-white w-100 text-muted">
           Author: Daniel Farst | Category: Illustration | Likes: 21
         </div>
-      </div>
-  </div>
-  @endfor
+      </div> -->
+  <!-- </div>
+  @endfor -->
 
   <br>
   <hr><br>
   <h2 style="text-align: center;">Our Progress</h2>
   <div class="row justify-content-center mb-3">
     <div class="col-lg-11 card">
-      <canvas id="UserChart"></canvas>
+      <canvas id="TreeRemovalAreaChart"></canvas>
+    </div>
+  </div>
+  <div class="row justify-content-center mb-3">
+    <div class="col-lg-11 card">
+      <canvas id="RestorationAreaChart"></canvas>
     </div>
   </div>
   <div class="row justify-content-center mb-3">

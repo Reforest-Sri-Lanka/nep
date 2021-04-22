@@ -13,11 +13,6 @@ Route::middleware(['auth'])->group(function () {
 // user/index route will route to the UserController to route based on the user's role  
 Route::get('/index', [UserController::class, 'index'])->name('userIndex'); 
 
-//Role Based Access control management
-Route::get('/roleindex',[AdminController::class, 'index'])->name('roleIndex');
-Route::get('/roleedit/{id}',[AdminController::class, 'roleedit'])->name('roleedit');
-Route::post('/rolePriviledge/{id}',[AdminController::class, 'roleupdate']);
-Route::get('/removeAccess/{id}',[AdminController::class, 'accessremove']);
 
 ///////ADMIN ACTIONS      
 Route::get('/create', [UserController::class, 'create']);      // Open create view.
@@ -43,4 +38,13 @@ Route::get('/searchUsers', [UserController::class, 'searchUsers']);
 Route::get('/searchSelfRegistered', [UserController::class, 'searchSelfRegistered']);
 
 });
+
+
+//Role Based Access control management
+Route::get('/roleindex',[AdminController::class, 'index'])->name('roleIndex');
+Route::get('/roleedit/{id}',[AdminController::class, 'roleedit'])->name('roleedit');
+Route::post('/rolePriviledge/{id}',[AdminController::class, 'roleupdate']);
+Route::get('/removeAccess/{id}',[AdminController::class, 'accessremove']);
+
+
 

@@ -42,7 +42,7 @@ class Tree_Removal_Request extends Model
     ];
 
     protected $attributes = [
-        'images' => 0,
+        'images' => '{}',
         'special_approval' => 0,
         'tree_locations' => 0,
         'status_id' => 1,

@@ -20,6 +20,7 @@
         </thead>
         <tbody>
             @foreach($roles as $role)
+            @if($role->id > Auth::user()->role_id)
             <tr>
                 <td>{{$role->id}}</td>
                 <td>{{$role->title}}</td>
@@ -27,6 +28,7 @@
                 <!-- opent he edit view -->
                 <td><a href="/admin/roleedit/{{$role->id}}" class="btn btn-outline-warning" role="button">Edit</a></td>
             </tr>
+            @endif
             @endforeach
         </tbody>
     </table>

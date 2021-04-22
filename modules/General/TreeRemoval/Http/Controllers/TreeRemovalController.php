@@ -48,8 +48,8 @@ class TreeRemovalController extends Controller
                 'polygon' => 'required',
                 'number_of_trees' => 'required|integer',
                 'description' => 'required',
-                'land_extent' => 'nullable|numeric|between:0,99.999',
-                'removal_requestor_email' => 'email|required'
+                'land_extent' => 'nullable|numeric|between:0,99.999'
+                //'removal_requestor_email' => 'email|required'
             ]);
         } elseif (request('checkremovalrequestor')) {
             $request->validate([
@@ -63,8 +63,8 @@ class TreeRemovalController extends Controller
                 'polygon' => 'required',
                 'number_of_trees' => 'required|integer',
                 'description' => 'required',
-                'land_extent' => 'nullable|numeric|between:0,99.999',
-                'removal_requestor_email' => 'email|required'
+                'land_extent' => 'nullable|numeric|between:0,99.999'
+                // 'removal_requestor_email' => 'email|required'
             ]);
         } elseif (request('checklandowner')) {
             $request->validate([
@@ -220,13 +220,17 @@ class TreeRemovalController extends Controller
             if (request('checkremovalrequestor')) {
                 $process->other_removal_requestor_name = request('removal_requestor');
                 $process->other_removal_requestor_type = request('removalrequestortype');
-                $process->requestor_email = request('removal_requestor_email');
+                if (request('removal_requestor_email') == null) {
+                    $process->requestor_email = "no email";
+                }
+                else{
+                    $process->requestor_email = request('removal_requestor_email');
+                }
             } else {
                 $removal_requestor = Organization::where('title', request('removal_requestor'))->pluck('id');
                 $process->activity_organization = $removal_requestor[0];
             }
             $process->save();
-
             $Users = User::where('role_id', '=', 2)->get();
             Notification::send($Users, new ApplicationMade($process));
 
@@ -253,7 +257,12 @@ class TreeRemovalController extends Controller
             if (request('checkremovalrequestor')) {
                 $landProcess->other_removal_requestor_name = request('removal_requestor');
                 $landProcess->other_removal_requestor_type = request('removalrequestortype');
-                $landProcess->requestor_email = request('removal_requestor_email');
+                if (request('removal_requestor_email') == null) {
+                    $landProcess->requestor_email = "no email";
+                }
+                else{
+                    $landProcess->requestor_email = request('removal_requestor_email');
+                }
             } else {
                 $removal_requestor = Organization::where('title', request('removal_requestor'))->pluck('id');
                 $landProcess->activity_organization = $removal_requestor[0];

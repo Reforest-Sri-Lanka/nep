@@ -36,7 +36,7 @@ class Process_Item extends Model
         'other_land_owner_name' => '',
         'other_removal_requestor_type' => 0,
         'other_removal_requestor_name' => '',
-        'requestor_email' => '',
+        'requestor_email' => "no email",
     ];
 
     public function form_type()
