@@ -5,17 +5,17 @@
 <div class="row justify-content-center">
     <div class="col-md-3">
         <div class="card">
-            <div class="card-header bg-white text-center">Tree Removals This Month</div>
+            <div class="card-header bg-white text-center">Tree Removal Requests This Month</div>
             <div class="card-body text-center">
-                <p class="card-text display-1">{{$tree_removals}}</p>
+                <p class="card-text display-4">{{$tree_removals}}</p>
             </div>
         </div>
     </div>
     <div class="col-md-3">
         <div class="card">
-            <div class="card-header bg-white text-center">Development Projects This Month</div>
+            <div class="card-header bg-white text-center">Development Project Requests This Month</div>
             <div class="card-body text-center">
-                <p class="card-text display-1">{{$dev_projects}}</p>
+                <p class="card-text display-4">{{$dev_projects}}</p>
             </div>
         </div>
     </div>

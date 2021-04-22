@@ -1,8 +1,6 @@
 @extends('home')
 
 @section('cont')
-
-<kbd><a href="/user/index" class="text-white font-weight-bolder"><i class="fas fa-chevron-left"></i></i> BACK</a></kbd>
 <div class="flex row border-secondary rounded-lg ml-3 justify-content-between">
 
     <h3 class="p-3 display-5" style="display:inline">Your Requests</h3>

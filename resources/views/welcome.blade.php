@@ -182,6 +182,7 @@
 
     #main p {
       text-align: justify;
+      font: 20px "Helvetica Neue";
     }
 
     #footer {
@@ -220,13 +221,13 @@
       @guest
       <li class="nav-item">
         <a class="nav-link text-light" href="{{ route('login') }}">
-          <p class="h5">{{ __('Login') }}</p>
+          <p class="h6">{{ __('Login') }}</p>
         </a>
       </li>
       @if (Route::has('register'))
       <li class="nav-item">
         <a class="nav-link text-light ml-3" href="{{ route('register') }}">
-          <p class="h5">{{ __('Register') }}</p>
+          <p class="h6">{{ __('Register') }}</p>
         </a>
       </li>
       @endif
@@ -373,8 +374,6 @@
   <!-- </div>
   @endfor -->
 
-  <br>
-  <hr><br>
   <h2 style="text-align: center;">Our Progress</h2>
   <div class="row justify-content-center mb-3">
     <div class="col-lg-11 card">
