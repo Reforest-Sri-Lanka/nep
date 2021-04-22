@@ -90,7 +90,7 @@
                     <label class="custom-control-label" for="customCheck1"><strong>Is Unregistered</strong></label>
                   </div>
                 </div>
-                <div class="extLandOwner" style="display:none;">
+                <div class="extLandOwner" id="extLandOwner">
                   <div class="form-group">
                     <label>Land Owner Type:</label>
                     <div class="form-check">
@@ -126,7 +126,7 @@
                 </div>
 
 
-                <div class="extRequestor" style="display:none">
+                <div class="extRequestor" id="extRequestor">
                   <div class="form-group">
                     <label>Removal Requestor Type:</label>
                     <div class="form-check">
@@ -512,6 +512,19 @@
       //No browser support geolocation service
       geolocationErrorOccurred(false, popup, map.getCenter());
     }
+
+    //keeping the dynamic components open if checked
+    if ($("#customCheck2").is(':checked')) {
+      $("#extRequestor").show();
+    } else {
+      $("#extRequestor").hide()
+    }
+
+    if ($("#customCheck1").is(':checked')) {
+      $("#extLandOwner").show();
+    } else {
+      $("#extLandOwner").hide()
+    }
   }
 
   // Set up the OSM layer 
@@ -595,16 +608,24 @@
   });
 
   //toggle extra details for external land owner
-  $(document).ready(function() {
-    $('input[id="customCheck1"]').click(function() {
-      $("." + "extLandOwner").toggle();
+  $(function() {
+    $("#customCheck1").click(function() {
+      if ($(this).is(":checked")) {
+        $("#extLandOwner").show();
+      } else {
+        $("#extLandOwner").hide();
+      }
     });
   });
 
   //toggle extra details for external requestor
-  $(document).ready(function() {
-    $('input[id="customCheck2"]').click(function() {
-      $("." + "extRequestor").toggle();
+  $(function() {
+    $("#customCheck2").click(function() {
+      if ($(this).is(":checked")) {
+        $("#extRequestor").show();
+      } else {
+        $("#extRequestor").hide();
+      }
     });
   });
 </script>

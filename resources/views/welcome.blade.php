@@ -182,7 +182,7 @@
 
     #main p {
       text-align: justify;
-      font: 18px "Helvetica Neue";
+      font: 20px "Helvetica Neue";
     }
 
     #footer {
@@ -374,8 +374,6 @@
   <!-- </div>
   @endfor -->
 
-  <br>
-  <hr><br>
   <h2 style="text-align: center;">Our Progress</h2>
   <div class="row justify-content-center mb-3">
     <div class="col-lg-11 card">
