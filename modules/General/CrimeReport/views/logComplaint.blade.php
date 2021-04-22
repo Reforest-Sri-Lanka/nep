@@ -2,7 +2,6 @@
 
 @section('general')
 <div class="container">
-<hr>
     <form action="\crime-report\crimecreate" method="post" enctype="multipart/form-data">
     @csrf
         <div class="container bg-white">
@@ -13,7 +12,11 @@
                         <select name="crime_type" class="custom-select" required>
                             <option value="0" selected>Select Crime Type</option>
                             @foreach($crime_types as $crime_type)
+                              @if (old('crime_type') == $crime_type->id)
+  		                          <option value="{{ $crime_type->id }}" selected>{{$crime_type->type}}</option>
+  	                          @else
                                 <option value="{{$crime_type->id}}">{{$crime_type->type}}</option>
+                              @endif
                             @endforeach
                         </select>
                         @error('crime_type')
@@ -44,8 +47,7 @@
                     </div>
                     <div class="form-group">
                         <label for="description">Description:</label>
-                        <textarea  class="form-control" rows="3" name="description">
-                        </textarea>
+                        <textarea  class="form-control" rows="3" name="description">{{{ old('description') }}}</textarea>
                         @error('description')
                             <div class="alert">
                                 <strong>{{ $message }}</strong>
@@ -71,7 +73,7 @@
                 <div class="col border border-muted rounded-lg p-4">
                     <div class="form-group">
                         <label for="landTitle">Area name:</label>
-                        <input type="text" class="form-control" placeholder="Enter Area name" id="landTitle" name="landTitle">
+                        <input type="text" class="form-control" placeholder="Enter Area name" id="landTitle" name="landTitle" value="{{ old('landTitle') }}">
                     </div>
                     <!-- ////////MAP GOES HERE -->
                     <div id="mapid" style="height:400px;" name="map"></div>
