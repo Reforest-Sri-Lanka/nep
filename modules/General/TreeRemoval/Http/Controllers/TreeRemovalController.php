@@ -132,16 +132,9 @@ class TreeRemovalController extends Controller
             $tree->created_by_user_id = request('createdBy');
             $tree->description = request('description');
             $tree->no_of_trees = request('number_of_trees');
-            $district_id1 = District::where('district', request('district'))->pluck('id');
-            $tree->district_id = $district_id1[0];
-
-            $province_id1 = Province::where('province', request('province'))->pluck('id');
-            $tree->province_id = $province_id1[0];
-
-            $gs_division_id1 = GS_Division::where('gs_division', request('gs_division'))->pluck('id');
-            $tree->gs_division_id = $gs_division_id1[0];
-
-
+            $tree->district_id = $request->district;
+            $tree->province_id = $request->province;
+            $tree->gs_division_id = $request->gs_division;
             $tree->governing_organizations = Organization::where('title', $governing_organizations1)->pluck('id');
 
 

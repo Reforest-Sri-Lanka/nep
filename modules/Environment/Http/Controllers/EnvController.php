@@ -37,8 +37,7 @@ class EnvController extends Controller
         else{
             $ecosystems->protected_area = 0;
         }
-        $district_id1 = District::where('district', request('district'))->pluck('id');
-        $ecosystems->district_id = $district_id1[0];
+        $ecosystems->district_id = $request->district;
         $ecosystems->title = $request->input('title');
         $ecosystems->polygon = request('polygon');
         $ecosystems->description = $request->input('description');
