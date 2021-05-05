@@ -23,7 +23,14 @@ class TreeRemovalController extends Controller
 {
     public function openForm()
     {
-        return view('treeRemoval::form');
+        $province = Province::all();
+        $district = District::all();
+        $gs = GS_Division::orderBy('gs_division')->get(); 
+        return view('treeRemoval::form', [
+            'provinces' => $province,
+            'districts' => $district,
+            'gs' => $gs,
+        ]);
     }
 
     public function save(Request $request)
@@ -38,9 +45,9 @@ class TreeRemovalController extends Controller
         if (request('checklandowner') && request('checkremovalrequestor')) {
             $request->validate([
                 'landTitle' => 'required',
-                'province' => 'required|exists:provinces,province',
-                'district' => 'required|exists:districts,district',
-                'gs_division' => 'required|exists:gs_divisions,gs_division',
+                'province' => 'required',
+                'district' => 'required',
+                'gs_division' => 'required',
                 'removal_requestor' => 'required',
                 'land_owner' => 'required',
                 'removalrequestortype' => 'required|in:1,2',
@@ -54,9 +61,9 @@ class TreeRemovalController extends Controller
         } elseif (request('checkremovalrequestor')) {
             $request->validate([
                 'landTitle' => 'required',
-                'province' => 'required|exists:provinces,province',
-                'district' => 'required|exists:districts,district',
-                'gs_division' => 'required|exists:gs_divisions,gs_division',
+                'province' => 'required',
+                'district' => 'required',
+                'gs_division' => 'required',
                 'removal_requestor' => 'required',
                 'removalrequestortype' => 'required|in:1,2',
                 'land_owner' => 'required|exists:organizations,title',
@@ -69,9 +76,9 @@ class TreeRemovalController extends Controller
         } elseif (request('checklandowner')) {
             $request->validate([
                 'landTitle' => 'required',
-                'province' => 'required|exists:provinces,province',
-                'district' => 'required|exists:districts,district',
-                'gs_division' => 'required|exists:gs_divisions,gs_division',
+                'province' => 'required',
+                'district' => 'required',
+                'gs_division' => 'required',
                 'removal_requestor' => 'required|exists:organizations,title',
                 'land_owner' => 'required',
                 'landownertype' => 'required|in:1,2',
@@ -83,9 +90,9 @@ class TreeRemovalController extends Controller
         } else {
             $request->validate([
                 'landTitle' => 'required',
-                'province' => 'required|exists:provinces,province',
-                'district' => 'required|exists:districts,district',
-                'gs_division' => 'required|exists:gs_divisions,gs_division',
+                'province' => 'required',
+                'district' => 'required',
+                'gs_division' => 'required',
                 'removal_requestor' => 'required|exists:organizations,title',
                 'land_owner' => 'required|exists:organizations,title',
                 'polygon' => 'required',
@@ -95,19 +102,6 @@ class TreeRemovalController extends Controller
             ]);
         }
 
-
-        // $request->validate([
-        //     'landTitle' => 'required',
-        //     'province' => 'required|exists:provinces,province',
-        //     'district' => 'required|exists:districts,district',
-        //     'gs_division' => 'required|exists:gs_divisions,gs_division',
-        //     'removal_requestor' => 'required',
-        //     'land_owner' => 'required',
-        //     'polygon' => 'required',
-        //     'number_of_trees' => 'required|integer',
-        //     'description' => 'required',
-        //     'land_extent' => 'integer'
-        // ]);
 
         DB::transaction(function () use ($request) {
 
@@ -287,6 +281,7 @@ class TreeRemovalController extends Controller
             'location' => $location_data,
             'polygon' => $land_data->polygon,
             'other_removal_requestor' => $item->other_removal_requestor_name,
+            'process' => $item,
         ]);
     }
 

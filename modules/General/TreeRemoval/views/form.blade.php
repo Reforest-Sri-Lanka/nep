@@ -23,19 +23,29 @@
 
             <div class="row p-2">
               <div class="col p-2">
+
+
                 <div class="form-group">
                   <label for="province">Province:</label>
-                  <input type="text" class="form-control typeahead @error('province') is-invalid @enderror" value="{{ old('province') }}" placeholder="Search" name="province" />
+                  <select class="custom-select @error('province') is-invalid @enderror" name="province">
+                    <option disabled selected value="">Select</option>
+                    @foreach ($provinces as $province)
+                    <option value="{{ $province->id }}" {{ Request::old()?(Request::old('province')==$province->id?'selected="selected"':''):'' }}>{{ $province->province }}</option>
+                    @endforeach
+                  </select>
                   @error('province')
                   <div class="alert alert-danger">{{ $message }}</div>
                   @enderror
                 </div>
 
-
-
                 <div class="form-group">
-                  <label for="gs_division">GS Division:</label>
-                  <input type="text" class="form-control typeahead4 @error('gs_division') is-invalid @enderror" value="{{ old('gs_division') }}" placeholder="Search" name="gs_division" />
+                  <label for="province">Grama Sevaka Division:</label>
+                  <select class="custom-select @error('gs_division') is-invalid @enderror" name="gs_division">
+                    <option disabled selected value="">Select</option>
+                    @foreach ($gs as $gs_division)
+                    <option value="{{ $gs_division->id }}" {{ Request::old()?(Request::old('gs_division')==$gs_division->id?'selected="selected"':''):'' }}>{{ $gs_division->gs_division }}</option>
+                    @endforeach
+                  </select>
                   @error('gs_division')
                   <div class="alert alert-danger">{{ $message }}</div>
                   @enderror
@@ -45,8 +55,13 @@
               <div class="col p-2">
 
                 <div class="form-group">
-                  <label for="district">District:</label>
-                  <input type="text" class="form-control typeahead2 @error('district') is-invalid @enderror" value="{{ old('district') }}" placeholder="Search" name="district" />
+                  <label for="province">District:</label>
+                  <select class="custom-select @error('district') is-invalid @enderror" name="district">
+                    <option disabled selected value="">Select</option>
+                    @foreach ($districts as $district)
+                    <option value="{{ $district->id }}" {{ Request::old()?(Request::old('district')==$district->id?'selected="selected"':''):'' }}>{{ $district->district }}</option>
+                    @endforeach
+                  </select>
                   @error('district')
                   <div class="alert alert-danger">{{ $message }}</div>
                   @enderror
@@ -369,42 +384,6 @@
 
 
   ///TYPEAHEAD
-  var path = "{{route('province')}}";
-  $('input.typeahead').typeahead({
-    source: function(terms, process) {
-
-      return $.get(path, {
-        terms: terms
-      }, function(data) {
-        console.log(data);
-        objects = [];
-        data.map(i => {
-          objects.push(i.province)
-        })
-        console.log(objects);
-        return process(objects);
-      })
-    },
-  });
-
-  var path2 = "{{route('district')}}";
-  $('input.typeahead2').typeahead({
-    source: function(terms, process) {
-
-      return $.get(path2, {
-        terms: terms
-      }, function(data) {
-        console.log(data);
-        objects = [];
-        data.map(i => {
-          objects.push(i.district)
-        })
-        console.log(objects);
-        return process(objects);
-      })
-    },
-  });
-
   var path3 = "{{route('organization')}}";
   $('input.typeahead3').typeahead({
     source: function(terms, process) {
