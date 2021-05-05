@@ -46,13 +46,13 @@ class SpeciesController extends Controller
         $species->polygon = request('polygon');
         $species->description = $request->input('description');
         $species->status_id = $request->input('status');
-
+        $species->district_id = $request->input('district');
         $species->created_by_user_id = $request->input('createby');
         $species->save();
 
 
 
-        return redirect('/environment/newspecies')->with('success', 'Data Added successfully');
+        return redirect('/environment/requestspecies')->with('success', 'Data Added successfully');
     }
 
     /* 

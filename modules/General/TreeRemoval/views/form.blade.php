@@ -402,25 +402,7 @@
     },
   });
 
-  var path4 = "{{route('gramasevaka')}}";
-  $('input.typeahead4').typeahead({
-    source: function(terms, process) {
-
-      return $.get(path4, {
-        terms: terms
-      }, function(data) {
-        console.log(data);
-        objects = [];
-        data.map(i => {
-          objects.push(i.gs_division)
-        })
-        console.log(objects);
-        return process(objects);
-      })
-    },
-  });
-
-
+  
   var path5 = "{{route('species')}}";
   $('input.typeahead5').typeahead({
     source: function(terms, process) {
