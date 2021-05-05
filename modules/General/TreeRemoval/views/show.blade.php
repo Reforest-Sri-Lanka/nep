@@ -50,6 +50,20 @@
                     </ul>
                 </dd>
 
+                <dt class="col-sm-3">Request Org:</dt>
+                @if($process->request_organization)
+                <dd class="col-sm-9">{{$process->requesting_organization->title}}</dd>
+                @else
+                <dd class="col-sm-9">{{$process->other_land_owner_name}} (External)</dd>
+                @endif
+
+                <dt class="col-sm-3">Request to Org:</dt>
+                @if($process->activity_organization)
+                <dd class="col-sm-9">{{$process->Activity_organization->title}}</dd>
+                @else
+                <dd class="col-sm-9">{{$process->other_removal_requestor_name}} (External)</dd>
+                @endif
+
                 <dt class="col-sm-3">Category:</dt>
                 <dd class="col-sm-9">Tree Removal</dd>
 
@@ -140,21 +154,21 @@
     </div>
     <div class="row">
         @isset($Photos)
-            <div class="row p-4 bg-white">
-                <div class="card-deck">
-                    @foreach($Photos as $photo)
-                    <div class="card" style="background-color:#99A3A4">
-                        <img class="card-img-top" src="{{asset('/storage/'.$photo)}}" alt="photo">
-                        <div class="card-body text-center">
+        <div class="row p-4 bg-white">
+            <div class="card-deck">
+                @foreach($Photos as $photo)
+                <div class="card" style="background-color:#99A3A4">
+                    <img class="card-img-top" src="{{asset('/storage/'.$photo)}}" alt="photo">
+                    <div class="card-body text-center">
                         <a class="nav-link text-dark font-italic p-2" href="/crime-report/downloadimage/{{$photo}}">Download Image</a>
-                        </div>
                     </div>
-                    @endforeach
                 </div>
+                @endforeach
             </div>
+        </div>
         @endisset
         @empty($Photos)
-            <p>No photos included in the application</p>
+        <p>No photos included in the application</p>
         @endempty
     </div>
 </div>
@@ -185,7 +199,5 @@
     // Adjust map to show the kml
     var bounds = layer.getBounds();
     map.fitBounds(bounds);
-
-    
 </script>
 @endsection

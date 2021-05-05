@@ -40,6 +40,20 @@
             </ul>
         </dd>
 
+        <dt class="col-sm-3">Request Org:</dt>
+        <!-- @if($process->request_organization) -->
+        <dd class="col-sm-9">{{$process->requesting_organization->title}}</dd>
+        <!-- @else
+        <dd class="col-sm-9">{{$process->other_land_owner_name}}</dd>
+        @endif -->
+
+        <dt class="col-sm-3">Request to Org:</dt>
+        <!-- @if($process->activity_organization) -->
+        <dd class="col-sm-9">{{$process->Activity_organization->title}}</dd>
+        <!-- @else
+        <dd class="col-sm-9">{{$process->other_removal_requestor_name}}</dd>
+        @endif -->
+
         <dt class="col-sm-3">Logs:</dt>
         @if($development_project->logs == 0)
         <dd class="col-sm-9">No Logs</dd>
