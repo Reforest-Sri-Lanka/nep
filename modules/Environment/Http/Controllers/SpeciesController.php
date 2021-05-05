@@ -4,6 +4,7 @@ namespace Environment\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Species;
+use App\Models\District;
 use App\Models\Organization;
 
 use App\Http\Controllers\Controller;
@@ -15,8 +16,10 @@ class SpeciesController extends Controller
     public function form()
     {
         $organization = Organization::all();
+        $districts = District::all();
         return view('environment::species', [
             'org' => $organization,
+            'districts' => $districts
         ]);
     }
     // Store the data in the database
@@ -32,7 +35,7 @@ class SpeciesController extends Controller
             'description' => 'required',
             'createby' => 'required',
             'polygon' => 'required',
-            'district' => 'required|exists:districts,district',
+            'district' => 'required',
         ]);
         $species = new Species;
         $species->type = $request->input('type');

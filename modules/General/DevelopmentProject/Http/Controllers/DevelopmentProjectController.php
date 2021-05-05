@@ -119,6 +119,7 @@ class DevelopmentProjectController extends Controller
         return view('developmentProject::show', [
             'development_project' => $development_project,
             'polygon' => $land_data->polygon,
+            'process' => $process_item,
         ]);
     }
 

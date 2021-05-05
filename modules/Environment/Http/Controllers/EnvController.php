@@ -26,7 +26,7 @@ class EnvController extends Controller
             'eco_type' => 'required',
             'description' => 'required',
             'polygon' => 'required',
-            'district' => 'required|exists:districts,district',
+            'district' => 'required',
 
         ]);
         $ecosystems = new Env;
@@ -62,7 +62,11 @@ class EnvController extends Controller
     {
 
         $data = Env_type::all();
-        return view('environment::request')->with('data', $data);
+        $districts = District::all();
+        return view('environment::request',[
+            'districts' => $districts,
+            'data' => $data,
+        ]);
     }
 
 

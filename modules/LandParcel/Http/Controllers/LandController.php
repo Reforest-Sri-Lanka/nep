@@ -23,10 +23,16 @@ class LandController extends Controller
     public function form()
     {
         $gazettes = Gazette::all();
+        $province = Province::all();
+        $district = District::all();
         $organizations = Organization::all();
+        $gs = GS_Division::orderBy('gs_division')->get();
         return view('land::form', [
             'organizations' => $organizations,
             'gazettes' => $gazettes,
+            'provinces' => $province,
+            'districts' => $district,
+            'gs' => $gs,
 
         ]);
     }

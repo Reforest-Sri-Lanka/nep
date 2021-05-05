@@ -51,7 +51,13 @@
 
                         </br>
                         <div class="form-group">
-                            District:<input type="text" class="form-control typeahead2 @error('district') is-invalid @enderror" value="{{ old('district') }}" placeholder="Search" name="district" />
+                            <label for="province">District:</label>
+                            <select class="custom-select @error('district') is-invalid @enderror" name="district">
+                                <option disabled selected value="">Select</option>
+                                @foreach ($districts as $district)
+                                <option value="{{ $district->id }}" {{ Request::old()?(Request::old('district')==$district->id?'selected="selected"':''):'' }}>{{ $district->district }}</option>
+                                @endforeach
+                            </select>
                             @error('district')
                             <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
@@ -104,10 +110,10 @@
                             </div>
                         </div>
                         <label>Project Description</label>
-                            <textarea class="form-control" rows="5" name="description"></textarea>
-                            @error('description')
-                                <div class="alert alert-danger">{{ $message }}</div>
-                                @enderror
+                        <textarea class="form-control" rows="5" name="description"></textarea>
+                        @error('description')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                         </br>
                         </br>
 
@@ -139,24 +145,6 @@
 
     </div>
     <script type="text/javascript">
-        var path2 = "{{route('district')}}";
-        $('input.typeahead2').typeahead({
-            source: function(terms, process) {
-
-                return $.get(path2, {
-                    terms: terms
-                }, function(data) {
-                    console.log(data);
-                    objects = [];
-                    data.map(i => {
-                        objects.push(i.district)
-                    })
-                    console.log(objects);
-                    return process(objects);
-                })
-            },
-        });
-
         ///SCRIPT FOR THE MAP
         var center = [7.2906, 80.6337];
 
