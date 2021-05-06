@@ -2,112 +2,111 @@
 
 @section('general')
 <div class="container">
-    <form action="\crime-report\crimecreate" method="post" enctype="multipart/form-data">
+  <form action="\crime-report\crimecreate" method="post" enctype="multipart/form-data">
     @csrf
-        <div class="container bg-white">
-            <div class="row p-4 bg-white">
-                <div class="col border border-muted rounded-lg mr-2 p-4">
-                    <div class="form-group">
-                        <label for="crime_type">Crime type:</label>
-                        <select name="crime_type" class="custom-select" required>
-                            <option value="0" selected>Select Crime Type</option>
-                            @foreach($crime_types as $crime_type)
-                              @if (old('crime_type') == $crime_type->id)
-  		                          <option value="{{ $crime_type->id }}" selected>{{$crime_type->type}}</option>
-  	                          @else
-                                <option value="{{$crime_type->id}}">{{$crime_type->type}}</option>
-                              @endif
-                            @endforeach
-                        </select>
-                        @error('crime_type')
-                            <div class="alert">                                   
-                                <strong>{{ $message }}</strong>
-                            </div>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <label for="organization">Make complaint to:</label>
-                            <input type="text" class="form-control typeahead3" placeholder="Search" name="organization" value="{{ old('organization') }}"/>
-                            
-                        @error('organization')
-                            <div class="alert">                                   
-                                <strong>{{ $message }}</strong>
-                            </div>
-                        @enderror    
-                    </div>
-                    <div class="form-group" id="dynamicAddRemove">
-                        <label for="images">Photos:</label>
-                        
-                        <input type="file" id="image" name="file[]" multiple>
-                        @if ($errors->has('file.*'))
-                            <div class="alert">
-                                <strong>{{ $errors->first('file.*') }}</strong>
-                            </div>
-                        @endif   
-                    </div>
-                    <div class="form-group">
-                        <label for="description">Description:</label>
-                        <textarea  class="form-control" rows="3" name="description">{{{ old('description') }}}</textarea>
-                        @error('description')
-                            <div class="alert">
-                                <strong>{{ $message }}</strong>
-                            </div>
-                        @enderror
-                    </div>
-                    <hr>
-                    
-                    <div class="form-check">
-                    <input type="hidden" class="form-control" name="create_by" value="{{ Auth::user()->id }}">  
-                        <input id="polygon" type="hidden" name="polygon" value="{{request('polygon')}}">
-                        <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input" name="confirm" ><strong>I confirm these information to be true</strong>
-                        @error('confirm')
-                            <div class="alert">
-                                <strong>{{ $message }}</strong>
-                            </div>
-                        @enderror
-                        </label>
-                        <button type="submit" class="btn btn-primary" >Submit</button>
-                    </div>
-                </div>
-                <div class="col border border-muted rounded-lg p-4">
-                    <div class="form-group">
-                        <label for="landTitle">Area name:</label>
-                        <input type="text" class="form-control" placeholder="Enter Area name" id="landTitle" name="landTitle" value="{{ old('landTitle') }}">
-                    </div>
-                    <!-- ////////MAP GOES HERE -->
-                    <div id="mapid" style="height:400px;" name="map"></div>
-                    <br>
-                </div>
+    <div class="container bg-white">
+      <div class="row p-4 bg-white">
+        <div class="col border border-muted rounded-lg mr-2 p-4">
+          <div class="form-group">
+            <label for="crime_type">Crime type:</label>
+            <select name="crime_type" class="custom-select" required>
+              <option value="0" selected>Select Crime Type</option>
+              @foreach($crime_types as $crime_type)
+              @if (old('crime_type') == $crime_type->id)
+              <option value="{{ $crime_type->id }}" selected>{{$crime_type->type}}</option>
+              @else
+              <option value="{{$crime_type->id}}">{{$crime_type->type}}</option>
+              @endif
+              @endforeach
+            </select>
+            @error('crime_type')
+            <div class="alert">
+              <strong>{{ $message }}</strong>
             </div>
+            @enderror
+          </div>
+          <div class="form-group">
+            <label for="organization">Make complaint to:</label>
+            <input type="text" class="form-control typeahead3" placeholder="Search" name="organization" value="{{ old('organization') }}" />
+
+            @error('organization')
+            <div class="alert">
+              <strong>{{ $message }}</strong>
+            </div>
+            @enderror
+          </div>
+          <div class="form-group" id="dynamicAddRemove">
+            <label for="images">Photos:</label>
+
+            <input type="file" id="image" name="file[]" multiple>
+            @if ($errors->has('file.*'))
+            <div class="alert">
+              <strong>{{ $errors->first('file.*') }}</strong>
+            </div>
+            @endif
+          </div>
+          <div class="form-group">
+            <label for="description">Description:</label>
+            <textarea class="form-control" rows="3" name="description">{{{ old('description') }}}</textarea>
+            @error('description')
+            <div class="alert">
+              <strong>{{ $message }}</strong>
+            </div>
+            @enderror
+          </div>
+          <hr>
+
+          <div class="form-check">
+            <input type="hidden" class="form-control" name="create_by" value="{{ Auth::user()->id }}">
+            <input id="polygon" type="hidden" name="polygon" value="{{request('polygon')}}">
+            <label class="form-check-label">
+              <input type="checkbox" class="form-check-input" name="confirm"><strong>I confirm these information to be true</strong>
+              @error('confirm')
+              <div class="alert">
+                <strong>{{ $message }}</strong>
+              </div>
+              @enderror
+            </label>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
         </div>
-    </form>
+        <div class="col border border-muted rounded-lg p-4">
+          <div class="form-group">
+            <label for="landTitle">Area name:</label>
+            <input type="text" class="form-control" placeholder="Enter Area name" id="landTitle" name="landTitle" value="{{ old('landTitle') }}">
+          </div>
+          <!-- ////////MAP GOES HERE -->
+          <div id="mapid" style="height:400px;" name="map"></div>
+          <br>
+        </div>
+      </div>
+    </div>
+  </form>
 </div>
 <script type="text/javascript">
+  //THIS USES THE AUTOMECOMPLETE FUNCTION IN TREE REMOVAL CONTROLLER
+  var path3 = "{{route('organization')}}";
+  $('input.typeahead3').typeahead({
+    source: function(terms, process) {
 
-    //THIS USES THE AUTOMECOMPLETE FUNCTION IN TREE REMOVAL CONTROLLER
-    var path3 = "{{route('organization')}}";
-    $('input.typeahead3').typeahead({
-        source: function(terms, process) {
+      return $.get(path3, {
+        terms: terms
+      }, function(data) {
+        console.log(data);
+        objects = [];
+        data.map(i => {
+          objects.push(i.title)
+        })
+        console.log(objects);
+        return process(objects);
+      })
+    },
+  });
 
-            return $.get(path3, {
-                terms: terms
-            }, function(data) {
-                console.log(data);
-                objects = [];
-                data.map(i => {
-                    objects.push(i.title)
-                })
-                console.log(objects);
-                return process(objects);
-            })
-        },
-    });
 
-    
-   
-// SCRIPT FOR THE MAP
-var map = L.map('mapid', {
+
+  // SCRIPT FOR THE MAP
+  var map = L.map('mapid', {
     center: [7.2906, 80.6337], //if the location cannot be fetched it will be set to Kandy
     zoom: 12
   });
@@ -204,25 +203,39 @@ var map = L.map('mapid', {
 
   });
 
-  $(document).ready(function(){
-        $('#image').change(function(){
-            var fp = $("#image");
-            var lg = fp[0].files.length; // get length
-            var items = fp[0].files;
-            var fileSize = 0;
-           
-            if (lg > 0) {
-                for (var i = 0; i < lg; i++) {
-                    fileSize = fileSize+items[i].size; // get file size
-                }
-                if(fileSize > 5242880) {
-                    alert('You should not uplaod files exceeding 4 MB. Please compress files size and uplaod agian');
-                    $('#image').val('');
-                }
-            }
-        });
+  $(document).ready(function() {
+    $('#image').change(function() {
+      var fp = $("#image");
+      var lg = fp[0].files.length; // get length
+      var items = fp[0].files;
+      var fileSize = 0;
+
+      if (lg > 0) {
+        for (var i = 0; i < lg; i++) {
+          fileSize = fileSize + items[i].size; // get file size
+        }
+        if (fileSize > 5242880) {
+          alert('You should not uplaod files exceeding 4 MB. Please compress files size and uplaod agian');
+          $('#image').val('');
+        }
+      }
     });
+  });
 
+  //SEARCH FUNCTIONALITY
+  var searchControl = new L.esri.Controls.Geosearch().addTo(map);
 
+  var results = new L.LayerGroup().addTo(map);
+
+  searchControl.on('results', function(data) {
+    results.clearLayers();
+    for (var i = data.results.length - 1; i >= 0; i--) {
+      results.addLayer(L.marker(data.results[i].latlng));
+    }
+  });
+
+  setTimeout(function() {
+    $('.pointer').fadeOut('slow');
+  }, 3400);
 </script>
 @endsection

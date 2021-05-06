@@ -142,73 +142,86 @@
                 </div>
         </div>
         </form>
-
     </div>
-    <script type="text/javascript">
-        ///SCRIPT FOR THE MAP
-        var center = [7.2906, 80.6337];
-
-        // Create the map
-        var map = L.map('mapid').setView(center, 10);
-
-        // Set up the OSM layer 
-        L.tileLayer(
-            'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: 'Data © <a href="http://osm.org/copyright">OpenStreetMap</a>',
-                maxZoom: 18
-            }).addTo(map);
-
-        var drawnItems = new L.FeatureGroup();
-        map.addLayer(drawnItems);
-
-        var drawControl = new L.Control.Draw({
-            position: 'topright',
-            draw: {
-                polygon: {
-                    shapeOptions: {
-                        color: 'purple'
-                    },
-                    allowIntersection: false,
-                    drawError: {
-                        color: 'orange',
-                        timeout: 1000
-                    },
-                    showArea: true,
-                    metric: false,
-                    repeatMode: true
-                },
-                polyline: {
-                    shapeOptions: {
-                        color: 'red'
-                    },
-                },
-                circlemarker: false,
-                rect: {
-                    shapeOptions: {
-                        color: 'green'
-                    },
-                },
-                circle: false,
-            },
-            edit: {
-                featureGroup: drawnItems
-            }
-        });
-        map.addControl(drawControl);
-
-        map.on('draw:created', function(e) {
-            var type = e.layerType,
-                layer = e.layer;
-
-            if (type === 'marker') {
-                layer.bindPopup('A popup!');
-            }
-
-            drawnItems.addLayer(layer);
-            $('#polygon').val(JSON.stringify(layer.toGeoJSON()));
-
-
-        });
-    </script>
 </div>
+<script type="text/javascript">
+    ///SCRIPT FOR THE MAP
+    var center = [7.2906, 80.6337];
+
+    // Create the map
+    var map = L.map('mapid').setView(center, 10);
+
+    // Set up the OSM layer 
+    L.tileLayer(
+        'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: 'Data © <a href="http://osm.org/copyright">OpenStreetMap</a>',
+            maxZoom: 18
+        }).addTo(map);
+
+    var drawnItems = new L.FeatureGroup();
+    map.addLayer(drawnItems);
+
+    var drawControl = new L.Control.Draw({
+        position: 'topright',
+        draw: {
+            polygon: {
+                shapeOptions: {
+                    color: 'purple'
+                },
+                allowIntersection: false,
+                drawError: {
+                    color: 'orange',
+                    timeout: 1000
+                },
+                showArea: true,
+                metric: false,
+                repeatMode: true
+            },
+            polyline: {
+                shapeOptions: {
+                    color: 'red'
+                },
+            },
+            circlemarker: false,
+            rect: {
+                shapeOptions: {
+                    color: 'green'
+                },
+            },
+            circle: false,
+        },
+        edit: {
+            featureGroup: drawnItems
+        }
+    });
+    map.addControl(drawControl);
+
+    map.on('draw:created', function(e) {
+        var type = e.layerType,
+            layer = e.layer;
+
+        if (type === 'marker') {
+            layer.bindPopup('A popup!');
+        }
+
+        drawnItems.addLayer(layer);
+        $('#polygon').val(JSON.stringify(layer.toGeoJSON()));
+    });
+
+    //SEARCH FUNCTIONALITY
+    var searchControl = new L.esri.Controls.Geosearch().addTo(map);
+
+    var results = new L.LayerGroup().addTo(map);
+
+    searchControl.on('results', function(data) {
+        results.clearLayers();
+        for (var i = data.results.length - 1; i >= 0; i--) {
+            results.addLayer(L.marker(data.results[i].latlng));
+        }
+    });
+
+    setTimeout(function() {
+        $('.pointer').fadeOut('slow');
+    }, 3400);
+</script>
 @endsection
