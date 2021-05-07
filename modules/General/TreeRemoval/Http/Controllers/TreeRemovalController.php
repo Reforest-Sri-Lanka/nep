@@ -251,10 +251,32 @@ class TreeRemovalController extends Controller
         return view('treeRemoval::show', [
             'tree' => $tree_removal,
             'location' => $location_data,
-            'polygon' => $land_data->polygon,
+            'land' => $land_data,
             'other_removal_requestor' => $item->other_removal_requestor_name,
             'process' => $item,
         ]);
+    }
+
+    public function destroy($processid, $treeid, $landid)
+    {
+        $prereqs = Process_Item::where("prerequisite_id", "=", $processid)->pluck('id');
+        //ddd($processid, $treeid, $landid, $prereqs[0]);
+
+        DB::transaction(function () use ($processid, $treeid, $landid, $prereqs) {
+
+            $landParcelProcess = Process_Item::find($prereqs[0]);
+            $landParcelProcess->delete();
+
+            $treeRemovalProcess = Process_Item::find($processid);
+            $treeRemovalProcess->delete();
+
+            $treeRemoval = Tree_Removal_Request::find($treeid);
+            $treeRemoval->delete();
+
+            $landParcel = Land_Parcel::find($landid);
+            $landParcel->delete();
+        });
+        return redirect('/approval-item/showRequests')->with('message', 'Request Successfully Deleted');
     }
 
     public function provinceAutocomplete(Request $request)

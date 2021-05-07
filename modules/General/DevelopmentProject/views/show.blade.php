@@ -58,7 +58,7 @@
         @if($development_project->logs == 0)
         <dd class="col-sm-9">No Logs</dd>
         @else
-        <dd class="col-sm-9">CONFIGURE CODE TO SHOW LOGS NOT DONE - CURRENTLY SAVING COORDINATES HERE</dd>
+        <dd class="col-sm-9">{{$development_project->logs}}</dd>
         @endif
 
         <dt class="col-sm-3">Plan Number:</dt>
@@ -76,6 +76,19 @@
     <div class="border border-dark border-rounded">
         <div id="mapid" style="height:400px;" name="map"></div>
     </div>
+    @if($process->status_id < 2)
+    <div class="mt-3" style="float:right;">
+        <!-- <a class="btn btn-outline-warning" href="/dev-project/edit/{{$process->id}}/{{$development_project->id}}/{{$land->id}}">Edit</a> -->
+        <button class="btn btn-outline-danger" onclick="if (confirm('Are you sure you wish to delete this request and all it\'s related data?')){
+            event.preventDefault();
+            document.getElementById('form-delete-{{$process->id}}').submit()}">Delete</button>
+
+        <form id="{{'form-delete-'.$process->id}}" style="display:none" method="post" action="/dev-project/delete/{{$process->id}}/{{$development_project->id}}/{{$land->id}}">
+            @csrf
+            @method('delete');
+        </form>
+    </div>
+    @endif
 </div>
 
 
@@ -95,7 +108,7 @@
 
 
     //FROM LARAVEL THE COORDINATES ARE BEING TAKEN TO THE SCRIPT AND CONVERTED TO JSON
-    var polygon = @json($polygon);
+    var polygon = @json($land -> polygon);
     console.log(polygon);
 
     //ADDING THE JSOON COORDINATES TO MAP
