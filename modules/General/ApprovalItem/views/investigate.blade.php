@@ -133,7 +133,7 @@
         <div class="row p-4 bg-white">
             <div class="col border border-muted rounded-lg mr-2 p-4">
                 <h6>Save investigation Progress<h6>
-                <form action="\approval-item\progresssave\" method="post">
+                <form action="\approval-item\progresssave\" type="post" method="post">
                     @csrf
                     <h6>Remark</h6>
                     <div class="input-group mb-3">
@@ -170,7 +170,7 @@
             </div>
             <div class="col border border-muted rounded-lg mr-2 p-4">
                 <h6>Final approval/rejection of application<h6>
-                <form action="\approval-item\finalapproval\" method="post">
+                <form action="\approval-item\finalapproval\" type="post" method="post">
                     @csrf
                     <h6>Remark</h6>
                     <div class="input-group mb-3">
