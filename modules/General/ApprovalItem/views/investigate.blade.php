@@ -168,7 +168,7 @@
                 </form>
             </div> -->
             <div class="col border border-muted rounded-lg mr-2 p-4">
-                <h6>Save investigation Progress</h6>
+                <h6>Final Decision</h6>
                 <br>
                 <form action="\approval-item\progresssave" method="post">
                     @csrf
