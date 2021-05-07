@@ -23,10 +23,7 @@ class DevelopmentProjectController extends Controller
     //Returns the view for the application form passing in data of lands, organziations and gazettes
     public function form()
     {
-        $organizations = Organization::all();
-        return view('developmentProject::form', [
-            'organizations' => $organizations,
-        ]);
+        return view('developmentProject::form');
     }
 
     // Saves the form to the development projects table as well as creates 1 or more entries in the process items table
@@ -35,15 +32,17 @@ class DevelopmentProjectController extends Controller
     {
         $request->validate([
             'title' => 'required',
-            'landTitle' => 'required',
+            'planNo' => 'required',
+            'surveyorName' => 'required',
             'organization' => 'required|exists:organizations,title',
             'gazette' => 'required|exists:gazettes,gazette_number',
-            'polygon' => 'required'
+            'polygon' => 'required',
         ]);
 
         DB::transaction(function () use ($request) {
             $land = new Land_Parcel();
-            $land->title = request('landTitle');
+            $land->title = request('planNo');
+            $land->surveyor_name = request('surveyorName');
 
             $governing_organizations1 = request('organization');
             $land->governing_organizations = Organization::where('title', $governing_organizations1)->pluck('id');
@@ -118,8 +117,40 @@ class DevelopmentProjectController extends Controller
         $land_data = Land_Parcel::find($development_project->land_parcel_id);
         return view('developmentProject::show', [
             'development_project' => $development_project,
-            'polygon' => $land_data->polygon,
+            'land' => $land_data,
             'process' => $process_item,
+        ]);
+    }
+
+    public function destroy($processid, $devid, $landid)
+    {
+        $prereqs = Process_Item::where("prerequisite_id", "=", $processid)->pluck('id');
+        //ddd($processid, $treeid, $landid, $prereqs[0]);
+
+        DB::transaction(function () use ($processid, $devid, $landid, $prereqs) {
+
+            $landParcelProcess = Process_Item::find($prereqs[0]);
+            $landParcelProcess->delete();
+
+            $treeRemovalProcess = Process_Item::find($processid);
+            $treeRemovalProcess->delete();
+
+            $treeRemoval = Development_Project::find($devid);
+            $treeRemoval->delete();
+
+            $landParcel = Land_Parcel::find($landid);
+            $landParcel->delete();
+        });
+        return redirect('/approval-item/showRequests')->with('message', 'Request Successfully Deleted');
+    }
+
+    public function edit($processid, $devid, $landid)
+    {
+        $process = Process_Item::find($processid);
+        $dev = Development_Project::find($devid);
+        return view('developmentProject::edit', [
+            'process' => $process,
+            'dev' => $dev,
         ]);
     }
 

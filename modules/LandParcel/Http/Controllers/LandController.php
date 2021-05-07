@@ -41,14 +41,17 @@ class LandController extends Controller
     {
 
         $request->validate([
-            'landTitle' => 'required',
+            'planNo' => 'required',
+            'surveyorName' => 'required',
             'governing_orgs' => 'nullable',
             'gazettes' => 'nullable',
             'polygon' => 'required'
         ]);
 
         $land = new Land_Parcel();
-        $land->title = request('landTitle');
+        $land->title = request('planNo');
+        $land->surveyor_name = request('surveyorName');
+
         //$land->governing_organizations = request('governing_orgs');
         if (request('governing_orgs')) {
             $land->governing_organizations = request('governing_orgs');

@@ -24,16 +24,24 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        Organization:<input type="text" class="form-control typeahead3" placeholder="Search" name="organization" value="{{ old('organization') }}" />
+                        Request Organization:<input type="text" class="form-control typeahead3" placeholder="Search" name="organization" value="{{ old('organization') }}" />
                         @error('organization')
                         <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                     </div>
 
                     <div class="form-group">
-                        <label for="title">Land Title:</label>
-                        <input type="text" class="form-control" placeholder="Enter Land Title" id="landTitle" name="landTitle" value="{{ old('landTitle') }}">
-                        @error('landTitle')
+                        <label for="title">Plan Number:</label>
+                        <input type="text" class="form-control @error('planNo') is-invalid @enderror" value="{{ old('planNo') }}" placeholder="Enter Plan Number" id="planNo" name="planNo">
+                        @error('planNo')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="form-group">
+                        <label for="title">Surveyor Name:</label>
+                        <input type="text" class="form-control @error('surveyorName') is-invalid @enderror" value="{{ old('surveyorName') }}" placeholder="Enter Surveyor Name" id="surveyorName" name="surveyorName">
+                        @error('surveyorName')
                         <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                     </div>

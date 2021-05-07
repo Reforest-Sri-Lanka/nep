@@ -3,7 +3,17 @@
 @section('cont')
 <h3 class="p-3 display-5">Your Requests</h3>
 <div class="row">
-    <div class="col">
+    <div class="col-md-6">
+        <!-- Sessions to display success or failure -->
+        <span>
+            <h3 class="text-center bg-success text-light">{{session('message')}}</h3>
+        </span>
+        <span>
+            <h3 class="text-center bg-danger text-light">{{session('warning')}}</h3>
+        </span>
+        <span>
+    </div>
+    <div class="col-md-6">
         <!-- Filter Dropdown -->
         <div class="dropdown" style="float:right;">
             <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown"><i class="fa fa-filter" aria-hidden="true"></i> Filter

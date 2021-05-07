@@ -25,7 +25,7 @@ class TreeRemovalController extends Controller
     {
         $province = Province::all();
         $district = District::all();
-        $gs = GS_Division::orderBy('gs_division')->get(); 
+        $gs = GS_Division::orderBy('gs_division')->get();
         return view('treeRemoval::form', [
             'provinces' => $province,
             'districts' => $district,
@@ -35,8 +35,20 @@ class TreeRemovalController extends Controller
 
     public function save(Request $request)
     {
-        if($request->hasfile('file')){
-            
+        request()->validate([
+            'planNo' => 'required',
+            'surveyorName' => 'required',
+            'province' => 'required',
+            'district' => 'required',
+            'gs_division' => 'required',
+            'polygon' => 'required',
+            'number_of_trees' => 'required|integer',
+            'description' => 'required',
+            'land_extent' => 'nullable|numeric|between:0,99.999',
+        ]);
+
+        if ($request->hasfile('file')) {
+
             request()->validate([
                 'file' => 'required',
                 'file.*' => 'mimes:jpeg,jpg,png|max:40000'
@@ -44,61 +56,29 @@ class TreeRemovalController extends Controller
         }
         if (request('checklandowner') && request('checkremovalrequestor')) {
             $request->validate([
-                'landTitle' => 'required',
-                'province' => 'required',
-                'district' => 'required',
-                'gs_division' => 'required',
                 'removal_requestor' => 'required',
                 'land_owner' => 'required',
                 'removalrequestortype' => 'required|in:1,2',
                 'landownertype' => 'required|in:1,2',
-                'polygon' => 'required',
-                'number_of_trees' => 'required|integer',
-                'description' => 'required',
-                'land_extent' => 'nullable|numeric|between:0,99.999'
                 //'removal_requestor_email' => 'email|required'
             ]);
         } elseif (request('checkremovalrequestor')) {
             $request->validate([
-                'landTitle' => 'required',
-                'province' => 'required',
-                'district' => 'required',
-                'gs_division' => 'required',
                 'removal_requestor' => 'required',
                 'removalrequestortype' => 'required|in:1,2',
                 'land_owner' => 'required|exists:organizations,title',
-                'polygon' => 'required',
-                'number_of_trees' => 'required|integer',
-                'description' => 'required',
-                'land_extent' => 'nullable|numeric|between:0,99.999'
                 // 'removal_requestor_email' => 'email|required'
             ]);
         } elseif (request('checklandowner')) {
             $request->validate([
-                'landTitle' => 'required',
-                'province' => 'required',
-                'district' => 'required',
-                'gs_division' => 'required',
                 'removal_requestor' => 'required|exists:organizations,title',
                 'land_owner' => 'required',
                 'landownertype' => 'required|in:1,2',
-                'polygon' => 'required',
-                'number_of_trees' => 'required|integer',
-                'description' => 'required',
-                'land_extent' => 'nullable|numeric|between:0,99.999',
             ]);
         } else {
             $request->validate([
-                'landTitle' => 'required',
-                'province' => 'required',
-                'district' => 'required',
-                'gs_division' => 'required',
                 'removal_requestor' => 'required|exists:organizations,title',
                 'land_owner' => 'required|exists:organizations,title',
-                'polygon' => 'required',
-                'number_of_trees' => 'required|integer',
-                'description' => 'required',
-                'land_extent' => 'nullable|numeric|between:0,99.999',
             ]);
         }
 
@@ -106,7 +86,8 @@ class TreeRemovalController extends Controller
         DB::transaction(function () use ($request) {
 
             $land = new Land_Parcel();
-            $land->title = request('landTitle');
+            $land->title = request('planNo');
+            $land->surveyor_name = request('surveyorName');
 
 
             $governing_organizations1 = request('removal_requestor');
@@ -177,16 +158,16 @@ class TreeRemovalController extends Controller
 
 
             $latest = Tree_Removal_Request::latest()->first();
-            if($request->hasfile('file')) { 
-                $y=0;
-                foreach($request->file('file') as $file){
-                    $filename =$file->getClientOriginalName();
-                    $newname = $latest->id.'No'.$y.$filename;
-                    $path = $file->storeAs('treeremoval',$newname,'public');
-                    $photoarray[$y] = $path;  
-                    $y++;          
+            if ($request->hasfile('file')) {
+                $y = 0;
+                foreach ($request->file('file') as $file) {
+                    $filename = $file->getClientOriginalName();
+                    $newname = $latest->id . 'No' . $y . $filename;
+                    $path = $file->storeAs('treeremoval', $newname, 'public');
+                    $photoarray[$y] = $path;
+                    $y++;
                 }
-                $tree = Tree_Removal_Request::where('id',$latest->id)->update(['images' => json_encode($photoarray)]);
+                $tree = Tree_Removal_Request::where('id', $latest->id)->update(['images' => json_encode($photoarray)]);
             }
             $process = new Process_Item();
             $process->form_type_id = 1;
@@ -209,8 +190,7 @@ class TreeRemovalController extends Controller
                 $process->other_removal_requestor_type = request('removalrequestortype');
                 if (request('removal_requestor_email') == null) {
                     $process->requestor_email = "no email";
-                }
-                else{
+                } else {
                     $process->requestor_email = request('removal_requestor_email');
                 }
             } else {
@@ -246,8 +226,7 @@ class TreeRemovalController extends Controller
                 $landProcess->other_removal_requestor_type = request('removalrequestortype');
                 if (request('removal_requestor_email') == null) {
                     $landProcess->requestor_email = "no email";
-                }
-                else{
+                } else {
                     $landProcess->requestor_email = request('removal_requestor_email');
                 }
             } else {
@@ -272,10 +251,32 @@ class TreeRemovalController extends Controller
         return view('treeRemoval::show', [
             'tree' => $tree_removal,
             'location' => $location_data,
-            'polygon' => $land_data->polygon,
+            'land' => $land_data,
             'other_removal_requestor' => $item->other_removal_requestor_name,
             'process' => $item,
         ]);
+    }
+
+    public function destroy($processid, $treeid, $landid)
+    {
+        $prereqs = Process_Item::where("prerequisite_id", "=", $processid)->pluck('id');
+        //ddd($processid, $treeid, $landid, $prereqs[0]);
+
+        DB::transaction(function () use ($processid, $treeid, $landid, $prereqs) {
+
+            $landParcelProcess = Process_Item::find($prereqs[0]);
+            $landParcelProcess->delete();
+
+            $treeRemovalProcess = Process_Item::find($processid);
+            $treeRemovalProcess->delete();
+
+            $treeRemoval = Tree_Removal_Request::find($treeid);
+            $treeRemoval->delete();
+
+            $landParcel = Land_Parcel::find($landid);
+            $landParcel->delete();
+        });
+        return redirect('/approval-item/showRequests')->with('message', 'Request Successfully Deleted');
     }
 
     public function provinceAutocomplete(Request $request)

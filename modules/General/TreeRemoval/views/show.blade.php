@@ -99,8 +99,11 @@
                 <dt class="col-sm-3">Special Approval:</dt>
                 <dd class="col-sm-9">{{$tree->special_approval}}</dd>
 
-                <dt class="col-sm-3">Land Parcel:</dt>
+                <dt class="col-sm-3">Plan Number:</dt>
                 <dd class="col-sm-9">{{$tree->land_parcel->title}}</dd>
+
+                <dt class="col-sm-3">Surveyor Name:</dt>
+                <dd class="col-sm-9">{{$tree->land_parcel->surveyor_name}}</dd>
 
                 <dt class="col-sm-3">Status:</dt>
                 <dd class="col-sm-9">{{$tree->status->type}}</dd>
@@ -171,6 +174,17 @@
         <p>No photos included in the application</p>
         @endempty
     </div>
+    @if($process->status_id < 2)
+    <div style="float:right;">
+        <button class="btn btn-outline-danger" onclick="if(confirm('Are you sure you wish to delete this request and all it\'s related data?')){ event.preventDefault();
+                            document.getElementById('form-delete-{{$process->id}}').submit()}">Delete</button>
+
+        <form id="{{'form-delete-'.$process->id}}" style="display:none" method="post" action="/tree-removal/delete/{{$process->id}}/{{$tree->id}}/{{$land->id}}">
+            @csrf
+            @method('delete');
+        </form>
+    </div>
+    @endif
 </div>
 
 <script>
@@ -193,7 +207,7 @@
         }).addTo(map);
 
 
-    var polygon = @json($polygon);
+    var polygon = @json($land -> polygon);
     var layer = L.geoJSON(JSON.parse(polygon)).addTo(map);
 
     // Adjust map to show the kml
