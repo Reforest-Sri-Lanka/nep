@@ -12,7 +12,8 @@ class Land_Parcel extends Model
     protected $table = 'land_parcels';
 
     protected $fillable = [
-        'title',
+        'title',    //plan number
+        'surveyor_name',
         'governing_organizations',
         'logs',
         'polygon',

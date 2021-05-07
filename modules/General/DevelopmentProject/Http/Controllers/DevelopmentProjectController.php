@@ -35,15 +35,17 @@ class DevelopmentProjectController extends Controller
     {
         $request->validate([
             'title' => 'required',
-            'landTitle' => 'required',
+            'planNo' => 'required',
+            'surveyorName' => 'required',
             'organization' => 'required|exists:organizations,title',
             'gazette' => 'required|exists:gazettes,gazette_number',
-            'polygon' => 'required'
+            'polygon' => 'required',
         ]);
 
         DB::transaction(function () use ($request) {
             $land = new Land_Parcel();
-            $land->title = request('landTitle');
+            $land->title = request('planNo');
+            $land->surveyor_name = request('surveyorName');
 
             $governing_organizations1 = request('organization');
             $land->governing_organizations = Organization::where('title', $governing_organizations1)->pluck('id');

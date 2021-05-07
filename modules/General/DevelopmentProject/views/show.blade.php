@@ -61,8 +61,11 @@
         <dd class="col-sm-9">CONFIGURE CODE TO SHOW LOGS NOT DONE - CURRENTLY SAVING COORDINATES HERE</dd>
         @endif
 
-        <dt class="col-sm-3">Land Parcel:</dt>
+        <dt class="col-sm-3">Plan Number:</dt>
         <dd class="col-sm-9">{{$development_project->land_parcel->title}}</dd>
+
+        <dt class="col-sm-3">Surveyor Name:</dt>
+        <dd class="col-sm-9">{{$development_project->land_parcel->surveyor_name}}</dd>
 
         <dt class="col-sm-3">Status:</dt>
         <dd class="col-sm-9">{{$development_project->status->type}}</dd>
