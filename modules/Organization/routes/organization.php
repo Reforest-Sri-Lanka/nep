@@ -27,3 +27,11 @@ Route::get('/more/{id}', [OrganizationController::class, 'more']);
 
 //Fetch Contact Types.
 Route::any('/create','Organization\Http\Controllers\TypeController@getTypesList'); 
+
+Route::get('/actIndex', [OrganizationController::class, 'activities'])->name('orgActIndex'); 
+
+Route::get('/newActivity', [OrganizationController::class, 'new_activity']); 
+
+Route::post('/activitycreate', [OrganizationController::class, 'activity_create']); 
+
+Route::get('/activityremove/{id}', [OrganizationController::class, 'activity_remove']); 

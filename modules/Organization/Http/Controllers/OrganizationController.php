@@ -2,7 +2,10 @@
 namespace Organization\Http\Controllers;
 use App\Models\User;
 use App\Models\Organization;
+use App\Models\Organization_Activity;
 use App\Models\Contact;
+use App\Models\Form_Type;
+use App\Models\District;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -99,6 +102,42 @@ class OrganizationController extends Controller {
         //direct back to the index page.
         return view('organization::index')->with('organization', $organization)->with('contact',$contact);
         
+    }
+
+    public function activities() {
+        $organizations = Organization_Activity::all();
+        //direct back to the index page.
+        return view('organization::activity', [
+            'organizations' => $organizations,
+        ]);  
+    }
+
+    public function new_activity() {
+        $organizations = Organization::all();
+        $Forms =Form_Type::all();
+        //direct back to the index page.
+        return view('organization::newactivity', [
+            'organizations' => $organizations,
+            'Forms' => $Forms,
+        ]);  
+    }
+
+    public function activity_create(Request $request) {
+        $Org_act = new Organization_Activity();
+        $Org_act->form_type_id = $request->form_type;
+        if(request('district') != null){
+            $district_id = District::where('district', request('district'))->pluck('id'); 
+            $Org_act->district_id = $district_id[0];
+        }
+        $org_id = Organization::where('title', request('organization'))->pluck('id');
+        $Org_act->organization_id = $org_id[0];
+        $Org_act->save();
+        return redirect('/organization/actIndex')->with('message', 'Organization Successfully assigned to handle application');
+    }
+    public function activity_remove($id) {
+        $organization = Organization_Activity::find($id);
+        $organization->delete();
+        return redirect('/organization/actIndex')->with('message', 'Organization Successfully removed from handling application');
     }
 
     public function destroy($id) {
