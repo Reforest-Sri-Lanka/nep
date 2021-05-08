@@ -260,7 +260,8 @@
             <tr>
               <th>Species</th>
               <th>Tree ID</th>
-              <th>Width at Breast Height</th>
+              <th>Diameter at Breast Height</th>
+              <th>Diameter at Stump</th>
               <th>Height</th>
               <th>Timber Volume</th>
               <th>Cubic Feet</th>
@@ -269,7 +270,8 @@
             <tr>
               <td><input type="text" name="location[0][tree_species_id]" placeholder="Enter ID" class="form-control typeahead5" /></td>
               <td><input type="text" name="location[0][tree_id]" placeholder="Enter ID" class="form-control" /></td>
-              <td><input type="text" name="location[0][width_at_breast_height]" placeholder="Enter Width" class="form-control" /></td>
+              <td><input type="text" name="location[0][diameter_at_breast_height]" placeholder="Enter Diameter" class="form-control" /></td>
+              <td><input type="text" name="location[0][diameter_at_stump]" placeholder="Enter Diameter" class="form-control" /></td>
               <td><input type="text" name="location[0][height]" placeholder="Enter Height" class="form-control" /></td>
               <td><input type="text" name="location[0][timber_volume]" placeholder="Enter Volume" class="form-control" /></td>
               <td><input type="text" name="location[0][timber_cubic]" placeholder="Enter Cubic" class="form-control" /></td>
@@ -277,7 +279,7 @@
               <td rowspan="2"><button type="button" name="add" id="add-btn" class="btn bd-navbar text-white">Add</button></td>
             </tr>
             <tr>
-              <td colspan="7"><textarea name="location[0][remark]" placeholder="Enter Remarks" class="form-control" rows="3"></textarea></td>
+              <td colspan="8"><textarea name="location[0][remark]" placeholder="Enter Remarks" class="form-control" rows="3"></textarea></td>
             </tr>
           </table>
         </div>
@@ -301,14 +303,6 @@
 
 
 <script>
-  //photos add
-  var i = 0;
-  $("#add-btn2").click(function() {
-    ++i;
-    $("#dynamicAddRemove2").append(
-      '<input type="file" id="images" name="images[' + i + ']">');
-  });
-
   //STEPPER
   var currentTab = 0; // Current tab is set to be the first tab (0)
   showTab(currentTab); // Display the current tab
@@ -429,7 +423,20 @@
   $("#add-btn").click(function() {
     ++i;
     $("#dynamicAddRemoveTable").append(
-      '<tr><td><input type="text" name="location[' + i + '][tree_species_id]" placeholder="Enter ID" class="form-control" /></td><td><input type="text" name="location[' + i + '][tree_id]" placeholder="Tree ID" class="form-control" /></td><td><input type="text" name="location[' + i + '][width_at_breast_height]" placeholder="Enter Width" class="form-control" /></td><td><input type="text" name="location[' + i + '][height]" placeholder="Enter Height" class="form-control" /></td><td><input type="text" name="location[' + i + '][timber_volume]" placeholder="Enter Volume" class="form-control" /></td><td><input type="text" name="location[' + i + '][timber_cubic]" placeholder="Enter Cubic" class="form-control" /></td><td><input type="text" name="location[' + i + '][age]" placeholder="Enter Age" class="form-control" /></td></td><td><button type="button" class="btn btn-danger remove-tr">Remove</button></td></tr><tr><td colspan="7"><textarea name="location[' + i + '][remark]" placeholder="Enter Remarks" class="form-control" rows="3"></textarea></td></tr>');
+      '<tr>\
+      <td><input type="text" name="location[' + i + '][tree_species_id]" placeholder="Enter ID" class="form-control" /></td>\
+      <td><input type="text" name="location[' + i + '][tree_id]" placeholder="Tree ID" class="form-control" /></td>\
+      <td><input type="text" name="location[' + i + '][diameter_at_breast_height]" placeholder="Enter Diameter" class="form-control" /></td>\
+      <td><input type="text" name="location[' + i + '][diameter_at_stump]" placeholder="Enter Diameter" class="form-control" /></td>\
+      <td><input type="text" name="location[' + i + '][height]" placeholder="Enter Height" class="form-control" />\
+      </td><td><input type="text" name="location[' + i + '][timber_volume]" placeholder="Enter Volume" class="form-control" />\
+      </td><td><input type="text" name="location[' + i + '][timber_cubic]" placeholder="Enter Cubic" class="form-control" /></td>\
+      <td><input type="text" name="location[' + i + '][age]" placeholder="Enter Age" class="form-control" /></td>\
+      </td><td><button type="button" class="btn btn-danger remove-tr">Remove</button></td>\
+      </tr>\
+      <tr>\
+      <td colspan="8"><textarea name="location[' + i + '][remark]" placeholder="Enter Remarks" class="form-control" rows="3"></textarea></td>\
+      </tr>');
   });
   $(document).on('click', '.remove-tr', function() {
     $(this).parents('tr').next('tr').remove()
