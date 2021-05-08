@@ -50,6 +50,20 @@
                     </ul>
                 </dd>
 
+                <dt class="col-sm-3">Request Org:</dt>
+                @if($process->request_organization)
+                <dd class="col-sm-9">{{$process->requesting_organization->title}}</dd>
+                @else
+                <dd class="col-sm-9">{{$process->other_land_owner_name}} (External)</dd>
+                @endif
+
+                <dt class="col-sm-3">Request to Org:</dt>
+                @if($process->activity_organization)
+                <dd class="col-sm-9">{{$process->Activity_organization->title}}</dd>
+                @else
+                <dd class="col-sm-9">{{$process->other_removal_requestor_name}} (External)</dd>
+                @endif
+
                 <dt class="col-sm-3">Category:</dt>
                 <dd class="col-sm-9">Tree Removal</dd>
 
@@ -85,8 +99,11 @@
                 <dt class="col-sm-3">Special Approval:</dt>
                 <dd class="col-sm-9">{{$tree->special_approval}}</dd>
 
-                <dt class="col-sm-3">Land Parcel:</dt>
+                <dt class="col-sm-3">Plan Number:</dt>
                 <dd class="col-sm-9">{{$tree->land_parcel->title}}</dd>
+
+                <dt class="col-sm-3">Surveyor Name:</dt>
+                <dd class="col-sm-9">{{$tree->land_parcel->surveyor_name}}</dd>
 
                 <dt class="col-sm-3">Status:</dt>
                 <dd class="col-sm-9">{{$tree->status->type}}</dd>
@@ -140,23 +157,34 @@
     </div>
     <div class="row">
         @isset($Photos)
-            <div class="row p-4 bg-white">
-                <div class="card-deck">
-                    @foreach($Photos as $photo)
-                    <div class="card" style="background-color:#99A3A4">
-                        <img class="card-img-top" src="{{asset('/storage/'.$photo)}}" alt="photo">
-                        <div class="card-body text-center">
+        <div class="row p-4 bg-white">
+            <div class="card-deck">
+                @foreach($Photos as $photo)
+                <div class="card" style="background-color:#99A3A4">
+                    <img class="card-img-top" src="{{asset('/storage/'.$photo)}}" alt="photo">
+                    <div class="card-body text-center">
                         <a class="nav-link text-dark font-italic p-2" href="/crime-report/downloadimage/{{$photo}}">Download Image</a>
-                        </div>
                     </div>
-                    @endforeach
                 </div>
+                @endforeach
             </div>
+        </div>
         @endisset
         @empty($Photos)
-            <p>No photos included in the application</p>
+        <p>No photos included in the application</p>
         @endempty
     </div>
+    @if($process->status_id < 2)
+    <div style="float:right;">
+        <button class="btn btn-outline-danger" onclick="if(confirm('Are you sure you wish to delete this request and all it\'s related data?')){ event.preventDefault();
+                            document.getElementById('form-delete-{{$process->id}}').submit()}">Delete</button>
+
+        <form id="{{'form-delete-'.$process->id}}" style="display:none" method="post" action="/tree-removal/delete/{{$process->id}}/{{$tree->id}}/{{$land->id}}">
+            @csrf
+            @method('delete');
+        </form>
+    </div>
+    @endif
 </div>
 
 <script>
@@ -179,13 +207,11 @@
         }).addTo(map);
 
 
-    var polygon = @json($polygon);
+    var polygon = @json($land -> polygon);
     var layer = L.geoJSON(JSON.parse(polygon)).addTo(map);
 
     // Adjust map to show the kml
     var bounds = layer.getBounds();
     map.fitBounds(bounds);
-
-    
 </script>
 @endsection

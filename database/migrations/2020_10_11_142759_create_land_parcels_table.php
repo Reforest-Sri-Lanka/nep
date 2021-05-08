@@ -16,6 +16,7 @@ class CreateLandParcelsTable extends Migration
         Schema::create('land_parcels', function (Blueprint $table) {
             $table->id();
             $table->string('title');
+            $table->string('surveyor_name');
             $table->json('governing_organizations')->nullable();;
             $table->json('logs');
             $table->json('polygon');

@@ -3,6 +3,7 @@
 use ApprovalItem\Http\Controllers\ApprovalItemController;
 
 Route::get('/showRequests', [ApprovalItemController::class, 'showRequests']);
+Route::get('/filterRequests', [ApprovalItemController::class, 'filterRequests']);
 Route::middleware(['access.control:6'])->group(function () {
     Route::get('/changeassignOrganization/{id}/{pid}', [ApprovalItemController::class, 'change_assign_organization']);
 

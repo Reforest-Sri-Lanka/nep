@@ -14,28 +14,46 @@
 
 
             <div class="form-group">
-              <label for="title">Land Title:</label>
-              <input type="text" class="form-control @error('landTitle') is-invalid @enderror" value="{{ old('landTitle') }}" placeholder="Enter Land Title" id="landTitle" name="landTitle">
-              @error('landTitle')
+              <label for="title">Plan Number:</label>
+              <input type="text" class="form-control @error('planNo') is-invalid @enderror" value="{{ old('planNo') }}" placeholder="Enter Plan Number" id="planNo" name="planNo">
+              @error('planNo')
+              <div class="alert alert-danger">{{ $message }}</div>
+              @enderror
+            </div>
+
+            <div class="form-group">
+              <label for="title">Surveyor Name:</label>
+              <input type="text" class="form-control @error('surveyorName') is-invalid @enderror" value="{{ old('surveyorName') }}" placeholder="Enter Surveyor Name" id="surveyorName" name="surveyorName">
+              @error('surveyorName')
               <div class="alert alert-danger">{{ $message }}</div>
               @enderror
             </div>
 
             <div class="row p-2">
               <div class="col p-2">
+
+
                 <div class="form-group">
                   <label for="province">Province:</label>
-                  <input type="text" class="form-control typeahead @error('province') is-invalid @enderror" value="{{ old('province') }}" placeholder="Search" name="province" />
+                  <select class="custom-select @error('province') is-invalid @enderror" name="province">
+                    <option disabled selected value="">Select</option>
+                    @foreach ($provinces as $province)
+                    <option value="{{ $province->id }}" {{ Request::old()?(Request::old('province')==$province->id?'selected="selected"':''):'' }}>{{ $province->province }}</option>
+                    @endforeach
+                  </select>
                   @error('province')
                   <div class="alert alert-danger">{{ $message }}</div>
                   @enderror
                 </div>
 
-
-
                 <div class="form-group">
-                  <label for="gs_division">GS Division:</label>
-                  <input type="text" class="form-control typeahead4 @error('gs_division') is-invalid @enderror" value="{{ old('gs_division') }}" placeholder="Search" name="gs_division" />
+                  <label for="province">Grama Sevaka Division:</label>
+                  <select class="custom-select @error('gs_division') is-invalid @enderror" name="gs_division">
+                    <option disabled selected value="">Select</option>
+                    @foreach ($gs as $gs_division)
+                    <option value="{{ $gs_division->id }}" {{ Request::old()?(Request::old('gs_division')==$gs_division->id?'selected="selected"':''):'' }}>{{ $gs_division->gs_division }}</option>
+                    @endforeach
+                  </select>
                   @error('gs_division')
                   <div class="alert alert-danger">{{ $message }}</div>
                   @enderror
@@ -45,8 +63,13 @@
               <div class="col p-2">
 
                 <div class="form-group">
-                  <label for="district">District:</label>
-                  <input type="text" class="form-control typeahead2 @error('district') is-invalid @enderror" value="{{ old('district') }}" placeholder="Search" name="district" />
+                  <label for="province">District:</label>
+                  <select class="custom-select @error('district') is-invalid @enderror" name="district">
+                    <option disabled selected value="">Select</option>
+                    @foreach ($districts as $district)
+                    <option value="{{ $district->id }}" {{ Request::old()?(Request::old('district')==$district->id?'selected="selected"':''):'' }}>{{ $district->district }}</option>
+                    @endforeach
+                  </select>
                   @error('district')
                   <div class="alert alert-danger">{{ $message }}</div>
                   @enderror
@@ -156,13 +179,6 @@
             </div>
 
 
-
-
-
-
-
-
-
           </div>
           <div class="col border border-muted rounded-lg">
             <div class="row p-2 mt-2">
@@ -244,7 +260,8 @@
             <tr>
               <th>Species</th>
               <th>Tree ID</th>
-              <th>Width at Breast Height</th>
+              <th>Diameter at Breast Height</th>
+              <th>Diameter at Stump</th>
               <th>Height</th>
               <th>Timber Volume</th>
               <th>Cubic Feet</th>
@@ -253,7 +270,8 @@
             <tr>
               <td><input type="text" name="location[0][tree_species_id]" placeholder="Enter ID" class="form-control typeahead5" /></td>
               <td><input type="text" name="location[0][tree_id]" placeholder="Enter ID" class="form-control" /></td>
-              <td><input type="text" name="location[0][width_at_breast_height]" placeholder="Enter Width" class="form-control" /></td>
+              <td><input type="text" name="location[0][diameter_at_breast_height]" placeholder="Enter Diameter" class="form-control" /></td>
+              <td><input type="text" name="location[0][diameter_at_stump]" placeholder="Enter Diameter" class="form-control" /></td>
               <td><input type="text" name="location[0][height]" placeholder="Enter Height" class="form-control" /></td>
               <td><input type="text" name="location[0][timber_volume]" placeholder="Enter Volume" class="form-control" /></td>
               <td><input type="text" name="location[0][timber_cubic]" placeholder="Enter Cubic" class="form-control" /></td>
@@ -261,7 +279,7 @@
               <td rowspan="2"><button type="button" name="add" id="add-btn" class="btn bd-navbar text-white">Add</button></td>
             </tr>
             <tr>
-              <td colspan="7"><textarea name="location[0][remark]" placeholder="Enter Remarks" class="form-control" rows="3"></textarea></td>
+              <td colspan="8"><textarea name="location[0][remark]" placeholder="Enter Remarks" class="form-control" rows="3"></textarea></td>
             </tr>
           </table>
         </div>
@@ -285,14 +303,6 @@
 
 
 <script>
-  //photos add
-  var i = 0;
-  $("#add-btn2").click(function() {
-    ++i;
-    $("#dynamicAddRemove2").append(
-      '<input type="file" id="images" name="images[' + i + ']">');
-  });
-
   //STEPPER
   var currentTab = 0; // Current tab is set to be the first tab (0)
   showTab(currentTab); // Display the current tab
@@ -369,42 +379,6 @@
 
 
   ///TYPEAHEAD
-  var path = "{{route('province')}}";
-  $('input.typeahead').typeahead({
-    source: function(terms, process) {
-
-      return $.get(path, {
-        terms: terms
-      }, function(data) {
-        console.log(data);
-        objects = [];
-        data.map(i => {
-          objects.push(i.province)
-        })
-        console.log(objects);
-        return process(objects);
-      })
-    },
-  });
-
-  var path2 = "{{route('district')}}";
-  $('input.typeahead2').typeahead({
-    source: function(terms, process) {
-
-      return $.get(path2, {
-        terms: terms
-      }, function(data) {
-        console.log(data);
-        objects = [];
-        data.map(i => {
-          objects.push(i.district)
-        })
-        console.log(objects);
-        return process(objects);
-      })
-    },
-  });
-
   var path3 = "{{route('organization')}}";
   $('input.typeahead3').typeahead({
     source: function(terms, process) {
@@ -416,24 +390,6 @@
         objects = [];
         data.map(i => {
           objects.push(i.title)
-        })
-        console.log(objects);
-        return process(objects);
-      })
-    },
-  });
-
-  var path4 = "{{route('gramasevaka')}}";
-  $('input.typeahead4').typeahead({
-    source: function(terms, process) {
-
-      return $.get(path4, {
-        terms: terms
-      }, function(data) {
-        console.log(data);
-        objects = [];
-        data.map(i => {
-          objects.push(i.gs_division)
         })
         console.log(objects);
         return process(objects);
@@ -467,7 +423,20 @@
   $("#add-btn").click(function() {
     ++i;
     $("#dynamicAddRemoveTable").append(
-      '<tr><td><input type="text" name="location[' + i + '][tree_species_id]" placeholder="Enter ID" class="form-control" /></td><td><input type="text" name="location[' + i + '][tree_id]" placeholder="Tree ID" class="form-control" /></td><td><input type="text" name="location[' + i + '][width_at_breast_height]" placeholder="Enter Width" class="form-control" /></td><td><input type="text" name="location[' + i + '][height]" placeholder="Enter Height" class="form-control" /></td><td><input type="text" name="location[' + i + '][timber_volume]" placeholder="Enter Volume" class="form-control" /></td><td><input type="text" name="location[' + i + '][timber_cubic]" placeholder="Enter Cubic" class="form-control" /></td><td><input type="text" name="location[' + i + '][age]" placeholder="Enter Age" class="form-control" /></td></td><td><button type="button" class="btn btn-danger remove-tr">Remove</button></td></tr><tr><td colspan="7"><textarea name="location[' + i + '][remark]" placeholder="Enter Remarks" class="form-control" rows="3"></textarea></td></tr>');
+      '<tr>\
+      <td><input type="text" name="location[' + i + '][tree_species_id]" placeholder="Enter ID" class="form-control" /></td>\
+      <td><input type="text" name="location[' + i + '][tree_id]" placeholder="Tree ID" class="form-control" /></td>\
+      <td><input type="text" name="location[' + i + '][diameter_at_breast_height]" placeholder="Enter Diameter" class="form-control" /></td>\
+      <td><input type="text" name="location[' + i + '][diameter_at_stump]" placeholder="Enter Diameter" class="form-control" /></td>\
+      <td><input type="text" name="location[' + i + '][height]" placeholder="Enter Height" class="form-control" />\
+      </td><td><input type="text" name="location[' + i + '][timber_volume]" placeholder="Enter Volume" class="form-control" />\
+      </td><td><input type="text" name="location[' + i + '][timber_cubic]" placeholder="Enter Cubic" class="form-control" /></td>\
+      <td><input type="text" name="location[' + i + '][age]" placeholder="Enter Age" class="form-control" /></td>\
+      </td><td><button type="button" class="btn btn-danger remove-tr">Remove</button></td>\
+      </tr>\
+      <tr>\
+      <td colspan="8"><textarea name="location[' + i + '][remark]" placeholder="Enter Remarks" class="form-control" rows="3"></textarea></td>\
+      </tr>');
   });
   $(document).on('click', '.remove-tr', function() {
     $(this).parents('tr').next('tr').remove()
@@ -606,6 +575,23 @@
       }
     });
   });
+
+  //SEARCH FUNCTIONALITY
+  var searchControl = new L.esri.Controls.Geosearch().addTo(map);
+
+  var results = new L.LayerGroup().addTo(map);
+
+  searchControl.on('results', function(data) {
+    results.clearLayers();
+    for (var i = data.results.length - 1; i >= 0; i--) {
+      results.addLayer(L.marker(data.results[i].latlng));
+    }
+  });
+
+  setTimeout(function() {
+    $('.pointer').fadeOut('slow');
+  }, 3400);
+
 
   //toggle extra details for external land owner
   $(function() {

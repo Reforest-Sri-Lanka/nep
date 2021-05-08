@@ -2,7 +2,7 @@
 
 @section('general')
 <div class="container">
-    <form action="\crime-report\crimecreate" method="post" enctype="multipart/form-data">
+  <form action="\crime-report\crimecreate" method="post" enctype="multipart/form-data">
     @csrf
         <div class="container bg-white">
             <div class="row p-4 bg-white">
@@ -88,12 +88,32 @@
                     <div id="mapid" style="height:400px;" name="map"></div>
                     <br>
                 </div>
-            </div>
-        </div>
-    </form>
+      </div>
+    </div>
+  </form>
 </div>
 <script type="text/javascript">
+  //THIS USES THE AUTOMECOMPLETE FUNCTION IN TREE REMOVAL CONTROLLER
+  var path3 = "{{route('organization')}}";
+  $('input.typeahead3').typeahead({
+    source: function(terms, process) {
 
+      return $.get(path3, {
+        terms: terms
+      }, function(data) {
+        console.log(data);
+        objects = [];
+        data.map(i => {
+          objects.push(i.title)
+        })
+        console.log(objects);
+        return process(objects);
+      })
+    },
+  });
+
+
+<<<<<<< HEAD
     //THIS USES THE AUTOMECOMPLETE FUNCTION IN TREE REMOVAL CONTROLLER
     /* var path3 = "{{route('organization')}}";
     $('input.typeahead3').typeahead({
@@ -130,11 +150,11 @@
         })
         },
     }); 
+=======
+>>>>>>> 4741a66614dcfa3146ce984a3f7e240c753e5fe8
 
-    
-   
-// SCRIPT FOR THE MAP
-var map = L.map('mapid', {
+  // SCRIPT FOR THE MAP
+  var map = L.map('mapid', {
     center: [7.2906, 80.6337], //if the location cannot be fetched it will be set to Kandy
     zoom: 12
   });
@@ -231,25 +251,39 @@ var map = L.map('mapid', {
 
   });
 
-  $(document).ready(function(){
-        $('#image').change(function(){
-            var fp = $("#image");
-            var lg = fp[0].files.length; // get length
-            var items = fp[0].files;
-            var fileSize = 0;
-           
-            if (lg > 0) {
-                for (var i = 0; i < lg; i++) {
-                    fileSize = fileSize+items[i].size; // get file size
-                }
-                if(fileSize > 5242880) {
-                    alert('You should not uplaod files exceeding 4 MB. Please compress files size and uplaod agian');
-                    $('#image').val('');
-                }
-            }
-        });
+  $(document).ready(function() {
+    $('#image').change(function() {
+      var fp = $("#image");
+      var lg = fp[0].files.length; // get length
+      var items = fp[0].files;
+      var fileSize = 0;
+
+      if (lg > 0) {
+        for (var i = 0; i < lg; i++) {
+          fileSize = fileSize + items[i].size; // get file size
+        }
+        if (fileSize > 5242880) {
+          alert('You should not uplaod files exceeding 4 MB. Please compress files size and uplaod agian');
+          $('#image').val('');
+        }
+      }
     });
+  });
 
+  //SEARCH FUNCTIONALITY
+  var searchControl = new L.esri.Controls.Geosearch().addTo(map);
 
+  var results = new L.LayerGroup().addTo(map);
+
+  searchControl.on('results', function(data) {
+    results.clearLayers();
+    for (var i = data.results.length - 1; i >= 0; i--) {
+      results.addLayer(L.marker(data.results[i].latlng));
+    }
+  });
+
+  setTimeout(function() {
+    $('.pointer').fadeOut('slow');
+  }, 3400);
 </script>
 @endsection

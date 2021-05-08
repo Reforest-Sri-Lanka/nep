@@ -7,8 +7,11 @@
 <div class="container">
 
     <dl class="row">
-        <dt class="col-sm-3">Title:</dt>
+        <dt class="col-sm-3">Plan Number:</dt>
         <dd class="col-sm-9">{{$land->title}}</dd>
+
+        <dt class="col-sm-3">Surveyor Name:</dt>
+        <dd class="col-sm-9">{{$land->surveyor_name}}</dd>
 
         <dt class="col-sm-3">Governing Organizations:</dt>
         <dd class="col-sm-9">

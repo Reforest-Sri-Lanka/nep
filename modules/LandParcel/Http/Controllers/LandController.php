@@ -24,10 +24,16 @@ class LandController extends Controller
     public function form()
     {
         $gazettes = Gazette::all();
+        $province = Province::all();
+        $district = District::all();
         $organizations = Organization::all();
+        $gs = GS_Division::orderBy('gs_division')->get();
         return view('land::form', [
             'organizations' => $organizations,
             'gazettes' => $gazettes,
+            'provinces' => $province,
+            'districts' => $district,
+            'gs' => $gs,
 
         ]);
     }
@@ -36,7 +42,8 @@ class LandController extends Controller
     {
 
         $request->validate([
-            'landTitle' => 'required',
+            'planNo' => 'required',
+            'surveyorName' => 'required',
             'governing_orgs' => 'nullable',
             'gazettes' => 'nullable',
             'polygon' => 'required',
@@ -44,7 +51,9 @@ class LandController extends Controller
         ]);
 
         $land = new Land_Parcel();
-        $land->title = request('landTitle');
+        $land->title = request('planNo');
+        $land->surveyor_name = request('surveyorName');
+
         //$land->governing_organizations = request('governing_orgs');
         if (request('governing_orgs')) {
             $land->governing_organizations = request('governing_orgs');
