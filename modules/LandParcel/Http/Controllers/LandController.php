@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Auth;
 use Validator;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
+use App\CustomClass\organization_assign;
 
 
 class LandController extends Controller
@@ -38,7 +39,8 @@ class LandController extends Controller
             'landTitle' => 'required',
             'governing_orgs' => 'nullable',
             'gazettes' => 'nullable',
-            'polygon' => 'required'
+            'polygon' => 'required',
+            'district' => 'required|exists:districts,district',
         ]);
 
         $land = new Land_Parcel();
@@ -59,6 +61,17 @@ class LandController extends Controller
 
         $landid = Land_Parcel::latest()->first()->id;
 
+        $process = new Process_Item();
+        $process->form_type_id = 5;
+        $process->form_id = $landid;
+        $process->created_by_user_id = request('createdBy');
+        $process->request_organization = Auth::user()->organization_id;
+        $process->save();
+
+        $mainprocess=Process_Item::latest()->first()->id;
+        $district_id = District::where('district', request('district'))->pluck('id'); 
+        organization_assign::auto_assign($mainprocess->id,$district_id);
+
         if (request('governing_orgs')) {
             $governing_organizations = request('governing_orgs');
 
@@ -75,6 +88,7 @@ class LandController extends Controller
                 $process->created_by_user_id = request('createdBy');
                 $process->request_organization = Auth::user()->organization_id;
                 $process->activity_organization = $governing_organization;
+                $process->prerequisite_id = $mainprocess;   
                 $process->save();
             }
         }

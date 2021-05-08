@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\ApplicationMade;
 use Illuminate\Support\Facades\DB;
-
+use App\CustomClass\organization_assign;
 
 
 class DevelopmentProjectController extends Controller
@@ -94,6 +94,8 @@ class DevelopmentProjectController extends Controller
 
             //process item for the land parcel
             $latestDevProcess = Process_Item::latest()->first();
+            //$district_id = District::where('district', request('district'))->pluck('id'); 
+            organization_assign::auto_assign($latestDevProcess->id,26);
             $landProcess = new Process_Item();
             $landProcess->form_id = $landid;
             $landProcess->remark = "Verify these land details";

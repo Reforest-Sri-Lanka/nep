@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Notification;
 use App\Notifications\ApplicationMade;
 use App\Models\User;
 use App\Models\Species;
-
+use App\CustomClass\organization_assign;
 
 
 class TreeRemovalController extends Controller
@@ -236,6 +236,7 @@ class TreeRemovalController extends Controller
 
             //process item for the land parcel
             $latestTreeProcess = Process_Item::latest()->first();
+            organization_assign::auto_assign($latestTreeProcess->id,$district_id1);
             $landProcess = new Process_Item();
             $landProcess->form_id = $landid;
             $landProcess->remark = "Verify these land details";

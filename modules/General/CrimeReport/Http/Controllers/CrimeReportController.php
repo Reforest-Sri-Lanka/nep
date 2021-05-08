@@ -15,8 +15,9 @@ use App\Models\Crime_report;
 use App\Models\Crime_type;
 use App\Models\User;
 use App\Models\Process_Item;
+use App\Models\District;
 use App\Models\Organization;
-
+use App\CustomClass\organization_assign;
 
 
 class CrimeReportController extends Controller
@@ -31,7 +32,7 @@ class CrimeReportController extends Controller
             'landTitle' => 'required',
             'confirm' => 'required',
             'create_by'=>'required',
-            'organization' => 'required|not_in:0',
+            'district' => 'required|exists:districts,district',
             'polygon' => 'required',
         ]);
         if($request->hasfile('file')){
@@ -80,12 +81,12 @@ class CrimeReportController extends Controller
                 //dd($photoarray);
                 $crime_rep = Crime_report::where('id',$id)->update(['photos' => json_encode($photoarray)]);
             }
-            $org=Organization::where('title', $request['organization'])->first();
+            //$org=Organization::where('title', $request['organization'])->first();
             $Process_item =new Process_Item;
             $Process_item->created_by_user_id = $request['create_by'];
             $Process_item->request_organization = "1";
             //dd($org->city);
-            $Process_item->activity_organization = $org->id;
+            //$Process_item->activity_organization = $org->id;
             $Process_item->activity_user_id = null;
             $Process_item->form_id =  $id;
             $Process_item->form_type_id = "4";      
@@ -97,6 +98,8 @@ class CrimeReportController extends Controller
             }
             $Process_item->save();
             $latestcrimeProcess = Process_Item::latest()->first();
+            $district_id = District::where('district', request('district'))->pluck('id'); 
+            organization_assign::auto_assign($latestcrimeProcess->id,$district_id);
             $landProcess = new Process_Item();
             $landProcess->form_id = $landid;
             $landProcess->remark = "Verify these land details";

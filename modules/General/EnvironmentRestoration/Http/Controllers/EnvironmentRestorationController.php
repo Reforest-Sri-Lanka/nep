@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use App\CustomClass\organization_assign;
 
 class EnvironmentRestorationController extends Controller
 {
@@ -131,7 +132,9 @@ class EnvironmentRestorationController extends Controller
             $Process_item->save();
             //+
             $latestprocess = Process_Item::latest()->first();
-
+            //assigning organization
+            //$district_id = District::where('district', request('district'))->pluck('id'); 
+            organization_assign::auto_assign($latestprocess->id,26);
             //creating a notification for restoration made
             $users = User::where('role_id', '=', 2)->where('id', '!=', $request['created_by'])->get();
             Notification::send($users, new ApplicationMade($Process_item));

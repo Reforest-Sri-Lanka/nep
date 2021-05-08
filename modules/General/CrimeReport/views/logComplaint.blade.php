@@ -25,7 +25,7 @@
                             </div>
                         @enderror
                     </div>
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <label for="organization">Make complaint to:</label>
                             <input type="text" class="form-control typeahead3" placeholder="Search" name="organization" value="{{ old('organization') }}"/>
                             
@@ -34,7 +34,16 @@
                                 <strong>{{ $message }}</strong>
                             </div>
                         @enderror    
+                    </div> -->
+
+                    <div class="form-group">
+                        <label for="district">District:</label>
+                        <input type="text" class="form-control typeahead2 @error('district') is-invalid @enderror" value="{{ old('district') }}" placeholder="Search" name="district" />
+                        @error('district')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
+
                     <div class="form-group" id="dynamicAddRemove">
                         <label for="images">Photos:</label>
                         
@@ -86,7 +95,7 @@
 <script type="text/javascript">
 
     //THIS USES THE AUTOMECOMPLETE FUNCTION IN TREE REMOVAL CONTROLLER
-    var path3 = "{{route('organization')}}";
+    /* var path3 = "{{route('organization')}}";
     $('input.typeahead3').typeahead({
         source: function(terms, process) {
 
@@ -102,7 +111,25 @@
                 return process(objects);
             })
         },
-    });
+    }); */
+
+    var path2 = "{{route('district')}}";
+    $('input.typeahead2').typeahead({
+        source: function(terms, process) {
+
+        return $.get(path2, {
+            terms: terms
+        }, function(data) {
+            console.log(data);
+            objects = [];
+            data.map(i => {
+            objects.push(i.district)
+            })
+            console.log(objects);
+            return process(objects);
+        })
+        },
+    }); 
 
     
    

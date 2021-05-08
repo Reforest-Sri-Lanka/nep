@@ -52,7 +52,7 @@
                         <table class="table table-light table-striped border-secondary rounded-lg mr-4">
                             <thead>
                                 <tr>
-                                    <th>Land Size</th>
+                                    <th>Land Size(In acres)</th>
                                     <th>Number of Trees</th>
                                     <th>Number of Tree Species</th>
                                 </tr>
