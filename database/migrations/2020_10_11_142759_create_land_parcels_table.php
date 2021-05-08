@@ -27,6 +27,15 @@ class CreateLandParcelsTable extends Migration
 
             $table->unsignedBigInteger('status_id')->nullable();
             $table->foreign('status_id')->references('id')->on('status')->onDelete('cascade');
+
+            $table->unsignedBigInteger('district_id')->nullable();
+            $table->foreign('district_id')->references('id')->on('districts')->onDelete('cascade');
+
+            $table->unsignedBigInteger('province_id')->nullable();
+            $table->foreign('province_id')->references('id')->on('provinces')->onDelete('cascade');
+
+            $table->unsignedBigInteger('gs_division_id')->nullable();
+            $table->foreign('gs_division_id')->references('id')->on('gs_divisions')->onDelete('cascade');
         });
     }
 

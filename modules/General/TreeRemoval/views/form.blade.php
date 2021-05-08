@@ -102,6 +102,8 @@
             <br>
             <hr><br>
             <div class="row p-2">
+              <!-- Citizens arent allowed to fill in organization. It will be auto assigned -->
+              @if(Auth()->user()->role_id != 6 )
               <div class="col p-2">
                 <div class="form-group">
                   Land Owner:<input type="text" class="form-control typeahead3 @error('land_owner') is-invalid @enderror" value="{{ old('land_owner') }}" placeholder="Search" name="land_owner" />
@@ -134,6 +136,7 @@
                   </div>
                 </div>
               </div>
+              @endif
 
 
               <div class="col p-2">
@@ -147,7 +150,6 @@
                     <label class="custom-control-label" for="customCheck2"><strong>Is Unregistered</strong></label>
                   </div>
                 </div>
-
 
                 <div class="extRequestor" id="extRequestor">
                   <div class="form-group">
@@ -167,7 +169,6 @@
                     <div class="alert alert-danger">Please Select the Type</div>
                     @enderror
                   </div>
-
                   <div class="form-group">
                     Removal Requestor Email:<input type="text" class="form-control @error('removal_requestor_email') is-invalid @enderror" value="{{ old('removal_requestor_email') }}" name="removal_requestor_email" placeholder="Enter Email" />
                     @error('removal_requestor_email')
@@ -177,8 +178,6 @@
                 </div>
               </div>
             </div>
-
-
           </div>
           <div class="col border border-muted rounded-lg">
             <div class="row p-2 mt-2">
