@@ -13,6 +13,7 @@ use App\Models\Land_Has_Organization;
 use App\Models\Process_Item;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Validator;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
@@ -43,6 +44,9 @@ class LandController extends Controller
         $request->validate([
             'planNo' => 'required',
             'surveyorName' => 'required',
+            'province' => 'required',
+            'district' => 'required',
+            'gs_division' => 'required',
             'governing_orgs' => 'nullable',
             'gazettes' => 'nullable',
             'polygon' => 'required'
@@ -51,6 +55,9 @@ class LandController extends Controller
         $land = new Land_Parcel();
         $land->title = request('planNo');
         $land->surveyor_name = request('surveyorName');
+        $land->district_id = $request->district;
+        $land->province_id = $request->province;
+        $land->gs_division_id = $request->gs_division;
 
         //$land->governing_organizations = request('governing_orgs');
         if (request('governing_orgs')) {
@@ -100,7 +107,6 @@ class LandController extends Controller
                 $land_has_gazette->save();
             }
         }
-
         return redirect('/general/pending')->with('message', 'Request Created Successfully');
     }
 
@@ -113,7 +119,37 @@ class LandController extends Controller
             'land' => $land_data,
             'polygon' => $land_data->polygon,
             'other_removal_requestor' => $item->other_removal_requestor_name,
+            'process' => $item,
         ]);
+    }
+
+    public function destroy($landid)
+    {
+
+        DB::transaction(function () use ($landid) {
+
+            $landhasGazettes = Land_Has_Gazette::where("land_parcel_id", "=", $landid)->get();
+            foreach ($landhasGazettes as $landhasGazette) {
+                $landhasGazette->delete();
+            }
+
+            $landHasOrganizations = Land_Has_Organization::where("land_parcel_id", "=", $landid)->get();
+            foreach ($landHasOrganizations as $landHasOrganization) {
+                $landHasOrganization->delete();
+            }
+
+            $landProcess = Process_Item::where([
+                ["form_id", "=", $landid],
+                ['form_type_id', '=', 5],
+            ])->get();
+            foreach ($landProcess as $land) {
+                $land->delete();
+            }
+
+            $landParcel = Land_Parcel::find($landid);
+            $landParcel->delete();
+        });
+        return redirect('/approval-item/showRequests')->with('message', 'Request Successfully Deleted');
     }
 
     function action(Request $request)

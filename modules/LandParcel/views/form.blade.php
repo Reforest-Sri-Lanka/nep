@@ -31,6 +31,7 @@
                         <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                     </div>
+
                     <div class="form-group">
                         <label for="province">Province:</label>
                         <select class="custom-select @error('province') is-invalid @enderror" name="province">
@@ -43,6 +44,7 @@
                         <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                     </div>
+
                     <div class="form-group">
                         <label for="province">District:</label>
                         <select class="custom-select @error('district') is-invalid @enderror" name="district">
@@ -55,6 +57,7 @@
                         <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                     </div>
+
                     <div class="form-group">
                         <label for="province">Grama Sevaka Division:</label>
                         <select class="custom-select @error('gs_division') is-invalid @enderror" name="gs_division">

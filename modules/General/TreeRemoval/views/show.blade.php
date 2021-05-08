@@ -9,13 +9,13 @@
         <div class="col border border-muted rounded-lg mr-2 p-2">
             <dl class="row">
                 <dt class="col-sm-3">Province:</dt>
-                <dd class="col-sm-9">{{$tree->province->province}}</dd>
+                <dd class="col-sm-9">{{$land->province->province}}</dd>
 
                 <dt class="col-sm-3">District:</dt>
-                <dd class="col-sm-9">{{$tree->district->district}}</dd>
+                <dd class="col-sm-9">{{$land->district->district}}</dd>
 
                 <dt class="col-sm-3">Grama Sevaka Division:</dt>
-                <dd class="col-sm-9">{{$tree->gs_division->gs_division}}</dd>
+                <dd class="col-sm-9">{{$land->gs_division->gs_division}}</dd>
 
                 <dt class="col-sm-3">Description:</dt>
                 <dd class="col-sm-9">
@@ -110,6 +110,13 @@
 
                 <dt class="col-sm-3">Created at:</dt>
                 <dd class="col-sm-9">{{$tree->created_at}}</dd>
+
+                <dt class="col-sm-3">Active User:</dt>
+                @if($process->activity_user_id == NULL)
+                <dd class="col-sm-9">No User Assigned Yet</dd>
+                @else
+                <dd class="col-sm-9">{{$process->activity_user->name}}</dd>
+                @endif
         </div>
         <div class="col border border-muted rounded-lg mr-2 p-2">
             <dt class="col-sm-3">Properties</dt>
@@ -125,8 +132,11 @@
                     <dt class="col-sm-7">Tree ID:</dt>
                     <dd class="col-sm-5">{{$location[$x]['tree_id']}}</dd>
 
-                    <dt class="col-sm-7">Width at Breast Height:</dt>
-                    <dd class="col-sm-5">{{$location[$x]['width_at_breast_height']}}</dd>
+                    <dt class="col-sm-7">Diameter at Breast Height:</dt>
+                    <dd class="col-sm-5">{{$location[$x]['diameter_at_breast_height']}}</dd>
+
+                    <dt class="col-sm-7">Diameter of Stump</dt>
+                    <dd class="col-sm-5">{{$location[$x]['diameter_at_stump']}}</dd>
 
                     <dt class="col-sm-7">Height:</dt>
                     <dd class="col-sm-5">{{$location[$x]['height']}}</dd>
@@ -174,7 +184,7 @@
         <p>No photos included in the application</p>
         @endempty
     </div>
-    @if($process->status_id < 2)
+    @if($process->status_id < 2) 
     <div style="float:right;">
         <button class="btn btn-outline-danger" onclick="if(confirm('Are you sure you wish to delete this request and all it\'s related data?')){ event.preventDefault();
                             document.getElementById('form-delete-{{$process->id}}').submit()}">Delete</button>
@@ -183,8 +193,8 @@
             @csrf
             @method('delete');
         </form>
-    </div>
-    @endif
+</div>
+@endif
 </div>
 
 <script>
@@ -207,7 +217,7 @@
         }).addTo(map);
 
 
-    var polygon = @json($land -> polygon);
+    var polygon = @json($polygon);
     var layer = L.geoJSON(JSON.parse(polygon)).addTo(map);
 
     // Adjust map to show the kml
