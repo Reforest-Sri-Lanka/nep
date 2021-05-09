@@ -536,7 +536,7 @@
     while (table.rows.length > 3) {
       table.deleteRow(2);
     }
-    i = 1;
+    i = 0;
     document.getElementById("species_name").value = "";
     document.getElementById("tree_id").value = "";
     document.getElementById("diameter_at_breast_height").value = "";
