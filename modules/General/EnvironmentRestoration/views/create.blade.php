@@ -68,7 +68,7 @@
                         </div>
                         <div class="form-group">
                             <label for="activity_org">Organization to submit request to :</label>
-                            <input type="text" class="form-control typeahead1" placeholder="Enter Organization" id="activity_org" name="activity_org" value="{{ old('organization') }}" />
+                            <input type="text" class="form-control typeahead1" placeholder="Enter Organization" id="activity_org" name="activity_org"/>
                             @error('activity_org')
                             <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
@@ -105,7 +105,7 @@
                                     <tr>
                                         <th>Name</th>
                                         <th>Quantity</th>
-                                        <th>Height (in m)</th>
+                                        <th>Height (in metres)</th>
                                         <th>Dimensions</th>
                                         <th>Remarks</th>
                                         <th></th>
@@ -119,7 +119,12 @@
                             <input type="hidden" class="form-control" name="status" value="1">
                             <input type="hidden" class="form-control" name="organization" value="{{Auth::user()->organization_id}}">
                             <input type="hidden" class="form-control" name="created_by" value="{{Auth::user()->id}}">
+                            <input type="hidden" class="form-control" name="logs" value="0">
                         </form>
+                        <input type="file" id="fileUpload" name="fileUpload" accept=".xks,.xlsx" />
+                        <a type="button" name="uploadExcel" id="uploadExcel" class="btn btn-info">Import as Excel</a>
+                        <a type="button" name="clear" id="clear" class="btn btn-danger">Clear All</a>
+                        <p id="error" class="text-danger"></p>
                     </div>
                 </div>
             </div>
@@ -140,29 +145,108 @@
 </div>
 
 <script type="text/javascript">
-    //DYNAMIC SPECIES 
+    //Species Excel Sheet Import
     $(document).ready(function() {
-        var count = 1;
-        dynamic_species(count);
 
-        function dynamic_species(number) {
-            html = '<tr>';
-            html += '<input type="hidden" name="environment_restoration_id[]" class="form-control" value="" />';
-            html += '<input type="hidden" name="statusSpecies[]" class="form-control" value="1" />';
-            html += '<td><input type="text" name="species_name[]" class="form-control typeahead2" /></td>';
-            html += '<td><input type="text" name="quantity[]" class="form-control" /></td>';
-            html += '<td><input type="text" name="height[]" class="form-control" /></td>';
-            html += '<td><input type="text" name="dimension[]" class="form-control" /></td>';
-            html += '<td><input type="text" name="remark[]" class="form-control" /></td>';
+        let selectedFile;
+        console.log(window.XLSX);
+        document.getElementById('fileUpload').addEventListener("change", (event) => {
+            selectedFile = event.target.files[0];
+        })
 
-            if (number > 1) {
-                html += '<td><button type="button" name="remove" id="" class="btn btn-danger remove">Remove Species</button></td></tr>';
-                $('tbody').append(html);
-            } else {
-                html += '<td><button type="button" name="add" id="add" class="btn btn-success">Add Species</button></td></tr>';
-                $('tbody').html(html);
+        let data = [{
+            "name": "",
+            "quantity": "",
+            "height": "",
+            "dimensions": "",
+            "remarks": ""
+        }]
+
+        document.getElementById('uploadExcel').addEventListener("click", () => {
+            XLSX.utils.json_to_sheet(data, 'out.xlsx');
+            if (selectedFile) {
+                let fileReader = new FileReader();
+                fileReader.readAsBinaryString(selectedFile);
+                fileReader.onload = (event) => {
+                    let data = event.target.result;
+                    try {
+                        let workbook = XLSX.read(data, {
+                            type: "binary"
+                        });
+                    } catch (err) {
+                        document.getElementById("error").innerHTML = "Uploaded file format is not xlsx. Please upload in excel format";
+                    }
+                    let workbook = XLSX.read(data, {
+                        type: "binary"
+                    });
+                    workbook.SheetNames.forEach(sheet => {
+                        let exceldata = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheet]);
+                        dynamic_species(exceldata.length, exceldata);
+                    });
+                }
             }
+        });
 
+
+        //DYNAMIC SPECIES 
+        var count = 1;
+        dynamic_species(count, null);
+
+        function dynamic_species(number, exceldata) {
+            if (exceldata == null) {
+                html = '<tr>';
+                html += '<input type="hidden" name="environment_restoration_id[]" class="form-control" value="" />';
+                html += '<input type="hidden" name="statusSpecies[]" class="form-control" value="1" />';
+                html += '<td><input type="text" id="species_name[]" name="species_name[]" class="form-control typeahead2" /></td>';
+                html += '<td><input type="text" id="quantity[]" name="quantity[]" class="form-control" /></td>';
+                html += '<td><input type="text" id="height[]" name="height[]" class="form-control" /></td>';
+                html += '<td><input type="text" id="dimension[]" name="dimension[]" class="form-control" /></td>';
+                html += '<td><input type="text" id="remark[]" name="remark[]" class="form-control" /></td>';
+
+                if (number > 1) {
+                    html += '<td><button type="button" name="remove" id="" class="btn btn-danger remove">Remove Species</button></td></tr>';
+                    $('tbody').append(html);
+                } else {
+                    html += '<td><button type="button" name="add" id="add" class="btn btn-success">Add Species</button></td></tr>';
+                    $('tbody').html(html);
+                }
+            } else {
+                let name = exceldata[0]['name'];
+                let quantity = exceldata[0]['quantity'];
+                let height = exceldata[0]['height'];
+                let dimensions = exceldata[0]['dimensions'];
+                let remarks = exceldata[0]['remarks'];
+
+                document.getElementById("species_name[]").value = name;
+                document.getElementById("quantity[]").value = quantity;
+                document.getElementById("height[]").value = height;
+                document.getElementById("dimension[]").value = dimensions;
+                document.getElementById("remark[]").value = remarks;
+
+                for (i = 1; i < (exceldata.length); i++) {
+                    name = exceldata[i]['name'];
+                    quantity = exceldata[i]['quantity'];
+                    height = exceldata[i]['height'];
+                    dimensions = exceldata[i]['dimensions'];
+                    remarks = exceldata[i]['remarks'];
+                    html = '<tr>';
+                    html += '<input type="hidden" id="environment_restoration_id" name="environment_restoration_id[]" class="form-control"  />';
+                    html += '<input type="hidden" id="status_species" name="statusSpecies[]" class="form-control" value="1" />';
+                    html += '<td><input type="text" id="species_name[]" name="species_name[]" class="form-control typeahead2" value=' + name + ' /></td>';
+                    html += '<td><input type="text" id="quantity[]" name="quantity[]" class="form-control" value=' + quantity + ' /></td>';
+                    html += '<td><input type="text" id="height[]" name="height[]" class="form-control" value=' + height + ' /></td>';
+                    html += '<td><input type="text" id="dimension[]" name="dimension[]" class="form-control" value=' + dimensions + ' /></td>';
+                    html += '<td><input type="text" id="remark[]" name="remark[]" class="form-control" value=' + remarks + ' /></td>';
+
+                    if (number > 1) {
+                        html += '<td><button type="button" name="remove" id="" class="btn btn-danger remove">Remove Species</button></td></tr>';
+                        $('tbody').append(html);
+                    } else {
+                        html += '<td><button type="button" name="add" id="add" class="btn btn-success">Add Species</button></td></tr>';
+                        $('tbody').html(html);
+                    }
+                }
+            }
             var path2 = "{{route('species')}}";
             $('input.typeahead2').typeahead({
                 source: function(terms, process) {
@@ -181,6 +265,7 @@
                 },
             });
         }
+
         $(document).on('click', '#add', function() {
             count++;
             dynamic_species(count);
@@ -189,6 +274,21 @@
         $(document).on('click', '.remove', function() {
             count--;
             $(this).closest("tr").remove();
+        });
+
+        document.getElementById('clear').addEventListener("click", () => {
+            console.log(count);
+            var table = document.getElementById("species");
+
+            while (table.rows.length > 2) {
+                table.deleteRow(2);
+            }
+            count=1;
+            document.getElementById("species_name[]").value = "";
+            document.getElementById("quantity[]").value = "";
+            document.getElementById("height[]").value = "";
+            document.getElementById("dimension[]").value = "";
+            document.getElementById("remark[]").value = "";
         });
 
         $('#dynamic_species').on('submit', function(event) {
@@ -311,7 +411,6 @@
         //... and adds the "active" class on the current step:
         x[n].className += " active";
     }
-
     /// SCRIPT FOR THE MAP
     var map = L.map('mapid', {
         center: [7.2906, 80.6337], //if the location cannot be fetched it will be set to Kandy
@@ -412,7 +511,6 @@
         ///Converting your layer to a KML
         //$('#kml').val(tokml(drawnItems.toGeoJSON()));
     });
-    
     //SEARCH FUNCTIONALITY
     var searchControl = new L.esri.Controls.Geosearch().addTo(map);
 

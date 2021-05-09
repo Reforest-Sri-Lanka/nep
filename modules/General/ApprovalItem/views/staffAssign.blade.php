@@ -25,8 +25,7 @@
                     <h6>Request</h6>
                     <div class="input-group mb-3">
                     </br>
-                        <textarea  class="form-control" rows="3" name="request">
-                        </textarea>
+                        <textarea  class="form-control" rows="3" name="request"></textarea>
                         @error('request')
                             <div class="alert">
                                 <strong>{{ $message }}</strong>

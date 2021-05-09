@@ -94,7 +94,7 @@ class EnvironmentRestorationController extends Controller
             $landparcel->governing_organizations = request('govOrg');
             if (request('isProtected')) {
                 $landparcel->protected_area = request('isProtected');
-            }else {
+            } else {
                 $landparcel->protected_area = 0;
             }
             $landparcel->created_by_user_id = request('created_by');
@@ -112,7 +112,7 @@ class EnvironmentRestorationController extends Controller
             $restoration->created_by_user_id = request('created_by');
             $restoration->status = request('status');
             $restoration->save();
-            
+
             $latest = Environment_Restoration::latest()->first();
             $newres = $latest->id;
             $activityorgname = request('activity_org');
@@ -124,7 +124,8 @@ class EnvironmentRestorationController extends Controller
             $Process_item->form_type_id = 3;
             $Process_item->created_by_user_id = request('created_by');
             $Process_item->activity_organization = $activityorgid[0];
-            $Process_item->request_organization = Auth::user()->organization_id;
+            // $Process_item->request_organization = Auth::user()->organization_id;
+            $Process_item->request_organization = 6;
             $Process_item->prerequisite_id = null;
             $Process_item->prerequisite = 0;
             $Process_item->status_id = 1;
@@ -180,7 +181,8 @@ class EnvironmentRestorationController extends Controller
             $process->form_type_id = 5;
             $process->form_id = $latest->id;
             $process->created_by_user_id = request('created_by');
-            $Process_item->request_organization = Auth::user()->organization_id;
+            // $process->request_organization = Auth::user()->organization_id;
+            $process->request_organization = 6;
             $process->activity_organization = $activityorgid[0];
             $process->prerequisite_id = $latestprocess->id;
             $process->prerequisite = 0;
