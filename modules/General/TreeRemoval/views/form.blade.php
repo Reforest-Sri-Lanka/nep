@@ -482,7 +482,7 @@
             species = exceldata[i]['Species'];
             tree_id = exceldata[i]['Tree ID'];
             diameter_breast = exceldata[i]['Diameter at Breast Height'];
-            diameter_at_stump = exceldata[i]['Diameter at Stump'];
+            diameter_stump = exceldata[i]['Diameter at Stump'];
             height = exceldata[i]['Height'];
             timber_volume = exceldata[i]['Timber Volume'];
             cubic_feet = exceldata[i]['Cubic Feet'];
@@ -531,23 +531,23 @@
 
 
   document.getElementById('clear').addEventListener("click", () => {
-            var table = document.getElementById("dynamicAddRemoveTable");
+    var table = document.getElementById("dynamicAddRemoveTable");
 
-            while (table.rows.length > 3) {
-                table.deleteRow(2);
-            }
-            i=1;
-            document.getElementById("species_name").value = "";
-            document.getElementById("tree_id").value = "";
-            document.getElementById("diameter_at_breast_height").value = "";
-            document.getElementById("diameter_at_stump").value = "";
-            document.getElementById("height").value = "";
-            document.getElementById("timber_volume").value = "";
-            document.getElementById("timber_cubic").value = "";
-            document.getElementById("age").value = "";
+    while (table.rows.length > 3) {
+      table.deleteRow(2);
+    }
+    i = 1;
+    document.getElementById("species_name").value = "";
+    document.getElementById("tree_id").value = "";
+    document.getElementById("diameter_at_breast_height").value = "";
+    document.getElementById("diameter_at_stump").value = "";
+    document.getElementById("height").value = "";
+    document.getElementById("timber_volume").value = "";
+    document.getElementById("timber_cubic").value = "";
+    document.getElementById("age").value = "";
 
-            document.getElementById("remarks").value = "";
-        });
+    document.getElementById("remarks").value = "";
+  });
 
   /// SCRIPT FOR THE MAP
   var map = L.map('mapid', {
