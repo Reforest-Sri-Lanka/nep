@@ -17,6 +17,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use App\Models\Province;
+use App\Models\District;
+use App\Models\GS_Division;
+
 
 class EnvironmentRestorationController extends Controller
 {
@@ -43,11 +47,17 @@ class EnvironmentRestorationController extends Controller
         $organizations = Organization::where('type_id', '=', '1')->get(); //show all records for all government organizations
         $restoration_activities = Environment_Restoration_Activity::all();
         $ecosystems = Env_type::all();
+        $province = Province::all();
+        $district = District::all();
+        $gs = GS_Division::orderBy('gs_division')->get();
         return view('environmentRestoration::create', [
             'restorations' => $restorations,
             'organizations' => $organizations,
             'restoration_activities' => $restoration_activities,
-            'ecosystems' => $ecosystems
+            'ecosystems' => $ecosystems,
+            'provinces' => $province,
+            'districts' => $district,
+            'gs' => $gs,
         ]);
     }
 
@@ -58,7 +68,7 @@ class EnvironmentRestorationController extends Controller
         //$restoration = Environment_Restoration::find($id);
         // $species = Environment_Restoration_Species::find($restoration->id); 
         $species = Environment_Restoration_Species::where('environment_restoration_id', ($restoration->id))->get();
-        $land = Land_Parcel::where('id', ($restoration->id))->get();
+        $land = Land_Parcel::find($restoration->land_parcel_id);
         $polygon = $land->pluck('polygon')->first();
         //ddd($restoration->environment_restoration_activity_id);
         //ddd($restoration->Environment_Restoration_Activity->title);
@@ -80,6 +90,9 @@ class EnvironmentRestorationController extends Controller
         $request->validate([
             'title' => 'required',
             'landparceltitle' => 'required',
+            'province' => 'required',
+            'district' => 'required',
+            'gs_division' => 'required',
             'environment_restoration_activity' => 'required',
             'environment_restoration_activity' => 'required',
             'ecosystem' => 'required',
@@ -91,6 +104,10 @@ class EnvironmentRestorationController extends Controller
             $landparcel = new Land_Parcel();
             $landparcel->title = request('landparceltitle');
             $landparcel->polygon = request('polygon');
+            $landparcel->district_id = $request->district;
+            $landparcel->province_id = $request->province;
+            $landparcel->gs_division_id = $request->gs_division;
+            $landparcel->surveyor_name = "No Surveyor - Dev Project";
             $landparcel->governing_organizations = request('govOrg');
             if (request('isProtected')) {
                 $landparcel->protected_area = request('isProtected');
@@ -98,6 +115,10 @@ class EnvironmentRestorationController extends Controller
                 $landparcel->protected_area = 0;
             }
             $landparcel->created_by_user_id = request('created_by');
+            if (request('size')) {
+                $landparcel->size = request('size');
+                $landparcel->size_unit = request('size_unit');
+            }
             $landparcel->save();
 
             $latest = Land_Parcel::latest()->first();
