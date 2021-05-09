@@ -22,6 +22,8 @@ class Land_Parcel extends Model
         'protected_area',
         'created_by_user_id',
         'status',
+        'size',
+        'size_unit',
     ];
 
     protected $attributes = [

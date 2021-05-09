@@ -68,13 +68,51 @@
                         </div>
                         <div class="form-group">
                             <label for="activity_org">Organization to submit request to :</label>
-                            <input type="text" class="form-control typeahead1" placeholder="Enter Organization" id="activity_org" name="activity_org"/>
+                            <input type="text" class="form-control typeahead1" placeholder="Enter Organization" id="activity_org" name="activity_org" />
                             @error('activity_org')
                             <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
                         </div>
                     </div>
                     <div class="col border border-muted rounded-lg p-4">
+                        <div class="form-group">
+                            <label for="province">Province:</label>
+                            <select class="custom-select @error('province') is-invalid @enderror" name="province">
+                                <option disabled selected value="">Select</option>
+                                @foreach ($provinces as $province)
+                                <option value="{{ $province->id }}" {{ Request::old()?(Request::old('province')==$province->id?'selected="selected"':''):'' }}>{{ $province->province }}</option>
+                                @endforeach
+                            </select>
+                            @error('province')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label for="province">District:</label>
+                            <select class="custom-select @error('district') is-invalid @enderror" name="district">
+                                <option disabled selected value="">Select</option>
+                                @foreach ($districts as $district)
+                                <option value="{{ $district->id }}" {{ Request::old()?(Request::old('district')==$district->id?'selected="selected"':''):'' }}>{{ $district->district }}</option>
+                                @endforeach
+                            </select>
+                            @error('district')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label for="province">Grama Sevaka Division:</label>
+                            <select class="custom-select @error('gs_division') is-invalid @enderror" name="gs_division">
+                                <option disabled selected value="">Select</option>
+                                @foreach ($gs as $gs_division)
+                                <option value="{{ $gs_division->id }}" {{ Request::old()?(Request::old('gs_division')==$gs_division->id?'selected="selected"':''):'' }}>{{ $gs_division->gs_division }}</option>
+                                @endforeach
+                            </select>
+                            @error('gs_division')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
                         <!-- ////////MAP GOES HERE -->
                         <div id="mapid" style="height:400px;" name="map"></div>
 
@@ -82,7 +120,8 @@
                         <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                         <input id="polygon" type="hidden" name="polygon" class="form-control @error('polygon') is-invalid @enderror" value="{{request('polygon')}}" /> <br>
-
+                        <input id="size" type="text" class="form-control" name="size" value="{{request('size')}}">
+                        <input id="size_unit" type="text" class="form-control" name="size_unit" value="{{request('size_unit')}}">
                         <div class="custom-control custom-checkbox">
                             <input type="checkbox" class="custom-control-input" id="customCheck" value="1" name="isProtected">
                             <label class="custom-control-label" for="customCheck"><strong>Check if land is a protected area</strong></label>
@@ -283,7 +322,7 @@
             while (table.rows.length > 2) {
                 table.deleteRow(2);
             }
-            count=1;
+            count = 1;
             document.getElementById("species_name[]").value = "";
             document.getElementById("quantity[]").value = "";
             document.getElementById("height[]").value = "";
@@ -506,8 +545,33 @@
 
 
         drawnItems.addLayer(layer);
-        $('#polygon').val(JSON.stringify(drawnItems.toGeoJSON())); //geoJSON converts a layer to JSON
+        $('#polygon').val(JSON.stringify(layer.toGeoJSON())); //geoJSON converts a layer to JSON
 
+        if (type === 'polygon' || type == 'rectangle') {
+            var seeArea = L.GeometryUtil.geodesicArea(layer.getLatLngs()[0]);
+            console.log((seeArea).toFixed(2));
+            $('#size').val((seeArea).toFixed(2));
+            $('#size_unit').val("Square Meters");
+        }
+        if (type === 'polyline') {
+            // Calculating the distance of the polyline
+            var tempLatLng = null;
+            var totalDistance = 0.00000;
+            $.each(e.layer._latlngs, function(i, latlng) {
+                if (tempLatLng == null) {
+                    tempLatLng = latlng;
+                    return;
+                }
+
+                totalDistance += tempLatLng.distanceTo(latlng);
+                tempLatLng = latlng;
+            });
+            e.layer.bindPopup((totalDistance).toFixed(2) + ' meters');
+            e.layer.openPopup();
+            console.log((totalDistance).toFixed(2));
+            $('#size').val((totalDistance).toFixed(2));
+            $('#size_unit').val("Meters");
+        }
         ///Converting your layer to a KML
         //$('#kml').val(tokml(drawnItems.toGeoJSON()));
     });
