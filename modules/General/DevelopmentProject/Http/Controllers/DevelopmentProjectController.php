@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Notification;
 use App\Notifications\ApplicationMade;
 use Illuminate\Support\Facades\DB;
 use App\CustomClass\organization_assign;
+use App\Models\District;
+use App\Models\Province;
 
 
 class DevelopmentProjectController extends Controller
@@ -23,7 +25,12 @@ class DevelopmentProjectController extends Controller
     //Returns the view for the application form passing in data of lands, organziations and gazettes
     public function form()
     {
-        return view('developmentProject::form');
+        $province = Province::all();
+        $district = District::all();
+        return view('developmentProject::form',[
+            'provinces' => $province,
+            'districts' => $district,
+        ]);  
     }
 
     // Saves the form to the development projects table as well as creates 1 or more entries in the process items table
@@ -35,18 +42,19 @@ class DevelopmentProjectController extends Controller
             'planNo' => 'required',
             'surveyorName' => 'required',
             'organization' => 'required|exists:organizations,title',
+            'district' => 'required|not_in:0',
+            'province' => 'required|not_in:0',
             'gazette' => 'required|exists:gazettes,gazette_number',
             'polygon' => 'required',
         ]);
-
         DB::transaction(function () use ($request) {
             $land = new Land_Parcel();
             $land->title = request('planNo');
             $land->surveyor_name = request('surveyorName');
-
+            if (request('organization') != null) {
             $governing_organizations1 = request('organization');
             $land->governing_organizations = Organization::where('title', $governing_organizations1)->pluck('id');
-
+            }
             $land->polygon = request('polygon');
             $land->created_by_user_id = request('createdBy');
             if (request('isProtected')) {
@@ -82,8 +90,8 @@ class DevelopmentProjectController extends Controller
             $process->created_by_user_id = request('createdBy');
             $process->request_organization = Auth::user()->organization_id;
 
-            $organization_id1 = Organization::where('title', request('organization'))->pluck('id');
-            $process->activity_organization = $organization_id1[0];
+            //$organization_id1 = Organization::where('title', request('organization'))->pluck('id');
+            //$process->activity_organization = $organization_id1[0];
 
             $process->status_id = 1;
             $process->save();
@@ -94,13 +102,13 @@ class DevelopmentProjectController extends Controller
             //process item for the land parcel
             $latestDevProcess = Process_Item::latest()->first();
             //$district_id = District::where('district', request('district'))->pluck('id'); 
-            organization_assign::auto_assign($latestDevProcess->id,26);
+            $org_id =organization_assign::auto_assign($latestDevProcess->id,request('district'),request('province'));
             $landProcess = new Process_Item();
             $landProcess->form_id = $landid;
             $landProcess->remark = "Verify these land details";
             $landProcess->prerequisite = 0;
             $landProcess->request_organization = auth()->user()->organization_id;
-            $landProcess->activity_organization = $organization_id1[0];
+            $landProcess->activity_organization = $org_id;
             $landProcess->status_id = 1;
             $landProcess->form_type_id = 5;
             $landProcess->created_by_user_id = request('createdBy');

@@ -11,11 +11,13 @@ use Illuminate\Support\Facades\Notification;
 Use App\Notifications\ApplicationMade;
 use Illuminate\Http\Request;
 use App\Models\Land_Parcel;
+use App\Models\Land_Has_Organization;
 use App\Models\Crime_report;
 use App\Models\Crime_type;
 use App\Models\User;
 use App\Models\Process_Item;
 use App\Models\District;
+use App\Models\Province;
 use App\Models\Organization;
 use App\CustomClass\organization_assign;
 
@@ -32,7 +34,8 @@ class CrimeReportController extends Controller
             'landTitle' => 'required',
             'confirm' => 'required',
             'create_by'=>'required',
-            'district' => 'required|exists:districts,district',
+            'district' => 'required|not_in:0',
+            'province' => 'required|not_in:0',
             'polygon' => 'required',
         ]);
         if($request->hasfile('file')){
@@ -51,6 +54,12 @@ class CrimeReportController extends Controller
             $land->created_by_user_id = $request['create_by'];
             if (request('isProtected')) {
                 $land->protected_area = request('isProtected');
+            }
+            if (request('govOrg')) {
+                $land->governing_organizations = request('govOrg');
+                
+            } else {
+                $land->governing_organizations = [];
             }
             $land->save();
             $landid = Land_Parcel::latest()->first()->id;
@@ -82,9 +91,10 @@ class CrimeReportController extends Controller
                 $crime_rep = Crime_report::where('id',$id)->update(['photos' => json_encode($photoarray)]);
             }
             //$org=Organization::where('title', $request['organization'])->first();
+            $user=User::find($request['create_by']);
             $Process_item =new Process_Item;
             $Process_item->created_by_user_id = $request['create_by'];
-            $Process_item->request_organization = "1";
+            $Process_item->request_organization = $user->organization_id;
             //dd($org->city);
             //$Process_item->activity_organization = $org->id;
             $Process_item->activity_user_id = null;
@@ -98,18 +108,44 @@ class CrimeReportController extends Controller
             }
             $Process_item->save();
             $latestcrimeProcess = Process_Item::latest()->first();
-            $district_id = District::where('district', request('district'))->pluck('id'); 
-            organization_assign::auto_assign($latestcrimeProcess->id,$district_id);
+            $org_id =organization_assign::auto_assign($latestcrimeProcess->id,request('district'),request('province'));
             $landProcess = new Process_Item();
             $landProcess->form_id = $landid;
             $landProcess->remark = "Verify these land details";
             $landProcess->prerequisite = 0;
-            $landProcess->activity_organization =$org->id;
+            $landProcess->activity_organization = $org_id;
             $landProcess->status_id = 1;
             $landProcess->form_type_id = 5;
             $landProcess->created_by_user_id = $request['create_by'];
             $landProcess->prerequisite_id = $latestcrimeProcess->id;
             $landProcess->save();
+
+            $latestlandprocess=Process_Item::latest('id')->first();
+            //dd($latestlandprocess,$latestcrimeProcess,$next,$latest);
+            //dd($request);
+            if (request('govOrg') != null) {
+                $governing_organizations = request('govOrg');
+                //dd('test');
+                $latestlandprocess2=Process_Item::latest()->first()->id;
+            //dd($latestlandprocess,$latestcrimeProcess,$latestlandprocess2);
+                foreach ($governing_organizations as $governing_organization) {
+                    $land_has_organization = new Land_Has_Organization();
+                    $land_has_organization->land_parcel_id = $landid;
+                    $land_has_organization->organization_id = $governing_organization;
+                    $land_has_organization->status = 2;
+                    $land_has_organization->save();
+    
+                    $process = new Process_Item();
+                    $process->form_type_id = 5;
+                    $process->form_id = $landid;
+                    $process->created_by_user_id = $request['create_by'];
+                    $process->request_organization = Auth::user()->organization_id;
+                    $process->activity_organization = $governing_organization;
+                    $landProcess->prerequisite = 1;
+                    $process->prerequisite_id = $latestlandprocess->id;   
+                    $process->save();
+                }
+            }
             $successmessage='Crime report logged Successfully the ID of the application is '.$latestcrimeProcess->id;
             $Users = User::where('role_id', '=', 2)->where('id', '!=', $request['create_by'])->get();
             Notification::send($Users, new ApplicationMade($latestcrimeProcess));
@@ -121,9 +157,17 @@ class CrimeReportController extends Controller
     }  
 
     public function crime_report_form_display() {
-        $Organizations = Organization::all();
+        $organizations = Organization::where('type_id', '=', '1')->get();
         $crime_types = Crime_type::all();
-        return view('crimeReport::logComplaint',['Organizations' => $Organizations],['crime_types' => $crime_types],);
+        $province = Province::all();
+        $district = District::all();
+        return view('crimeReport::logComplaint', [
+            'organizations' => $organizations,
+            'crime_types' => $crime_types,
+            'provinces' => $province,
+            'districts' => $district,
+        ]);  
+        //return view('crimeReport::logComplaint',['Organizations' => $Organizations],['crime_types' => $crime_types],);
     }
 
     public function download_image($path,$file) 

@@ -11,6 +11,8 @@ use App\Models\Process_Item;
 use App\Models\Env_type;
 use App\Models\Species;
 use App\Models\User;
+use App\Models\District;
+use App\Models\Province;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\ApplicationMade;
 use Illuminate\Support\Facades\Auth;
@@ -44,11 +46,15 @@ class EnvironmentRestorationController extends Controller
         $organizations = Organization::where('type_id', '=', '1')->get(); //show all records for all government organizations
         $restoration_activities = Environment_Restoration_Activity::all();
         $ecosystems = Env_type::all();
+        $province = Province::all();
+        $district = District::all();
         return view('environmentRestoration::create', [
             'restorations' => $restorations,
             'organizations' => $organizations,
             'restoration_activities' => $restoration_activities,
-            'ecosystems' => $ecosystems
+            'ecosystems' => $ecosystems,
+            'provinces' => $province,
+            'districts' => $district,
         ]);
     }
 
@@ -134,7 +140,7 @@ class EnvironmentRestorationController extends Controller
             $latestprocess = Process_Item::latest()->first();
             //assigning organization
             //$district_id = District::where('district', request('district'))->pluck('id'); 
-            organization_assign::auto_assign($latestprocess->id,26);
+            $org_id = organization_assign::auto_assign($latestprocess->id,26);
             //creating a notification for restoration made
             $users = User::where('role_id', '=', 2)->where('id', '!=', $request['created_by'])->get();
             Notification::send($users, new ApplicationMade($Process_item));
@@ -184,7 +190,7 @@ class EnvironmentRestorationController extends Controller
             $process->form_id = $latest->id;
             $process->created_by_user_id = request('created_by');
             $Process_item->request_organization = Auth::user()->organization_id;
-            $process->activity_organization = $activityorgid[0];
+            $process->activity_organization = $org_id;
             $process->prerequisite_id = $latestprocess->id;
             $process->prerequisite = 0;
             $process->save();

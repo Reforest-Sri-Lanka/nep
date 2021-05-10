@@ -38,8 +38,8 @@ class TreeRemovalController extends Controller
         request()->validate([
             'planNo' => 'required',
             'surveyorName' => 'required',
-            'province' => 'required',
-            'district' => 'required',
+            'district' => 'required|not_in:0',
+            'province' => 'required|not_in:0',
             'gs_division' => 'required',
             'polygon' => 'required',
             'number_of_trees' => 'required|integer',
@@ -203,7 +203,7 @@ class TreeRemovalController extends Controller
 
             //process item for the land parcel
             $latestTreeProcess = Process_Item::latest()->first();
-            organization_assign::auto_assign($latestTreeProcess->id,$district_id1);
+            $org_id =organization_assign::auto_assign($latestTreeProcess->id,$request->district,$request->province);
             $landProcess = new Process_Item();
             $landProcess->form_id = $landid;
             $landProcess->remark = "Verify these land details";
@@ -222,7 +222,7 @@ class TreeRemovalController extends Controller
                 $land_owner = Organization::where('title', request('land_owner'))->pluck('id');
                 $landProcess->request_organization = $land_owner[0];
             }
-            if (request('checkremovalrequestor')) {
+            /* if (request('checkremovalrequestor')) {
                 $landProcess->other_removal_requestor_name = request('removal_requestor');
                 $landProcess->other_removal_requestor_type = request('removalrequestortype');
                 if (request('removal_requestor_email') == null) {
@@ -232,8 +232,9 @@ class TreeRemovalController extends Controller
                 }
             } else {
                 $removal_requestor = Organization::where('title', request('removal_requestor'))->pluck('id');
-                $landProcess->activity_organization = $removal_requestor[0];
-            }
+                
+            } */
+            $landProcess->activity_organization = $org_id;
             $landProcess->save();
 
             $users = User::where('role_id', '=', 2)->where('id', '!=', $request['createdBy'])->get();

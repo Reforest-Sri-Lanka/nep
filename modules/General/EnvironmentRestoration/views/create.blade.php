@@ -67,10 +67,31 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="activity_org">Organization to submit request to :</label>
-                            <input type="text" class="form-control typeahead1" placeholder="Enter Organization" id="activity_org" name="activity_org" value="{{ old('organization') }}" />
-                            @error('activity_org')
-                            <div class="alert alert-danger">{{ $message }}</div>
+                            <label for="province">Province:</label>
+                            <select class="custom-select @error('province') is-invalid @enderror" name="province">
+                                <option disabled selected value="">Select</option>
+                                @foreach ($provinces as $province)
+                                    <option value="{{ $province->id }}" {{ Request::old()?(Request::old('province')==$province->id?'selected="selected"':''):'' }}>{{ $province->province }}</option>
+                                @endforeach
+                            </select>
+                            @error('province')
+                                <div class="alert">                                   
+                                    <strong>{{ $message }}</strong>
+                                </div>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="district">District:</label>
+                            <select class="custom-select @error('district') is-invalid @enderror" name="district">
+                                <option disabled selected value="">Select</option>
+                                @foreach ($districts as $district)
+                                <option value="{{ $district->id }}" {{ Request::old()?(Request::old('district')==$district->id?'selected="selected"':''):'' }}>{{ $district->district }}</option>
+                                @endforeach
+                            </select>
+                            @error('district')
+                                <div class="alert">                                   
+                                    <strong>{{ $message }}</strong>
+                                </div>
                             @enderror
                         </div>
                     </div>
@@ -218,7 +239,7 @@
         });
     });
 
-    //TYPEAHEAD 
+    /* //TYPEAHEAD 
     //THIS USES THE AUTOMECOMPLETE FUNCTION IN TREE REMOVAL CONTROLLER
     var path1 = "{{route('organization')}}";
     $('input.typeahead1').typeahead({
@@ -236,7 +257,7 @@
                 return process(objects);
             })
         },
-    });
+    }); */
 
     ///STEPPER
     var currentTab = 0; // Current tab is set to be the first tab (0)

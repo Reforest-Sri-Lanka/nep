@@ -25,25 +25,34 @@
                             </div>
                         @enderror
                     </div>
-                    <!-- <div class="form-group">
-                        <label for="organization">Make complaint to:</label>
-                            <input type="text" class="form-control typeahead3" placeholder="Search" name="organization" value="{{ old('organization') }}"/>
-                            
-                        @error('organization')
+                    <div class="form-group">
+                        <label for="province">Province:</label>
+                        <select class="custom-select @error('province') is-invalid @enderror" name="province">
+                            <option disabled selected value="">Select</option>
+                            @foreach ($provinces as $province)
+                                <option value="{{ $province->id }}" {{ Request::old()?(Request::old('province')==$province->id?'selected="selected"':''):'' }}>{{ $province->province }}</option>
+                            @endforeach
+                        </select>
+                        @error('province')
                             <div class="alert">                                   
                                 <strong>{{ $message }}</strong>
                             </div>
-                        @enderror    
-                    </div> -->
-
-                    <div class="form-group">
-                        <label for="district">District:</label>
-                        <input type="text" class="form-control typeahead2 @error('district') is-invalid @enderror" value="{{ old('district') }}" placeholder="Search" name="district" />
-                        @error('district')
-                        <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                     </div>
-
+                    <div class="form-group">
+                        <label for="district">District:</label>
+                        <select class="custom-select @error('district') is-invalid @enderror" name="district">
+                            <option disabled selected value="">Select</option>
+                            @foreach ($districts as $district)
+                            <option value="{{ $district->id }}" {{ Request::old()?(Request::old('district')==$district->id?'selected="selected"':''):'' }}>{{ $district->district }}</option>
+                            @endforeach
+                        </select>
+                        @error('district')
+                            <div class="alert">                                   
+                                <strong>{{ $message }}</strong>
+                            </div>
+                        @enderror
+                    </div>
                     <div class="form-group" id="dynamicAddRemove">
                         <label for="images">Photos:</label>
                         
@@ -64,7 +73,23 @@
                         @enderror
                     </div>
                     <hr>
-                    
+                    <div class="card">
+                      <div class="card-header">
+                          <a class="collapsed card-link text-dark" data-toggle="collapse" href="#collapseOne">Governing Organization for selected Land Parcel (Optional)</a>
+                      </div>
+                      <div id="collapseOne" class="collapse">
+                        <div class="card-body">
+                          @foreach($organizations as $organization)
+                            <div class="form-check">
+                              <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input" name="govOrg[]" value="{{$organization->id}}">{{$organization->title}}
+                              </label>
+                            </div>
+                          @endforeach
+                        </div>
+                      </div>
+                    </div>
+                    <br>
                     <div class="form-check">
                     <input type="hidden" class="form-control" name="create_by" value="{{ Auth::user()->id }}">  
                         <input id="polygon" type="hidden" name="polygon" value="{{request('polygon')}}">
@@ -113,7 +138,6 @@
   });
 
 
-<<<<<<< HEAD
     //THIS USES THE AUTOMECOMPLETE FUNCTION IN TREE REMOVAL CONTROLLER
     /* var path3 = "{{route('organization')}}";
     $('input.typeahead3').typeahead({
@@ -150,8 +174,6 @@
         })
         },
     }); 
-=======
->>>>>>> 4741a66614dcfa3146ce984a3f7e240c753e5fe8
 
   // SCRIPT FOR THE MAP
   var map = L.map('mapid', {

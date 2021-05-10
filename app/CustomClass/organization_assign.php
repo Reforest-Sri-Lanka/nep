@@ -26,11 +26,11 @@ class organization_assign
         else{
             $activity_org3 = Organization_Activity::where('district_id',26)->where('form_type_id',$Process_Item->form_type_id)->first(); //checking for all island
           if($activity_org3 != null){
-            $Process_Item->activity_organization = $activity_org2->organization_id;
+            $Process_Item->activity_organization = $activity_org3->organization_id;
             $Process_Item->status_id=2;
           }
           else{
-            $Process_Item->activity_organization=1;
+            $Process_Item->activity_organization=2;
           }
         }
       }

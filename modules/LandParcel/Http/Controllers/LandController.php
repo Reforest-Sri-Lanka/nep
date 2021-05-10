@@ -47,7 +47,8 @@ class LandController extends Controller
             'governing_orgs' => 'nullable',
             'gazettes' => 'nullable',
             'polygon' => 'required',
-            'district' => 'required|exists:districts,district',
+            'district' => 'required|not_in:0',
+            'province' => 'required|not_in:0',
         ]);
 
         $land = new Land_Parcel();
@@ -78,8 +79,8 @@ class LandController extends Controller
         $process->save();
 
         $mainprocess=Process_Item::latest()->first()->id;
-        $district_id = District::where('district', request('district'))->pluck('id'); 
-        organization_assign::auto_assign($mainprocess->id,$district_id);
+        //$district_id = District::where('district', request('district'))->pluck('id'); 
+        organization_assign::auto_assign($mainprocess->id,request('district'),request('province'));
 
         if (request('governing_orgs')) {
             $governing_organizations = request('governing_orgs');

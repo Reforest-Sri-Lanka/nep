@@ -29,7 +29,34 @@
                         <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                     </div>
-
+                    <div class="form-group">
+                        <label for="province">Province:</label>
+                        <select class="custom-select @error('province') is-invalid @enderror" name="province">
+                            <option disabled selected value="">Select</option>
+                            @foreach ($provinces as $province)
+                                <option value="{{ $province->id }}" {{ Request::old()?(Request::old('province')==$province->id?'selected="selected"':''):'' }}>{{ $province->province }}</option>
+                            @endforeach
+                        </select>
+                        @error('province')
+                            <div class="alert">                                   
+                                <strong>{{ $message }}</strong>
+                            </div>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="district">District:</label>
+                        <select class="custom-select @error('district') is-invalid @enderror" name="district">
+                            <option disabled selected value="">Select</option>
+                            @foreach ($districts as $district)
+                            <option value="{{ $district->id }}" {{ Request::old()?(Request::old('district')==$district->id?'selected="selected"':''):'' }}>{{ $district->district }}</option>
+                            @endforeach
+                        </select>
+                        @error('district')
+                            <div class="alert">                                   
+                                <strong>{{ $message }}</strong>
+                            </div>
+                        @enderror
+                    </div>
                     <div class="form-group">
                         <label for="title">Plan Number:</label>
                         <input type="text" class="form-control @error('planNo') is-invalid @enderror" value="{{ old('planNo') }}" placeholder="Enter Plan Number" id="planNo" name="planNo">
