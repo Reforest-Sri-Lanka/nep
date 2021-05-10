@@ -6,6 +6,8 @@ use App\Models\Province;
 use App\Models\Organization_Activity;
 use App\Models\Contact;
 use App\Models\Form_Type;
+use App\Models\Branch_Type;
+use App\Models\Type;
 use App\Models\District;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,8 +19,12 @@ class OrganizationController extends Controller {
     
     // Returns the create.blade.php view in the organization module.
     public function create() {
-        
-        return view('organization::create');
+        $branches = Branch_Type::all();
+        $list = Type::all();
+        return view(('organization::create'), [
+            'branches' => $branches,
+            'data' => $list
+        ]);  
     }
 
     // When the user fills in the details of the new organization and clicks submit it will be handled here. organization details and contact details will store database.
@@ -28,6 +34,7 @@ class OrganizationController extends Controller {
         $organization->title = $request->title;
         $organization->city = $request->city;
         $organization->type_id = $request->org_type;
+        $organization->branch_type_id = $request->branch_type;
         $organization->description = $request->description;
         $organization->status = $request->status;
         $organization->save();

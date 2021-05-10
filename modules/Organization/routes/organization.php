@@ -8,7 +8,7 @@ use Organization\Http\Controllers\TypeController;
 Route::get('/index', [OrganizationController::class, 'index'])->name('orgIndex'); 
 
 // Open create view.
-Route::get('/create', [OrganizationController::class, 'create']);      
+Route::get('/create1', [OrganizationController::class, 'create']);      
 
 // Store data in the database. 
 Route::post('/store', [OrganizationController::class, 'store']);       

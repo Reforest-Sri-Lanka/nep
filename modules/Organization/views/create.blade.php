@@ -46,6 +46,21 @@
             @error('type')
             <div class="alert alert-danger">{{ $message }}</div>
             @enderror
+             <!-- Select Branch Type. -->
+             <div class="input-group mb-3">
+               <div class="input-group-prepend">
+                  <span class="input-group-text">Type</span>
+               </diV>
+               <select name="branch_type" class="custom-select">
+                  <option disabled selected>Organization Type</option>
+                  @foreach ($branches as $branch)
+                  <option value="{{ $branch->id }}">{{ $branch->title }}</option>
+                  @endforeach
+               </select>
+            </div>
+            @error('branch_type')
+            <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
             <!-- Description field. -->
             <div class="input-group mb-3">
                <div class="input-group-prepend">
