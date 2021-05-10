@@ -33,16 +33,36 @@
                             <div class="alert">                                   
                                 <strong>{{ $message }}</strong>
                             </div>
-                        @enderror    
+                        @enderror 
+                    </div>
+                    <div class="form-group">
+                        <label for="province">Province:</label>
+                        <select class="custom-select @error('province') is-invalid @enderror" name="province">
+                            <option disabled selected value="">Select</option>
+                            @foreach ($provinces as $province)
+                                <option value="{{ $province->id }}" {{ Request::old()?(Request::old('province')==$province->id?'selected="selected"':''):'' }}>{{ $province->province }}</option>
+                            @endforeach
+                        </select>
+                        @error('province')
+                            <div class="alert">                                   
+                                <strong>{{ $message }}</strong>
+                            </div>
+                        @enderror
                     </div>
                     <div class="form-group">
                         <label for="district">District:</label>
-                        <input type="text" class="form-control typeahead2 @error('district') is-invalid @enderror" value="{{ old('district') }}" placeholder="Search" name="district" />
+                        <select class="custom-select @error('district') is-invalid @enderror" name="district">
+                            <option disabled selected value="">Select</option>
+                            @foreach ($districts as $district)
+                            <option value="{{ $district->id }}" {{ Request::old()?(Request::old('district')==$district->id?'selected="selected"':''):'' }}>{{ $district->district }}</option>
+                            @endforeach
+                        </select>
                         @error('district')
-                        <div class="alert alert-danger">{{ $message }}</div>
+                            <div class="alert">                                   
+                                <strong>{{ $message }}</strong>
+                            </div>
                         @enderror
                     </div>
-                    
                     <div class="form-check" style="float:right;">
                     <input type="hidden" class="form-control" name="create_by" value="{{ Auth::user()->id }}">  
                         <label class="form-check-label">
@@ -74,22 +94,7 @@
         },
     });
 
-    var path2 = "{{route('district')}}";
-    $('input.typeahead2').typeahead({
-        source: function(terms, process) {
-
-        return $.get(path2, {
-            terms: terms
-        }, function(data) {
-            console.log(data);
-            objects = [];
-            data.map(i => {
-            objects.push(i.district)
-            })
-            console.log(objects);
-            return process(objects);
-        })
-        },
-    }); 
+    
+    
 </script>
 @endsection

@@ -30,9 +30,9 @@
                 <tr>
                     <td>{{$organization->form_type->type}}</td>
                     @if($organization->district == null)
-                    <td>All Island</td>
+                    <td>{{$organization->province->province}} Province</td>
                     @else
-                    <td>{{$organization->district->district}}</td>
+                    <td>{{$organization->district->district}} District</td>
                     @endif
                     <td>{{$organization->organization->title}}</td>
                     <td>{{$organization->priority}}</td>

@@ -2,6 +2,7 @@
 namespace Organization\Http\Controllers;
 use App\Models\User;
 use App\Models\Organization;
+use App\Models\Province;
 use App\Models\Organization_Activity;
 use App\Models\Contact;
 use App\Models\Form_Type;
@@ -115,10 +116,14 @@ class OrganizationController extends Controller {
     public function new_activity() {
         $organizations = Organization::all();
         $Forms =Form_Type::all();
+        $province = Province::all();
+        $district = District::all();
         //direct back to the index page.
         return view('organization::newactivity', [
             'organizations' => $organizations,
             'Forms' => $Forms,
+            'provinces' => $province,
+            'districts' => $district,
         ]);  
     }
 
@@ -126,8 +131,10 @@ class OrganizationController extends Controller {
         $Org_act = new Organization_Activity();
         $Org_act->form_type_id = $request->form_type;
         if(request('district') != null){
-            $district_id = District::where('district', request('district'))->pluck('id'); 
-            $Org_act->district_id = $district_id[0];
+            $Org_act->district_id = request('district');
+        }
+        if(request('province') != null){
+            $Org_act->province_id = request('province');
         }
         $org_id = Organization::where('title', request('organization'))->pluck('id');
         $Org_act->organization_id = $org_id[0];
