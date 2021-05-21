@@ -91,7 +91,7 @@
                     </div>
                     <br>
                     <div class="form-check">
-                    <input type="hidden" class="form-control" name="create_by" value="{{ Auth::user()->id }}">  
+                    <input type="hidden" class="form-control" name="createdBy" value="{{ Auth::user()->id }}">  
                         <input id="polygon" type="hidden" name="polygon" value="{{request('polygon')}}">
                         <label class="form-check-label">
                         <input type="checkbox" class="form-check-input" name="confirm" ><strong>I confirm these information to be true</strong>
@@ -106,8 +106,13 @@
                 </div>
                 <div class="col border border-muted rounded-lg p-4">
                     <div class="form-group">
-                        <label for="landTitle">Area name:</label>
-                        <input type="text" class="form-control" placeholder="Enter Area name" id="landTitle" name="landTitle" value="{{ old('landTitle') }}">
+                        <label for="planNo">Area name:</label>
+                        <input type="text" class="form-control" placeholder="Enter Area name" id="planNo" name="planNo" value="{{ old('landTitle') }}">
+                        @error('planNo')
+                            <div class="alert">
+                                <strong>{{ $message }}</strong>
+                            </div>
+                        @enderror
                     </div>
                     <!-- ////////MAP GOES HERE -->
                     <div id="mapid" style="height:400px;" name="map"></div>
