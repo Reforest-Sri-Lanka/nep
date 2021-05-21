@@ -31,6 +31,8 @@
                     <td>{{$organization->form_type->type}}</td>
                     @if($organization->district == null)
                     <td>{{$organization->province->province}} Province</td>
+                    @elseif($organization->district_id == 26)
+                    <td>{{$organization->district->district}}</td>
                     @else
                     <td>{{$organization->district->district}} District</td>
                     @endif

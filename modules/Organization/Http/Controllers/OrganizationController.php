@@ -137,10 +137,10 @@ class OrganizationController extends Controller {
     public function activity_create(Request $request) {
         $Org_act = new Organization_Activity();
         $Org_act->form_type_id = $request->form_type;
-        if(request('district') != null){
+        if(request('district') != 27){
             $Org_act->district_id = request('district');
         }
-        if(request('province') != null){
+        else{
             $Org_act->province_id = request('province');
         }
         $org_id = Organization::where('title', request('organization'))->pluck('id');

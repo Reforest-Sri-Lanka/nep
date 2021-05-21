@@ -52,6 +52,7 @@
                     <div class="form-group">
                         <label for="district">District:</label>
                         <select class="custom-select @error('district') is-invalid @enderror" name="district">
+                            <option selected value="27">All districts of the province</option>
                             <option disabled selected value="">Select</option>
                             @foreach ($districts as $district)
                             <option value="{{ $district->id }}" {{ Request::old()?(Request::old('district')==$district->id?'selected="selected"':''):'' }}>{{ $district->district }}</option>
