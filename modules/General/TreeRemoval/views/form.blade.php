@@ -3,7 +3,11 @@
 @section('general')
 
 <div class="container">
-
+  <!-- FAQ button -->
+  <div class="d-flex mb-2 justify-content-end">
+    <span><a title="FAQ" style="font-size:24px;cursor:pointer;" data-toggle="modal" data-target="#treeHelp"><i class="fa fa-info-circle" aria-hidden="true"></i></a></span>
+  </div>
+  @include('faq')
   <form action="/tree-removal/save" method="post" id="regForm" enctype="multipart/form-data">
     @csrf
     <!-- One "tab" for each step in the form: -->
@@ -88,6 +92,8 @@
 
 
             <!-- ////////MAP GOES HERE -->
+            <label>Select Location On Map*</label>
+            <span style="float:right; cursor:pointer;"><kbd><a title="How to Draw Shapes on the Map" class="text-white" data-toggle="modal" data-target="#mapHelp">How To Mark Location</a></kbd></span>
             <div id="mapid" style="height:400px;" name="map"></div>
             @error('polygon')
             <div class="alert alert-danger">{{ $message }}</div>
@@ -255,6 +261,32 @@
     <div class="tab">
       <div class="container">
         <div class="row border rounded-lg p-4 bg-white">
+
+          <ul>
+            @error('location.*.tree_species_id')
+            <li><div class="alert alert-danger">The Tree Species Field must be letters</div></li>
+            @enderror
+            @error('location.*.diameter_at_breast_height')
+            <li><div class="alert alert-danger">The Diameter At Breast Height Field must be numeric</div></li>
+            @enderror
+            @error('location.*.diameter_at_stump')
+            <li><div class="alert alert-danger">The Diameter at Stump Field must be numeric</div></li>
+            @enderror
+            @error('location.*.height')
+            <li><div class="alert alert-danger">The Height Field must be numeric</div></li>
+            @enderror
+            @error('location.*.timber_volume')
+            <li><div class="alert alert-danger">The timber volume field must be numeric</div></li>
+            @enderror
+            @error('location.*.timber_cubic')
+            <li><div class="alert alert-danger">The timber cubic field must be numeric</div></li>
+            @enderror
+            @error('location.*.age')
+            <li><div class="alert alert-danger">The age field must be numeric</div></li>
+            @enderror
+          </ul>
+
+
           <table class="table" id="dynamicAddRemoveTable">
             <tr>
               <th>Species</th>
