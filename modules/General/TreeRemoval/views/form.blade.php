@@ -63,7 +63,7 @@
               <div class="col p-2">
 
                 <div class="form-group">
-                  <label for="province">District:</label>
+                  <label for="district">District:</label>
                   <select class="custom-select @error('district') is-invalid @enderror" name="district">
                     <option disabled selected value="">Select</option>
                     @foreach ($districts as $district)
