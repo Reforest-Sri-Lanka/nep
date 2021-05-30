@@ -26,15 +26,20 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label for="organization">Organization in charge</label>
-                            <input type="text" class="form-control typeahead3" placeholder="Search" name="organization" value="{{ old('organization') }}"/>
-                            
+                        <label for="organization">Organization in charge:</label>
+                        <select class="custom-select @error('organization') is-invalid @enderror" name="organization">
+                            <option disabled selected value="">Select Organization</option>
+                            @foreach ($organizations as $organization)
+                            <option value="{{ $organization->id }}" {{ Request::old()?(Request::old('organization')==$organization->id?'selected="selected"':''):'' }}>{{ $organization->title }}{{ $organization->branch_type->title}}</option>
+                            @endforeach
+                        </select>
                         @error('organization')
                             <div class="alert">                                   
                                 <strong>{{ $message }}</strong>
                             </div>
                         @enderror 
                     </div>
+                    
                     <div class="form-group">
                         <label for="province">Province:</label>
                         <select class="custom-select @error('province') is-invalid @enderror" name="province">

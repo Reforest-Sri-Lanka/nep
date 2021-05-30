@@ -36,7 +36,7 @@
                     @else
                     <td>{{$organization->district->district}} District</td>
                     @endif
-                    <td>{{$organization->organization->title}}</td>
+                    <td>{{$organization->organization->title}} {{$organization->organization->branch_type->title}}</td>
                     <td>{{$organization->priority}}</td>
                     <!-- opent he edit view -->
                     <td><a href="/organization/activityremove/{{$organization->id}}" class="btn btn-outline-warning" role="button">Remove</a></td>
