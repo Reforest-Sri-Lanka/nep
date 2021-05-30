@@ -89,7 +89,7 @@
             <br>
             <div class="row">
                 <div class="col">
-                <strong>Descroption :</strong>
+                <strong>Description :</strong>
                 </div>
                 <div class="col">
                 {{ $organization->description }}
@@ -119,9 +119,6 @@
 
                 </tbody>
             </table>
-
-
-
             <br>
             </form>
         </div>

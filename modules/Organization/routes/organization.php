@@ -19,6 +19,9 @@ Route::get('/edit/{id}', [OrganizationController::class, 'edit']);
 // Store changes in the db.
 Route::patch('/update/{id}', [OrganizationController::class, 'update']);   
 
+//Contact delete
+Route::get('/contactremove/{id}', [OrganizationController::class, 'contactremove']);
+Route::post('/contactupdate/{id}', [OrganizationController::class, 'contactupdate']);
 // Delete a organization.
 Route::delete('/delete/{id}', [OrganizationController::class, 'destroy']);     
 

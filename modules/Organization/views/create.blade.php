@@ -73,8 +73,26 @@
             <div class="alert alert-danger">{{ $message }}</div>
             @enderror
             <br>
-            <br>
             <!--Contact Details. -->
+            <h6 style="text-align:left;" class="text-dark">Contact Details</h6>
+            <br>
+            <div class="input-group mb-3">
+               <div class="input-group-prepend">
+                     <select name="type" class="custom-select" required>
+                        <option disabled selected value >Primary Contact Type</option>
+                        @foreach($contact_types as $contact_type)
+                        <option value="{{ $contact_type->id }}"{{ Request::old()?(Request::old('type')==$contact_type->id?'selected="selected"':''):'' }}>{{ $contact_type->title }}</option>
+                        @endforeach
+                     </select>
+               </div>
+               <input type="text" class="form-control" name="contact" placeholder="Enter contact" required  value="{{ old('contact') }}">
+            </div>
+            @error('type')
+                     <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
+            @error('contact')
+            <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
             <div class="input-group mb-3">
                <div class="input-group-prepend">
                   <span class="input-group-text">Address</span>
@@ -85,27 +103,7 @@
                <div class="alert alert-danger">{{ $message }}</div>
             @enderror
             <br>
-            <h6 style="text-align:left;" class="text-dark">Primary Contact</h6>
-            <br>
-            <div class="input-group mb-3">
-               <div class="input-group-prepend">
-                     <select name="type" class="custom-select" required>
-                        <option disabled selected value >Contact Type</option>
-                        @foreach($contact_types as $contact_type)
-                        <option value="{{ $contact_type->id }}"{{ Request::old()?(Request::old('type')==$contact_type->id?'selected="selected"':''):'' }}>{{ $contact_type->title }}</option>
-                        @endforeach
-                     </select>
-                     
-               </div>
-               <input type="text" class="form-control" name="contact" placeholder="Enter contact" required  value="{{ old('contact') }}">
-            </div>
-            @error('type')
-                     <div class="alert alert-danger">{{ $message }}</div>
-            @enderror
-            @error('contact')
-            <div class="alert alert-danger">{{ $message }}</div>
-            @enderror
-            <br>
+            
             <!-- End Select Contact Type. -->
             <!--pass in the user's organization id as well -->
             <input type="hidden" class="form-control" name="created_by" value="{{Auth::user()->id}}"/>
