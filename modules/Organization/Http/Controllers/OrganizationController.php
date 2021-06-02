@@ -216,6 +216,7 @@ class OrganizationController extends Controller {
     }
 
     public function activity_create(Request $request) {
+        $exist_act = Organization_Activity::where('organization_id', request('organization'))->first();
         $Org_act = new Organization_Activity();
         $Org_act->form_type_id = $request->form_type;
         if(request('district') != 27){
@@ -224,8 +225,13 @@ class OrganizationController extends Controller {
         else{
             $Org_act->province_id = request('province');
         }
-        $org_id = request('organization');
-        $Org_act->organization_id = $org_id[0];
+        $Org_act->organization_id = request('organization');
+        if($exist_act != null){
+            $Org_act->admin_access = $exist_act->admin_access;
+        }else{
+            $Org_act->admin_access = 0;
+        }
+        
         $Org_act->save();
         return redirect('/organization/actIndex')->with('message', 'Organization Successfully assigned to handle application');
     }
@@ -240,5 +246,16 @@ class OrganizationController extends Controller {
         $organization->delete();
         return redirect('/organization/index')->with('message', 'Organization Successfully Deleted');
     }
-    
+
+    public function activity_admin_on() {
+        $id = Auth::user()->organization_id;
+        Organization_Activity::where('organization_id',$id)->update(['admin_access' => 1]);
+        return back()->with('message', 'Admin review turned on');
+    }
+
+    public function activity_admin_off() {
+        $id = Auth::user()->organization_id;
+        Organization_Activity::where('organization_id',$id)->update(['admin_access' => 0]);
+        return back()->with('message', 'Admin review turned off');
+    }
 }

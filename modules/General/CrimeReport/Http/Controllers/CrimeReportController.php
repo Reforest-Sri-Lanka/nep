@@ -99,7 +99,7 @@ class CrimeReportController extends Controller
             $landProcess->remark = "Verify these land details";
             $landProcess->prerequisite = 0;
             $landProcess->activity_organization = $org_id;
-            $landProcess->status_id = 1;
+            $landProcess->status_id = 2;
             $landProcess->form_type_id = 5;
             $landProcess->created_by_user_id = $request['createdBy'];
             $landProcess->prerequisite_id = $latestcrimeProcess->id;
@@ -109,8 +109,8 @@ class CrimeReportController extends Controller
  
             lanparcel_creation::landprocesses_save($request,$landid,$latestcrimeProcess->id);
             $successmessage='Crime report logged Successfully the ID of the application is '.$latestcrimeProcess->id;
-            $Users = User::where('role_id', '=', 2)->where('id', '!=', $request['createdBy'])->get();
-            Notification::send($Users, new ApplicationMade($latestcrimeProcess));
+           /*  $Users = User::where('role_id', '=', 2)->where('id', '!=', $request['createdBy'])->get();
+            Notification::send($Users, new ApplicationMade($latestcrimeProcess)); */
             return $successmessage;
             
         });

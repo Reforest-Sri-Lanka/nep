@@ -57,9 +57,18 @@
                             <li class="nav-item mt-3">
                                 <a class="nav-link text-light" href="/approval-item/showRequests"><i class="fa fa-fw fa-arrow-down mr-3" aria-hidden="true"></i> Requests</a>
                             </li>
+                            @if(Auth::user()->role_id < 3)
+                                <li class="nav-item mt-3">
+                            @else
+                                <li class="nav-item mt-3" style="margin-bottom:400px;">
+                            @endif
+                                    <a class="nav-link text-light" href="/reporting/overview"><i class="fa fa-fw fa-book mr-3" aria-hidden="true"></i> Reporting</a>
+                                </li>
+                            @if(Auth::user()->role_id < 3)
                             <li class="nav-item mt-3" style="margin-bottom:400px;">
-                                <a class="nav-link text-light" href="/reporting/overview"><i class="fa fa-fw fa-book mr-3" aria-hidden="true"></i> Reporting</a>
+                                <a class="nav-link text-light" href="/general/systemSetting"><i class="fa fa-fw fa-cog mr-3" aria-hidden="true"></i> System Settings</a>
                             </li>
+                            @endif
                             <li class="nav-item mt-3"></li>
                         </ul>
                     </nav>

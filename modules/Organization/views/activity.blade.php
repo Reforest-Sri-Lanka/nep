@@ -21,7 +21,7 @@
                 <th scope="col">Form</th>
                 <th scope="col">Area of control</th>
                 <th scope="col">Organization</th>
-                <th scope="col">Priority</th>
+                <th scope="col">Admin review</th>
                 <th scope="col">Remove</th>
                 </tr>
             </thead>
@@ -37,7 +37,11 @@
                     <td>{{$organization->district->district}} District</td>
                     @endif
                     <td>{{$organization->organization->title}} {{$organization->organization->branch_type->title}}</td>
-                    <td>{{$organization->priority}}</td>
+                    @if($organization->admin_access == 1)
+                    <td>On</td>
+                    @else
+                    <td>Off</td>
+                    @endif
                     <!-- opent he edit view -->
                     <td><a href="/organization/activityremove/{{$organization->id}}" class="btn btn-outline-warning" role="button">Remove</a></td>
                 </tr>

@@ -16,7 +16,7 @@ class CreateOrganizationActivityTable extends Migration
         Schema::create('organization_activity', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->tinyInteger('priority');
+            $table->tinyInteger('admin_access');
             $table->unsignedBigInteger('organization_id')->nullable();
             $table->unsignedBigInteger('form_type_id')->nullable();
             $table->unsignedBigInteger('district_id')->nullable();
