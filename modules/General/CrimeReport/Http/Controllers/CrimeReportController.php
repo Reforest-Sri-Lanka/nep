@@ -38,6 +38,7 @@ class CrimeReportController extends Controller
             'district' => 'required|not_in:0',
             'province' => 'required|not_in:0',
             'polygon' => 'required',
+            'organization' => 'nullable|exists:organizations,title',
         ]);
         if($request->hasfile('file')){
             
@@ -54,10 +55,7 @@ class CrimeReportController extends Controller
             $Crime_report->crime_type_id = $request['crime_type'];
             $Crime_report->description = $request['description'];
             $Crime_report->photos = "{}";
-   
-                $Crime_report->logs = "{}";
-            
-          
+            $Crime_report->logs = "{}";
             $Crime_report->action_taken = "0";
             $Crime_report->land_parcel_id = $landid; //add relationship later
             $Crime_report->status = "1";
@@ -80,26 +78,32 @@ class CrimeReportController extends Controller
             $Process_item =new Process_Item;
             $Process_item->created_by_user_id = $request['createdBy'];
             $Process_item->request_organization = $user->organization_id;
-            //dd($org->city);
-            //$Process_item->activity_organization = $org->id;
             $Process_item->activity_user_id = null;
             $Process_item->form_id =  $id;
             $Process_item->form_type_id = "4";      
             $Process_item->status_id = "1";
             $Process_item->remark = "to be made yet";
-            if($request->has('nonreguser')){
-                $Process_item->requestor_email = $request['Requestor_email'];
-                $Process_item->other_removal_requestor_name = $request['Requestor'];
+            if($request->filled('organization')){
+                $organization = Organization::where('title', $request['organization'])->pluck('id');
+                $org_id =$organization[0];
+                $Process_item->activity_organization = $org_id;
             }
             $Process_item->save();
             $latestcrimeProcess = Process_Item::latest()->first();
-            $org_id =organization_assign::auto_assign($latestcrimeProcess->id,request('district'),request('province'));
+            if(empty($request->input('organization'))){
+                $org_id =organization_assign::auto_assign($latestcrimeProcess->id,request('district'),request('province'));
+                $latestcrimeProcess =Process_Item::latest()->first();
+            }
+            else{
+                $Admins = User::where('organization_id',$latestcrimeProcess->activity_organization)->whereBetween('role_id', [1, 2])->get();
+                Notification::send($Admins, new ApplicationMade($latestcrimeProcess));
+            }
             $landProcess = new Process_Item();
             $landProcess->form_id = $landid;
             $landProcess->remark = "Verify these land details";
             $landProcess->prerequisite = 0;
             $landProcess->activity_organization = $org_id;
-            $landProcess->status_id = 2;
+            $landProcess->status_id = $latestcrimeProcess->status_id;
             $landProcess->form_type_id = 5;
             $landProcess->created_by_user_id = $request['createdBy'];
             $landProcess->prerequisite_id = $latestcrimeProcess->id;

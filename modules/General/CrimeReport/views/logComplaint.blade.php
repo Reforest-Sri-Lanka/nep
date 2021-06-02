@@ -10,13 +10,9 @@
                     <div class="form-group">
                         <label for="crime_type">Crime type:</label>
                         <select name="crime_type" class="custom-select" required>
-                            <option value="0" selected>Select Crime Type</option>
-                            @foreach($crime_types as $crime_type)
-                              @if (old('crime_type') == $crime_type->id)
-  		                          <option value="{{ $crime_type->id }}" selected>{{$crime_type->type}}</option>
-  	                          @else
-                                <option value="{{$crime_type->id}}">{{$crime_type->type}}</option>
-                              @endif
+                          <option disabled selected value="">Select Crime Type</option>
+                            @foreach ($crime_types as $crime_type)
+                                <option value="{{ $crime_type->id }}" {{ Request::old()?(Request::old('crime_type')==$crime_type->id?'selected="selected"':''):'' }}>{{ $crime_type->type }}</option>
                             @endforeach
                         </select>
                         @error('crime_type')
@@ -27,7 +23,7 @@
                     </div>
                     <div class="form-group">
                         <label for="province">Province:</label>
-                        <select class="custom-select @error('province') is-invalid @enderror" name="province">
+                        <select class="custom-select @error('province') is-invalid @enderror" name="province" required>
                             <option disabled selected value="">Select</option>
                             @foreach ($provinces as $province)
                                 <option value="{{ $province->id }}" {{ Request::old()?(Request::old('province')==$province->id?'selected="selected"':''):'' }}>{{ $province->province }}</option>
@@ -41,7 +37,7 @@
                     </div>
                     <div class="form-group">
                         <label for="district">District:</label>
-                        <select class="custom-select @error('district') is-invalid @enderror" name="district">
+                        <select class="custom-select @error('district') is-invalid @enderror" name="district" required>
                             <option disabled selected value="">Select</option>
                             @foreach ($districts as $district)
                             <option value="{{ $district->id }}" {{ Request::old()?(Request::old('district')==$district->id?'selected="selected"':''):'' }}>{{ $district->district }}</option>
@@ -51,6 +47,12 @@
                             <div class="alert">                                   
                                 <strong>{{ $message }}</strong>
                             </div>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        Request Organization (this will override auto assign):<input type="text" class="form-control typeahead3" placeholder="Search" name="organization" value="{{ old('organization') }}" />
+                        @error('organization')
+                        <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                     </div>
                     <div class="form-group" id="dynamicAddRemove">
@@ -65,7 +67,7 @@
                     </div>
                     <div class="form-group">
                         <label for="description">Description:</label>
-                        <textarea  class="form-control" rows="3" name="description">{{{ old('description') }}}</textarea>
+                        <textarea  class="form-control" rows="3" name="description" required>{{{ old('description') }}}</textarea>
                         @error('description')
                             <div class="alert">
                                 <strong>{{ $message }}</strong>
@@ -82,7 +84,7 @@
                           @foreach($organizations as $organization)
                             <div class="form-check">
                               <label class="form-check-label">
-                                <input type="checkbox" class="form-check-input" name="govOrg[]" value="{{$organization->id}}">{{$organization->title}}
+                                <input type="checkbox" class="form-check-input" name="govOrg[]" value="{{$organization->id}}" >{{$organization->title}}
                               </label>
                             </div>
                           @endforeach
@@ -94,7 +96,7 @@
                     <input type="hidden" class="form-control" name="createdBy" value="{{ Auth::user()->id }}">  
                         <input id="polygon" type="hidden" name="polygon" value="{{request('polygon')}}">
                         <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input" name="confirm" ><strong>I confirm these information to be true</strong>
+                        <input type="checkbox" class="form-check-input" name="confirm" required><strong>I confirm these information to be true</strong>
                         @error('confirm')
                             <div class="alert">
                                 <strong>{{ $message }}</strong>
@@ -107,7 +109,7 @@
                 <div class="col border border-muted rounded-lg p-4">
                     <div class="form-group">
                         <label for="planNo">Area name:</label>
-                        <input type="text" class="form-control" placeholder="Enter Area name" id="planNo" name="planNo" value="{{ old('landTitle') }}">
+                        <input type="text" class="form-control" placeholder="Enter Area name" id="planNo" name="planNo" value="{{ old('planNo') }}" required>
                         @error('planNo')
                             <div class="alert">
                                 <strong>{{ $message }}</strong>
@@ -117,6 +119,11 @@
                     <!-- ////////MAP GOES HERE -->
                     <div id="mapid" style="height:400px;" name="map"></div>
                     <br>
+                    @error('polygon')
+                            <div class="alert">
+                                <strong>{{ $message }}</strong>
+                            </div>
+                    @enderror
                 </div>
       </div>
     </div>
@@ -143,43 +150,7 @@
   });
 
 
-    //THIS USES THE AUTOMECOMPLETE FUNCTION IN TREE REMOVAL CONTROLLER
-    /* var path3 = "{{route('organization')}}";
-    $('input.typeahead3').typeahead({
-        source: function(terms, process) {
-
-            return $.get(path3, {
-                terms: terms
-            }, function(data) {
-                console.log(data);
-                objects = [];
-                data.map(i => {
-                    objects.push(i.title)
-                })
-                console.log(objects);
-                return process(objects);
-            })
-        },
-    }); */
-
-    var path2 = "{{route('district')}}";
-    $('input.typeahead2').typeahead({
-        source: function(terms, process) {
-
-        return $.get(path2, {
-            terms: terms
-        }, function(data) {
-            console.log(data);
-            objects = [];
-            data.map(i => {
-            objects.push(i.district)
-            })
-            console.log(objects);
-            return process(objects);
-        })
-        },
-    }); 
-
+   
   // SCRIPT FOR THE MAP
   var map = L.map('mapid', {
     center: [7.2906, 80.6337], //if the location cannot be fetched it will be set to Kandy
