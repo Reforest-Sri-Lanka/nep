@@ -269,6 +269,7 @@ class ApprovalItemController extends Controller
         } else {
             $item = Land_Parcel::find($process_item->form_id);
             $Land_Organizations = Land_Has_Organization::where('land_parcel_id', $item->id)->get();
+            $Land_Gazzettes = Land_Has_Gazette::where('land_parcel_id', $item->id)->get();
             return view('approvalItem::staffAssign', [
                 'item' => $item,
                 'process_item' => $process_item,
@@ -276,6 +277,7 @@ class ApprovalItemController extends Controller
                 'polygon' => $item->polygon,
                 'LandOrganizations' => $Land_Organizations,
                 'Users' => $Users,
+                'Land_Gazzettes' =>$Land_Gazzettes,
             ]);
         }
     }
@@ -322,12 +324,14 @@ class ApprovalItemController extends Controller
         } else {
             $item = Land_Parcel::find($process_item->form_id);
             $Land_Organizations = Land_Has_Organization::where('land_parcel_id', $item->id)->get();
+            $Land_Gazzettes = Land_Has_Gazette::where('land_parcel_id', $item->id)->get();
             return view('approvalItem::assignOrg', [
                 'item' => $item,
                 'process_item' => $process_item,
                 'Organizations' => $Organizations,
                 'polygon' => $item->polygon,
                 'LandOrganizations' => $Land_Organizations,
+                'Land_Gazzettes' =>$Land_Gazzettes,
             ]);
         }
     }
@@ -390,6 +394,7 @@ class ApprovalItemController extends Controller
         } else {
             $item = Land_Parcel::find($process_item->form_id);
             $Land_Organizations = Land_Has_Organization::where('land_parcel_id', $item->id)->get();
+            $Land_Gazzettes = Land_Has_Gazette::where('land_parcel_id', $item->id)->get();
             return view('approvalItem::investigate', [
                 'item' => $item,
                 'process_item' => $process_item,
@@ -400,6 +405,7 @@ class ApprovalItemController extends Controller
                 'Process_item_progresses' => $Process_item_progresses,
                 'Prerequisites' => $Prerequisites,
                 'LandOrganizations' => $Land_Organizations,
+                'Land_Gazzettes' =>$Land_Gazzettes,
             ]);
         }
     }

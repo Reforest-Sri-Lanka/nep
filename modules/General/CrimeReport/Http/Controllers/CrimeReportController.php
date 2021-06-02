@@ -17,6 +17,7 @@ use App\Models\Crime_type;
 use App\Models\User;
 use App\Models\Process_Item;
 use App\Models\District;
+use App\Models\Gazette;
 use App\Models\Province;
 use App\Models\Organization;
 use App\CustomClass\organization_assign;
@@ -127,11 +128,13 @@ class CrimeReportController extends Controller
         $crime_types = Crime_type::all();
         $province = Province::all();
         $district = District::all();
+        $gazettes = Gazette::all();
         return view('crimeReport::logComplaint', [
             'organizations' => $organizations,
             'crime_types' => $crime_types,
             'provinces' => $province,
             'districts' => $district,
+            'gazettes' => $gazettes,
         ]);  
         //return view('crimeReport::logComplaint',['Organizations' => $Organizations],['crime_types' => $crime_types],);
     }

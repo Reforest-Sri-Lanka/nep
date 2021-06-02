@@ -75,21 +75,42 @@
                         @enderror
                     </div>
                     <hr>
-                    <div class="card">
-                      <div class="card-header">
-                          <a class="collapsed card-link text-dark" data-toggle="collapse" href="#collapseOne">Governing Organization for selected Land Parcel (Optional)</a>
-                      </div>
-                      <div id="collapseOne" class="collapse">
-                        <div class="card-body">
-                          @foreach($organizations as $organization)
-                            <div class="form-check">
-                              <label class="form-check-label">
-                                <input type="checkbox" class="form-check-input" name="govOrg[]" value="{{$organization->id}}" >{{$organization->title}}
-                              </label>
+                    <div id="accordion" class="mb-3">
+                        <div class="card mb-3">
+                            <div class="card-header bg-white">
+                                <a class="collapsed card-link text-dark" data-toggle="collapse" href="#collapseone">
+                                    Organizations Governing Land (Optional)
+                                </a>
                             </div>
-                          @endforeach
+                            <div id="collapseone" class="collapse" data-parent="#accordion">
+                                <div class="card-body">
+                                    <strong>Select 1 or More</strong>
+                                    <fieldset>
+                                        @foreach($organizations as $organization)
+                                        <input type="checkbox" name="governing_orgs[]" value="{{$organization->id}}" @if( is_array(old('governing_orgs')) && in_array($organization->id, old('governing_orgs'))) checked @endif><label class="ml-2">{{$organization->title}}</label> <br>
+                                        @endforeach
+                                    </fieldset>
+                                </div>
+                            </div>
                         </div>
-                      </div>
+
+                        <div class="card">
+                            <div class="card-header bg-white">
+                                <a class="collapsed card-link text-dark" data-toggle="collapse" href="#collapsetwo">
+                                    Gazettes Relavant to Land (Optional)
+                                </a>
+                            </div>
+                            <div id="collapsetwo" class="collapse" data-parent="#accordion">
+                                <div class="card-body">
+                                    <strong>Select 1 or More</strong>
+                                    <fieldset>
+                                        @foreach($gazettes as $gazette)
+                                        <input type="checkbox" name="gazettes[]" value="{{$gazette->id}}" @if( is_array(old('gazettes')) && in_array($gazette->id, old('gazettes'))) checked @endif> <label class="ml-2">{{$gazette->title}}</label> <br>
+                                        @endforeach
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <br>
                     <div class="form-check">

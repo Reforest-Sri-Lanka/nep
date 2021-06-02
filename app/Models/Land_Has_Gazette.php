@@ -15,4 +15,9 @@ class Land_Has_Gazette extends Model
         'land_parcel_id',
         'status'
     ];
+
+    public function gazette()
+    {
+        return $this->belongsTo('App\Models\Gazette');
+    }
 }
