@@ -4,9 +4,11 @@ namespace App\CustomClass;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Process_Item;
 use App\Models\Land_Parcel;
 use App\Models\Land_Has_Gazette;
+use App\Models\Land_Has_Organization;
 
 
 class lanparcel_creation
@@ -23,7 +25,9 @@ class lanparcel_creation
         
         $land->district_id = $request->district;
         $land->province_id = $request->province;
+        if (request('gs_division')) {
         $land->gs_division_id = $request->gs_division;
+        }
 
         //$land->governing_organizations = request('governing_orgs');
         if (($request->governing_orgs)!= null) {
@@ -39,6 +43,18 @@ class lanparcel_creation
         $land->status_id = 1;
         $land->save();
         $landid = Land_Parcel::latest()->first()->id;
+        if (request('governing_orgs')) {
+            $governing_organizations = request('governing_orgs');
+
+            foreach ($governing_organizations as $governing_organization) {
+                $land_has_organization = new Land_Has_Organization();
+                $land_has_organization->land_parcel_id = $landid;
+                $land_has_organization->organization_id = $governing_organization;
+                $land_has_organization->status = 1;
+                $land_has_organization->save();
+            }
+        }
+
         if (request('gazettes')) {
 
           $gazettes = request('gazettes');
@@ -49,7 +65,7 @@ class lanparcel_creation
               $land_has_gazette->gazette_id = $gazette;
               $land_has_gazette->status = 2;
               $land_has_gazette->save();
-          }
+        }
       }
         return $landid;
     }
@@ -58,12 +74,6 @@ class lanparcel_creation
             $governing_organizations = request('governing_orgs');
 
             foreach ($governing_organizations as $governing_organization) {
-                $land_has_organization = new Land_Has_Organization();
-                $land_has_organization->land_parcel_id = $landid;
-                $land_has_organization->organization_id = $governing_organization;
-                $land_has_organization->status = 1;
-                $land_has_organization->save();
-
                 $process = new Process_Item();
                 $process->form_type_id = 5;
                 $process->form_id = $landid;
@@ -71,7 +81,7 @@ class lanparcel_creation
                 $process->request_organization = Auth::user()->organization_id;
                 $process->activity_organization = $governing_organization;
                 $process->prerequisite_id = $pid; 
-                $landProcess->prerequisite = 1;  
+                $process->prerequisite = 1;  
                 $process->save();
             }
         }
