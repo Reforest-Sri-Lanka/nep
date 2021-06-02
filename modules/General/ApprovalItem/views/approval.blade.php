@@ -162,8 +162,14 @@
             </div>
             <div class="col border border-muted rounded-lg mr-2 p-4">
                 <div id="mapid" style="height:400px;" name="map"></div>
-                @if($process_item->form_type_id!=5 && $process_item->status_id > 2)
-                    <button type="submit" class="btn btn-primary" ><a href="/approval-item/investigate/{{$land_process->id}}" class="text-dark">View More details</a></button>
+                @if($process_item->form_type_id !=5)
+                    @if($process_item->status_id == 1 || $process_item->status_id ==9)
+                        <button type="submit" class="btn btn-primary" ><a href="/approval-item/assignorganization/{{$land_process->id}}" class="text-dark">View More details</a></button>
+                    @elseif($process_item->status_id ==2 || $process_item->status_id ==9)
+                        <button type="submit" class="btn btn-primary" ><a href="/approval-item/assignstaff/{{$land_process->id}}" class="text-dark">View More details</a></button>
+                    @elseif($process_item->status_id > 2 && $process_item->status_id < 9)
+                        <button type="submit" class="btn btn-primary" ><a href="/approval-item/investigate/{{$land_process->id}}" class="text-dark">View More details</a></button>
+                    @endif
                 @endif
             </div>
         </div>
