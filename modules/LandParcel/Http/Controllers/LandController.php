@@ -17,7 +17,7 @@ use Validator;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use App\CustomClass\organization_assign;
-
+use App\CustomClass\lanparcel_creation;
 
 class LandController extends Controller
 {
@@ -49,72 +49,33 @@ class LandController extends Controller
             'polygon' => 'required',
             'district' => 'required|not_in:0',
             'province' => 'required|not_in:0',
+            'organization' => 'nullable|exists:organizations,title',
         ]);
-
-        $land = new Land_Parcel();
-        $land->title = request('planNo');
-        $land->surveyor_name = request('surveyorName');
-
-        //$land->governing_organizations = request('governing_orgs');
-        if (request('governing_orgs')) {
-            $land->governing_organizations = request('governing_orgs');
-        } else {
-            $land->governing_organizations = [];
-        }
-        $land->polygon = request('polygon');
-        $land->created_by_user_id = request('createdBy');
-        if (request('isProtected')) {
-            $land->protected_area = request('isProtected');
-        }
-        $land->status_id = 1;
-        $land->save();
-
-        $landid = Land_Parcel::latest()->first()->id;
-
+        
+        
+        $landid =lanparcel_creation::land_save($request);
         $process = new Process_Item();
         $process->form_type_id = 5;
         $process->form_id = $landid;
         $process->created_by_user_id = request('createdBy');
         $process->request_organization = Auth::user()->organization_id;
+        if($request->filled('organization')){
+            $organization = Organization::where('title', $request['organization'])->pluck('id');
+            
+            $process->activity_organization = $org_id =$organization[0];
+        }
         $process->save();
 
-        $mainprocess=Process_Item::latest()->first()->id;
-        //$district_id = District::where('district', request('district'))->pluck('id'); 
-        organization_assign::auto_assign($mainprocess->id,request('district'),request('province'));
-
-        if (request('governing_orgs')) {
-            $governing_organizations = request('governing_orgs');
-
-            foreach ($governing_organizations as $governing_organization) {
-                $land_has_organization = new Land_Has_Organization();
-                $land_has_organization->land_parcel_id = $landid;
-                $land_has_organization->organization_id = $governing_organization;
-                $land_has_organization->status = 2;
-                $land_has_organization->save();
-
-                $process = new Process_Item();
-                $process->form_type_id = 5;
-                $process->form_id = $landid;
-                $process->created_by_user_id = request('createdBy');
-                $process->request_organization = Auth::user()->organization_id;
-                $process->activity_organization = $governing_organization;
-                $process->prerequisite_id = $mainprocess;   
-                $process->save();
-            }
+        $land_process=Process_Item::latest()->first();
+        if(empty($request->input('organization'))){
+        organization_assign::auto_assign($land_process->id,request('district'),request('province'));
+            $land_process=Process_Item::latest()->first();
+        }else{
+            $Admins = User::where('organization_id',$land_process->activity_organization)->whereBetween('role_id', [1, 2])->get();
+            Notification::send($Admins, new ApplicationMade($land_process));
         }
-
-        if (request('gazettes')) {
-
-            $gazettes = request('gazettes');
-
-            foreach ($gazettes as $gazette) {
-                $land_has_gazette = new Land_Has_Gazette();
-                $land_has_gazette->land_parcel_id = $landid;
-                $land_has_gazette->gazette_id = $gazette;
-                $land_has_gazette->status = 2;
-                $land_has_gazette->save();
-            }
-        }
+        lanparcel_creation::landprocesses_save($request,$landid,$land_process->id);
+        
 
         return redirect('/general/pending')->with('message', 'Request Created Successfully');
     }
