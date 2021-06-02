@@ -22,7 +22,7 @@
                 <form action="/approval-item/filterRequests" method="get">
                     <div class="container">
                         <li class="dropdown-header">Filter by Date</li>
-                        <li><input class="date form-control" type="text" placeholder="Select Date" name="date"></li>
+                        <li><input type="date" class="form-control" name="date" placeholder="Enter here"></li>
                         <li class="dropdown-header">Filter by Organization</li>
                         <li><select name="organization" class="custom-select">
                                 <option selected disabled value="">Select Org.</option>
@@ -94,15 +94,5 @@
             </tbody>
         </table>
     </div>
-
 </div>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" />
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.css" rel="stylesheet">
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
-<script type="text/javascript">
-    $('.date').datepicker({
-        format: 'yyyy-mm-dd'
-    });
-</script>
 @endsection

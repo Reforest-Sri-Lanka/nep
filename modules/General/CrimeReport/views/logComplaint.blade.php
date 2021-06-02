@@ -2,6 +2,11 @@
 
 @section('general')
 <div class="container">
+  <!-- FAQ button -->
+  <div class="d-flex mb-2 justify-content-end">
+    <span><a title="FAQ" style="font-size:24px;cursor:pointer;" data-toggle="modal" data-target="#complaintsHelp"><i class="fa fa-info-circle" aria-hidden="true"></i></a></span>
+  </div>
+  @include('faq')
   <form action="\crime-report\crimecreate" method="post" enctype="multipart/form-data">
     @csrf
     <div class="container bg-white">
@@ -76,6 +81,8 @@
             <input type="text" class="form-control" placeholder="Enter Area name" id="landTitle" name="landTitle" value="{{ old('landTitle') }}">
           </div>
           <!-- ////////MAP GOES HERE -->
+          <label>Select Location On Map*</label>
+          <span style="float:right; cursor:pointer;"><kbd><a title="How to Draw Shapes on the Map" class="text-white" data-toggle="modal" data-target="#mapHelp">How To Mark Location</a></kbd></span>
           <div id="mapid" style="height:400px;" name="map"></div>
           <br>
         </div>

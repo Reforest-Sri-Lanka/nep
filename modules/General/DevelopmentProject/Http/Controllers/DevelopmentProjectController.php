@@ -39,6 +39,67 @@ class DevelopmentProjectController extends Controller
     // depenign on the number of governing organizations selected.
     public function save(Request $request)
     {
+        if (Auth()->user()->role_id != 6) {
+            if (request('checklandowner') && request('checkremovalrequestor')) {
+                $request->validate([
+                    'title' => 'required',
+                    'planNo' => 'required',
+                    'surveyorName' => 'required',
+                    'province' => 'required',
+                    'district' => 'required',
+                    'gs_division' => 'required',
+                    'gazette' => 'required|exists:gazettes,gazette_number',
+                    'polygon' => 'required',
+                    'removal_requestor' => 'required',
+                    'land_owner' => 'required',
+                    'removalrequestortype' => 'required|in:1,2',
+                    'landownertype' => 'required|in:1,2',
+                    //'removal_requestor_email' => 'email|required'
+                ]);
+            } elseif (request('checkremovalrequestor')) {
+                $request->validate([
+                    'title' => 'required',
+                    'planNo' => 'required',
+                    'surveyorName' => 'required',
+                    'province' => 'required',
+                    'district' => 'required',
+                    'gs_division' => 'required',
+                    'gazette' => 'required|exists:gazettes,gazette_number',
+                    'polygon' => 'required',
+                    'removal_requestor' => 'required',
+                    'removalrequestortype' => 'required|in:1,2',
+                    'land_owner' => 'required|exists:organizations,title',
+                    // 'removal_requestor_email' => 'email|required'
+                ]);
+            } elseif (request('checklandowner')) {
+                $request->validate([
+                    'title' => 'required',
+                    'planNo' => 'required',
+                    'surveyorName' => 'required',
+                    'province' => 'required',
+                    'district' => 'required',
+                    'gs_division' => 'required',
+                    'gazette' => 'required|exists:gazettes,gazette_number',
+                    'polygon' => 'required',
+                    'removal_requestor' => 'required|exists:organizations,title',
+                    'land_owner' => 'required',
+                    'landownertype' => 'required|in:1,2',
+                ]);
+            } else {
+                $request->validate([
+                    'title' => 'required',
+                    'planNo' => 'required',
+                    'surveyorName' => 'required',
+                    'province' => 'required',
+                    'district' => 'required',
+                    'gs_division' => 'required',
+                    'gazette' => 'required|exists:gazettes,gazette_number',
+                    'polygon' => 'required',
+                    'removal_requestor' => 'required|exists:organizations,title',
+                    'land_owner' => 'required|exists:organizations,title',
+                ]);
+            }
+        }
         if (Auth()->user()->role_id = 6) {
             if (request('checkremovalrequestor')) {
                 $request->validate([
@@ -67,65 +128,8 @@ class DevelopmentProjectController extends Controller
                     'removal_requestor' => 'required|exists:organizations,title',
                 ]);
             }
-        } elseif (request('checklandowner') && request('checkremovalrequestor')) {
-            $request->validate([
-                'title' => 'required',
-                'planNo' => 'required',
-                'surveyorName' => 'required',
-                'province' => 'required',
-                'district' => 'required',
-                'gs_division' => 'required',
-                'gazette' => 'required|exists:gazettes,gazette_number',
-                'polygon' => 'required',
-                'removal_requestor' => 'required',
-                'land_owner' => 'required',
-                'removalrequestortype' => 'required|in:1,2',
-                'landownertype' => 'required|in:1,2',
-                //'removal_requestor_email' => 'email|required'
-            ]);
-        } elseif (request('checkremovalrequestor')) {
-            $request->validate([
-                'title' => 'required',
-                'planNo' => 'required',
-                'surveyorName' => 'required',
-                'province' => 'required',
-                'district' => 'required',
-                'gs_division' => 'required',
-                'gazette' => 'required|exists:gazettes,gazette_number',
-                'polygon' => 'required',
-                'removal_requestor' => 'required',
-                'removalrequestortype' => 'required|in:1,2',
-                'land_owner' => 'required|exists:organizations,title',
-                // 'removal_requestor_email' => 'email|required'
-            ]);
-        } elseif (request('checklandowner')) {
-            $request->validate([
-                'title' => 'required',
-                'planNo' => 'required',
-                'surveyorName' => 'required',
-                'province' => 'required',
-                'district' => 'required',
-                'gs_division' => 'required',
-                'gazette' => 'required|exists:gazettes,gazette_number',
-                'polygon' => 'required',
-                'removal_requestor' => 'required|exists:organizations,title',
-                'land_owner' => 'required',
-                'landownertype' => 'required|in:1,2',
-            ]);
-        } else {
-            $request->validate([
-                'title' => 'required',
-                'planNo' => 'required',
-                'surveyorName' => 'required',
-                'province' => 'required',
-                'district' => 'required',
-                'gs_division' => 'required',
-                'gazette' => 'required|exists:gazettes,gazette_number',
-                'polygon' => 'required',
-                'removal_requestor' => 'required|exists:organizations,title',
-                'land_owner' => 'required|exists:organizations,title',
-            ]);
         }
+
 
         DB::transaction(function () use ($request) {
             $land = new Land_Parcel();

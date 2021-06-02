@@ -43,6 +43,99 @@ class TreeRemovalController extends Controller
             ]);
         }
 
+        if (Auth()->user()->role_id != 6) {
+            if (request('checklandowner') && request('checkremovalrequestor')) {
+                $request->validate([
+                    'planNo' => 'required',
+                    'surveyorName' => 'required',
+                    'province' => 'required',
+                    'district' => 'required',
+                    'gs_division' => 'required',
+                    'polygon' => 'required',
+                    'number_of_trees' => 'required|integer',
+                    'description' => 'required',
+                    'land_extent' => 'nullable|numeric|between:0,99.999',
+                    'removal_requestor' => 'required',
+                    'land_owner' => 'required',
+                    'removalrequestortype' => 'required|in:1,2',
+                    'landownertype' => 'required|in:1,2',
+                    'location.*.tree_species_id' => 'nullable|alpha',
+                    'location.*.diameter_at_breast_height' => 'nullable|numeric',
+                    'location.*.diameter_at_stump' => 'nullable|numeric',
+                    'location.*.height' => 'nullable|numeric',
+                    'location.*.timber_volume' => 'nullable|numeric',
+                    'location.*.timber_cubic' => 'nullable|numeric',
+                    'location.*.age' => 'nullable|numeric',
+                    //'removal_requestor_email' => 'email|required'
+                ]);
+            } elseif (request('checkremovalrequestor')) {
+                $request->validate([
+                    'planNo' => 'required',
+                    'surveyorName' => 'required',
+                    'province' => 'required',
+                    'district' => 'required',
+                    'gs_division' => 'required',
+                    'polygon' => 'required',
+                    'number_of_trees' => 'required|integer',
+                    'description' => 'required',
+                    'land_extent' => 'nullable|numeric|between:0,99.999',
+                    'removal_requestor' => 'required',
+                    'removalrequestortype' => 'required|in:1,2',
+                    'land_owner' => 'required|exists:organizations,title',
+                    'location.*.tree_species_id' => 'nullable|alpha',
+                    'location.*.diameter_at_breast_height' => 'nullable|numeric',
+                    'location.*.diameter_at_stump' => 'nullable|numeric',
+                    'location.*.height' => 'nullable|numeric',
+                    'location.*.timber_volume' => 'nullable|numeric',
+                    'location.*.timber_cubic' => 'nullable|numeric',
+                    'location.*.age' => 'nullable|numeric',
+                    // 'removal_requestor_email' => 'email|required'
+                ]);
+            } elseif (request('checklandowner')) {
+                $request->validate([
+                    'planNo' => 'required',
+                    'surveyorName' => 'required',
+                    'province' => 'required',
+                    'district' => 'required',
+                    'gs_division' => 'required',
+                    'polygon' => 'required',
+                    'number_of_trees' => 'required|integer',
+                    'description' => 'required',
+                    'land_extent' => 'nullable|numeric|between:0,99.999',
+                    'removal_requestor' => 'required|exists:organizations,title',
+                    'land_owner' => 'required',
+                    'landownertype' => 'required|in:1,2',
+                    'location.*.tree_species_id' => 'nullable|alpha',
+                    'location.*.diameter_at_breast_height' => 'nullable|numeric',
+                    'location.*.diameter_at_stump' => 'nullable|numeric',
+                    'location.*.height' => 'nullable|numeric',
+                    'location.*.timber_volume' => 'nullable|numeric',
+                    'location.*.timber_cubic' => 'nullable|numeric',
+                    'location.*.age' => 'nullable|numeric',
+                ]);
+            } else {
+                $request->validate([
+                    'planNo' => 'required',
+                    'surveyorName' => 'required',
+                    'province' => 'required',
+                    'district' => 'required',
+                    'gs_division' => 'required',
+                    'polygon' => 'required',
+                    'number_of_trees' => 'required|integer',
+                    'description' => 'required',
+                    'land_extent' => 'nullable|numeric|between:0,99.999',
+                    'removal_requestor' => 'required|exists:organizations,title',
+                    'land_owner' => 'required|exists:organizations,title',
+                    'location.*.tree_species_id' => 'nullable|alpha',
+                    'location.*.diameter_at_breast_height' => 'nullable|numeric',
+                    'location.*.diameter_at_stump' => 'nullable|numeric',
+                    'location.*.height' => 'nullable|numeric',
+                    'location.*.timber_volume' => 'nullable|numeric',
+                    'location.*.timber_cubic' => 'nullable|numeric',
+                    'location.*.age' => 'nullable|numeric',
+                ]);
+            }
+        }
         if (Auth()->user()->role_id = 6) {
             if (request('checkremovalrequestor')) {
                 $request->validate([
@@ -57,6 +150,13 @@ class TreeRemovalController extends Controller
                     'land_extent' => 'nullable|numeric|between:0,99.999',
                     'removal_requestor' => 'required',
                     'removalrequestortype' => 'required|in:1,2',
+                    'location.*.tree_species_id' => 'nullable|alpha',
+                    'location.*.diameter_at_breast_height' => 'nullable|numeric',
+                    'location.*.diameter_at_stump' => 'nullable|numeric',
+                    'location.*.height' => 'nullable|numeric',
+                    'location.*.timber_volume' => 'nullable|numeric',
+                    'location.*.timber_cubic' => 'nullable|numeric',
+                    'location.*.age' => 'nullable|numeric',
                     // 'removal_requestor_email' => 'email|required'
                 ]);
             } else {
@@ -71,71 +171,17 @@ class TreeRemovalController extends Controller
                     'description' => 'required',
                     'land_extent' => 'nullable|numeric|between:0,99.999',
                     'removal_requestor' => 'required|exists:organizations,title',
+                    'location.*.tree_species_id' => 'nullable|alpha',
+                    'location.*.diameter_at_breast_height' => 'nullable|numeric',
+                    'location.*.diameter_at_stump' => 'nullable|numeric',
+                    'location.*.height' => 'nullable|numeric',
+                    'location.*.timber_volume' => 'nullable|numeric',
+                    'location.*.timber_cubic' => 'nullable|numeric',
+                    'location.*.age' => 'nullable|numeric',
                 ]);
             }
-        } elseif (request('checklandowner') && request('checkremovalrequestor')) {
-            $request->validate([
-                'planNo' => 'required',
-                'surveyorName' => 'required',
-                'province' => 'required',
-                'district' => 'required',
-                'gs_division' => 'required',
-                'polygon' => 'required',
-                'number_of_trees' => 'required|integer',
-                'description' => 'required',
-                'land_extent' => 'nullable|numeric|between:0,99.999',
-                'removal_requestor' => 'required',
-                'land_owner' => 'required',
-                'removalrequestortype' => 'required|in:1,2',
-                'landownertype' => 'required|in:1,2',
-                //'removal_requestor_email' => 'email|required'
-            ]);
-        } elseif (request('checkremovalrequestor')) {
-            $request->validate([
-                'planNo' => 'required',
-                'surveyorName' => 'required',
-                'province' => 'required',
-                'district' => 'required',
-                'gs_division' => 'required',
-                'polygon' => 'required',
-                'number_of_trees' => 'required|integer',
-                'description' => 'required',
-                'land_extent' => 'nullable|numeric|between:0,99.999',
-                'removal_requestor' => 'required',
-                'removalrequestortype' => 'required|in:1,2',
-                'land_owner' => 'required|exists:organizations,title',
-                // 'removal_requestor_email' => 'email|required'
-            ]);
-        } elseif (request('checklandowner')) {
-            $request->validate([
-                'planNo' => 'required',
-                'surveyorName' => 'required',
-                'province' => 'required',
-                'district' => 'required',
-                'gs_division' => 'required',
-                'polygon' => 'required',
-                'number_of_trees' => 'required|integer',
-                'description' => 'required',
-                'land_extent' => 'nullable|numeric|between:0,99.999',
-                'removal_requestor' => 'required|exists:organizations,title',
-                'land_owner' => 'required',
-                'landownertype' => 'required|in:1,2',
-            ]);
-        } else {
-            $request->validate([
-                'planNo' => 'required',
-                'surveyorName' => 'required',
-                'province' => 'required',
-                'district' => 'required',
-                'gs_division' => 'required',
-                'polygon' => 'required',
-                'number_of_trees' => 'required|integer',
-                'description' => 'required',
-                'land_extent' => 'nullable|numeric|between:0,99.999',
-                'removal_requestor' => 'required|exists:organizations,title',
-                'land_owner' => 'required|exists:organizations,title',
-            ]);
         }
+
 
 
         DB::transaction(function () use ($request) {
