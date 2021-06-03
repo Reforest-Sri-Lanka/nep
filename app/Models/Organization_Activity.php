@@ -9,9 +9,7 @@ class Organization_Activity extends Model
 {
     use HasFactory;
 
-    protected $attributes = [
-        'priority' => 0,
-    ];
+    
 
     protected $table = 'organization_activity';
 

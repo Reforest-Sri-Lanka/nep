@@ -9,6 +9,7 @@ use App\Models\GS_Division;
 use App\Models\Organization;
 use App\Models\Gazette;
 use App\Models\Land_Has_Gazette;
+use App\Models\User;
 use App\Models\Land_Has_Organization;
 use App\Models\Process_Item;
 use Illuminate\Http\Request;
@@ -19,6 +20,8 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use App\CustomClass\organization_assign;
 use App\CustomClass\lanparcel_creation;
+use Illuminate\Support\Facades\Notification;
+Use App\Notifications\ApplicationMade;
 
 class LandController extends Controller
 {
@@ -71,7 +74,7 @@ class LandController extends Controller
 
         $land_process=Process_Item::latest()->first();
         if(empty($request->input('organization'))){
-        organization_assign::auto_assign($land_process->id,request('district'),request('province'));
+            organization_assign::auto_assign($land_process->id,request('district'),request('province'));
             $land_process=Process_Item::latest()->first();
         }else{
             $Admins = User::where('organization_id',$land_process->activity_organization)->whereBetween('role_id', [1, 2])->get();

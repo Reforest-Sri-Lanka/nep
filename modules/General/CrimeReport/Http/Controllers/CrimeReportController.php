@@ -81,8 +81,7 @@ class CrimeReportController extends Controller
             $Process_item->request_organization = $user->organization_id;
             $Process_item->activity_user_id = null;
             $Process_item->form_id =  $id;
-            $Process_item->form_type_id = "4";      
-            $Process_item->status_id = "1";
+            $Process_item->form_type_id = 4;      
             $Process_item->remark = "to be made yet";
             if($request->filled('organization')){
                 $organization = Organization::where('title', $request['organization'])->pluck('id');
