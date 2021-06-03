@@ -129,30 +129,50 @@
                         </table>
                     @break
                     @case('5')
-                        <table class="table table-light table-striped border-secondary rounded-lg mr-4">
+                    <table class="table table-light table-striped border-secondary rounded-lg mr-4">
                             <thead>
                                 <tr>
-                                    <th>District</th>
-                                    <th>Grama Niladari Division</th>
+                                    <th>Plan No/Land Area</th>
+                                    <th>Surveyor</th>
                                     <th>Protected Area</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    @if($item->district==null)
-                                        <td>Not assigned</td>
-                                    @else
-                                        <td>{{$item->district->district}}</td>
-                                    @endif
-                                    @if($item->gs_division==null)
-                                        <td>Not assigned</td>
-                                    @else
-                                    <td>{{$item->gs_division->gs_division}}</td>
-                                    @endif
+                                    <td>{{$item->title}}</td>
+                                    <td>{{$item->surveyor_name}}</td>
                                     @if($item->special_approval==0)
                                         <td>Not a protected area</td>
                                     @else
                                         <td>Protected area</td>
+                                    @endif
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table class="table table-light table-striped border-secondary rounded-lg mr-4">
+                            <thead>
+                                <tr>
+                                    <th>Province</th>
+                                    <th>District</th>
+                                    <th>Grama Niladari Division</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    @if($item->province_id ==0)
+                                        <td>Not a protected area</td>
+                                    @else
+                                        <td>{{$item->province->province}}</td>
+                                    @endif
+                                    @if($item->district_id==null)
+                                        <td>Not assigned</td>
+                                    @else
+                                        <td>{{$item->district->district}}</td>
+                                    @endif
+                                    @if($item->gs_division_id==null)
+                                        <td>Not assigned</td>
+                                    @else
+                                    <td>{{$item->gs_division->gs_division}}</td>
                                     @endif
                                 </tr>
                             </tbody>
