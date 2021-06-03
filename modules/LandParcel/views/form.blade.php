@@ -71,7 +71,7 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        Request Organization (this will override auto assign):<input type="text" class="form-control typeahead3" placeholder="Search" name="organization" value="{{ old('organization') }}" />
+                        Forward to Organization (this will override auto assign):<input type="text" class="form-control typeahead3" placeholder="Search" name="organization" value="{{ old('organization') }}" />
                         @error('organization')
                         <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
