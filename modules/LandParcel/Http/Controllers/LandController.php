@@ -13,6 +13,7 @@ use App\Models\Land_Has_Organization;
 use App\Models\Process_Item;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Validator;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
@@ -44,6 +45,9 @@ class LandController extends Controller
         $request->validate([
             'planNo' => 'required',
             'surveyorName' => 'required',
+            'province' => 'required',
+            'district' => 'required',
+            'gs_division' => 'required',
             'governing_orgs' => 'nullable',
             'gazettes' => 'nullable',
             'polygon' => 'required',
@@ -61,7 +65,6 @@ class LandController extends Controller
         $process->request_organization = Auth::user()->organization_id;
         if($request->filled('organization')){
             $organization = Organization::where('title', $request['organization'])->pluck('id');
-            
             $process->activity_organization = $org_id =$organization[0];
         }
         $process->save();
@@ -89,29 +92,62 @@ class LandController extends Controller
             'land' => $land_data,
             'polygon' => $land_data->polygon,
             'other_removal_requestor' => $item->other_removal_requestor_name,
+            'process' => $item,
         ]);
+    }
+
+    public function destroy($landid)
+    {
+
+        DB::transaction(function () use ($landid) {
+
+            $landhasGazettes = Land_Has_Gazette::where("land_parcel_id", "=", $landid)->get();
+            foreach ($landhasGazettes as $landhasGazette) {
+                $landhasGazette->delete();
+            }
+
+            $landHasOrganizations = Land_Has_Organization::where("land_parcel_id", "=", $landid)->get();
+            foreach ($landHasOrganizations as $landHasOrganization) {
+                $landHasOrganization->delete();
+            }
+
+            $landProcess = Process_Item::where([
+                ["form_id", "=", $landid],
+                ['form_type_id', '=', 5],
+            ])->get();
+            foreach ($landProcess as $land) {
+                $land->delete();
+            }
+
+            $landParcel = Land_Parcel::find($landid);
+            $landParcel->delete();
+        });
+        return redirect('/approval-item/showRequests')->with('message', 'Request Successfully Deleted');
     }
 
     function action(Request $request)
     {
-        $validation = Validator::make($request->all(), [
-            'select_file' => 'required'
-        ]);
-        if ($validation->passes()) {
-            $image = $request->file('select_file');
-            $new_name = rand() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('kml'), $new_name);
-            return response()->json([
-                'message'   => 'Image Upload Successfully',
-                'uploaded_image' => "kml/$new_name",
-                'class_name'  => 'alert-success'
-            ]);
-        } else {
-            return response()->json([
-                'message'   => $validation->errors()->all(),
-                'uploaded_image' => '',
-                'class_name'  => 'alert-danger'
-            ]);
+
+        if ($request->hasFile('select_file')) {
+            $file = $request->file('select_file');
+            //you also need to keep file extension as well
+            $name = $file->getClientOriginalExtension();
+            if ($name == "kml") {
+                $image = $request->file('select_file');
+                $new_name = rand() . '.' . $image->getClientOriginalExtension();
+                $image->move(public_path('kml'), $new_name);
+                return response()->json([
+                    'message'   => 'File Upload Successfull',
+                    'uploaded_image' => "kml/$new_name",
+                    'class_name'  => 'alert-success'
+                ]);
+            } else {
+                return response()->json([
+                    'message'   => "Error Uploading File. Check File Type.",
+                    'uploaded_image' => '',
+                    'class_name'  => 'alert-danger'
+                ]);
+            }
         }
     }
 }

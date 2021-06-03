@@ -3,6 +3,11 @@
 @section('general')
 
 <div class="container">
+    <!-- FAQ button -->
+    <div class="d-flex mb-2 justify-content-end">
+        <span><a title="FAQ" style="font-size:24px;cursor:pointer;" data-toggle="modal" data-target="#devHelp"><i class="fa fa-info-circle" aria-hidden="true"></i></a></span>
+    </div>
+    @include('faq')
     <form action="/dev-project/saveForm" method="post">
         @csrf
 
@@ -24,40 +29,6 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        Request Organization:<input type="text" class="form-control typeahead3" placeholder="Search" name="organization" value="{{ old('organization') }}" />
-                        @error('organization')
-                        <div class="alert alert-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <label for="province">Province:</label>
-                        <select class="custom-select @error('province') is-invalid @enderror" name="province">
-                            <option disabled selected value="">Select</option>
-                            @foreach ($provinces as $province)
-                                <option value="{{ $province->id }}" {{ Request::old()?(Request::old('province')==$province->id?'selected="selected"':''):'' }}>{{ $province->province }}</option>
-                            @endforeach
-                        </select>
-                        @error('province')
-                            <div class="alert">                                   
-                                <strong>{{ $message }}</strong>
-                            </div>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <label for="district">District:</label>
-                        <select class="custom-select @error('district') is-invalid @enderror" name="district">
-                            <option disabled selected value="">Select</option>
-                            @foreach ($districts as $district)
-                            <option value="{{ $district->id }}" {{ Request::old()?(Request::old('district')==$district->id?'selected="selected"':''):'' }}>{{ $district->district }}</option>
-                            @endforeach
-                        </select>
-                        @error('district')
-                            <div class="alert">                                   
-                                <strong>{{ $message }}</strong>
-                            </div>
-                        @enderror
-                    </div>
-                    <div class="form-group">
                         <label for="title">Plan Number:</label>
                         <input type="text" class="form-control @error('planNo') is-invalid @enderror" value="{{ old('planNo') }}" placeholder="Enter Plan Number" id="planNo" name="planNo">
                         @error('planNo')
@@ -73,12 +44,130 @@
                         @enderror
                     </div>
 
+
+                    <div class="row p-2">
+                        <!-- Citizens arent allowed to fill in organization. It will automatically filled -->
+                        @if(Auth()->user()->role_id != 6 )
+                        <div class="col p-2">
+                            <div class="form-group">
+                                Land Owner:<input type="text" class="form-control typeahead3 @error('land_owner') is-invalid @enderror" value="{{ old('land_owner') }}" placeholder="Search" name="land_owner" />
+                                @error('land_owner')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="customCheck1" value="1" name="checklandowner" {{ old('checklandowner') == "1" ? 'checked' : ''}}>
+                                    <label class="custom-control-label" for="customCheck1"><strong>Is Unregistered</strong></label>
+                                </div>
+                            </div>
+                            <div class="extLandOwner" id="extLandOwner">
+                                <div class="form-group">
+                                    <label>Land Owner Type:</label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="landownertype" id="landownertype1" value="1" {{(old('landownertype') == '1') ? 'checked' : ''}}>
+                                        <label class="form-check-label" for="landownertype1">
+                                            Government
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="landownertype" id="landownertype2" value="2" {{(old('landownertype') == '2') ? 'checked' : ''}}>
+                                        <label class="form-check-label" for="landownertype2">
+                                            Private
+                                        </label>
+                                    </div>
+                                    @error('landownertype')
+                                    <div class="alert alert-danger">Please Select the Type</div>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                        @endif
+                        <div class="col p-2">
+                            <div class="form-group">
+                                Removal Requestor:<input type="text" class="form-control typeahead3 @error('removal_requestor') is-invalid @enderror" value="{{ old('removal_requestor') }}" name="removal_requestor" placeholder="Search" />
+                                @error('removal_requestor')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="customCheck2" value="1" name="checkremovalrequestor" {{ old('checkremovalrequestor') == "1" ? 'checked' : ''}}>
+                                    <label class="custom-control-label" for="customCheck2"><strong>Is Unregistered</strong></label>
+                                </div>
+                            </div>
+                            <div class="extRequestor" id="extRequestor">
+                                <div class="form-group">
+                                    <label>Removal Requestor Type:</label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="removalrequestortype" id="removalrequestortype1" value="1" {{(old('removalrequestortype') == '1') ? 'checked' : ''}}>
+                                        <label class="form-check-label" for="removalrequestortype1">
+                                            Government
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="removalrequestortype" id="removalrequestortype2" value="2" {{(old('removalrequestortype') == '2') ? 'checked' : ''}} <label class="form-check-label" for="removalrequestortype2">
+                                        Private
+                                        </label>
+                                    </div>
+                                    @error('removalrequestortype')
+                                    <div class="alert alert-danger">Please Select the Type</div>
+                                    @enderror
+                                </div>
+
+                                <div class="form-group">
+                                    Removal Requestor Email:<input type="text" class="form-control @error('removal_requestor_email') is-invalid @enderror" value="{{ old('removal_requestor_email') }}" name="removal_requestor_email" placeholder="Enter Email" />
+                                    @error('removal_requestor_email')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
                     <div>
                         <button type="submit" class="btn bd-navbar text-light">Submit</button>
                     </div>
                 </div>
                 <div class="col border border-muted rounded-lg p-4">
+                    <div class="form-group">
+                        <label for="province">Province:</label>
+                        <select class="custom-select @error('province') is-invalid @enderror" name="province">
+                            <option disabled selected value="">Select</option>
+                            @foreach ($provinces as $province)
+                            <option value="{{ $province->id }}" {{ Request::old()?(Request::old('province')==$province->id?'selected="selected"':''):'' }}>{{ $province->province }}</option>
+                            @endforeach
+                        </select>
+                        @error('province')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="form-group">
+                        <label for="province">District:</label>
+                        <select class="custom-select @error('district') is-invalid @enderror" name="district">
+                            <option disabled selected value="">Select</option>
+                            @foreach ($districts as $district)
+                            <option value="{{ $district->id }}" {{ Request::old()?(Request::old('district')==$district->id?'selected="selected"':''):'' }}>{{ $district->district }}</option>
+                            @endforeach
+                        </select>
+                        @error('district')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="form-group">
+                        <label for="province">Grama Sevaka Division:</label>
+                        <select class="custom-select @error('gs_division') is-invalid @enderror" name="gs_division">
+                            <option disabled selected value="">Select</option>
+                            @foreach ($gs as $gs_division)
+                            <option value="{{ $gs_division->id }}" {{ Request::old()?(Request::old('gs_division')==$gs_division->id?'selected="selected"':''):'' }}>{{ $gs_division->gs_division }}</option>
+                            @endforeach
+                        </select>
+                        @error('gs_division')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
                     <!-- ////////MAP GOES HERE -->
+                    <label>Select Location On Map*</label>
+                    <span style="float:right; cursor:pointer;"><kbd><a title="How to Draw Shapes on the Map" class="text-white" data-toggle="modal" data-target="#mapHelp">How To Mark Location</a></kbd></span>
                     <div id="mapid" style="height:400px;" name="map"></div>
                     @error('polygon')
                     <div class="alert alert-danger">{{ $message }}</div>
@@ -175,6 +264,18 @@
             //No browser support geolocation service
             geolocationErrorOccurred(false, popup, map.getCenter());
         }
+        //keeping the dynamic components open if checked
+        if ($("#customCheck2").is(':checked')) {
+            $("#extRequestor").show();
+        } else {
+            $("#extRequestor").hide()
+        }
+
+        if ($("#customCheck1").is(':checked')) {
+            $("#extLandOwner").show();
+        } else {
+            $("#extLandOwner").hide()
+        }
     }
 
     // Set up the OSM layer 
@@ -252,5 +353,27 @@
     setTimeout(function() {
         $('.pointer').fadeOut('slow');
     }, 3400);
+
+    //toggle extra details for external land owner
+    $(function() {
+        $("#customCheck1").click(function() {
+            if ($(this).is(":checked")) {
+                $("#extLandOwner").show();
+            } else {
+                $("#extLandOwner").hide();
+            }
+        });
+    });
+
+    //toggle extra details for external requestor
+    $(function() {
+        $("#customCheck2").click(function() {
+            if ($(this).is(":checked")) {
+                $("#extRequestor").show();
+            } else {
+                $("#extRequestor").hide();
+            }
+        });
+    });
 </script>
 @endsection

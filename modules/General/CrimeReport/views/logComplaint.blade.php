@@ -2,6 +2,11 @@
 
 @section('general')
 <div class="container">
+  <!-- FAQ button -->
+  <div class="d-flex mb-2 justify-content-end">
+    <span><a title="FAQ" style="font-size:24px;cursor:pointer;" data-toggle="modal" data-target="#complaintsHelp"><i class="fa fa-info-circle" aria-hidden="true"></i></a></span>
+  </div>
+  @include('faq')
   <form action="\crime-report\crimecreate" method="post" enctype="multipart/form-data">
     @csrf
         <div class="container bg-white">

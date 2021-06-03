@@ -9,19 +9,19 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
             <li class="nav-item {{ Route::currentRouteName() == 'pending' ? 'active' : '' }}">
-                <a class="nav-link" href="{{ route('pending') }}">Pending Request<span class="sr-only">(current)</span></a>
+                <a class="nav-link mr-4" href="{{ route('pending') }}">Pending Request<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item {{ Route::currentRouteName() == 'treeremoval' ? 'active' : '' }}">
-                <a class="nav-link" href="{{ route('treeremoval') }}">Tree Removal</a>
+                <a class="nav-link mr-4" href="{{ route('treeremoval') }}">Tree Removal</a>
             </li>
             <li class="nav-item {{ Route::currentRouteName() == 'devproject' ? 'active' : '' }}">
-                <a class="nav-link" href="{{ route('devproject') }}">Development Project</a>
+                <a class="nav-link mr-4" href="{{ route('devproject') }}">Development Project</a>
             </li>
             <li class="nav-item {{ Route::currentRouteName() == 'envrestoration' ? 'active' : '' }}">
-                <a class="nav-link" href="{{ route('envrestoration') }}">Environment Restoration</a>
+                <a class="nav-link mr-4" href="{{ route('envrestoration') }}">Environment Restoration</a>
             </li>
             <li class="nav-item {{ Route::currentRouteName() == 'land' ? 'active' : '' }}">
-                <a class="nav-link" href="{{ route('land') }}">Register Land</a>
+                <a class="nav-link mr-4" href="{{ route('land') }}">Register Land</a>
             </li>
 
             <li class="nav-item {{ Route::currentRouteName() == 'crime' ? 'active' : '' }}">

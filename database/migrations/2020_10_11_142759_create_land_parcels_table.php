@@ -24,9 +24,20 @@ class CreateLandParcelsTable extends Migration
             $table->tinyInteger('protected_area');
             $table->timestampsTz(); //time stamp with timezone in UTC
             $table->softDeletesTz('deleted_at', 0);
+            $table->double('size', 12,4);
+            $table->string('size_unit');
 
             $table->unsignedBigInteger('status_id')->nullable();
             $table->foreign('status_id')->references('id')->on('status')->onDelete('cascade');
+
+            $table->unsignedBigInteger('district_id')->nullable();
+            $table->foreign('district_id')->references('id')->on('districts')->onDelete('cascade');
+
+            $table->unsignedBigInteger('province_id')->nullable();
+            $table->foreign('province_id')->references('id')->on('provinces')->onDelete('cascade');
+
+            $table->unsignedBigInteger('gs_division_id')->nullable();
+            $table->foreign('gs_division_id')->references('id')->on('gs_divisions')->onDelete('cascade');
         });
     }
 

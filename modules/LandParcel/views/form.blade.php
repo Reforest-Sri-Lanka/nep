@@ -31,6 +31,7 @@
                         <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                     </div>
+
                     <div class="form-group">
                         <label for="province">Province:</label>
                         <select class="custom-select @error('province') is-invalid @enderror" name="province" required>
@@ -43,6 +44,7 @@
                         <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                     </div>
+
                     <div class="form-group">
                         <label for="province">District:</label>
                         <select class="custom-select @error('district') is-invalid @enderror" name="district" required>
@@ -55,6 +57,7 @@
                         <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                     </div>
+
                     <div class="form-group">
                         <label for="province">Grama Sevaka Division:</label>
                         <select class="custom-select @error('gs_division') is-invalid @enderror" name="gs_division">
@@ -115,12 +118,16 @@
 
 
                     <div>
-                        <label>Upload KML File</label>
+                        <label>If coordinates are available as KML, upload KML File</label>
                         <input type="file" name="select_file" id="select_file" />
                         <input type="button" name="upload" id="upload" class="btn btn-primary" value="Upload">
                     </div>
+                    <div class="alert mt-3" id="message" style="display: none"></div>
                     <br>
                     <!-- ////////MAP GOES HERE -->
+                    @include('faq')
+                    <label>Select Location On Map*</label>
+                    <span style="float:right; cursor:pointer;"><kbd><a title="How to Draw Shapes on the Map" class="text-white" data-toggle="modal" data-target="#mapHelp">How To Mark Location</a></kbd></span>
                     <div id="mapid" style="height:400px;" name="map"></div>
                     @error('polygon')
                     <div class="alert alert-danger">{{ $message }}</div>
