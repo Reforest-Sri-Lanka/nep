@@ -20,7 +20,7 @@ class lanparcel_creation
         if (($request->surveyorName)!= null) {
             $land->surveyor_name = $request->surveyorName;
         } else {
-            $land->surveyor_name = "not given";
+            $land->surveyor_name = "No surveyor given";
         }
         
         $land->district_id = $request->district;
@@ -39,6 +39,12 @@ class lanparcel_creation
         $land->created_by_user_id = request('createdBy');
         if (request('isProtected')) {
             $land->protected_area = request('isProtected');
+        }else {
+            $land->protected_area = 0;
+        }
+        if (request('size')) {
+            $land->size = request('size');
+            $land->size_unit = request('size_unit');
         }
         $land->status_id = 1;
         $land->save();

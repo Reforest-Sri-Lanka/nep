@@ -104,8 +104,8 @@
                                 <tr>
                                     <td>{{$item->title}}</td>
                                     <td>{{$item->environment_restoration_activity->title}}</td>
-                                    <td>{{$item->eco_system->ecosystem_type}}</td>
-                                    <td>{{$item->eco_system->description}}</td>
+                                    <td>{{$item->ecosystems_type->ecosystem_type}}</td>
+                                    <td>{{$item->ecosystems_type->description}}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -255,10 +255,40 @@
                     @endif             
             </div>
         @endif
-        
+        @if($process_item->form_type_id==3)
+            <div class="row p-4 bg-white">
+                <h6>Species restoration data</h6>
+                <table class="table table-light table-striped border-secondary rounded-lg mr-4">
+                    <thead>
+                        <tr>
+                            <th>Species Name</th>
+                            <th>Scientefic Name</th>
+                            <th>Number of species to be restored</th>
+                            <th>Height</th>
+                            <th>Dimentions</th>
+                            <th>Remark</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($data as $species)
+                        <tr>
+                            <td>{{$species->Species->title}}</td>
+                            <td>{{$species->Species->scientefic_name}}</td>
+                            <td>{{$species->quantity}}</td>
+                            <td>{{$species->height}}</td>
+                            <td>{{$species->dimensions}}</td>
+                            @if($species->remarks!=null)
+                                <td>No remarks</td>
+                            @else
+                                <td>{{$species->remarks}}</td>
+                            @endif
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>      
+            </div>
+        @endif
         @if($process_item->form_type_id==1 || $process_item->form_type_id==4 )
-        <div class="row p-4 bg-white">
-        </div>
             @isset($Photos)
                 <div class="row p-4 bg-white">
                     <div class="card-deck">
