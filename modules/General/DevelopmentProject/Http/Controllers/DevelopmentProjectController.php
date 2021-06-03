@@ -17,9 +17,7 @@ use Illuminate\Support\Facades\Notification;
 use App\Notifications\ApplicationMade;
 use Illuminate\Support\Facades\DB;
 use App\CustomClass\organization_assign;
-use App\Models\District;
-use App\Models\Province;
-
+use App\CustomClass\lanparcel_creation;
 
 class DevelopmentProjectController extends Controller
 {
@@ -30,10 +28,14 @@ class DevelopmentProjectController extends Controller
         $province = Province::all();
         $district = District::all();
         $gs = GS_Division::orderBy('gs_division')->get();
+        $organizations = Organization::where('type_id', '=', '1')->get();
+        $gazettes = Gazette::all();
         return view('developmentProject::form', [
             'provinces' => $province,
             'districts' => $district,
             'gs' => $gs,
+            'organizations' => $organizations,
+            'gazettes' => $gazettes,
         ]);
     }
 
@@ -42,7 +44,7 @@ class DevelopmentProjectController extends Controller
     public function save(Request $request)
     {
         if (Auth()->user()->role_id != 6) {
-            if (request('checklandowner') && request('checkremovalrequestor')) {
+            if (request('checklandowner')) {
                 $request->validate([
                     'title' => 'required',
                     'planNo' => 'required',
@@ -52,40 +54,9 @@ class DevelopmentProjectController extends Controller
                     'gs_division' => 'required',
                     'gazette' => 'required|exists:gazettes,gazette_number',
                     'polygon' => 'required',
-                    'removal_requestor' => 'required',
-                    'land_owner' => 'required',
-                    'removalrequestortype' => 'required|in:1,2',
-                    'landownertype' => 'required|in:1,2',
-                    //'removal_requestor_email' => 'email|required'
-                ]);
-            } elseif (request('checkremovalrequestor')) {
-                $request->validate([
-                    'title' => 'required',
-                    'planNo' => 'required',
-                    'surveyorName' => 'required',
-                    'province' => 'required',
-                    'district' => 'required',
-                    'gs_division' => 'required',
-                    'gazette' => 'required|exists:gazettes,gazette_number',
-                    'polygon' => 'required',
-                    'removal_requestor' => 'required',
-                    'removalrequestortype' => 'required|in:1,2',
-                    'land_owner' => 'required|exists:organizations,title',
-                    // 'removal_requestor_email' => 'email|required'
-                ]);
-            } elseif (request('checklandowner')) {
-                $request->validate([
-                    'title' => 'required',
-                    'planNo' => 'required',
-                    'surveyorName' => 'required',
-                    'province' => 'required',
-                    'district' => 'required',
-                    'gs_division' => 'required',
-                    'gazette' => 'required|exists:gazettes,gazette_number',
-                    'polygon' => 'required',
-                    'removal_requestor' => 'required|exists:organizations,title',
                     'land_owner' => 'required',
                     'landownertype' => 'required|in:1,2',
+                    'organization' => 'nullable|exists:organizations,title',
                 ]);
             } else {
                 $request->validate([
@@ -97,62 +68,28 @@ class DevelopmentProjectController extends Controller
                     'gs_division' => 'required',
                     'gazette' => 'required|exists:gazettes,gazette_number',
                     'polygon' => 'required',
-                    'removal_requestor' => 'required|exists:organizations,title',
                     'land_owner' => 'required|exists:organizations,title',
+                    'organization' => 'nullable|exists:organizations,title',
                 ]);
             }
         }
         if (Auth()->user()->role_id = 6) {
-            if (request('checkremovalrequestor')) {
-                $request->validate([
-                    'title' => 'required',
-                    'planNo' => 'required',
-                    'surveyorName' => 'required',
-                    'province' => 'required',
-                    'district' => 'required',
-                    'gs_division' => 'required',
-                    'gazette' => 'required|exists:gazettes,gazette_number',
-                    'polygon' => 'required',
-                    'removal_requestor' => 'required',
-                    'removalrequestortype' => 'required|in:1,2',
-                    // 'removal_requestor_email' => 'email|required'
-                ]);
-            } else {
-                $request->validate([
-                    'title' => 'required',
-                    'planNo' => 'required',
-                    'surveyorName' => 'required',
-                    'province' => 'required',
-                    'district' => 'required',
-                    'gs_division' => 'required',
-                    'gazette' => 'required|exists:gazettes,gazette_number',
-                    'polygon' => 'required',
-                    'removal_requestor' => 'required|exists:organizations,title',
-                ]);
-            }
+            $request->validate([
+                'title' => 'required',
+                'planNo' => 'required',
+                'surveyorName' => 'required',
+                'province' => 'required',
+                'district' => 'required',
+                'gs_division' => 'required',
+                'gazette' => 'required|exists:gazettes,gazette_number',
+                'polygon' => 'required',
+                'organization' => 'nullable|exists:organizations,title',
+            ]);
         }
 
 
         DB::transaction(function () use ($request) {
-            $land = new Land_Parcel();
-            $land->title = request('planNo');
-            $land->surveyor_name = request('surveyorName');
-            $land->district_id = $request->district;
-            $land->province_id = $request->province;
-            $land->gs_division_id = $request->gs_division;
-
-            $governing_organizations1 = request('removal_requestor');
-            $land->governing_organizations = Organization::where('title', $governing_organizations1)->pluck('id');
-            }
-            $land->polygon = request('polygon');
-            $land->created_by_user_id = request('createdBy');
-            if (request('isProtected')) {
-                $land->protected_area = request('isProtected');
-            }
-            $land->status_id = 1;
-            $land->save();
-
-            $landid = Land_Parcel::latest()->first()->id;
+            $landid = lanparcel_creation::land_save($request);
 
             $dev = new Development_Project();
             $dev->title = request('title');
@@ -161,7 +98,7 @@ class DevelopmentProjectController extends Controller
             $gazette = Gazette::where('gazette_number', request('gazette'))->pluck('id');
             $dev->gazette_id = $gazette[0];
 
-            $dev->governing_organizations = Organization::where('title', $governing_organizations1)->pluck('id');
+            $dev->governing_organizations = 1; //I've set this to defalt until we remove the column as it is redundant data
 
             $dev->land_parcel_id = $landid;
             $dev->created_by_user_id = request('createdBy');
@@ -190,34 +127,28 @@ class DevelopmentProjectController extends Controller
                     $process->request_organization = $land_owner[0];
                 }
             }
-            if (request('checkremovalrequestor')) {
-                $process->other_removal_requestor_name = request('removal_requestor');
-                $process->other_removal_requestor_type = request('removalrequestortype');
-                if (request('removal_requestor_email') == null) {
-                    $process->requestor_email = "no email";
-                } else {
-                    $process->requestor_email = request('removal_requestor_email');
-                }
-            } else {
-                $removal_requestor = Organization::where('title', request('removal_requestor'))->pluck('id');
-                $process->activity_organization = $removal_requestor[0];
+            if($request->filled('organization')){
+                $organization = Organization::where('title', $request['organization'])->pluck('id');
+                $Process_item->activity_organization = $organization[0];
             }
-
-            $process->status_id = 1;
             $process->save();
-
-            $users = User::where('role_id', '<', 3)->get();
-            Notification::send($users, new ApplicationMade($process));
 
             //process item for the land parcel
             $latestDevProcess = Process_Item::latest()->first();
-            //$district_id = District::where('district', request('district'))->pluck('id'); 
-            $org_id =organization_assign::auto_assign($latestDevProcess->id,request('district'),request('province'));
+            if(empty($request->input('organization'))){
+                organization_assign::auto_assign($latestDevProcess->id,request('district'),request('province'));
+                $latestDevProcess =Process_Item::latest()->first();
+            }
+            else{
+                $Admins = User::where('organization_id',$latestDevProcess->activity_organization)->whereBetween('role_id', [1, 2])->get();
+                Notification::send($Admins, new ApplicationMade($latestDevProcess));
+            }
+
             $landProcess = new Process_Item();
             $landProcess->form_id = $landid;
             $landProcess->remark = "Verify these land details";
             $landProcess->prerequisite = 0;
-            $landProcess->status_id = 1;
+            $landProcess->status_id = $latestDevProcess->status_id;
             $landProcess->form_type_id = 5;
             $landProcess->created_by_user_id = request('createdBy');
             $landProcess->prerequisite_id = $latestDevProcess->id;
@@ -233,22 +164,8 @@ class DevelopmentProjectController extends Controller
                     $landProcess->request_organization = $land_owner[0];
                 }
             }
-            if (request('checkremovalrequestor')) {
-                $landProcess->other_removal_requestor_name = request('removal_requestor');
-                $landProcess->other_removal_requestor_type = request('removalrequestortype');
-                if (request('removal_requestor_email') == null) {
-                    $landProcess->requestor_email = "no email";
-                } else {
-                    $landProcess->requestor_email = request('removal_requestor_email');
-                }
-            } else {
-                $removal_requestor = Organization::where('title', request('removal_requestor'))->pluck('id');
-                $landProcess->activity_organization = $removal_requestor[0];
-            }
+            $landProcess->activity_organization = $latestDevProcess->activity_organization;
             $landProcess->save();
-
-            $users = User::where('role_id', '=', 2)->where('id', '!=', $request['createdBy'])->get();
-            Notification::send($users, new ApplicationMade($landProcess));
         });
         return redirect('/general/pending')->with('message', 'Request Created Successfully');
     }
