@@ -42,8 +42,10 @@ class lanparcel_creation
         }else {
             $land->protected_area = 0;
         }
-        if (request('size')) {
+        if (request('land_extent')) {
             $land->size = request('size');
+        }
+        if (request('land_extent_unit')) {
             $land->size_unit = request('size_unit');
         }
         $land->status_id = 1;

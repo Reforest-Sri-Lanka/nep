@@ -29,7 +29,8 @@ class Land_Parcel extends Model
     protected $attributes = [
         'logs' => 0,
         'protected_area' => 0,
-        'surveyor_name' =>'not available'
+        'surveyor_name' =>'not available',
+        'size_unit' => "acres",
     ];
 
     protected $casts = [
