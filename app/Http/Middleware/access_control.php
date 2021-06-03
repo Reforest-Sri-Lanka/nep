@@ -24,7 +24,7 @@ class access_control
         return redirect('login'); //will redirect to login if not logged
         $role = Auth::user()->role_id;
         if($role != 1){
-            $access1 = Role_has_access::where('role_id',$role)->where('access_id',$access)->first();;
+            $access1 = Role_has_access::where('role_id',$role)->where('access_id',$access)->first();
             if($access1 == null)
             {
                 $accesstitle=Access::find($access);

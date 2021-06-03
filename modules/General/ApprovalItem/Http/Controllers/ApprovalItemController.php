@@ -14,7 +14,9 @@ use App\Models\Process_item_status;
 use App\Models\Land_Parcel;
 use App\Models\Land_Has_Organization;
 use App\Models\Land_Has_Gazette;
+use App\Models\Environment_Restoration;
 use App\Models\Environment_Restoration_Activity;
+use App\Models\Environment_Restoration_Species;
 use App\Mail\RequestApproved;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -269,6 +271,7 @@ class ApprovalItemController extends Controller
         } else {
             $item = Land_Parcel::find($process_item->form_id);
             $Land_Organizations = Land_Has_Organization::where('land_parcel_id', $item->id)->get();
+            $Land_Gazzettes = Land_Has_Gazette::where('land_parcel_id', $item->id)->get();
             return view('approvalItem::staffAssign', [
                 'item' => $item,
                 'process_item' => $process_item,
@@ -276,6 +279,7 @@ class ApprovalItemController extends Controller
                 'polygon' => $item->polygon,
                 'LandOrganizations' => $Land_Organizations,
                 'Users' => $Users,
+                'Land_Gazzettes' =>$Land_Gazzettes,
             ]);
         }
     }
@@ -294,7 +298,7 @@ class ApprovalItemController extends Controller
             $data = null;
             $Photos = null;
         } else if ($process_item->form_type_id == '3') {
-            $item = Environment_Restoration_Activity::find($process_item->form_id);
+            $item = Environment_Restoration::find($process_item->form_id);
             $data = Environment_Restoration_Species::all()->where('environment_restoration_id', $item->id);
             $Photos = null;
         } else if ($process_item->form_type_id == '4') {
@@ -309,7 +313,10 @@ class ApprovalItemController extends Controller
                 ['prerequisite_id', '=', $process_item->id],
                 ['prerequisite', '=', 0],
             ])->first();
-
+            $test =Process_Item::where([
+                ['form_type_id', '=', $item->land_parcel_id],
+                ['form_id', '=', 5],
+            ])->first();
             return view('approvalItem::assignOrg', [
                 'Organizations' => $Organizations,
                 'process_item' => $process_item,
@@ -322,12 +329,14 @@ class ApprovalItemController extends Controller
         } else {
             $item = Land_Parcel::find($process_item->form_id);
             $Land_Organizations = Land_Has_Organization::where('land_parcel_id', $item->id)->get();
+            $Land_Gazzettes = Land_Has_Gazette::where('land_parcel_id', $item->id)->get();
             return view('approvalItem::assignOrg', [
                 'item' => $item,
                 'process_item' => $process_item,
                 'Organizations' => $Organizations,
                 'polygon' => $item->polygon,
                 'LandOrganizations' => $Land_Organizations,
+                'Land_Gazzettes' =>$Land_Gazzettes,
             ]);
         }
     }
@@ -360,8 +369,8 @@ class ApprovalItemController extends Controller
             $Photos = null;
             $data = null;
         } else if ($process_item->form_type_id == '3') {
-            $item = Environment_Restoration_Activity::find($process_item->form_id);
-            $data = null;
+            $item = Environment_Restoration::find($process_item->form_id);
+            $data = Environment_Restoration_Species::all()->where('environment_restoration_id', $item->id);
         } else if ($process_item->form_type_id == '4') {
             $item = Crime_report::find($process_item->form_id);
             $Photos = Json_decode($item->photos);
@@ -374,6 +383,7 @@ class ApprovalItemController extends Controller
                 ['prerequisite_id', '=', $process_item->id],
                 ['prerequisite', '=', 0],
             ])->first();
+            
             return view('approvalItem::investigate', [
                 'item' => $item,
                 'Organizations' => $Organizations,
@@ -390,6 +400,7 @@ class ApprovalItemController extends Controller
         } else {
             $item = Land_Parcel::find($process_item->form_id);
             $Land_Organizations = Land_Has_Organization::where('land_parcel_id', $item->id)->get();
+            $Land_Gazzettes = Land_Has_Gazette::where('land_parcel_id', $item->id)->get();
             return view('approvalItem::investigate', [
                 'item' => $item,
                 'process_item' => $process_item,
@@ -400,6 +411,7 @@ class ApprovalItemController extends Controller
                 'Process_item_progresses' => $Process_item_progresses,
                 'Prerequisites' => $Prerequisites,
                 'LandOrganizations' => $Land_Organizations,
+                'Land_Gazzettes' =>$Land_Gazzettes,
             ]);
         }
     }

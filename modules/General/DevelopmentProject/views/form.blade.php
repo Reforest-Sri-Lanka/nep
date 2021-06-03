@@ -30,6 +30,13 @@
                     </div>
 
                     <div class="form-group">
+                        Forward to Organization (this will override auto assign):<input type="text" class="form-control typeahead3" placeholder="Search" name="organization" value="{{ old('organization') }}" />
+                        @error('organization')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="form-group">
                         <label for="title">Plan Number:</label>
                         <input type="text" class="form-control @error('planNo') is-invalid @enderror" value="{{ old('planNo') }}" placeholder="Enter Plan Number" id="planNo" name="planNo">
                         @error('planNo')
@@ -45,83 +52,77 @@
                         @enderror
                     </div>
 
-
-                    <div class="row p-2">
-                        <!-- Citizens arent allowed to fill in organization. It will automatically filled -->
-                        @if(Auth()->user()->role_id != 6 )
-                        <div class="col p-2">
-                            <div class="form-group">
-                                Land Owner:<input type="text" class="form-control typeahead3 @error('land_owner') is-invalid @enderror" value="{{ old('land_owner') }}" placeholder="Search" name="land_owner" />
-                                @error('land_owner')
-                                <div class="alert alert-danger">{{ $message }}</div>
-                                @enderror
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="customCheck1" value="1" name="checklandowner" {{ old('checklandowner') == "1" ? 'checked' : ''}}>
-                                    <label class="custom-control-label" for="customCheck1"><strong>Is Unregistered</strong></label>
-                                </div>
+                    <!-- Citizens arent allowed to fill in organization. It will automatically filled -->
+                    @if(Auth()->user()->role_id != 6 )
+                        <div class="form-group">
+                            Land Owner:<input type="text" class="form-control typeahead3 @error('land_owner') is-invalid @enderror" value="{{ old('land_owner') }}" placeholder="Search" name="land_owner" />
+                            @error('land_owner')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="customCheck1" value="1" name="checklandowner" {{ old('checklandowner') == "1" ? 'checked' : ''}}>
+                                <label class="custom-control-label" for="customCheck1"><strong>Is Unregistered</strong></label>
                             </div>
-                            <div class="extLandOwner" id="extLandOwner">
-                                <div class="form-group">
-                                    <label>Land Owner Type:</label>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="landownertype" id="landownertype1" value="1" {{(old('landownertype') == '1') ? 'checked' : ''}}>
-                                        <label class="form-check-label" for="landownertype1">
-                                            Government
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="landownertype" id="landownertype2" value="2" {{(old('landownertype') == '2') ? 'checked' : ''}}>
-                                        <label class="form-check-label" for="landownertype2">
-                                            Private
-                                        </label>
-                                    </div>
-                                    @error('landownertype')
-                                    <div class="alert alert-danger">Please Select the Type</div>
-                                    @enderror
+                        </div>
+                        <div class="extLandOwner" id="extLandOwner">
+                            <div class="form-group">
+                                <label>Land Owner Type:</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="landownertype" id="landownertype1" value="1" {{(old('landownertype') == '1') ? 'checked' : ''}}>
+                                    <label class="form-check-label" for="landownertype1">
+                                        Government
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="landownertype" id="landownertype2" value="2" {{(old('landownertype') == '2') ? 'checked' : ''}}>
+                                    <label class="form-check-label" for="landownertype2">
+                                        Private
+                                    </label>
+                                </div>
+                                @error('landownertype')
+                                <div class="alert alert-danger">Please Select the Type</div>
+                                @enderror
+                            </div>
+                        </div>
+                    @endif
+                   
+                    <div id="accordion" class="mb-3">
+                        <div class="card mb-3">
+                            <div class="card-header bg-white">
+                                <a class="collapsed card-link text-dark" data-toggle="collapse" href="#collapseone">
+                                    Organizations Governing Land (Optional)
+                                </a>
+                            </div>
+                            <div id="collapseone" class="collapse" data-parent="#accordion">
+                                <div class="card-body">
+                                    <strong>Select 1 or More</strong>
+                                    <fieldset>
+                                        @foreach($organizations as $organization)
+                                        <input type="checkbox" name="governing_orgs[]" value="{{$organization->id}}" @if( is_array(old('governing_orgs')) && in_array($organization->id, old('governing_orgs'))) checked @endif><label class="ml-2">{{$organization->title}}</label> <br>
+                                        @endforeach
+                                    </fieldset>
                                 </div>
                             </div>
                         </div>
-                        @endif
-                        <div class="col p-2">
-                            <div class="form-group">
-                                Removal Requestor:<input type="text" class="form-control typeahead3 @error('removal_requestor') is-invalid @enderror" value="{{ old('removal_requestor') }}" name="removal_requestor" placeholder="Search" />
-                                @error('removal_requestor')
-                                <div class="alert alert-danger">{{ $message }}</div>
-                                @enderror
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="customCheck2" value="1" name="checkremovalrequestor" {{ old('checkremovalrequestor') == "1" ? 'checked' : ''}}>
-                                    <label class="custom-control-label" for="customCheck2"><strong>Is Unregistered</strong></label>
-                                </div>
-                            </div>
-                            <div class="extRequestor" id="extRequestor">
-                                <div class="form-group">
-                                    <label>Removal Requestor Type:</label>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="removalrequestortype" id="removalrequestortype1" value="1" {{(old('removalrequestortype') == '1') ? 'checked' : ''}}>
-                                        <label class="form-check-label" for="removalrequestortype1">
-                                            Government
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="removalrequestortype" id="removalrequestortype2" value="2" {{(old('removalrequestortype') == '2') ? 'checked' : ''}} <label class="form-check-label" for="removalrequestortype2">
-                                        Private
-                                        </label>
-                                    </div>
-                                    @error('removalrequestortype')
-                                    <div class="alert alert-danger">Please Select the Type</div>
-                                    @enderror
-                                </div>
 
-                                <div class="form-group">
-                                    Removal Requestor Email:<input type="text" class="form-control @error('removal_requestor_email') is-invalid @enderror" value="{{ old('removal_requestor_email') }}" name="removal_requestor_email" placeholder="Enter Email" />
-                                    @error('removal_requestor_email')
-                                    <div class="alert alert-danger">{{ $message }}</div>
-                                    @enderror
+                        <div class="card">
+                            <div class="card-header bg-white">
+                                <a class="collapsed card-link text-dark" data-toggle="collapse" href="#collapsetwo">
+                                    Gazettes Relavant to Land (Optional)
+                                </a>
+                            </div>
+                            <div id="collapsetwo" class="collapse" data-parent="#accordion">
+                                <div class="card-body">
+                                    <strong>Select 1 or More</strong>
+                                    <fieldset>
+                                        @foreach($gazettes as $gazette)
+                                        <input type="checkbox" name="gazettes[]" value="{{$gazette->id}}" @if( is_array(old('gazettes')) && in_array($gazette->id, old('gazettes'))) checked @endif> <label class="ml-2">{{$gazette->title}}</label> <br>
+                                        @endforeach
+                                    </fieldset>
                                 </div>
                             </div>
                         </div>
                     </div>
-
 
                     <div>
                         <button type="submit" class="btn bd-navbar text-light">Submit</button>
@@ -266,12 +267,6 @@
             geolocationErrorOccurred(false, popup, map.getCenter());
         }
         //keeping the dynamic components open if checked
-        if ($("#customCheck2").is(':checked')) {
-            $("#extRequestor").show();
-        } else {
-            $("#extRequestor").hide()
-        }
-
         if ($("#customCheck1").is(':checked')) {
             $("#extLandOwner").show();
         } else {
