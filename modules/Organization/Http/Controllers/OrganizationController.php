@@ -219,7 +219,7 @@ class OrganizationController extends Controller {
         $exist_act = Organization_Activity::where('organization_id', request('organization'))->first();
         $Org_act = new Organization_Activity();
         $Org_act->form_type_id = $request->form_type;
-        if(request('district') != 27){
+        if((request('district') != 27) && (request('district') != null)){
             $Org_act->district_id = request('district');
         }
         else{
