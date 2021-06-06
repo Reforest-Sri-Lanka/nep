@@ -97,8 +97,11 @@
             </div>
 
             <!-- ////////MAP GOES HERE -->
-            <label>Select Location On Map*</label>
-            <span style="float:right; cursor:pointer;"><kbd><a title="How to Draw Shapes on the Map" class="text-white" data-toggle="modal" data-target="#mapHelp">How To Mark Location</a></kbd></span>
+            <div class="form-group">
+              <span style="float:right; cursor:pointer;"><kbd><a title="How to Draw Shapes on the Map" class="text-white" data-toggle="modal" data-target="#mapHelp">How To Mark Location</a></kbd></span>
+              <label>Select Location On Map*</label>
+            </div>
+
             <div id="mapid" style="height:400px;" name="map"></div>
             @error('polygon')
             <div class="alert alert-danger">{{ $message }}</div>
@@ -696,7 +699,7 @@
     //$('#kml').val(tokml(drawnItems.toGeoJSON()));
   });
   map.addControl(new L.Control.Fullscreen());
-  
+
   $(document).ready(function() {
     $('#image').change(function() {
       var fp = $("#image");
