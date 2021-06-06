@@ -3,6 +3,7 @@
 use CrimeReport\Http\Controllers\CrimeReportController;
 
 Route::post('/crimecreate', [CrimeReportController::class, 'create_crime_report']);
+Route::post('/trackcrime', [CrimeReportController::class, 'track_crime_reports']);
 
 
 Route::get('/downloadimage/{path}/{file}',[CrimeReportController::class, 'download_image']);

@@ -344,8 +344,32 @@
           <a href="{{ route('crime') }}" class="btn lightpurp text-light">Make a Complaint</a>
           @endif
           @else
-          <a href="{{ route('crime') }}" class="btn lightpurp text-light">Make a Complaint</a>
+          <a href="{{ route('crime') }}" class="btn lightpurp text-light">Make an Anonymous Complaint</a>
           @endif
+        </div>
+      </div>
+      <div class="card m-2" style="width: 18rem;">
+        <img class="card-img-top" style="height:250px; width:287px;" src="images/complain.jpg" alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title">Track Complaint</h5>
+          <p class="card-text">Track the progress of any anonymous complaints logged using the reference ID given</p>
+        </div>
+        <div class="card-body">
+          <!-- Search Bar -->
+          <form action="/crime-report/trackcrime" method="post">
+            @csrf
+              <div class="input-group">
+                  <input type="search" class="form-control" name="reference_id" placeholder="Track Complaint">
+                  <span class="form-group-button">
+                      <button type="submit" class="btn btn-primary ml-2"><i class="fa fa-search" aria-hidden="true"></i></button>
+                  </span>
+              </div>
+          </form>
+          @error('reference_id')
+            <div class="alert">                                   
+                <strong>{{ $message }}</strong>
+            </div>
+          @enderror
         </div>
       </div>
     </div>

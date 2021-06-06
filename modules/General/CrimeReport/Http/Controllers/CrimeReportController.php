@@ -22,7 +22,7 @@ use App\Models\Province;
 use App\Models\Organization;
 use App\CustomClass\organization_assign;
 use App\CustomClass\lanparcel_creation;
-
+use PDF;
 
 class CrimeReportController extends Controller
 {
@@ -121,14 +121,14 @@ class CrimeReportController extends Controller
             return $id;
             
         });
+        $message ='Crime report logged Successfully the ID of the application is '.$array;
         if(Auth::user()){
-            $message ='Crime report logged Successfully the ID of the application is '.$array;
             return redirect('/general/pending')->with('message', $message); 
         }else{
-            return redirect()->action(
-                [CrimeReportController::class, 'view_crime_reports'],
-                ['id' => $array]
-            );
+            $pdf = PDF::loadView('crimeReport::reference', [
+                'id' => $array,
+            ]);
+            return $pdf->stream('crime_report_reference.pdf');
         }
                
     }  
@@ -181,8 +181,26 @@ class CrimeReportController extends Controller
         $crime = Crime_report::find($process_item->form_id);
         $Photos=Json_decode($crime->photos);
         $land_parcel = Land_Parcel::find($crime->land_parcel_id);
+            return view('crimeReport::crimeview',[
+                'crime' => $crime,
+                'process_item' => $process_item,
+                'Photos' =>$Photos,
+                'polygon' =>$land_parcel->polygon,
+            ]);
+    }
+
+    public function track_crime_reports(Request $request)
+    {
+        $request -> validate([
+            'reference_id' => 'required|exists:process_items,id',
+        ]);
+        $process_item = Process_Item::find(request('reference_id'));
+        $crime = Crime_report::find($process_item->form_id);
+        $Photos=Json_decode($crime->photos);
+        $land_parcel = Land_Parcel::find($crime->land_parcel_id);
+        
         if($process_item->created_by_user_id != 11 && ((Auth::check())) == 0){
-            return redirect('/home/unRegistered')->with('danger', 'This application is not anonymous and is not accessible to non registered users'); 
+            return redirect('/home/unRegistered')->with('danger', 'This application is not anonymous and is not accessible'); 
         }else{
             return view('crimeReport::crimeview',[
                 'crime' => $crime,
