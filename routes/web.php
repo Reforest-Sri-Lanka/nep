@@ -35,6 +35,7 @@ Route::get('/home', [GeneralController::class, 'pending'])->middleware('auth','v
 
 Route::get('/home/main',  [UserController::class, 'home'])->middleware('auth','verified');
 
+Route::get('/home/unRegistered',  [UserController::class, 'home']);
 //Route::get('/admin', 'AdministratorController@index');
 
 
