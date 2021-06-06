@@ -129,8 +129,10 @@
                       </div>
                   @enderror
               </div>
-              <!-- ////////MAP GOES HERE --><label>Select Location On Map*</label>
-              <span style="float:right; cursor:pointer;"><kbd><a title="How to Draw Shapes on the Map" class="text-white" data-toggle="modal" data-target="#mapHelp">How To Mark Location</a></kbd></span>
+              <div class="form-group">
+                <span style="float:right; cursor:pointer;"><kbd><a title="How to Draw Shapes on the Map" class="text-white" data-toggle="modal" data-target="#mapHelp">How To Mark Location</a></kbd></span>
+                <label>Select Location On Map*</label>
+            </div>
               <div id="mapid" style="height:400px;" name="map"></div>
               <br>
               @error('polygon')
@@ -285,7 +287,7 @@
         ///Converting your layer to a KML
         //$('#kml').val(tokml(drawnItems.toGeoJSON()));
     });
-
+    map.addControl(new L.Control.Fullscreen());
     //SEARCH FUNCTIONALITY
     var searchControl = new L.esri.Controls.Geosearch().addTo(map);
 

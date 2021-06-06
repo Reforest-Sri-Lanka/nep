@@ -695,7 +695,8 @@
     ///Converting your layer to a KML
     //$('#kml').val(tokml(drawnItems.toGeoJSON()));
   });
-
+  map.addControl(new L.Control.Fullscreen());
+  
   $(document).ready(function() {
     $('#image').change(function() {
       var fp = $("#image");
