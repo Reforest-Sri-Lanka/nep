@@ -344,7 +344,7 @@
           <a href="{{ route('crime') }}" class="btn lightpurp text-light">Make a Complaint</a>
           @endif
           @else
-          <a href="{{ route('login') }}" class="btn lightpurp text-light">Make a Complaint</a>
+          <a href="{{ route('crime') }}" class="btn lightpurp text-light">Make a Complaint</a>
           @endif
         </div>
       </div>

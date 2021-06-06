@@ -35,7 +35,6 @@ class CrimeReportController extends Controller
             'description' => 'required',
             'planNo' => 'required',
             'confirm' => 'required',
-            'createdBy'=>'required',
             'district' => 'required|not_in:0',
             'province' => 'required|not_in:0',
             'polygon' => 'required',
@@ -48,6 +47,10 @@ class CrimeReportController extends Controller
                 'file.*' => 'mimes:jpeg,jpg,png|max:40000'
             ]);
         }
+        if($request['createdBy'] == null){
+            $request['createdBy'] =11;
+        }
+        
         $array=DB::transaction(function () use($request) {
             
             $landid =lanparcel_creation::land_save($request);
@@ -112,13 +115,21 @@ class CrimeReportController extends Controller
             $latestlandprocess=Process_Item::latest('id')->first();
  
             lanparcel_creation::landprocesses_save($request,$landid,$latestcrimeProcess->id);
-            $successmessage='Crime report logged Successfully the ID of the application is '.$latestcrimeProcess->id;
+            $id=$latestcrimeProcess->id;
            /*  $Users = User::where('role_id', '=', 2)->where('id', '!=', $request['createdBy'])->get();
             Notification::send($Users, new ApplicationMade($latestcrimeProcess)); */
-            return $successmessage;
+            return $id;
             
         });
-        return redirect('/general/pending')->with('message', $array); 
+        if(Auth::user()){
+            $message ='Crime report logged Successfully the ID of the application is '.$array;
+            return redirect('/general/pending')->with('message', $message); 
+        }else{
+            return redirect()->action(
+                [CrimeReportController::class, 'view_crime_reports'],
+                ['id' => $array]
+            );
+        }
                
     }  
 
@@ -128,13 +139,24 @@ class CrimeReportController extends Controller
         $province = Province::all();
         $district = District::all();
         $gazettes = Gazette::all();
-        return view('crimeReport::logComplaint', [
-            'organizations' => $organizations,
-            'crime_types' => $crime_types,
-            'provinces' => $province,
-            'districts' => $district,
-            'gazettes' => $gazettes,
-        ]);  
+        if(Auth::user()){
+            return view('crimeReport::logComplaint', [
+                'organizations' => $organizations,
+                'crime_types' => $crime_types,
+                'provinces' => $province,
+                'districts' => $district,
+                'gazettes' => $gazettes,
+            ]);
+        }else{
+            return view('crimeReport::complaint', [
+                'organizations' => $organizations,
+                'crime_types' => $crime_types,
+                'provinces' => $province,
+                'districts' => $district,
+                'gazettes' => $gazettes,
+            ]);
+        }
+          
         //return view('crimeReport::logComplaint',['Organizations' => $Organizations],['crime_types' => $crime_types],);
     }
 
@@ -152,10 +174,6 @@ class CrimeReportController extends Controller
        
     }
 
-    public function display_image($path,$file)
-    {
-
-    }
 
     public function view_crime_reports($id)
     {
@@ -163,12 +181,17 @@ class CrimeReportController extends Controller
         $crime = Crime_report::find($process_item->form_id);
         $Photos=Json_decode($crime->photos);
         $land_parcel = Land_Parcel::find($crime->land_parcel_id);
-        return view('crimeReport::crimeview',[
-            'crime' => $crime,
-            'process_item' => $process_item,
-            'Photos' =>$Photos,
-            'polygon' =>$land_parcel->polygon,
-        ]);
+        if($process_item->created_by_user_id != 11 && ((Auth::check())) == 0){
+            return redirect('/home/unRegistered')->with('danger', 'This application is not anonymous and is not accessible to non registered users'); 
+        }else{
+            return view('crimeReport::crimeview',[
+                'crime' => $crime,
+                'process_item' => $process_item,
+                'Photos' =>$Photos,
+                'polygon' =>$land_parcel->polygon,
+            ]);
+        }
+        
     }
 
     //related to crime_types

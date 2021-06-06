@@ -2,8 +2,11 @@
 
 @section('cont')
 
-<kbd><a href="/approval-item/showRequests" class="text-white font-weight-bolder"><i class="fas fa-chevron-left"></i></i> BACK</a></kbd>
-
+@if(Auth::user())
+    <kbd><a href="/approval-item/showRequests" class="text-white font-weight-bolder"><i class="fas fa-chevron-left"></i></i> BACK</a></kbd>
+@else
+    <kbd><a href="/home/unRegistered" class="text-white font-weight-bolder"><i class="fas fa-chevron-left"></i></i> BACK</a></kbd>
+@endif
 <div class="container border bg-light">
     <dl class="row">
 
