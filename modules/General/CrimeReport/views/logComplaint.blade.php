@@ -287,7 +287,7 @@
         ///Converting your layer to a KML
         //$('#kml').val(tokml(drawnItems.toGeoJSON()));
     });
-
+    map.addControl(new L.Control.Fullscreen());
     //SEARCH FUNCTIONALITY
     var searchControl = new L.esri.Controls.Geosearch().addTo(map);
 
