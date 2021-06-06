@@ -279,7 +279,7 @@
   <div id="secondmain">
     <br>
     <hr><br>
-    <h2 style="text-align: center;">Performance This Month</h2>
+    <h2 style="text-align: center;">Quick Links</h2>
     <div class="row justify-content-center">
       <div class="card m-2" style="width: 18rem;">
         <img class="card-img-top" style="height:250px; width:287px;" src="images/tree.jpg" alt="Card image cap">
