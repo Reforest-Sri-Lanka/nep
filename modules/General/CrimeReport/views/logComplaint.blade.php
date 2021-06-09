@@ -17,7 +17,7 @@
                   <select name="crime_type" class="custom-select" required>
                     <option disabled selected value="">Select Crime Type</option>
                       @foreach ($crime_types as $crime_type)
-                          <option value="{{ $crime_type->id }}" {{ Request::old()?(Request::old('crime_type')==$crime_type->id?'selected="selected"':''):'' }}>{{ $crime_type->type }}</option>
+                          <option value="{{ $crime_type->id }}" {{ ( $crime_type->id == '1') ? 'selected' : '' }} {{ Request::old()?(Request::old('crime_type')==$crime_type->id?'selected="selected"':''):'' }}>{{ $crime_type->type }}</option>
                       @endforeach
                   </select>
                   @error('crime_type')
