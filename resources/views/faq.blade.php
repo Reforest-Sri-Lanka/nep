@@ -327,6 +327,17 @@
 							<div class="card-body">Visit the requests tab from the side mounted navbar.</div>
 						</div>
 					</div>
+
+					<div class="card">
+						<div class="card-header" id="headingFour">
+							<h2 class="mb-0">
+								<a class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour"><i class="fa fa-chevron-circle-down"></i>Why should I add my contact?</a>
+							</h2>
+						</div>
+						<div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample2">
+							<div class="card-body">While it is not mandatory your contact is needed to contact you for further information is necessary and to inform on the final action taken.</div>
+						</div>
+					</div>
 				</div>
 			</div>
 			<div class="modal-footer">

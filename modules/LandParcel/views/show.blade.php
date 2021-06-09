@@ -13,15 +13,17 @@
         <dt class="col-sm-3">Surveyor Name:</dt>
         <dd class="col-sm-9">{{$land->surveyor_name}}</dd>
 
+        @if($land->province !=null)
         <dt class="col-sm-3">Province:</dt>
         <dd class="col-sm-9">{{$land->province->province}}</dd>
-
+        @endif
         <dt class="col-sm-3">District:</dt>
         <dd class="col-sm-9">{{$land->district->district}}</dd>
-
+        
+        @if($land->gs_division !=null)
         <dt class="col-sm-3">Grama Sevaka Division:</dt>
         <dd class="col-sm-9">{{$land->gs_division->gs_division}}</dd>
-
+        @endif
         <dt class="col-sm-3">Governing Organizations:</dt>
         <dd class="col-sm-9">
             <!-- if other type, then will show that instead -->

@@ -17,24 +17,10 @@
                   <select name="crime_type" class="custom-select" required>
                     <option disabled selected value="">Select Crime Type</option>
                       @foreach ($crime_types as $crime_type)
-                          <option value="{{ $crime_type->id }}" {{ Request::old()?(Request::old('crime_type')==$crime_type->id?'selected="selected"':''):'' }}>{{ $crime_type->type }}</option>
+                          <option value="{{ $crime_type->id }}" {{ ( $crime_type->id == '6') ? 'selected' : '' }} {{ Request::old()?(Request::old('crime_type')==$crime_type->id?'selected="selected"':''):'' }}>{{ $crime_type->type }}</option>
                       @endforeach
                   </select>
                   @error('crime_type')
-                      <div class="alert">                                   
-                          <strong>{{ $message }}</strong>
-                      </div>
-                  @enderror
-              </div>
-              <div class="form-group">
-                  <label for="province">Province:</label>
-                  <select class="custom-select @error('province') is-invalid @enderror" name="province" required>
-                      <option disabled selected value="">Select</option>
-                      @foreach ($provinces as $province)
-                          <option value="{{ $province->id }}" {{ Request::old()?(Request::old('province')==$province->id?'selected="selected"':''):'' }}>{{ $province->province }}</option>
-                      @endforeach
-                  </select>
-                  @error('province')
                       <div class="alert">                                   
                           <strong>{{ $message }}</strong>
                       </div>
@@ -55,12 +41,6 @@
                   @enderror
               </div>
               <div class="form-group">
-                  Forward to Organization (this will override auto assign):<input type="text" class="form-control typeahead3" placeholder="Search" name="organization" value="{{ old('organization') }}" />
-                  @error('organization')
-                  <div class="alert alert-danger">{{ $message }}</div>
-                  @enderror
-              </div>
-              <div class="form-group" id="dynamicAddRemove">
                   <label for="images">Photos:</label>
                   
                   <input type="file" id="image" name="file[]" multiple>
@@ -79,45 +59,15 @@
                       </div>
                   @enderror
               </div>
-              <hr>
-              <div id="accordion" class="mb-3">
-                  <div class="card mb-3">
-                      <div class="card-header bg-white">
-                          <a class="collapsed card-link text-dark" data-toggle="collapse" href="#collapseone">
-                              Organizations Governing Land (Optional)
-                          </a>
+              <div class="form-group">
+                  <label for="contact">Contact of complainant: </label>
+                  <input type="text" class="form-control" placeholder="Phone/Email" name="contact" value="{{ old('contact') }}">
+                  @error('contact')
+                      <div class="alert">
+                          <strong>{{ $message }}</strong>
                       </div>
-                      <div id="collapseone" class="collapse" data-parent="#accordion">
-                          <div class="card-body">
-                              <strong>Select 1 or More</strong>
-                              <fieldset>
-                                  @foreach($organizations as $organization)
-                                  <input type="checkbox" name="governing_orgs[]" value="{{$organization->id}}" @if( is_array(old('governing_orgs')) && in_array($organization->id, old('governing_orgs'))) checked @endif><label class="ml-2">{{$organization->title}}</label> <br>
-                                  @endforeach
-                              </fieldset>
-                          </div>
-                      </div>
-                  </div>
-
-                  <div class="card">
-                      <div class="card-header bg-white">
-                          <a class="collapsed card-link text-dark" data-toggle="collapse" href="#collapsetwo">
-                              Gazettes Relavant to Land (Optional)
-                          </a>
-                      </div>
-                      <div id="collapsetwo" class="collapse" data-parent="#accordion">
-                          <div class="card-body">
-                              <strong>Select 1 or More</strong>
-                              <fieldset>
-                                  @foreach($gazettes as $gazette)
-                                  <input type="checkbox" name="gazettes[]" value="{{$gazette->id}}" @if( is_array(old('gazettes')) && in_array($gazette->id, old('gazettes'))) checked @endif> <label class="ml-2">{{$gazette->title}}</label> <br>
-                                  @endforeach
-                              </fieldset>
-                          </div>
-                      </div>
-                  </div>
+                  @enderror
               </div>
-              <br>
           </div>
           <div class="col border border-muted rounded-lg p-4">
               <div class="form-group">
@@ -218,12 +168,6 @@
         } else {
             //No browser support geolocation service
             geolocationErrorOccurred(false, popup, map.getCenter());
-        }
-        //keeping the dynamic components open if checked
-        if ($("#customCheck1").is(':checked')) {
-            $("#extLandOwner").show();
-        } else {
-            $("#extLandOwner").hide()
         }
     }
 
