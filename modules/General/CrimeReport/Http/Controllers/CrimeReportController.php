@@ -36,9 +36,9 @@ class CrimeReportController extends Controller
             'planNo' => 'required',
             'confirm' => 'required',
             'district' => 'required|not_in:0',
-            'province' => 'required|not_in:0',
+            //'province' => 'required|not_in:0',
             'polygon' => 'required',
-            'organization' => 'nullable|exists:organizations,title',
+            //'organization' => 'nullable|exists:organizations,title',
         ]);
         if($request->hasfile('file')){
             
@@ -83,6 +83,7 @@ class CrimeReportController extends Controller
             $Process_item->created_by_user_id = $request['createdBy'];
             $Process_item->request_organization = $user->organization_id;
             $Process_item->activity_user_id = null;
+            $Process_item->requestor_email = $request['contact'];
             $Process_item->form_id =  $id;
             $Process_item->form_type_id = 4;      
             $Process_item->remark = "to be made yet";

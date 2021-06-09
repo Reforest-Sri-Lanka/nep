@@ -24,7 +24,9 @@ class lanparcel_creation
         }
         
         $land->district_id = $request->district;
+        if (request('province')) {
         $land->province_id = $request->province;
+        }
         if (request('gs_division')) {
         $land->gs_division_id = $request->gs_division;
         }

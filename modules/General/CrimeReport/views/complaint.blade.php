@@ -1,6 +1,7 @@
 @extends('home')
 
 @section('cont')
+
 <div class="container">
   <!-- FAQ button -->
   <div class="d-flex mb-2 justify-content-end">
@@ -11,143 +12,89 @@
     @csrf
     <div class="container bg-white">
       <div class="row p-4 bg-white">
-        <div class="col border border-muted rounded-lg mr-2 p-4">
-            <div class="form-group">
-                <label for="crime_type">Crime type:</label>
-                <select name="crime_type" class="custom-select" required>
-                  <option disabled selected value="">Select Crime Type</option>
-                    @foreach ($crime_types as $crime_type)
-                        <option value="{{ $crime_type->id }}" {{ Request::old()?(Request::old('crime_type')==$crime_type->id?'selected="selected"':''):'' }}>{{ $crime_type->type }}</option>
-                    @endforeach
-                </select>
-                @error('crime_type')
-                    <div class="alert">                                   
-                        <strong>{{ $message }}</strong>
-                    </div>
-                @enderror
+          <div class="col border border-muted rounded-lg mr-2 p-4">
+              <div class="form-group">
+                  <label for="crime_type">Crime type:</label>
+                  <select name="crime_type" class="custom-select" required>
+                    <option disabled selected value="">Select Crime Type</option>
+                      @foreach ($crime_types as $crime_type)
+                          <option value="{{ $crime_type->id }}" {{ Request::old()?(Request::old('crime_type')==$crime_type->id?'selected="selected"':''):'' }}>{{ $crime_type->type }}</option>
+                      @endforeach
+                  </select>
+                  @error('crime_type')
+                      <div class="alert">                                   
+                          <strong>{{ $message }}</strong>
+                      </div>
+                  @enderror
+              </div>
+              <div class="form-group">
+                  <label for="district">District:</label>
+                  <select class="custom-select @error('district') is-invalid @enderror" name="district" required>
+                      <option disabled selected value="">Select</option>
+                      @foreach ($districts as $district)
+                      <option value="{{ $district->id }}" {{ Request::old()?(Request::old('district')==$district->id?'selected="selected"':''):'' }}>{{ $district->district }}</option>
+                      @endforeach
+                  </select>
+                  @error('district')
+                      <div class="alert">                                   
+                          <strong>{{ $message }}</strong>
+                      </div>
+                  @enderror
+              </div>
+              <div class="form-group">
+                  <label for="images">Photos:</label>
+                  
+                  <input type="file" id="image" name="file[]" multiple>
+                  @if ($errors->has('file.*'))
+                      <div class="alert">
+                          <strong>{{ $errors->first('file.*') }}</strong>
+                      </div>
+                  @endif   
+              </div>
+              <div class="form-group">
+                  <label for="description">Description:</label>
+                  <textarea  class="form-control" rows="3" name="description" required>{{{ old('description') }}}</textarea>
+                  @error('description')
+                      <div class="alert">
+                          <strong>{{ $message }}</strong>
+                      </div>
+                  @enderror
+              </div>
+              <div class="form-group">
+                  <label for="contact">Contact of complainant:</label>
+                  <input type="text" class="form-control" placeholder="Phone/Email" name="contact" value="{{ old('contact') }}">
+                  @error('contact')
+                      <div class="alert">
+                          <strong>{{ $message }}</strong>
+                      </div>
+                  @enderror
+              </div>
+          </div>
+          <div class="col border border-muted rounded-lg p-4">
+              <div class="form-group">
+                  <label for="planNo">Area name:</label>
+                  <input type="text" class="form-control" placeholder="Enter Area name" id="planNo" name="planNo" value="{{ old('planNo') }}" required>
+                  @error('planNo')
+                      <div class="alert">
+                          <strong>{{ $message }}</strong>
+                      </div>
+                  @enderror
+              </div>
+              <div class="form-group">
+                <span style="float:right; cursor:pointer;"><kbd><a title="How to Draw Shapes on the Map" class="text-white" data-toggle="modal" data-target="#mapHelp">How To Mark Location</a></kbd></span>
+                <label>Select Location On Map*</label>
             </div>
-            <div class="form-group">
-                <label for="province">Province:</label>
-                <select class="custom-select @error('province') is-invalid @enderror" name="province" required>
-                    <option disabled selected value="">Select</option>
-                    @foreach ($provinces as $province)
-                        <option value="{{ $province->id }}" {{ Request::old()?(Request::old('province')==$province->id?'selected="selected"':''):'' }}>{{ $province->province }}</option>
-                    @endforeach
-                </select>
-                @error('province')
-                    <div class="alert">                                   
-                        <strong>{{ $message }}</strong>
-                    </div>
-                @enderror
-            </div>
-            <div class="form-group">
-                <label for="district">District:</label>
-                <select class="custom-select @error('district') is-invalid @enderror" name="district" required>
-                    <option disabled selected value="">Select</option>
-                    @foreach ($districts as $district)
-                    <option value="{{ $district->id }}" {{ Request::old()?(Request::old('district')==$district->id?'selected="selected"':''):'' }}>{{ $district->district }}</option>
-                    @endforeach
-                </select>
-                @error('district')
-                    <div class="alert">                                   
-                        <strong>{{ $message }}</strong>
-                    </div>
-                @enderror
-            </div>
-            <div class="form-group">
-                Forward to Organization (this will override auto assign):<input type="text" class="form-control typeahead3" placeholder="Search" name="organization" value="{{ old('organization') }}" />
-                @error('organization')
-                <div class="alert alert-danger">{{ $message }}</div>
-                @enderror
-            </div>
-            <div class="form-group" id="dynamicAddRemove">
-                <label for="images">Photos:</label>
-                
-                <input type="file" id="image" name="file[]" multiple>
-                @if ($errors->has('file.*'))
-                    <div class="alert">
-                        <strong>{{ $errors->first('file.*') }}</strong>
-                    </div>
-                @endif   
-            </div>
-            <div class="form-group">
-                <label for="description">Description:</label>
-                <textarea  class="form-control" rows="3" name="description" required>{{{ old('description') }}}</textarea>
-                @error('description')
-                    <div class="alert">
-                        <strong>{{ $message }}</strong>
-                    </div>
-                @enderror
-            </div>
-            <hr>
-            <div id="accordion" class="mb-3">
-                <div class="card mb-3">
-                    <div class="card-header bg-white">
-                        <a class="collapsed card-link text-dark" data-toggle="collapse" href="#collapseone">
-                            Organizations Governing Land (Optional)
-                        </a>
-                    </div>
-                    <div id="collapseone" class="collapse" data-parent="#accordion">
-                        <div class="card-body">
-                            <strong>Select 1 or More</strong>
-                            <fieldset>
-                                @foreach($organizations as $organization)
-                                <input type="checkbox" name="governing_orgs[]" value="{{$organization->id}}" @if( is_array(old('governing_orgs')) && in_array($organization->id, old('governing_orgs'))) checked @endif><label class="ml-2">{{$organization->title}}</label> <br>
-                                @endforeach
-                            </fieldset>
-                        </div>
-                    </div>
+              <div id="mapid" style="height:400px;" name="map"></div>
+              <br>
+              @error('polygon')
+                <div class="alert">
+                    <strong>{{ $message }}</strong>
                 </div>
-
-                <div class="card">
-                    <div class="card-header bg-white">
-                        <a class="collapsed card-link text-dark" data-toggle="collapse" href="#collapsetwo">
-                            Gazettes Relavant to Land (Optional)
-                        </a>
-                    </div>
-                    <div id="collapsetwo" class="collapse" data-parent="#accordion">
-                        <div class="card-body">
-                            <strong>Select 1 or More</strong>
-                            <fieldset>
-                                @foreach($gazettes as $gazette)
-                                <input type="checkbox" name="gazettes[]" value="{{$gazette->id}}" @if( is_array(old('gazettes')) && in_array($gazette->id, old('gazettes'))) checked @endif> <label class="ml-2">{{$gazette->title}}</label> <br>
-                                @endforeach
-                            </fieldset>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <br>
-        </div>
-        <div class="col border border-muted rounded-lg p-4">
-            <div class="form-group">
-                <label for="planNo">Area name:</label>
-                <input type="text" class="form-control" placeholder="Enter Area name" id="planNo" name="planNo" value="{{ old('planNo') }}" required>
-                @error('planNo')
-                    <div class="alert">
-                        <strong>{{ $message }}</strong>
-                    </div>
-                @enderror
-            </div>
-            <!-- ////////MAP GOES HERE -->
-            <div class="form-group">
-              <span style="float:right; cursor:pointer;"><kbd><a title="How to Draw Shapes on the Map" class="text-white" data-toggle="modal" data-target="#mapHelp">How To Mark Location</a></kbd></span>
-              <label>Select Location On Map*</label>
-            </div>
-            <div id="mapid" style="height:400px;" name="map"></div>
-            <br>
-            @error('polygon')
-                    <div class="alert">
-                        <strong>{{ $message }}</strong>
-                    </div>
-            @enderror
-        </div>
+              @enderror
+          </div>
       </div>
       <div class="row p-4 bg-white">
         <div class="form-check">
-          @if(auth()->user())
-            <input type="hidden" class="form-control" name="createdBy" value="{{ Auth::user()->id }}">  
-          @endif
             <input id="polygon" type="hidden" name="polygon" value="{{request('polygon')}}">
             <label class="form-check-label">
             <input type="checkbox" class="form-check-input" name="confirm" required><strong>I confirm these information to be true</strong>
@@ -164,29 +111,28 @@
   </form>
 </div>
 <script type="text/javascript">
-    //THIS USES THE AUTOMECOMPLETE FUNCTION IN TREE REMOVAL CONTROLLER
-    var path3 = "{{route('organization')}}";
-    $('input.typeahead3').typeahead({
-      source: function(terms, process) {
+  //THIS USES THE AUTOMECOMPLETE FUNCTION IN TREE REMOVAL CONTROLLER
+  var path3 = "{{route('organization')}}";
+  $('input.typeahead3').typeahead({
+    source: function(terms, process) {
 
-        return $.get(path3, {
-          terms: terms
-        }, function(data) {
-          console.log(data);
-          objects = [];
-          data.map(i => {
-            objects.push(i.title)
-          })
-          console.log(objects);
-          return process(objects);
+      return $.get(path3, {
+        terms: terms
+      }, function(data) {
+        console.log(data);
+        objects = [];
+        data.map(i => {
+          objects.push(i.title)
         })
-      },
-    });
+        console.log(objects);
+        return process(objects);
+      })
+    },
+  });
 
 
-    
-    // SCRIPT FOR THE MAP
-     var map = L.map('mapid', {
+  // SCRIPT FOR THE MAP
+  var map = L.map('mapid', {
         center: [7.2906, 80.6337], //if the location cannot be fetched it will be set to Kandy
         zoom: 12
     });
@@ -307,24 +253,28 @@
     setTimeout(function() {
         $('.pointer').fadeOut('slow');
     }, 3400);
+   
+  
 
-    $(document).ready(function() {
-      $('#image').change(function() {
-        var fp = $("#image");
-        var lg = fp[0].files.length; // get length
-        var items = fp[0].files;
-        var fileSize = 0;
+  $(document).ready(function() {
+    $('#image').change(function() {
+      var fp = $("#image");
+      var lg = fp[0].files.length; // get length
+      var items = fp[0].files;
+      var fileSize = 0;
 
-        if (lg > 0) {
-          for (var i = 0; i < lg; i++) {
-            fileSize = fileSize + items[i].size; // get file size
-          }
-          if (fileSize > 5242880) {
-            alert('You should not uplaod files exceeding 4 MB. Please compress files size and uplaod agian');
-            $('#image').val('');
-          }
+      if (lg > 0) {
+        for (var i = 0; i < lg; i++) {
+          fileSize = fileSize + items[i].size; // get file size
         }
-      });
+        if (fileSize > 5242880) {
+          alert('You should not uplaod files exceeding 4 MB. Please compress files size and uplaod agian');
+          $('#image').val('');
+        }
+      }
     });
+  });
+
+  
 </script>
 @endsection
