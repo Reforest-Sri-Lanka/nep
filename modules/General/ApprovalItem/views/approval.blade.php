@@ -116,14 +116,24 @@
                                 <tr>
                                     <th>Crime Type</th>
                                     <th>Description</th>
-                                    <th>Land Parcel</th>
+                                    <th>Contact Person</th>
+                                    <th>Update Application</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td>{{$item->crime_type->type}}</td>
                                     <td>{{$item->description}}</td>
-                                    <td>{{$item->land_parcel->title}}</td>
+                                    @if($process_item->requestor_email != (null || 'no email') )
+                                        <td>{{$process_item->requestor_email}}</td>
+                                    @elseif($process_item->created_by_user_id != null)
+                                        <td>{{$process_item->created_by_user->email}}</td>
+                                    @else
+                                        <td>No contact available</td>
+                                    @endif
+                                    @if((Auth::user()->id == $process_item->activity_user_id) || ((Auth::user()->organization_id == $process_item->activity_organization) && (Auth::user()->role_id < 5))) 
+                                        <td><a href="/crime-report/crimeedit/{{$process_item->id}}" class="text-muted">Click</a></td>
+                                    @endif
                                 </tr>
                             </tbody>
                         </table>

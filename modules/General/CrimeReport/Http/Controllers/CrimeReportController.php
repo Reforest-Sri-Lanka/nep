@@ -35,7 +35,7 @@ class CrimeReportController extends Controller
             'description' => 'required',
             'planNo' => 'required',
             'confirm' => 'required',
-            'district' => 'required|not_in:0',
+            //'district' => 'required|not_in:0',
             //'province' => 'required|not_in:0',
             'polygon' => 'required',
             //'organization' => 'nullable|exists:organizations,title',
@@ -83,7 +83,9 @@ class CrimeReportController extends Controller
             $Process_item->created_by_user_id = $request['createdBy'];
             $Process_item->request_organization = $user->organization_id;
             $Process_item->activity_user_id = null;
-            $Process_item->requestor_email = $request['contact'];
+            if($request->filled('contact')){
+                $Process_item->requestor_email = $request['contact'];
+            }
             $Process_item->form_id =  $id;
             $Process_item->form_type_id = 4;      
             $Process_item->remark = "to be made yet";
@@ -95,7 +97,7 @@ class CrimeReportController extends Controller
             $Process_item->save();
             $latestcrimeProcess = Process_Item::latest()->first();
             if(empty($request->input('organization'))){
-                $org_id =organization_assign::auto_assign($latestcrimeProcess->id,request('district'),request('province'));
+                $org_id =organization_assign::auto_assign($latestcrimeProcess->id,26,request('province'));
                 $latestcrimeProcess =Process_Item::latest()->first();
             }
             else{
@@ -161,6 +163,59 @@ class CrimeReportController extends Controller
         //return view('crimeReport::logComplaint',['Organizations' => $Organizations],['crime_types' => $crime_types],);
     }
 
+    public function crime_report_edit($pid) {
+        $process_item =Process_Item::find($pid);
+        $crime = Crime_report::find($process_item->form_id);
+        $crime_types = Crime_type::all();
+        $Photos = Json_decode($crime->photos);
+        return view('crimeReport::crimeEdit', [
+            'process_item' => $process_item,
+            'crime' => $crime,
+            'crime_types' => $crime_types,
+            'Photos' =>$Photos,
+        ]);
+    }
+
+    public function update_crime_report(Request $request)
+    {   
+        $request -> validate([
+            'crime_type' => 'required|not_in:0',
+            'description' => 'required',
+        ]);
+        if($request->hasfile('file')){
+            
+            request()->validate([
+                'file' => 'required',
+                'file.*' => 'mimes:jpeg,jpg,png|max:40000'
+            ]);
+        }
+        $array=DB::transaction(function () use($request) {
+            
+            $Process_item =Process_Item::find($request->pid);
+            $Crime_report =Crime_report::find($Process_item->form_id);
+            $Crime_report->update([
+                'crime_type_id' => $request->crime_type,
+                'description' => $request->description,
+            ]);
+            if($request->hasfile('file')) { 
+                $y=0;
+                foreach($request->file('file') as $file){
+                    $filename =$file->getClientOriginalName();
+                    $newname = $Crime_report->id.'No'.$y.$filename;
+                    $path = $file->storeAs('crimeEvidence',$newname,'public');
+                    $photoarray[$y] = $path;  
+                    $y++;          
+                }
+                $newarray=array_merge($photoarray,Json_decode($Crime_report->photos));
+                $Crime_report->photos= json_encode($newarray);
+                $Crime_report->save();
+            }
+            $Process_item->update([
+                'requestor_email' => $request->contact,
+            ]);
+        });
+        return back()->with('message', 'Crime report updated Successfully');            
+    } 
     public function download_image($path,$file) 
     {   
         //dd($path,$file);    
