@@ -10,6 +10,7 @@
         @isset($user)
         <kbd><a href="/security/user/{{$user->id}}" class="text-white font-weight-bolder"><i class="fas fa-chevron-left"></i></i> BACK</a></kbd>
         @endisset
+        
     </div>
     <div class="row p-4 bg-white">
         <h4>Details of Audit record {{$audit['event']}} on {{date('d-m-Y',strtotime($audit['created_at']))}}</h4>

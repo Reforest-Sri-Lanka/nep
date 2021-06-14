@@ -80,7 +80,7 @@
         <div class="row p-4 bg-white">
             <div class="col border border-muted rounded-lg mr-2 p-4">
                 <h6>Audit records for the application</h6>
-                @if($Audits == null)
+                @if($Audits == null && $Form_Audits == null)
                     <h1>No data</h1>
                 @else
                     <table class="table table-light table-striped border-secondary rounded-lg mr-4">
@@ -99,13 +99,23 @@
                                     <td>{{ $audit['user']->Organization->title }}</td>
                                     <td>{{ $audit['event'] }}</td>
                                     @isset($process_item)
-                                    <td><a href="/security/individual/{{ $audit['id'] }}/{{$process_item->id}}" class="text-muted">More</a></td></td>
+                                    <td><a href="/security/individual/{{ $audit['id'] }}/{{$process_item->id}}/0" class="text-muted">More</a></td></td>
                                     @endisset
                                     @isset($user)
                                     <td><a href="/security/user-individual/{{ $audit['id'] }}/{{$user->id}}" class="text-muted">More</a></td></td>
                                     @endisset
                                 </tr>
                             @endforeach
+                            @isset($process_item)
+                            @foreach($Form_Audits as $audit)
+                                <tr>
+                                    <td>{{ $audit['user']->name }}</td>
+                                    <td>{{ $audit['user']->Organization->title }}</td>
+                                    <td>{{ $audit['event'] }}</td>
+                                    <td><a href="/security/individual/{{ $audit['id'] }}/{{$process_item->id}}/1" class="text-muted">More</a></td></td>
+                                </tr>
+                            @endforeach
+                            @endisset
                         </tbody>
                     </table>
                 @endif

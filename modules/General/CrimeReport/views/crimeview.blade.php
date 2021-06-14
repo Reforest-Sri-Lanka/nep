@@ -6,7 +6,7 @@
     <kbd><a href="/approval-item/showRequests" class="text-white font-weight-bolder"><i class="fas fa-chevron-left"></i></i> BACK</a></kbd>
 @endif
 <div class="container border bg-light">
-    @if(($process_item->status_id < 10 || $process_item->status_id == 9) && (Auth::user()->id == $process_item->created_by_user_id)) 
+    @if(($process_item->status_id < 2 || $process_item->status_id == 9) && (Auth::user()->id == $process_item->created_by_user_id)) 
         <div class="row" style="float:right;">
         <a href="/crime-report/crimeedit/{{$process_item->id}}" class="btn btn-info mr-4"  role="button">Edit</a>
         </div>

@@ -6,17 +6,25 @@ use App\Models\User;
 use App\Models\Process_Item;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Environment\Http\Controllers\EnvController;
-use Environment\Http\Controllers\SpeciesController;
-use App\Models\Role_has_access;
+use App\Models\Crime_report;
+
 
 class SecurityController extends Controller
 {
     
-    public function moredetails($id,$pid)
+    public function moredetails($id,$pid,$type)
     {
         $process_item = Process_Item::find($pid);
-        $audit = $process_item->audits()->find($id);
+        if($type==0){
+            $audit = $process_item->audits()->find($id);
+        }else{
+            switch($process_item->form_type_id){
+                case 4:
+                    $crime = Crime_report::find($process_item->form_id);
+                    $audit = $crime->audits()->find($id);
+                    break;
+            }
+        }
         $data =$audit->old_values;
         $datanew=$audit->new_values;
         //dd($audit);
@@ -32,10 +40,16 @@ class SecurityController extends Controller
     {
         $process_item = Process_Item::find($id);
         $Audits = $process_item->audits()->get();
-        
+        switch($process_item->form_type_id){
+            case 4:
+                $crime = Crime_report::find($process_item->form_id);
+                $Form_Audits = $crime->audits()->get();
+                break;
+        }
         return view('Security::mainview', [
             'Audits' => $Audits,
             'process_item' => $process_item,
+            'Form_Audits' =>$Form_Audits,
         ]);
     }
 
@@ -66,19 +80,5 @@ class SecurityController extends Controller
     }
 
 
-    public function speciesredirect()
-    {
-        $role = Auth::user()->role_id;
-        if($role != 1){
-            $access1 = Role_has_access::where('role_id',$role)->where('access_id',2)->first();;
-            if($access1 == null)
-            {
-                return redirect()->action([SpeciesController::class, 'index2']);
-            }
-        }
-        return redirect()->action([SpeciesController::class, 'index']);
-    }
-
-    
 
 }

@@ -207,7 +207,8 @@ class CrimeReportController extends Controller
                     $y++;          
                 }
                 $newarray=array_merge($photoarray,Json_decode($Crime_report->photos));
-                $crime_rep = Crime_report::where('id',$Crime_report->id)->update(['photos' => json_encode($newarray)]);
+                $Crime_report->photos= json_encode($newarray);
+                $Crime_report->save();
             }
             $Process_item->update([
                 'requestor_email' => $request->contact,
