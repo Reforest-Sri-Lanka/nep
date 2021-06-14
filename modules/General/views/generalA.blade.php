@@ -65,6 +65,9 @@
                 @else
                 <th>Check Progress</th>
                 @endif
+                @if(Auth::user()->role_id < 5) 
+                    <th>Audit</th>
+                @endif
             </tr>
         </thead>
         <tbody>
@@ -88,6 +91,9 @@
                 <td><a href="/approval-item/investigate/{{$process_item->id}}" class="text-muted">Investigate</a></td>
                 @elseif(Auth::user()->role_id == 6)
                 <td><a href="#" class="text-muted">View More Details</a></td>
+                @endif
+                @if(Auth::user()->role_id < 5)
+                <td><a href="/security/process-item/{{$process_item->id}}" class="text-muted">Audit</a></td>
                 @endif
             @endif
             </tr>
