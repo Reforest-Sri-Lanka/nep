@@ -508,6 +508,9 @@
     //we’re calling tilelayer() to create the tile layer, passing in the OSM URL first, then the second argument is an object containing the options for our new tile 
     //layer (including attribution is critical here to comply with licensing), and then the tile layer is added to the map using addTo().
 
+    // Add FULLSCREEN to an existing map:
+    map.addControl(new L.Control.Fullscreen());
+    
     var drawnItems = new L.FeatureGroup();
     map.addLayer(drawnItems);
 

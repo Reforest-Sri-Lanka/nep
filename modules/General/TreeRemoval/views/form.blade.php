@@ -264,25 +264,39 @@
 
           <ul>
             @error('location.*.tree_species_id')
-            <li><div class="alert alert-danger">The Tree Species Field must be letters</div></li>
+            <li>
+              <div class="alert alert-danger">The Tree Species Field must be letters</div>
+            </li>
             @enderror
             @error('location.*.diameter_at_breast_height')
-            <li><div class="alert alert-danger">The Diameter At Breast Height Field must be numeric</div></li>
+            <li>
+              <div class="alert alert-danger">The Diameter At Breast Height Field must be numeric</div>
+            </li>
             @enderror
             @error('location.*.diameter_at_stump')
-            <li><div class="alert alert-danger">The Diameter at Stump Field must be numeric</div></li>
+            <li>
+              <div class="alert alert-danger">The Diameter at Stump Field must be numeric</div>
+            </li>
             @enderror
             @error('location.*.height')
-            <li><div class="alert alert-danger">The Height Field must be numeric</div></li>
+            <li>
+              <div class="alert alert-danger">The Height Field must be numeric</div>
+            </li>
             @enderror
             @error('location.*.timber_volume')
-            <li><div class="alert alert-danger">The timber volume field must be numeric</div></li>
+            <li>
+              <div class="alert alert-danger">The timber volume field must be numeric</div>
+            </li>
             @enderror
             @error('location.*.timber_cubic')
-            <li><div class="alert alert-danger">The timber cubic field must be numeric</div></li>
+            <li>
+              <div class="alert alert-danger">The timber cubic field must be numeric</div>
+            </li>
             @enderror
             @error('location.*.age')
-            <li><div class="alert alert-danger">The age field must be numeric</div></li>
+            <li>
+              <div class="alert alert-danger">The age field must be numeric</div>
+            </li>
             @enderror
           </ul>
 
@@ -586,6 +600,9 @@
     center: [7.2906, 80.6337], //if the location cannot be fetched it will be set to Kandy
     zoom: 12
   });
+
+  // Add FULLSCREEN to an existing map:
+  map.addControl(new L.Control.Fullscreen());
 
   window.onload = function() {
     var popup = L.popup();
