@@ -16,6 +16,11 @@
       <li class="nav-item {{ Route::currentRouteName() == 'roleIndex' ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('roleIndex') }}">Roles</a>
       </li>
+      @if (Auth::user()->role_id == 1 ||Auth::user()->role_id == 2)
+        <li class="nav-item {{ Route::currentRouteName() == 'orgActIndex' ? 'active' : '' }}">
+          <a class="nav-link" href="{{ route('orgActIndex') }}">Organization Form Handling</a>
+        </li>
+      @endif
     </ul>
   </nav>
   <div class="col-md">

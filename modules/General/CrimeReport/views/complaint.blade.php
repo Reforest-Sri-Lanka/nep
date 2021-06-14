@@ -1,6 +1,7 @@
-@extends('general')
+@extends('home')
 
-@section('general')
+@section('cont')
+
 <div class="container">
   <!-- FAQ button -->
   <div class="d-flex mb-2 justify-content-end">
@@ -17,7 +18,7 @@
                   <select name="crime_type" class="custom-select" required>
                     <option disabled selected value="">Select Crime Type</option>
                       @foreach ($crime_types as $crime_type)
-                          <option value="{{ $crime_type->id }}" {{ ( $crime_type->id == '6') ? 'selected' : '' }} {{ Request::old()?(Request::old('crime_type')==$crime_type->id?'selected="selected"':''):'' }}>{{ $crime_type->type }}</option>
+                          <option value="{{ $crime_type->id }}" {{ ( $crime_type->id == '6') ? 'selected' : '' }} {{ Request::old()?(Request::old('crime_type')==$crime_type->id?'selected="selected"':''):'' }} >{{ $crime_type->type }}</option>
                       @endforeach
                   </select>
                   @error('crime_type')
@@ -60,7 +61,7 @@
                   @enderror
               </div>
               <div class="form-group">
-                  <label for="contact">Contact of complainant: </label>
+                  <label for="contact">Contact of complainant:</label>
                   <input type="text" class="form-control" placeholder="Phone/Email" name="contact" value="{{ old('contact') }}">
                   @error('contact')
                       <div class="alert">
@@ -94,7 +95,6 @@
       </div>
       <div class="row p-4 bg-white">
         <div class="form-check">
-          <input type="hidden" class="form-control" name="createdBy" value="{{ Auth::user()->id }}">  
             <input id="polygon" type="hidden" name="polygon" value="{{request('polygon')}}">
             <label class="form-check-label">
             <input type="checkbox" class="form-check-input" name="confirm" required><strong>I confirm these information to be true</strong>
@@ -137,40 +137,44 @@
         zoom: 12
     });
 
-  // Add FULLSCREEN to an existing map:
-  map.addControl(new L.Control.Fullscreen());
+    window.onload = function() {
+        var popup = L.popup();
+        //false,               ,popup, map.center
+        function geolocationErrorOccurred(geolocationSupported, popup, latLng) {
+            popup.setLatLng(latLng);
+            popup.setContent(geolocationSupported ?
+                '<b>Error:</b> Geolocation service failed. Enable Location.' :
+                '<b>Error:</b> This browser doesn\'t support geolocation.');
+            popup.openOn(map);
+        }
+        //If theres an error then 
 
-  window.onload = function() {
-    var popup = L.popup();
-    //false,               ,popup, map.center
-    function geolocationErrorOccurred(geolocationSupported, popup, latLng) {
-      popup.setLatLng(latLng);
-      popup.setContent(geolocationSupported ?
-        '<b>Error:</b> Geolocation service failed. Enable Location.' :
-        '<b>Error:</b> This browser doesn\'t support geolocation.');
-      popup.openOn(map);
-    }
-    //If theres an error then 
+        if (navigator.geolocation) { //using an inbuilt function to get the lat and long of the user.
+            navigator.geolocation.getCurrentPosition(function(position) {
+                var latLng = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
 
-    if (navigator.geolocation) { //using an inbuilt function to get the lat and long of the user.
-      navigator.geolocation.getCurrentPosition(function(position) {
-        var latLng = {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude
-        };
+                popup.setLatLng(latLng);
+                popup.setContent('This is your current location');
+                popup.openOn(map);
+                //setting the map to the user location
+                map.setView(latLng);
 
-        popup.setLatLng(latLng);
-        popup.setContent('This is your current location');
-        popup.openOn(map);
-        //setting the map to the user location
-        map.setView(latLng);
-
-      }, function() {
-        geolocationErrorOccurred(true, popup, map.getCenter());
-      });
-    } else {
-      //No browser support geolocation service
-      geolocationErrorOccurred(false, popup, map.getCenter());
+            }, function() {
+                geolocationErrorOccurred(true, popup, map.getCenter());
+            });
+        } else {
+            //No browser support geolocation service
+            geolocationErrorOccurred(false, popup, map.getCenter());
+        }
+        //keeping the dynamic components open if checked
+        if ($("#customCheck1").is(':checked')) {
+            $("#extLandOwner").show();
+        } else {
+            $("#extLandOwner").hide()
+        }
     }
 
     // Set up the OSM layer 
@@ -270,5 +274,7 @@
       }
     });
   });
+
+  
 </script>
 @endsection

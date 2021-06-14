@@ -2,8 +2,9 @@
 
 @section('cont')
 
-<kbd><a href="/approval-item/showRequests" class="text-white font-weight-bolder"><i class="fas fa-chevron-left"></i></i> BACK</a></kbd>
-
+@if(Auth::user())
+    <kbd><a href="/approval-item/showRequests" class="text-white font-weight-bolder"><i class="fas fa-chevron-left"></i></i> BACK</a></kbd>
+@endif
 <div class="container border bg-light">
     <dl class="row">
 
@@ -13,7 +14,8 @@
         <dt class="col-sm-3">Crime Type:</dt>
         <dd class="col-sm-9">{{$crime->Crime_type->type}}</dd>
 
-
+        <dt class="col-sm-3">Description:</dt>
+        <dd class="col-sm-9">{{$crime->description}}</dd>
 
         <dt class="col-sm-3">Land Parcel Title:</dt>
         <dd class="col-sm-9">
@@ -23,6 +25,11 @@
         <dt class="col-sm-3">Activity Organization:</dt>
         <dd class="col-sm-9">
             <p>{{$process_item->Activity_organization->title}}</p>
+        </dd>
+
+        <dt class="col-sm-3">complainant's contact:</dt>
+        <dd class="col-sm-9">
+            <p>{{$process_item->requestor_email}}</p>
         </dd>
 
         <dt class="col-sm-3">Status:</dt>

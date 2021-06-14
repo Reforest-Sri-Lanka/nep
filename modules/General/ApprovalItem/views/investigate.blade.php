@@ -1,6 +1,9 @@
 @extends('approvalItem::approval')
 
 @section('approval')
+<br>
+<h5 >Review application</h5>
+<hr>
 <div class="container bg-white">
         <div class="row p-4 bg-white">
             <h6>Prerequisites</h6>

@@ -18,7 +18,7 @@
 
                     <div class="form-group">
                         <label for="title">Plan Number:</label>
-                        <input type="text" class="form-control @error('planNo') is-invalid @enderror" value="{{ old('planNo') }}" placeholder="Enter Plan Number" id="planNo" name="planNo">
+                        <input type="text" class="form-control @error('planNo') is-invalid @enderror" value="{{ old('planNo') }}" placeholder="Enter Plan Number" id="planNo" name="planNo" required>
                         @error('planNo')
                         <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
@@ -26,7 +26,7 @@
 
                     <div class="form-group">
                         <label for="title">Surveyor Name:</label>
-                        <input type="text" class="form-control @error('surveyorName') is-invalid @enderror" value="{{ old('surveyorName') }}" placeholder="Enter Surveyor Name" id="surveyorName" name="surveyorName">
+                        <input type="text" class="form-control @error('surveyorName') is-invalid @enderror" value="{{ old('surveyorName') }}" placeholder="Enter Surveyor Name" id="surveyorName" name="surveyorName" required>
                         @error('surveyorName')
                         <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
@@ -34,7 +34,7 @@
 
                     <div class="form-group">
                         <label for="province">Province:</label>
-                        <select class="custom-select @error('province') is-invalid @enderror" name="province">
+                        <select class="custom-select @error('province') is-invalid @enderror" name="province" required>
                             <option disabled selected value="">Select</option>
                             @foreach ($provinces as $province)
                             <option value="{{ $province->id }}" {{ Request::old()?(Request::old('province')==$province->id?'selected="selected"':''):'' }}>{{ $province->province }}</option>
@@ -47,7 +47,7 @@
 
                     <div class="form-group">
                         <label for="province">District:</label>
-                        <select class="custom-select @error('district') is-invalid @enderror" name="district">
+                        <select class="custom-select @error('district') is-invalid @enderror" name="district" required>
                             <option disabled selected value="">Select</option>
                             @foreach ($districts as $district)
                             <option value="{{ $district->id }}" {{ Request::old()?(Request::old('district')==$district->id?'selected="selected"':''):'' }}>{{ $district->district }}</option>
@@ -70,7 +70,12 @@
                         <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                     </div>
-
+                    <div class="form-group">
+                        Forward to Organization (this will override auto assign):<input type="text" class="form-control typeahead3" placeholder="Search" name="organization" value="{{ old('organization') }}" />
+                        @error('organization')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
                     <div id="accordion" class="mb-3">
                         <div class="card mb-3">
                             <div class="card-header bg-white">
@@ -145,6 +150,24 @@
 </div>
 
 <script type="text/javascript">
+    //THIS USES THE AUTOMECOMPLETE FUNCTION IN TREE REMOVAL CONTROLLER
+    var path3 = "{{route('organization')}}";
+    $('input.typeahead3').typeahead({
+        source: function(terms, process) {
+
+            return $.get(path3, {
+                terms: terms
+            }, function(data) {
+                console.log(data);
+                objects = [];
+                data.map(i => {
+                    objects.push(i.title)
+                })
+                console.log(objects);
+                return process(objects);
+            })
+        },
+    });
     /// SCRIPT FOR THE MAP
     var map = L.map('mapid', {
         center: [7.2906, 80.6337], //if the location cannot be fetched it will be set to Kandy
