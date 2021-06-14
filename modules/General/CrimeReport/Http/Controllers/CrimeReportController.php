@@ -35,7 +35,7 @@ class CrimeReportController extends Controller
             'description' => 'required',
             'planNo' => 'required',
             'confirm' => 'required',
-            'district' => 'required|not_in:0',
+            //'district' => 'required|not_in:0',
             //'province' => 'required|not_in:0',
             'polygon' => 'required',
             //'organization' => 'nullable|exists:organizations,title',
@@ -97,7 +97,7 @@ class CrimeReportController extends Controller
             $Process_item->save();
             $latestcrimeProcess = Process_Item::latest()->first();
             if(empty($request->input('organization'))){
-                $org_id =organization_assign::auto_assign($latestcrimeProcess->id,request('district'),request('province'));
+                $org_id =organization_assign::auto_assign($latestcrimeProcess->id,26,request('province'));
                 $latestcrimeProcess =Process_Item::latest()->first();
             }
             else{
