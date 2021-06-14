@@ -4,8 +4,8 @@ use CrimeReport\Http\Controllers\CrimeReportController;
 
 Route::post('/crimecreate', [CrimeReportController::class, 'create_crime_report']);
 Route::post('/trackcrime', [CrimeReportController::class, 'track_crime_reports']);
-
-
+Route::get('/crimeedit/{pid}', [CrimeReportController::class, 'crime_report_edit']);
+Route::patch('/crimeupdate', [CrimeReportController::class, 'update_crime_report']);
 Route::get('/downloadimage/{path}/{file}',[CrimeReportController::class, 'download_image']);
 Route::get('/viewimage/{path}/{file}',[CrimeReportController::class, 'view_image']);
 Route::get('/newcrime',[CrimeReportController::class, 'crime_report_form_display'])->name("crime");
