@@ -34,7 +34,10 @@
         </div>
         <div class="row p-4 bg-white">
             <h5>Progress of the reforestation project in general</h5>
-            <table class="table table-bordered table-striped">
+        </div>
+        <div class="row p-4 bg-white">
+            @if($Updates != null)
+                <table class="table table-bordered table-striped">
                     <thead>
                         <tr>
                             <th>Date</th>
@@ -46,53 +49,62 @@
                     </thead>
                     <tbody>
                         @foreach($Updates as $update)
-                        <tr>
-                        <td>{{date('d-m-Y',strtotime($update->created_at))}}</td>
-                        <td>{{$update->situation_update}}</td>
-                        <td>{{$update->suggestions}}</td>
-                        <td>{{$update->further_remarks}}</td>
-                        <td>{{$update->create_user->name}}</td>
-                        <tr>
+                            <tr>
+                            <td>{{date('d-m-Y',strtotime($update->created_at))}}</td>
+                            <td>{{$update->situation_update}}</td>
+                            <td>{{$update->suggestions}}</td>
+                            <td>{{$update->further_remarks}}</td>
+                            <td>{{$update->create_user->name}}</td>
+                            <tr>
                         @endforeach
                     </tbody>
-                </table>  
+                </table> 
+            @else
+                <h6>No progress recorded yet</h6>
+            @endif 
         </div>            
         <div class="row p-4 bg-white">
             <h5>Individual species and their latest growth information</h5>
-            <table class="table table-bordered table-striped">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Species Name</th>
-                        <th>Scientefic Name</th>
-                        <th>Number of trees planted</th>
-                        <th>Height</th>
-                        <th>Dimentions</th>
-                        <th>Previous Remark</th>
-                        <th>Current Height</th>
-                        <th>Number of successfully grown trees</th>
-                        <th>Suggestions for improvement</th>
-                        <th>Further Remarks</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($Species as $data)
-                    <tr>
-                    <td>{{$data->id}}</td>
-                    <td>{{$data->environment_restoration_species->Species->title}}</td>
-                    <td>{{$data->environment_restoration_species->Species->scientefic_name}}</td>
-                    <td>{{$data->environment_restoration_species->quantity}}</td>
-                    <td>{{$data->environment_restoration_species->height}}</td>
-                    <td>{{$data->environment_restoration_species->dimensions}}</td>
-                    <td>{{$data->environment_restoration_species->remarks}}</td>
-                    <td>{{$data->current_height}}</td>
-                    <td>{{$data->qty_of_successful_trees}}</td>
-                    <td>{{$data->improvement_suggestions}}</td>
-                    <td>{{$data->futher_remarks}}</td>
-                    <tr>
-                    @endforeach
-                </tbody>
-            </table>   
+        </div>
+        <div class="row p-4 bg-white">
+            @if($Species != null)
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Species Name</th>
+                            <th>Scientefic Name</th>
+                            <th>Number of trees planted</th>
+                            <th>Height</th>
+                            <th>Dimentions</th>
+                            <th>Previous Remark</th>
+                            <th>Current Height</th>
+                            <th>Number of successfully grown trees</th>
+                            <th>Suggestions for improvement</th>
+                            <th>Further Remarks</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($Species as $data)
+                            <tr>
+                            <td>{{$data->id}}</td>
+                            <td>{{$data->environment_restoration_species->Species->title}}</td>
+                            <td>{{$data->environment_restoration_species->Species->scientefic_name}}</td>
+                            <td>{{$data->environment_restoration_species->quantity}}</td>
+                            <td>{{$data->environment_restoration_species->height}}</td>
+                            <td>{{$data->environment_restoration_species->dimensions}}</td>
+                            <td>{{$data->environment_restoration_species->remarks}}</td>
+                            <td>{{$data->current_height}}</td>
+                            <td>{{$data->qty_of_successful_trees}}</td>
+                            <td>{{$data->improvement_suggestions}}</td>
+                            <td>{{$data->futher_remarks}}</td>
+                            <tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            @else
+                <h6>No progress recorded yet</h6>   
+            @endif
         </div>
         <div class="row p-4 bg-white">
             <a href="/env-restoration/progressUpdate/{{$process_item->id}}" class="btn btn-info mr-4"  role="button">Update Progress</a>
