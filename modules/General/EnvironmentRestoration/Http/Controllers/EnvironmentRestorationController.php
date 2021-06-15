@@ -226,11 +226,16 @@ class EnvironmentRestorationController extends Controller
     {
         $process_item = Process_Item::find($id);
         $restoration = Environment_Restoration::find($process_item->form_id);
-        $restoration_updates=Restoration_Update::where('env_rest_id', $restoration->id)->get();
         $restoration_update=Restoration_Update::where('env_rest_id', $restoration->id)->latest()->first();
-        $data=Restoration_Species_Update::where('env_rest_update_id', $restoration_update->id)->get();
+        if($restoration_update == null){
+            $restoration_updates=null;
+            $data=null;
+        }else{
+            $restoration_updates=Restoration_Update::where('env_rest_id', $restoration->id)->get();
+            $data=Restoration_Species_Update::where('env_rest_update_id', $restoration_update->id)->get();
+        }
         $land = Land_Parcel::find($restoration->land_parcel_id);
-        $Species=$data->toArray();
+       
         return view('environmentRestoration::progressView', [
             'restoration' => $restoration,
             'Updates' =>$restoration_updates,
