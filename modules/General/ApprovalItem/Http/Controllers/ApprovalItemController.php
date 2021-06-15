@@ -47,6 +47,7 @@ class ApprovalItemController extends Controller
                 'activity_user_id' => $id,
                 'status_id' => 3
             ]);
+            $Process_item = Process_Item::find($pid);
             $user = User::find($id);
             Notification::send($user, new StaffAssigned($Process_item));
             return $new_assign;
@@ -70,6 +71,7 @@ class ApprovalItemController extends Controller
                 'activity_organization' => $id,
                 'status_id' => 2
             ]);
+            $Process_item = Process_Item::find($pid);
             $Users=User::where('organization_id',$id)->whereBetween('role_id', [3, 4])->get();
             Notification::send($Users, new AssignOrg($Process_item));
         });
@@ -292,6 +294,7 @@ class ApprovalItemController extends Controller
             $data = null;
         } else if ($process_item->form_type_id == '3') {
             $item = Environment_Restoration::find($process_item->form_id);
+            $Photos = null;
             $data = Environment_Restoration_Species::all()->where('environment_restoration_id', $item->id);
         } else if ($process_item->form_type_id == '4') {
             $item = Crime_report::find($process_item->form_id);
@@ -361,6 +364,7 @@ class ApprovalItemController extends Controller
             $data = null;
         } else if ($process_item->form_type_id == '3') {
             $item = Environment_Restoration::find($process_item->form_id);
+            $Photos = null;
             $data = Environment_Restoration_Species::all()->where('environment_restoration_id', $item->id);
         } else if ($process_item->form_type_id == '4') {
             $item = Crime_report::find($process_item->form_id);

@@ -139,7 +139,7 @@
                         </table>
                     @break
                     @case('5')
-                    <table class="table table-light table-striped border-secondary rounded-lg mr-4">
+                        <table class="table table-light table-striped border-secondary rounded-lg mr-4">
                             <thead>
                                 <tr>
                                     <th>Plan No/Land Area</th>
@@ -195,10 +195,8 @@
                 @if($process_item->form_type_id !=5)
                     @if($process_item->status_id == 1 || ( $process_item->status_id ==9 && Auth::user()->role_id < 3))
                         <button type="submit" class="btn btn-primary" ><a href="/approval-item/assignorganization/{{$land_process->id}}" class="text-dark">View More details</a></button>
-                    @elseif($process_item->status_id ==2 || ( $process_item->status_id ==9 && Auth::user()->role_id < 5))
+                    @else
                         <button type="submit" class="btn btn-primary" ><a href="/approval-item/assignstaff/{{$land_process->id}}" class="text-dark">View More details</a></button>
-                    @elseif($process_item->status_id > 2 && $process_item->status_id < 9)
-                        <button type="submit" class="btn btn-primary" ><a href="/approval-item/investigate/{{$land_process->id}}" class="text-dark">View More details</a></button>
                     @endif
                 @endif
             </div>
