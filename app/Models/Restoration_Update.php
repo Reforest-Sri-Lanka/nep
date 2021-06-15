@@ -4,8 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Restoration_Update extends Model
+class Restoration_Update extends Model implements Auditable
 {
     use HasFactory;
     protected $table = "environment_restoration_updates";
@@ -20,6 +21,11 @@ class Restoration_Update extends Model
 
     protected $casts = [
         'created_at' => 'datetime',
+    ];
+
+    protected $attributes = [
+        'photos' => '{}',
+        'status' => 0,
     ];
 
 
