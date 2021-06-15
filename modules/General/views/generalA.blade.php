@@ -72,7 +72,6 @@
         </thead>
         <tbody>
             @foreach($Process_items as $process_item)<tr>
-            @if($process_item->prerequisite_id == null )
                 <td>{{$process_item->form_type->type}}</td>
                 <td>{{date('d-m-Y',strtotime($process_item->created_at))}}</td>
                 @if($process_item->request_organization==null && $process_item->other_land_owner_name==null)
@@ -83,7 +82,9 @@
                 <td>{{$process_item->requesting_organization->title}}</td>
                 @endif
                 <td>{{$process_item->remark}}</td>
-                @if(Auth::user()->role_id == 1 ||Auth::user()->role_id == 2)
+                @if($process_item->form_type_id == 3 && $process_item->status_id == 5)
+                <td><a href="/env-restoration/progressView/{{$process_item->id}}" class="text-muted">View Progress</a></td>
+                @elseif(Auth::user()->role_id == 1 ||Auth::user()->role_id == 2)
                 <td><a href="/approval-item/assignorganization/{{$process_item->id}}" class="text-muted">Assign</a></td>
                 @elseif(Auth::user()->role_id == 3 ||Auth::user()->role_id == 4)
                 <td><a href="/approval-item/assignstaff/{{$process_item->id}}" class="text-muted">Assign</a></td>
@@ -95,7 +96,6 @@
                 @if(Auth::user()->role_id < 5)
                 <td><a href="/security/process-item/{{$process_item->id}}" class="text-muted">Audit</a></td>
                 @endif
-            @endif
             </tr>
             @endforeach
         </tbody>

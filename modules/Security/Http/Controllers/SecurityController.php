@@ -7,7 +7,10 @@ use App\Models\Process_Item;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Crime_report;
-
+use App\Models\Tree_Removal_Request;
+use App\Models\Development_Project;
+use App\Models\Environment_Restoration;
+use App\Models\Land_Parcel;
 
 class SecurityController extends Controller
 {
@@ -19,11 +22,23 @@ class SecurityController extends Controller
             $audit = $process_item->audits()->find($id);
         }else{
             switch($process_item->form_type_id){
+                case 1:
+                    $item = Tree_Removal_Request::find($process_item->form_id);
+                    break;
+                case 1:
+                    $item = Development_Project::find($process_item->form_id);
+                    break;
+                case 3:
+                    $item = Environment_Restoration::find($process_item->form_id);
+                    break;
                 case 4:
-                    $crime = Crime_report::find($process_item->form_id);
-                    $audit = $crime->audits()->find($id);
+                    $item = Crime_report::find($process_item->form_id);
+                    break;
+                case 5:
+                    $item = Land_Parcel::find($process_item->form_id);
                     break;
             }
+            $audit = $item->audits()->find($id);
         }
         $data =$audit->old_values;
         $datanew=$audit->new_values;
@@ -41,11 +56,23 @@ class SecurityController extends Controller
         $process_item = Process_Item::find($id);
         $Audits = $process_item->audits()->get();
         switch($process_item->form_type_id){
+            case 1:
+                $item = Tree_Removal_Request::find($process_item->form_id);
+                break;
+            case 1:
+                $item = Development_Project::find($process_item->form_id);
+                break;
+            case 3:
+                $item = Environment_Restoration::find($process_item->form_id);
+                break;
             case 4:
-                $crime = Crime_report::find($process_item->form_id);
-                $Form_Audits = $crime->audits()->get();
+                $item = Crime_report::find($process_item->form_id);
+                break;
+            case 5:
+                $item = Land_Parcel::find($process_item->form_id);
                 break;
         }
+        $Form_Audits = $item->audits()->get();
         return view('Security::mainview', [
             'Audits' => $Audits,
             'process_item' => $process_item,
