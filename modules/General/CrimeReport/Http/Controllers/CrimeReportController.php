@@ -165,6 +165,11 @@ class CrimeReportController extends Controller
 
     public function crime_report_edit($pid) {
         $process_item =Process_Item::find($pid);
+        if($process_item->created_by_user_id != Auth::user()->id ){
+            return redirect('/general/pending')->with('warning', 'You are only allowed to edit complaints logged by yourself');
+        }elseif(($process_item->status_id > 1) && ($process_item->status_id < 9)){
+            return redirect('/general/pending')->with('warning', 'Cannot edit after the approval process has begun');
+        }
         $crime = Crime_report::find($process_item->form_id);
         $crime_types = Crime_type::all();
         $Photos = Json_decode($crime->photos);
