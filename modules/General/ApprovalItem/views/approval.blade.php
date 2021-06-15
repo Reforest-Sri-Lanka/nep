@@ -117,7 +117,6 @@
                                     <th>Crime Type</th>
                                     <th>Description</th>
                                     <th>Contact Person</th>
-                                    <th>Update Application</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -130,9 +129,6 @@
                                         <td>{{$process_item->created_by_user->email}}</td>
                                     @else
                                         <td>No contact available</td>
-                                    @endif
-                                    @if((Auth::user()->id == $process_item->activity_user_id) || ((Auth::user()->organization_id == $process_item->activity_organization) && (Auth::user()->role_id < 5))) 
-                                        <td><a href="/crime-report/crimeedit/{{$process_item->id}}" class="text-muted">Click</a></td>
                                     @endif
                                 </tr>
                             </tbody>
