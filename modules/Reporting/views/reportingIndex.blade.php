@@ -9,17 +9,17 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="/reporting/overview">Overview<span class="sr-only">(current)</span></a>
+                <a class="nav-link mr-4" href="/reporting/overview">Overview<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/reporting/tree-removal">Tree Removal</a>
+                <a class="nav-link mr-4" href="/reporting/tree-removal">Tree Removal</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/reporting/dev-proj">Development Project</a>
+                <a class="nav-link mr-4" href="/reporting/dev-proj">Development Project</a>
             </li>
             <li class="nav-item">
 
-                <a class="nav-link" href="/reporting/restoration">Restoration</a>
+                <a class="nav-link mr-4" href="/reporting/restoration">Restoration</a>
 
             </li>
             <li class="nav-item">

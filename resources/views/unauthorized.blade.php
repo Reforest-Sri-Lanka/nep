@@ -14,6 +14,7 @@
         <span class="navbar-toggler-icon"></span>
     </button>
 </nav>
+
 <div class="col-md">
     <div class="row justify-content-center">
         <div class="col-md-3">
@@ -32,6 +33,8 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="row justify-content-center">
     </div>
 </div>
 

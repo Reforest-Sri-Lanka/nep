@@ -3,6 +3,11 @@
 @section('general')
 
 <div class="container">
+    <!-- FAQ button -->
+    <div class="d-flex mb-2 justify-content-end">
+        <span><a title="FAQ" style="font-size:24px;cursor:pointer;" data-toggle="modal" data-target="#restorationHelp"><i class="fa fa-info-circle" aria-hidden="true"></i></a></span>
+    </div>
+    @include('faq')
     <form action="/env-restoration/store" id="envForm" method="post" autocomplete="off">
         @csrf
         <!-- One "tab" for each step in the form: -->
@@ -18,9 +23,9 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label for="title">Restored Land Parcel Name:</label>
-                            <input type="text" class="form-control" placeholder="Enter Land Parcel Name" name="landparceltitle">
-                            @error('landparceltitle')
+                            <label for="planNo">Restored Land Parcel Name:</label>
+                            <input type="text" class="form-control" placeholder="Enter Land Parcel Name" name="planNo">
+                            @error('planNo')
                             <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
                         </div>
@@ -50,28 +55,49 @@
                             <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="card">
-                            <div class="card-header">
-                                <a class="collapsed card-link text-dark" data-toggle="collapse" href="#collapseOne">Governing Organization for selected Land Parcel (Optional)</a>
-                            </div>
-                            <div id="collapseOne" class="collapse">
-                                <div class="card-body">
-                                    @foreach($organizations as $organization)
-                                    <div class="form-check">
-                                        <label class="form-check-label">
-                                            <input type="checkbox" class="form-check-input" name="govOrg[]" value="{{$organization->id}}">{{$organization->title}}
-                                        </label>
-                                    </div>
-                                    @endforeach
-                                </div>
-                            </div>
-                        </div>
                         <div class="form-group">
-                            <label for="activity_org">Organization to submit request to :</label>
+                            <label for="activity_org">Organization to submit request to (Instead of auto assigning):</label>
                             <input type="text" class="form-control typeahead1" placeholder="Enter Organization" id="activity_org" name="activity_org" />
                             @error('activity_org')
                             <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
+                        </div>
+                        <div id="accordion" class="mb-3">
+                            <div class="card mb-3">
+                                <div class="card-header bg-white">
+                                    <a class="collapsed card-link text-dark" data-toggle="collapse" href="#collapseone">
+                                        Organizations Governing Land (Optional)
+                                    </a>
+                                </div>
+                                <div id="collapseone" class="collapse" data-parent="#accordion">
+                                    <div class="card-body">
+                                        <strong>Select 1 or More</strong>
+                                        <fieldset>
+                                            @foreach($organizations as $organization)
+                                            <input type="checkbox" name="governing_orgs[]" value="{{$organization->id}}" @if( is_array(old('governing_orgs')) && in_array($organization->id, old('governing_orgs'))) checked @endif><label class="ml-2">{{$organization->title}}</label> <br>
+                                            @endforeach
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header bg-white">
+                                    <a class="collapsed card-link text-dark" data-toggle="collapse" href="#collapsetwo">
+                                        Gazettes Relavant to Land (Optional)
+                                    </a>
+                                </div>
+                                <div id="collapsetwo" class="collapse" data-parent="#accordion">
+                                    <div class="card-body">
+                                        <strong>Select 1 or More</strong>
+                                        <fieldset>
+                                            @foreach($gazettes as $gazette)
+                                            <input type="checkbox" name="gazettes[]" value="{{$gazette->id}}" @if( is_array(old('gazettes')) && in_array($gazette->id, old('gazettes'))) checked @endif> <label class="ml-2">{{$gazette->title}}</label> <br>
+                                            @endforeach
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="col border border-muted rounded-lg p-4">
@@ -114,6 +140,11 @@
                             @enderror
                         </div>
                         <!-- ////////MAP GOES HERE -->
+                        <div class="form-group">
+                            <span style="float:right; cursor:pointer;"><kbd><a title="How to Draw Shapes on the Map" class="text-white" data-toggle="modal" data-target="#mapHelp">How To Mark Location</a></kbd></span>
+                            <label>Select Location On Map*</label>
+                        </div>
+                        
                         <div id="mapid" style="height:400px;" name="map"></div>
 
                         @error('polygon')
@@ -157,7 +188,7 @@
                             </table>
                             <input type="hidden" class="form-control" name="status" value="1">
                             <input type="hidden" class="form-control" name="organization" value="{{Auth::user()->organization_id}}">
-                            <input type="hidden" class="form-control" name="created_by" value="{{Auth::user()->id}}">
+                            <input type="hidden" class="form-control" name="createdBy" value="{{Auth::user()->id}}">
                             <input type="hidden" class="form-control" name="logs" value="0">
                         </form>
                         <input type="file" id="fileUpload" name="fileUpload" accept=".xks,.xlsx" />
@@ -375,7 +406,7 @@
                 return process(objects);
             })
         },
-    });
+    }); 
 
     ///STEPPER
     var currentTab = 0; // Current tab is set to be the first tab (0)
@@ -575,6 +606,7 @@
         ///Converting your layer to a KML
         //$('#kml').val(tokml(drawnItems.toGeoJSON()));
     });
+    map.addControl(new L.Control.Fullscreen());
     //SEARCH FUNCTIONALITY
     var searchControl = new L.esri.Controls.Geosearch().addTo(map);
 

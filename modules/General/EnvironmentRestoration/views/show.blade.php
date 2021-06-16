@@ -5,6 +5,10 @@
 <kbd><a href="/approval-item/showRequests" class="text-white font-weight-bolder"><i class="fas fa-chevron-left"></i></i> BACK</a></kbd>
 <hr>
 <div class="container">
+    <div class="row" style="float:right;">
+        <a href="/env-restoration/progressUpdate/{{$process_item->id}}" class="btn btn-info mr-4"  role="button">Update Progress</a>
+        <a href="/env-restoration/progressView/{{$process_item->id}}" class="btn btn-info mr-4"  role="button">View Progress</a>
+    </div>
     <dl class="row">
         <dt class="col-sm-3">Title:</dt>
         <dd class="col-sm-9">{{$restoration->title}}</dd>

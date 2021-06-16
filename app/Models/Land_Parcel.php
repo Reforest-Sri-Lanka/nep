@@ -5,11 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Land_Parcel extends Model
+class Land_Parcel extends Model implements Auditable
 {
     use SoftDeletes;
     use HasFactory;
+    use \OwenIt\Auditing\Auditable;
 
     protected $table = 'land_parcels';
 
@@ -29,6 +31,8 @@ class Land_Parcel extends Model
     protected $attributes = [
         'logs' => 0,
         'protected_area' => 0,
+        'surveyor_name' =>'not available',
+        'size_unit' => "acres",
     ];
 
     protected $casts = [
