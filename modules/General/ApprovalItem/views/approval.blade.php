@@ -116,20 +116,26 @@
                                 <tr>
                                     <th>Crime Type</th>
                                     <th>Description</th>
-                                    <th>Land Parcel</th>
+                                    <th>Contact Person</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td>{{$item->crime_type->type}}</td>
                                     <td>{{$item->description}}</td>
-                                    <td>{{$item->land_parcel->title}}</td>
+                                    @if($process_item->requestor_email != (null || 'no email') )
+                                        <td>{{$process_item->requestor_email}}</td>
+                                    @elseif($process_item->created_by_user_id != null)
+                                        <td>{{$process_item->created_by_user->email}}</td>
+                                    @else
+                                        <td>No contact available</td>
+                                    @endif
                                 </tr>
                             </tbody>
                         </table>
                     @break
                     @case('5')
-                    <table class="table table-light table-striped border-secondary rounded-lg mr-4">
+                        <table class="table table-light table-striped border-secondary rounded-lg mr-4">
                             <thead>
                                 <tr>
                                     <th>Plan No/Land Area</th>
@@ -185,10 +191,8 @@
                 @if($process_item->form_type_id !=5)
                     @if($process_item->status_id == 1 || ( $process_item->status_id ==9 && Auth::user()->role_id < 3))
                         <button type="submit" class="btn btn-primary" ><a href="/approval-item/assignorganization/{{$land_process->id}}" class="text-dark">View More details</a></button>
-                    @elseif($process_item->status_id ==2 || ( $process_item->status_id ==9 && Auth::user()->role_id < 5))
+                    @else
                         <button type="submit" class="btn btn-primary" ><a href="/approval-item/assignstaff/{{$land_process->id}}" class="text-dark">View More details</a></button>
-                    @elseif($process_item->status_id > 2 && $process_item->status_id < 9)
-                        <button type="submit" class="btn btn-primary" ><a href="/approval-item/investigate/{{$land_process->id}}" class="text-dark">View More details</a></button>
                     @endif
                 @endif
             </div>
