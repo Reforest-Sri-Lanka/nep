@@ -605,8 +605,6 @@
     zoom: 12
   });
 
-  // Add FULLSCREEN to an existing map:
-  map.addControl(new L.Control.Fullscreen());
 
   window.onload = function() {
     var popup = L.popup();

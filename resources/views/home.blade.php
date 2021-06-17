@@ -22,7 +22,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js" integrity="sha512-ozq8xQKq6urvuU6jNgkfqAmT7jKN2XumbrX1JiB3TnF7tI48DPI4Gy1GXKD/V3EExgAs1V+pRO7vwtS1LHg0Gw==" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.15.3/xlsx.full.min.js"></script>
     <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js'></script>
-<link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css' rel='stylesheet' />
+    <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css' rel='stylesheet' />
     <!-- Search for laravel -->
     <script src="https://cdn-geoweb.s3.amazonaws.com/esri-leaflet/0.0.1-beta.5/esri-leaflet.js"></script>
     <script src="https://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.5/esri-leaflet-geocoder.js"></script>
@@ -43,104 +43,103 @@
     @livewireScripts
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-2 bd-navbar">
-                <div class="p-2 flex-shrink-3">
-                    <nav class="navbar">
-                        <!-- Links -->
-                        @if(Auth::user())
-                            <ul class="navbar-nav">
-                                <li class="nav-item mt-5">
-                                    <a class="nav-link text-light" href="/general/pending"><i class="fa fa-fw fa-home mr-3" aria-hidden="true"></i> General</a>
-                                </li>
-                                <li class="nav-item mt-3">
-                                    <a class="nav-link text-light" href="/user/index"><i class="fa fa-fw fa-user mr-3" aria-hidden="true"></i> Users</a>
-                                </li>
-                                <li class="nav-item mt-3">
-                                    <a class="nav-link text-light" href="/environment/updatedata"><i class="fa fa-fw fa-tree mr-3" aria-hidden="true"></i> Environment</a>
-                                </li>
-                                <li class="nav-item mt-3">
-                                    <a class="nav-link text-light" href="/glad"><i class="fa fa-fw fa-globe mr-3" aria-hidden="true"></i> Tracking</a>
-                                </li>
-                                <li class="nav-item mt-3">
-                                    <a class="nav-link text-light" href="/approval-item/showRequests"><i class="fa fa-fw fa-arrow-down mr-3" aria-hidden="true"></i> Requests</a>
-                                </li>
-                                @if(Auth::user()->role_id < 3)
-                                    <li class="nav-item mt-3">
-                                @else
-                                    <li class="nav-item mt-3" style="margin-bottom:400px;">
-                                @endif
-                                        <a class="nav-link text-light" href="/reporting/overview"><i class="fa fa-fw fa-book mr-3" aria-hidden="true"></i> Reporting</a>
-                                    </li>
-                                @if(Auth::user()->role_id < 3)
-                                <li class="nav-item mt-3" style="margin-bottom:400px;">
-                                    <a class="nav-link text-light" href="/general/systemSetting"><i class="fa fa-fw fa-cog mr-3" aria-hidden="true"></i> System Settings</a>
-                                </li>
-                                @endif
-                                <li class="nav-item mt-3"></li>
-                            </ul>
-                        @endif
-                    </nav>
-                </div>
+
+
+            <div id="mySidebar" class="sidebar">
+                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                <!-- Links -->
+                @if(Auth::user())
+                <ul class="navbar-nav">
+                    <li class="nav-item mt-5 pl-4">
+                        <a class="nav-link text-light" href="/general/pending"><i class="fa fa-fw fa-home mr-3" aria-hidden="true"></i> General</a>
+                    </li>
+                    <li class="nav-item mt-3 pl-4">
+                        <a class="nav-link text-light" href="/user/index"><i class="fa fa-fw fa-user mr-3" aria-hidden="true"></i> Users</a>
+                    </li>
+                    <li class="nav-item mt-3 pl-4">
+                        <a class="nav-link text-light" href="/environment/updatedata"><i class="fa fa-fw fa-tree mr-3" aria-hidden="true"></i> Environment</a>
+                    </li>
+                    <li class="nav-item mt-3 pl-4">
+                        <a class="nav-link text-light" href="/glad"><i class="fa fa-fw fa-globe mr-3" aria-hidden="true"></i> Tracking</a>
+                    </li>
+                    <li class="nav-item mt-3 pl-4">
+                        <a class="nav-link text-light" href="/approval-item/showRequests"><i class="fa fa-fw fa-arrow-down mr-3" aria-hidden="true"></i> Requests</a>
+                    </li>
+                    @if(Auth::user()->role_id < 3) <li class="nav-item mt-3 pl-4">
+                        @else
+                        <li class="nav-item mt-3 pl-4">
+                            @endif
+                            <a class="nav-link text-light" href="/reporting/overview"><i class="fa fa-fw fa-book mr-3" aria-hidden="true"></i> Reporting</a>
+                        </li>
+                        @if(Auth::user()->role_id < 3) <li class="nav-item mt-3 pl-4">
+                            <a class="nav-link text-light" href="/general/systemSetting"><i class="fa fa-fw fa-cog mr-3" aria-hidden="true"></i> System Settings</a>
+                            </li>
+                            @endif
+                </ul>
+                @endif
             </div>
+
+
             <div class="col-lg" style="padding-left: 0; padding-right: 0;">
 
                 <!-- TOP NAV -->
                 <nav class="navbar navbar-expand-sm bg-white navbar-dark">
+                    <button class="openbtn" onclick="openNav()">&#9776;</button>
                     <!-- Brand/logo -->
                     <a class="navbar-brand mr-auto" href="#">
                         <img src="/Logo.jpeg" alt="logo" style="width:70px;">
                     </a>
                     @if(Auth::user())
-                        <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <div class="media align-items-center">
-                                <div class="media-body  ml-2  d-none d-lg-block">
-                                    <span class="mb-0 text-sm  text-dark font-weight-bold"><i class="fas fa-bell mr-1"></i></span>
-                                    @if(auth()->user()->unreadNotifications->count())
-                                    <span class="mb-0 text-sm  font-weight-bold"><span class="badge badge-light">{{auth()->user()->unreadNotifications->count()}}</span></span>
-                                    @endif
-                                </div>
+                    <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <div class="media align-items-center">
+                            <div class="media-body  ml-2  d-none d-lg-block">
+                                <span class="mb-0 text-sm  text-dark font-weight-bold"><i class="fas fa-bell mr-1"></i></span>
+                                @if(auth()->user()->unreadNotifications->count())
+                                <span class="mb-0 text-sm  font-weight-bold"><span class="badge badge-light">{{auth()->user()->unreadNotifications->count()}}</span></span>
+                                @endif
                             </div>
-                        </a>
-                        <div class="dropdown-menu  dropdown-menu-right ">
-                            <div class="dropdown-header noti-title">
-                                <h6 class="text-overflow m-0">Your Notifications:</h6>
-                            </div>
-                            @foreach(auth()->user()->unreadNotifications as $notification)
-                            <ul>
-                                @if($notification->type == "App\Notifications\StaffAssigned")
-                                <a href="/approval-item/investigate/{{$notification->data['process_id']}}"><i class="ni ni-single-02"></i><span>
-                                        <li>
-                                            <p> {{$notification->data['type']}} application No {{$notification->data['form_id']}} {{$notification->data['action']}}</p></i>
-                                    </span></a>
-                                @endif
-                                @if($notification->type == "App\Notifications\AssignOrg")
-                                <a href="/approval-item/assignstaff/{{$notification->data['process_id']}}"><i class="ni ni-single-02"></i><span>
-                                        <li>
-                                            <p> {{$notification->data['type']}} application No {{$notification->data['form_id']}} {{$notification->data['action']}}</p></i>
-                                    </span></a>
-                                @endif
-                                @if($notification->type == "App\Notifications\ApplicationMade")
-                                <a href="/approval-item/assignorganization/{{$notification->data['process_id']}}"><i class="ni ni-single-02"></i><span>
-                                        <li>
-                                            <p>New {{$notification->data['type']}} application No {{$notification->data['form_id']}} {{$notification->data['action']}} .</p></i>
-                                    </span></a>
-                                @endif
-                                @if($notification->type == "App\Notifications\prereqmemo")
-                                <a href="/approval-item/investigate/{{$notification->data['prerequisite_id']}}"><i class="ni ni-single-02"></i><span>
-                                        <li>
-                                            <p>Prerequisite no {{$notification->data['prerequisite_id']}} {{$notification->data['remark']}} .</p></i>
-                                        </li>
-                                    </span></a>
-                                @endif
-                            </ul>
-                            @endforeach
-                            @if(auth()->user()->unreadNotifications->count())
-                            <div class="dropdown-divider"></div>
-                            <a href="/markAsRead" class="dropdown-item">
-                                <span>Mark all as Read</span>
-                            </a>
-                            @endif
                         </div>
+                    </a>
+                    <div class="dropdown-menu  dropdown-menu-right ">
+                        <div class="dropdown-header noti-title">
+                            <h6 class="text-overflow m-0">Your Notifications:</h6>
+                        </div>
+                        @foreach(auth()->user()->unreadNotifications as $notification)
+                        <ul>
+                            @if($notification->type == "App\Notifications\StaffAssigned")
+                            <a href="/approval-item/investigate/{{$notification->data['process_id']}}"><i class="ni ni-single-02"></i><span>
+                                    <li>
+                                        <p> {{$notification->data['type']}} application No {{$notification->data['form_id']}} {{$notification->data['action']}}</p></i>
+                                </span></a>
+                            @endif
+                            @if($notification->type == "App\Notifications\AssignOrg")
+                            <a href="/approval-item/assignstaff/{{$notification->data['process_id']}}"><i class="ni ni-single-02"></i><span>
+                                    <li>
+                                        <p> {{$notification->data['type']}} application No {{$notification->data['form_id']}} {{$notification->data['action']}}</p></i>
+                                </span></a>
+                            @endif
+                            @if($notification->type == "App\Notifications\ApplicationMade")
+                            <a href="/approval-item/assignorganization/{{$notification->data['process_id']}}"><i class="ni ni-single-02"></i><span>
+                                    <li>
+                                        <p>New {{$notification->data['type']}} application No {{$notification->data['form_id']}} {{$notification->data['action']}} .</p></i>
+                                </span></a>
+                            @endif
+                            @if($notification->type == "App\Notifications\prereqmemo")
+                            <a href="/approval-item/investigate/{{$notification->data['prerequisite_id']}}"><i class="ni ni-single-02"></i><span>
+                                    <li>
+                                        <p>Prerequisite no {{$notification->data['prerequisite_id']}} {{$notification->data['remark']}} .</p></i>
+                                    </li>
+                                </span></a>
+                            @endif
+                        </ul>
+                        @endforeach
+                        @if(auth()->user()->unreadNotifications->count())
+                        <div class="dropdown-divider"></div>
+                        <a href="/markAsRead" class="dropdown-item">
+                            <span>Mark all as Read</span>
+                        </a>
+                        @endif
+                    </div>
                     @endif
                     <ul class="navbar-nav">
                         <!-- Authentication Links -->
@@ -206,7 +205,7 @@
     <div>
         {{-- sticky footer --}}
         <footer class="footer">
-            <div class="d-flex  bg-light justify-content-end">
+            <div class="d-flex  bg-light justify-content-end" style="font-size:15px">
                 <br>
                 <a href="#" class="text-secondary mr-2">
                     <i class="fab fa-facebook-square"></i> Facebook |
@@ -219,13 +218,28 @@
                 </a>
             </div>
             <div class="d-flex bg-light justify-content-center">
-                <h5 class="text-secondary"><i class="far fa-copyright"></i> 2021 by RFSL - LSF - Ministry of Environment</h5><br>
+                <h5 class="text-secondary" style="font-size:15px"><i class="far fa-copyright"></i> 2021 by RFSL - LSF - Ministry of Environment</h5><br>
             </div>
-            <div class="d-flex bg-light justify-content-center">
+            <div class="d-flex bg-light justify-content-center" style="font-size:15px">
                 <h6>All rights reserved</h6>
             </div>
         </footer>
     </div>
 </body>
+
+<!-- SideNavbar -->
+<script>
+    /* Set the width of the sidebar to 250px and the left margin of the page content to 250px */
+    function openNav() {
+        document.getElementById("mySidebar").style.width = "250px";
+        document.getElementById("main").style.marginLeft = "250px";
+    }
+
+    /* Set the width of the sidebar to 0 and the left margin of the page content to 0 */
+    function closeNav() {
+        document.getElementById("mySidebar").style.width = "0";
+        document.getElementById("main").style.marginLeft = "0";
+    }
+</script>
 
 </html>
