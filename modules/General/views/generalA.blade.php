@@ -101,6 +101,9 @@
             @endforeach
         </tbody>
     </table>
+    <div class="col-sm-12" style="display:flex; align-items:center; justify-content:center;">
+    {!!$Process_items->links();!!}
+    </div>
 </div>
 
 @endsection
