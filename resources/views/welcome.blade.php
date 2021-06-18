@@ -351,7 +351,7 @@
       </div>
 
       <div class="card m-2" style="width: 18rem;">
-        <img class="card-img-top" style="height:250px; width:287px;" src="/images/restore2.jpg" alt="Card image cap">
+        <img class="card-img-top" style="height:250px; width:287px;" src="/images/restore.jpg" alt="Card image cap">
         <div class="card-body">
           <h5 class="card-title">Restorations</h5>
           <p class="card-text">Add details of any environment restoration projects such as tree planting, mangrove planting, sea grass or coral restoration and others.</p>
