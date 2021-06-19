@@ -357,7 +357,7 @@
   </form>
 </div>
 
-
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.15.3/xlsx.full.min.js"></script>
 <script>
   //STEPPER
   var currentTab = 0; // Current tab is set to be the first tab (0)

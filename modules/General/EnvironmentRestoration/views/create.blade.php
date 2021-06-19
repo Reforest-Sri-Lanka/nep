@@ -213,7 +213,7 @@
         </div>
     </form>
 </div>
-
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.15.3/xlsx.full.min.js"></script>
 <script type="text/javascript">
     //Species Excel Sheet Import
     $(document).ready(function() {
