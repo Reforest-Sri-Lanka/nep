@@ -235,6 +235,9 @@
         zoom: 12
     });
 
+    // Add FULLSCREEN to an existing map:
+    map.addControl(new L.Control.Fullscreen());
+
     window.onload = function() {
         var popup = L.popup();
         //false,               ,popup, map.center
@@ -278,11 +281,16 @@
     // Set up the OSM layer 
     //map tiles are “square bitmap graphics displayed in a grid arrangement to show a map.”
     //There are a number of different tile providers (or tileservers), some are free and open source. We are using OSM
-    L.tileLayer(
-        'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: 'Data © <a href="http://osm.org/copyright">OpenStreetMap</a>',
-            maxZoom: 18
-        }).addTo(map);
+    // L.tileLayer(
+    //     'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    //         attribution: 'Data © <a href="http://osm.org/copyright">OpenStreetMap</a>',
+    //         maxZoom: 18
+    //     }).addTo(map);
+
+    L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+        maxZoom: 20,
+        subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
+    }).addTo(map);
     //we’re calling tilelayer() to create the tile layer, passing in the OSM URL first, then the second argument is an object containing the options for our new tile 
     //layer (including attribution is critical here to comply with licensing), and then the tile layer is added to the map using addTo().
 
@@ -335,7 +343,6 @@
         ///Converting your layer to a KML
         //$('#kml').val(tokml(drawnItems.toGeoJSON()));
     });
-    map.addControl(new L.Control.Fullscreen());
     //SEARCH FUNCTIONALITY
     var searchControl = new L.esri.Controls.Geosearch().addTo(map);
 

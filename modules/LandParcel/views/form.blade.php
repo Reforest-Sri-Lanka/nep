@@ -118,7 +118,7 @@
 
 
                     <div>
-                        <label>If coordinates are available as KML, upload KML File</label>
+                        <label>If coordinates are available as KML or CSV, upload File</label>
                         <input type="file" name="select_file" id="select_file" />
                         <input type="button" name="upload" id="upload" class="btn btn-primary" value="Upload">
                     </div>
@@ -173,6 +173,9 @@
         center: [7.2906, 80.6337], //if the location cannot be fetched it will be set to Kandy
         zoom: 12
     });
+
+    // Add FULLSCREEN to an existing map:
+    map.addControl(new L.Control.Fullscreen());
 
     window.onload = function() {
         var popup = L.popup();
@@ -291,22 +294,49 @@
                 var tmp = data.uploaded_image;
                 $('#loc').val(JSON.stringify(tmp));
                 console.log(tmp);
-                fetch(`/${tmp}`)
-                    .then(res => res.text())
-                    .then(kmltext => {
-                        // Create new kml overlay
-                        const track = new omnivore.kml.parse(kmltext);
-                        map.addLayer(track);
+                if (tmp.includes(".kml")) {
+                    fetch(`/${tmp}`)
+                        .then(res => res.text())
+                        .then(kmltext => {
+                            // Create new kml overlay
 
-                        //SAVING THE UPLOADED COORDIATE LAYER TO GEOJSON
-                        $('#polygon').val(JSON.stringify(track.toGeoJSON()));
+                            const track = new omnivore.kml.parse(kmltext);
+                            map.addLayer(track);
 
-                        // Adjust map to show the kml
-                        const bounds = track.getBounds();
-                        map.fitBounds(bounds);
-                    }).catch((e) => {
-                        console.log(e);
-                    })
+                            // //SAVING THE UPLOADED COORDIATE LAYER TO GEOJSON
+                            $('#polygon').val(JSON.stringify(track.toGeoJSON()));
+
+                            // Adjust map to show the kml
+                            const bounds = track.getBounds();
+                            map.fitBounds(bounds);
+                        }).catch((e) => {
+                            console.log(e);
+                        })
+                }
+                // - The CSV file must contain latitude and longitude values, in column
+                //   named roughly latitude and longitude
+                // - The file must either be on the same domain as the page that requests it,
+                //   or both the server it is requested from and the user's browser must
+                //   support CORS.
+                if (tmp.includes(".csv")) {
+                    fetch(`/${tmp}`)
+                        .then(res => res.text())
+                        .then(csvtext => {
+                            // Create new csv overlay
+
+                            const track = new omnivore.csv.parse(csvtext);
+                            map.addLayer(track);
+
+                            // //SAVING THE UPLOADED COORDIATE LAYER TO GEOJSON
+                            $('#polygon').val(JSON.stringify(track.toGeoJSON()));
+
+                            // Adjust map to show the kml
+                            const bounds = track.getBounds();
+                            map.fitBounds(bounds);
+                        }).catch((e) => {
+                            console.log(e);
+                        })
+                }
             }
         })
 

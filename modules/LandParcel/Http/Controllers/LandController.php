@@ -133,7 +133,7 @@ class LandController extends Controller
             $file = $request->file('select_file');
             //you also need to keep file extension as well
             $name = $file->getClientOriginalExtension();
-            if ($name == "kml") {
+            if ($name == "csv" || "kml") {
                 $image = $request->file('select_file');
                 $new_name = rand() . '.' . $image->getClientOriginalExtension();
                 $image->move(public_path('kml'), $new_name);

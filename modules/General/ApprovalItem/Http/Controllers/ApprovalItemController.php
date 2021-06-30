@@ -161,8 +161,10 @@ class ApprovalItemController extends Controller
 
     public function showRequests()
     {
+
         $exclude=Process_Item::select('id')->where('form_type_id',5)->whereNotNull('prerequisite_id');
-        $items = Process_Item::whereNotIn('id',$exclude)->where('created_by_user_id', '=', Auth::user()->id)->get();
+        $items = Process_Item::whereNotIn('id',$exclude)->where('created_by_user_id', '=', Auth::user()->id)->orderby('id','desc')->paginate(10);
+
         $organizations = Organization::all();
         return view('approvalItem::requests', [
             'items' => $items,
