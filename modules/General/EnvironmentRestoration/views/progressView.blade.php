@@ -107,7 +107,7 @@
             @endif
         </div>
         <div class="row p-4 bg-white">
-            @if(($process_item->status_id == 5) && (Auth::user()->organization_id == ($process_item->actvity_organization || $process_item->request_organization)) )
+            @if(($process_item->status_id == 5) && ((Auth::user()->organization_id == ($process_item->actvity_organization || $process_item->request_organization)) || (Auth::user()->id == $process_item->created_by_user_id) ) )
                 <a href="/env-restoration/progressUpdate/{{$process_item->id}}" class="btn btn-info mr-4"  role="button">Update Progress</a>
             @endif
         </div>
