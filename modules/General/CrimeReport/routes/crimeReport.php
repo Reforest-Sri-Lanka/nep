@@ -2,6 +2,7 @@
 
 use CrimeReport\Http\Controllers\CrimeReportController;
 
+Route::get('/crimemain', [CrimeReportController::class, 'crime_home_display'])->name("crimeMain");
 Route::post('/crimecreate', [CrimeReportController::class, 'create_crime_report']);
 Route::post('/trackcrime', [CrimeReportController::class, 'track_crime_reports']);
 Route::get('/crimeedit/{pid}', [CrimeReportController::class, 'crime_report_edit']);

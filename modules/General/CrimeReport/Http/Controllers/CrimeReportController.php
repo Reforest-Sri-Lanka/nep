@@ -27,7 +27,24 @@ use PDF;
 class CrimeReportController extends Controller
 {
 
-    
+    public function crime_home_display() {
+        $role = Auth::user()->role_id;
+        if ($role < 3){
+            $Process_items = Process_Item::where('form_type_id',4)->whereIn('status_id',[1,2,9])->orderby('id','desc')->paginate(10);
+        }else if ($role == 3 || $role == 4) {
+            $Process_items = Process_Item::where('activity_organization', Auth::user()->organization_id)->where('form_type_id', 4)->where('status_id','>=',2)->orderby('id','desc')->paginate(10);
+        }else if ($role == 5) {
+            $Process_items = Process_Item::where('activity_user_id', Auth::user()->id)->where('form_type_id', 4)->orderby('id','desc')->paginate(10);     
+        }else{
+            $Process_items = Process_Item::where('created_by_user_id',Auth::user()->id)->where('form_type_id', 4)->orderby('id','desc')->paginate(10);
+        }
+        $view_crimes = Process_Item::where('form_type_id',4)->orderby('id','desc')->paginate(15);
+        
+            return view('crimeReport::crimeMain', [
+                'Process_items' => $Process_items,
+                'view_crimes' => $view_crimes,
+            ]);
+    }
     public function create_crime_report(Request $request)
     {   
         $request -> validate([

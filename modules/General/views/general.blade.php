@@ -24,8 +24,8 @@
                 <a class="nav-link mr-4" href="{{ route('land') }}">Register Land</a>
             </li>
 
-            <li class="nav-item {{ Route::currentRouteName() == 'crime' ? 'active' : '' }}">
-                <a class="nav-link" href="{{ route('crime') }}">Crime Reporting</a>
+            <li class="nav-item {{ Route::currentRouteName() == 'crimeMain' ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('crimeMain') }}">Crime Reporting</a>
 
             </li>
         </ul>
