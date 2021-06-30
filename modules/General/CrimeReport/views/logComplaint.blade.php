@@ -134,43 +134,50 @@
   });
 
 
-  // SCRIPT FOR THE MAP
-  var map = L.map('mapid', {
+ // SCRIPT FOR THE MAP
+ var map = L.map('mapid', {
         center: [7.2906, 80.6337], //if the location cannot be fetched it will be set to Kandy
         zoom: 12
     });
 
-  window.onload = function() {
-    var popup = L.popup();
-    //false,               ,popup, map.center
-    function geolocationErrorOccurred(geolocationSupported, popup, latLng) {
-      popup.setLatLng(latLng);
-      popup.setContent(geolocationSupported ?
-        '<b>Error:</b> Geolocation service failed. Enable Location.' :
-        '<b>Error:</b> This browser doesn\'t support geolocation.');
-      popup.openOn(map);
-    }
-    //If theres an error then 
+    window.onload = function() {
+        var popup = L.popup();
+        //false,               ,popup, map.center
+        function geolocationErrorOccurred(geolocationSupported, popup, latLng) {
+            popup.setLatLng(latLng);
+            popup.setContent(geolocationSupported ?
+                '<b>Error:</b> Geolocation service failed. Enable Location.' :
+                '<b>Error:</b> This browser doesn\'t support geolocation.');
+            popup.openOn(map);
+        }
+        //If theres an error then 
 
-    if (navigator.geolocation) { //using an inbuilt function to get the lat and long of the user.
-      navigator.geolocation.getCurrentPosition(function(position) {
-        var latLng = {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude
-        };
+        if (navigator.geolocation) { //using an inbuilt function to get the lat and long of the user.
+            navigator.geolocation.getCurrentPosition(function(position) {
+                var latLng = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
 
-        popup.setLatLng(latLng);
-        popup.setContent('This is your current location');
-        popup.openOn(map);
-        //setting the map to the user location
-        map.setView(latLng);
+                popup.setLatLng(latLng);
+                popup.setContent('This is your current location');
+                popup.openOn(map);
+                //setting the map to the user location
+                map.setView(latLng);
 
-      }, function() {
-        geolocationErrorOccurred(true, popup, map.getCenter());
-      });
-    } else {
-      //No browser support geolocation service
-      geolocationErrorOccurred(false, popup, map.getCenter());
+            }, function() {
+                geolocationErrorOccurred(true, popup, map.getCenter());
+            });
+        } else {
+            //No browser support geolocation service
+            geolocationErrorOccurred(false, popup, map.getCenter());
+        }
+        //keeping the dynamic components open if checked
+        if ($("#customCheck1").is(':checked')) {
+            $("#extLandOwner").show();
+        } else {
+            $("#extLandOwner").hide()
+        }
     }
 
     // Set up the OSM layer 

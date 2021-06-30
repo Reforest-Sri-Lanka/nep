@@ -27,7 +27,14 @@ use PDF;
 class CrimeReportController extends Controller
 {
 
-    
+    public function crime_home_display() {
+        
+        $view_crimes = Process_Item::where('form_type_id',4)->orderby('id','desc')->paginate(15);
+        
+            return view('crimeReport::crimeMain', [
+                'view_crimes' => $view_crimes,
+            ]);
+    }
     public function create_crime_report(Request $request)
     {   
         $request -> validate([
