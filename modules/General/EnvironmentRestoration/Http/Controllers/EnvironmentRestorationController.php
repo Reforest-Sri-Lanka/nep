@@ -44,6 +44,13 @@ class EnvironmentRestorationController extends Controller
     //         'restorations' => $restorations,
     //     ]);
     // }
+    public function restoration_home() {
+        $restorations = Process_Item::where('form_type_id',3)->orderby('id','desc')->paginate(10);
+        
+            return view('environmentRestoration::restorationHome', [
+                'restorations' => $restorations,
+            ]);
+    }
 
     public function create()
     {
