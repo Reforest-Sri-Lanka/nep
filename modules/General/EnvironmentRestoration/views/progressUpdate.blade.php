@@ -159,7 +159,7 @@
                 html +='<td>'+height+'</td>'
                 html +='<td>'+dimentions+'</td>'
                 html +='<td>'+p_remark+'</td>'
-                html += '<td><input type="text" id="new_height[]" name="new_height[]" class="form-control"  Required/></td>';
+                html += '<td><input type="text" id="new_height[]" name="new_height[]" class="form-control"/></td>';
                 html += '<td><input type="text" id="tree_qty[]" name="tree_qty[]" class="form-control"  /></td>';
                 html += '<td><input type="text" id="suggestions[]" name="suggestions[]" class="form-control"  /></td>';
                 html += '<td><input type="text" id="remark[]" name="remark[]" class="form-control"  /></td>';

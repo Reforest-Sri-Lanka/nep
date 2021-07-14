@@ -17,15 +17,15 @@
             <li class="nav-item {{ Route::currentRouteName() == 'devproject' ? 'active' : '' }}">
                 <a class="nav-link mr-4" href="{{ route('devproject') }}">Development Project</a>
             </li>
-            <li class="nav-item {{ Route::currentRouteName() == 'envrestoration' ? 'active' : '' }}">
-                <a class="nav-link mr-4" href="{{ route('envrestoration') }}">Environment Restoration</a>
+            <li class="nav-item {{ Route::currentRouteName() == 'restoration.home' ? 'active' : '' }}">
+                <a class="nav-link mr-4" href="{{ route('restoration.home') }}">Environment Restoration</a>
             </li>
             <li class="nav-item {{ Route::currentRouteName() == 'land' ? 'active' : '' }}">
                 <a class="nav-link mr-4" href="{{ route('land') }}">Register Land</a>
             </li>
 
-            <li class="nav-item {{ Route::currentRouteName() == 'crime' ? 'active' : '' }}">
-                <a class="nav-link" href="{{ route('crime') }}">Crime Reporting</a>
+            <li class="nav-item {{ Route::currentRouteName() == 'crimeMain' ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('crimeMain') }}">Crime Reporting</a>
 
             </li>
         </ul>

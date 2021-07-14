@@ -370,15 +370,5 @@
         });
     });
 
-    //toggle extra details for external requestor
-    $(function() {
-        $("#customCheck2").click(function() {
-            if ($(this).is(":checked")) {
-                $("#extRequestor").show();
-            } else {
-                $("#extRequestor").hide();
-            }
-        });
-    });
 </script>
 @endsection
