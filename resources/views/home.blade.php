@@ -25,7 +25,7 @@
     <!-- Search for laravel -->
     <script src="https://cdn-geoweb.s3.amazonaws.com/esri-leaflet/0.0.1-beta.5/esri-leaflet.js"></script>
     <script src="https://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.5/esri-leaflet-geocoder.js"></script>
-    <!-- <link rel="stylesheet" type="text/css" href="https://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.5/esri-leaflet-geocoder.css"> -->
+    <link rel="stylesheet" type="text/css" href="https://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.5/esri-leaflet-geocoder.css">
 
     <!-- Max/Min Leaflet Map size -->
     <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js'></script>
@@ -33,7 +33,7 @@
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
     <link href="{{ url('/css/app.css') }}" rel="stylesheet">
-    <link href="{{ url('/css/search.css') }}" rel="stylesheet">
+    <!-- <link href="{{ url('/css/search.css') }}" rel="stylesheet"> -->
 
     <script type="text/javascript" src="{{ URL::asset('js/tokml.js') }}"></script>
 </head>
