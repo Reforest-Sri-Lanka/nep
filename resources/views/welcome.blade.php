@@ -314,7 +314,6 @@
     
         </div>
         <div class="col-lg-6 col-md-2">
-          <h3 class="product-img">Product image goes here..</h3>
           <!-- <img class="title-image product-img" src="../resources/css/header-image.png" alt="Header Image Goes here"> -->
         </div>
       </div>
