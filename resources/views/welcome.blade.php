@@ -21,10 +21,18 @@
   <!-- Font Awsome -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 
+  <!--greensock lib -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.2/TweenMax.min.js"></script>
+
   <style>
+    html {
+      scroll-behavior: smooth;
+    }
         body {
         font-family: 'Product Sans', sans-serif;
         text-align: center;
+        scroll-behavior: smooth;
+   
     }
 
     h1, h2, h3 {
@@ -49,6 +57,10 @@
 
     .container-fluid {
         padding: 4% 15%;
+    }
+
+    .container-fluids {
+        padding: 0% 15% 0% 15%;
     }
 
     /* Sections */
@@ -103,22 +115,36 @@
     .title-image {
 
         right: 30%;
-        transform: rotate(25deg);
-        width: 60%;
+        /* transform: rotate(25deg); */
+        width: 80%;
     }
     #features {
-        padding: 2% 0%;
+        padding: 2% 0% 0% 0%;
     }
 
     #links {
-        padding: 2% 0%;
+        padding: 0% 0% 2% 0%;
+    }
+
+    .card-title{
+      font-size: 1.3rem;
+      font-weight: bold;
+    }
+
+    .card-title_text{
+      color: #8f8f8f;
     }
 
     .feature-title {
         font-size: 1.5rem;
     }
 
-    .feature-box {
+   .feature-box {
+        padding: 4%;
+        text-align: center;
+    }
+
+    .feature-box2 {
         padding: 4%;
         text-align: center;
     }
@@ -216,6 +242,26 @@
       }
     }
 
+    /*animations*/
+    .product-img {
+      padding-top:350px;
+      margin-left:200px;
+      transform: translate(-50%, -40%);
+      animation: fly 4s ease-in-out infinite;
+    }
+
+
+    @keyframes fly {
+      0% {
+        transform: translate(-50%, -46%);
+      }
+      50% {
+        transform: translate(-50%, -54%);
+      }
+      100% {
+        transform: translate(-50%, -46%);
+      }
+    }
   </style>
 
 </head>
@@ -268,7 +314,8 @@
     
         </div>
         <div class="col-lg-6 col-md-2">
-          <img class="title-image" src="images/iphone6.png" alt="Header Image Goes here">
+          <h3 class="product-img">Product image goes here..</h3>
+          <!-- <img class="title-image product-img" src="../resources/css/header-image.png" alt="Header Image Goes here"> -->
         </div>
       </div>
 
@@ -310,7 +357,7 @@
   
       <!-- Features -->
 
-  <section id="features" id="features">
+  <section  id="features">
     <div class="container-fluid">
     <h2 class="price-text">What is the National Environment Platform (NEP)?</h2>
     <p>A government cloud aimed for sustainable management of envrionmental resources of Sri Lanka. It automates</p>
@@ -340,95 +387,89 @@
     </div>
   </section>
 
+  <!-- Quick Links -->
 
-    <!-- Quick Links -->
-
-    <section id="links">
-    <div class="container-fluid">
+  <section id="links">
+    <div class="container-fluids">
     <h2 class="price-text">Quick Links</h2>
-      <div class="row">
+    <div class="row">
 
-        <div class="feature-box col-lg-4 col-md-6">
-          <div class="card ">
-          <div class="card-header">
-            <h4>Tree Removals</h4>
-          </div>
-              <div class="card-body">
-              <p>If any project, maintainance, road development, housing project etc. require trees to be removed, please enter their details.</p>
-                @if(auth()->user())
+    <div class="feature-box2 col-lg-4 col-md-6">
+      <div class="card">
+          <img src="https://dummyimage.com/450x299/ACB0B3/ACB0B3.jpg" class="card-img-top" alt="Tree Removals">
+          <div class="card-body">
+            <h5 class="card-title">Tree Removals</h5>
+            <p class="card-title_text">If any project, maintainance, road development, housing project etc. require trees to be removed, please enter their details.</p>
+              @if(auth()->user())
                 @if(auth()->user()->role_id)
-                <a href="{{ route('treeremoval') }}" >Submit a Tree Removal Form</a>
+                <a href="{{ route('treeremoval') }}">Submit a Tree Removal Form</a>
                 @endif
                 @else
-                <a href="{{ route('login') }}" >Submit a Tree Removal Form</a>
+                <a href="{{ route('login') }}">Submit a Tree Removal Form</a>
                 @endif
-              </div>
-              </div>
+          </div>
         </div>
+      </div>
 
-        <div class="feature-box col-lg-4 col-md-6">
-          <div class="card ">
-            <div class="card-header">
-              <h4>Development Projects</h4>
-            </div>
-              <div class="card-body">
-                <p>Add details of development projects such as markets, land sales, housing, roads, public infrastructure, ports</p>
-                @if(auth()->user())
+      <div class="feature-box2 col-lg-4 col-md-6">
+        <div class="card">
+          <img src="https://dummyimage.com/450x299/ACB0B3/ACB0B3.jpg" class="card-img-top" alt="Development Projects">
+          <div class="card-body">
+            <h5 class="card-title">Development Projects</h5>
+            <p class="card-title_text">Add details of development projects such as markets, land sales, housing, roads, public infrastructure, ports</p>
+            @if(auth()->user())
                 @if(auth()->user()->role_id)
                 <a href="{{ route('devproject') }}" >Submit a Development Request</a>
                 @endif
                 @else
                 <a href="{{ route('login') }}" >Submit a Development Request</a>
                 @endif
-              </div>
-            </div>
+          </div>
         </div>
+      </div>
 
-        <div class="feature-box col-lg-4 col-md-6">
-          <div class="card ">
-            <div class="card-header">
-              <h4>Restorations</h4>
-            </div>
-              <div class="card-body">
-                <p>Add details of any environment restoration projects such as tree planting, mangrove planting, sea grass or coral restoration.</p>
-                @if(auth()->user())
+      <div class="feature-box2 col-lg-4 col-md-6">
+        <div class="card">
+          <img src="https://dummyimage.com/450x299/ACB0B3/ACB0B3.jpg" class="card-img-top" alt="Restorations">
+          <div class="card-body">
+            <h5 class="card-title">Restorations</h5>
+            <p class="card-title_text">Add details of any environment restoration projects such as tree planting, mangrove planting, sea grass or coral restoration.</p>
+            @if(auth()->user())
                 @if(auth()->user()->role_id)
                 <a href="{{ route('envrestoration') }}">Submit a Restoration Request</a>
                 @endif
                 @else
                 <a href="{{ route('login') }}" >Submit a Restoration Request</a>
                 @endif
-              </div>
           </div>
         </div>
+      </div>
 
-        <div class="feature-box col-lg-4 col-md-6">
-          <div class="card ">
-            <div class="card-header">
-              <h4>Crime Report</h4>
-            </div>
-              <div class="card-body">
-                <p>Add details of environmental crimes, poaching, trapping, dead animals, tree felling and others.<br><br></p>
-                @if(auth()->user())
+      <div class="feature-box2 col-lg-4 col-md-6">
+        <div class="card">
+          <img src="https://dummyimage.com/450x299/ACB0B3/ACB0B3.jpg" class="card-img-top" alt="Crime Report">
+          <div class="card-body">
+            <h5 class="card-title">Crime Report</h5>
+            <p class="card-title_text">Add details of environmental crimes, poaching, trapping, dead animals, tree felling and others.</p>
+            @if(auth()->user())
                 @if(auth()->user()->role_id)
                 <a href="{{ route('crime') }}">Make a Complaint</a>
                 @endif
                 @else
                 <a href="{{ route('crime') }}">Make an Anonymous Complaint</a>
                 @endif
-              </div>
           </div>
         </div>
+      </div>
 
-        <div class="feature-box col-lg-4 col-md-6">
-          <div class="card ">
-            <div class="card-header">
-              <h4>Track Complaint</h4>
-            </div>
-              <div class="card-body">
-              <p>Track the progress of any anonymous complaints logged using the reference ID given</p><br>
-                   <!-- Search Bar -->
-                <form action="/crime-report/trackcrime" method="post">
+      <div class="feature-box2 col-lg-4 col-md-6">
+        <div class="card">
+          <img src="https://dummyimage.com/450x299/ACB0B3/ACB0B3.jpg" class="card-img-top" alt="Track Complaint">
+          <div class="card-body">
+            <h5 class="card-title">Track Complaint</h5>
+            <p class="card-title_text">Track the progress of any anonymous complaints logged using the reference ID given</p>
+               <!-- Search Bar -->
+               <form action="/crime-report/trackcrime" method="post">
                   @csrf
                     <div class="input-group">
                         <input type="search" class="form-control" name="reference_id" placeholder="Track Complaint">
@@ -442,15 +483,13 @@
                       <strong>{{ $message }}</strong>
                   </div>
                 @enderror
-              </div>
           </div>
         </div>
-
       </div>
+    </div>
   </div>
   </section>
-
-
+  <!-- End testing -->
 
 
   </div>
@@ -469,7 +508,7 @@
       <a href="https://www.facebook.com/reforestsrilanka/" target="_blank"><i class="fab fa-facebook-f social-icon"></i></a>
       <a href="https://www.linkedin.com/company/reforest-sri-lanka/" target="_blank"><i class="fab fa-linkedin social-icon"></i><a>
       <a href="https://www.instagram.com/reforest_srilanka/?hl=en" target="_blank"><i class="fab fa-instagram social-icon"></i></a>
-      <a href="#" target="_blank"><i class="fas fa-envelope social-icon"></i></a>
+      <a href="mailto:info@reforestsrilanka.com" target="_blank"><i class="fas fa-envelope social-icon"></i></a>
       <p>© 2021 by RFSL - for Ministry of Environment - All rights reserved</p>
       <small>Not officially launched <small>
     </div>
@@ -479,6 +518,32 @@
   <script src="{{ url('/vendor/chart.js/dist/Chart.min.js') }}"></script>
   <script src="{{ url('/vendor/chart.js/dist/Chart.extension.js') }}"></script>
   <script src="{{ url('/vendor/welcomepage-charts.js' ) }}"></script>
+  <script type="text/javascript">
+
+          TweenMax.from(".product-img", 3, {
+            delay: 2,
+            opacity: 0,
+            y: 80,
+            ease: Expo.easeInOut
+          });
+
+          TweenMax.from(".product-title", 3, {
+            delay: 2.2,
+            opacity: 0,
+            y: 50,
+            ease: Expo.easeInOut
+          });
+
+          TweenMax.from(".product-subtitle", 3, {
+            delay: 2.4,
+            opacity: 0,
+            y: 50,
+            ease: Expo.easeInOut
+          });
+
+  </script>
+
+
 </body>
 
 </html>
