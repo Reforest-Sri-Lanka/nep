@@ -2116,7 +2116,11 @@
                 "issues": "https://github.com/owen-it/laravel-auditing/issues",
                 "source": "https://github.com/owen-it/laravel-auditing"
             },
+<<<<<<< HEAD
+            "time": "2020-09-13T23:51:26+00:00"
+=======
             "time": "2020-12-15T19:19:43+00:00"
+>>>>>>> main
         },
         {
             "name": "paragonie/constant_time_encoding",

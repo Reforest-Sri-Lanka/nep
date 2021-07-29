@@ -42,7 +42,7 @@ Route::get('/home/unRegistered',  [UserController::class, 'home']);
 /* Route::post('/crimecreate', [Crime_reportController::class, 'create_crime_report']);
 Route::get('/crimehome', [Crime_reportController::class, 'crime_module_access_controller']);
 
-Route::get('/newcrime', fn() => view('general.logComplaint'));
+Route::get('/reportcrime', fn() => view('general.logComplaint'));
 Route::get('/general', [Crime_reportController::class, 'general_view_display']);
 
 Route::get('/trackcrime', [Crime_reportController::class, 'track_user_crime_reports']);

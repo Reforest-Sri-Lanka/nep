@@ -47,7 +47,7 @@
             </div>
             <div class="card-body text-center text-light">
                 <p class="card-text p-2">Quick links</p>
-                <a class="nav-link text-light font-italic p-2" href="/crime-report/newcrime">Make a complaint</a>
+                <a class="nav-link text-light font-italic p-2" href="/crime-report/reportcrime">Make a complaint</a>
                 <a class="nav-link text-light font-italic p-2" href="#">Check status</a>
             </div>
         </div>
