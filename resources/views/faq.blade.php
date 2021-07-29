@@ -335,7 +335,7 @@
 							</h2>
 						</div>
 						<div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample2">
-							<div class="card-body">While it is not mandatory your contact is needed to contact you for further information is necessary and to inform on the final action taken.</div>
+							<div class="card-body">While it is not mandatory to add your contact, it is needed to contact you if further information is necessary and to inform on the final action taken.</div>
 						</div>
 					</div>
 				</div>

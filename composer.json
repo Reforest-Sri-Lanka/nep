@@ -17,11 +17,12 @@
         "laravel/framework": "^8.0",
         "laravel/tinker": "^2.0",
         "livewire/livewire": "^2.3",
-        "owen-it/laravel-auditing": "^11.0"
+        "owen-it/laravel-auditing": "^12.0"
     },
     "require-dev": {
         "facade/ignition": "^2.3.6",
         "fzaninotto/faker": "^1.9.1",
+        "laravel/sail": "^1.8",
         "mockery/mockery": "^1.3.1",
         "nunomaduro/collision": "^5.0",
         "phpunit/phpunit": "^9.3"
@@ -54,8 +55,8 @@
             "General\\": "modules/General",
             "Environment\\": "modules/Environment",
             "LandParcel\\": "modules/LandParcel",
-            "Reporting\\": "modules/Reporting"
-
+            "Reporting\\": "modules/Reporting",
+            "Security\\": "modules/Security"
             
         }
     },

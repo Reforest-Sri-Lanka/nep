@@ -18,7 +18,7 @@ class CreateGazettesTable extends Migration
             $table->string('title');
             $table->string('gazette_number');
             $table->date('gazetted_date');
-            $table->date('degazetted_date');
+            $table->date('degazetted_date')->nullable();
             $table->json('organizations');
             $table->text('content');
             $table->integer('created_by_user_id');

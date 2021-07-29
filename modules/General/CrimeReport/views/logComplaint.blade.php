@@ -10,103 +10,106 @@
   <form action="\crime-report\crimecreate" method="post" enctype="multipart/form-data">
     @csrf
     <div class="container bg-white">
-      <div class="row p-4 bg-white">
-          <div class="col border border-muted rounded-lg mr-2 p-4">
-              <div class="form-group">
-                  <label for="crime_type">Crime type:</label>
-                  <select name="crime_type" class="custom-select" required>
-                    <option disabled selected value="">Select Crime Type</option>
-                      @foreach ($crime_types as $crime_type)
-                          <option value="{{ $crime_type->id }}" {{ ( $crime_type->id == '6') ? 'selected' : '' }} {{ Request::old()?(Request::old('crime_type')==$crime_type->id?'selected="selected"':''):'' }}>{{ $crime_type->type }}</option>
-                      @endforeach
-                  </select>
-                  @error('crime_type')
-                      <div class="alert">                                   
-                          <strong>{{ $message }}</strong>
-                      </div>
-                  @enderror
-              </div>
-              <div class="form-group">
-                  <label for="district">District:</label>
-                  <select class="custom-select @error('district') is-invalid @enderror" name="district" required>
-                      <option disabled selected value="">Select</option>
-                      @foreach ($districts as $district)
-                      <option value="{{ $district->id }}" {{ Request::old()?(Request::old('district')==$district->id?'selected="selected"':''):'' }}>{{ $district->district }}</option>
-                      @endforeach
-                  </select>
-                  @error('district')
-                      <div class="alert">                                   
-                          <strong>{{ $message }}</strong>
-                      </div>
-                  @enderror
-              </div>
-              <div class="form-group">
-                  <label for="images">Photos:</label>
-                  
-                  <input type="file" id="image" name="file[]" multiple>
-                  @if ($errors->has('file.*'))
-                      <div class="alert">
-                          <strong>{{ $errors->first('file.*') }}</strong>
-                      </div>
-                  @endif   
-              </div>
-              <div class="form-group">
-                  <label for="description">Description:</label>
-                  <textarea  class="form-control" rows="3" name="description" required>{{{ old('description') }}}</textarea>
-                  @error('description')
-                      <div class="alert">
-                          <strong>{{ $message }}</strong>
-                      </div>
-                  @enderror
-              </div>
-              <div class="form-group">
-                  <label for="contact">Contact of complainant: </label>
-                  <input type="text" class="form-control" placeholder="Phone/Email" name="contact" value="{{ old('contact') }}">
-                  @error('contact')
-                      <div class="alert">
-                          <strong>{{ $message }}</strong>
-                      </div>
-                  @enderror
-              </div>
-          </div>
-          <div class="col border border-muted rounded-lg p-4">
-              <div class="form-group">
-                  <label for="planNo">Area name:</label>
-                  <input type="text" class="form-control" placeholder="Enter Area name" id="planNo" name="planNo" value="{{ old('planNo') }}" required>
-                  @error('planNo')
-                      <div class="alert">
-                          <strong>{{ $message }}</strong>
-                      </div>
-                  @enderror
-              </div>
-              <div class="form-group">
-                <span style="float:right; cursor:pointer;"><kbd><a title="How to Draw Shapes on the Map" class="text-white" data-toggle="modal" data-target="#mapHelp">How To Mark Location</a></kbd></span>
-                <label>Select Location On Map*</label>
-            </div>
-              <div id="mapid" style="height:400px;" name="map"></div>
-              <br>
-              @error('polygon')
-                <div class="alert">
-                    <strong>{{ $message }}</strong>
-                </div>
-              @enderror
-          </div>
-      </div>
-      <div class="row p-4 bg-white">
-        <div class="form-check">
-          <input type="hidden" class="form-control" name="createdBy" value="{{ Auth::user()->id }}">  
-            <input id="polygon" type="hidden" name="polygon" value="{{request('polygon')}}">
-            <label class="form-check-label">
-            <input type="checkbox" class="form-check-input" name="confirm" required><strong>I confirm these information to be true</strong>
-            @error('confirm')
-                <div class="alert">
-                    <strong>{{ $message }}</strong>
-                </div>
-            @enderror
-            </label>
-            <button type="submit" class="btn bd-navbar text-light" >Submit</button>
+        <div class="row p-4 bg-white">
+        <h6>Please enter details of any environmental crimes or disasters for us to inform authorities or carry out suitable investigations.</h6>
         </div>
-      </div>
+        <div class="row p-4 bg-white">
+            <div class="col border border-muted rounded-lg mr-2 p-4">
+                <div class="form-group">
+                    <label for="crime_type">Crime type:</label>
+                    <select name="crime_type" class="custom-select" required>
+                        <option disabled selected value="">Select Crime Type</option>
+                        @foreach ($crime_types as $crime_type)
+                            <option value="{{ $crime_type->id }}" {{ ( $crime_type->id == '6') ? 'selected' : '' }} {{ Request::old()?(Request::old('crime_type')==$crime_type->id?'selected="selected"':''):'' }}>{{ $crime_type->type }}</option>
+                        @endforeach
+                    </select>
+                    @error('crime_type')
+                        <div class="alert">                                   
+                            <strong>{{ $message }}</strong>
+                        </div>
+                    @enderror
+                </div>
+                <!-- <div class="form-group">
+                    <label for="district">District:</label>
+                    <select class="custom-select @error('district') is-invalid @enderror" name="district" required>
+                        <option disabled selected value="">Select</option>
+                        @foreach ($districts as $district)
+                        <option value="{{ $district->id }}" {{ Request::old()?(Request::old('district')==$district->id?'selected="selected"':''):'' }}>{{ $district->district }}</option>
+                        @endforeach
+                    </select>
+                    @error('district')
+                        <div class="alert">                                   
+                            <strong>{{ $message }}</strong>
+                        </div>
+                    @enderror
+                </div> -->
+                <div class="form-group">
+                    <label for="images">Photos:</label>
+                    
+                    <input type="file" id="image" name="file[]" multiple>
+                    @if ($errors->has('file.*'))
+                        <div class="alert">
+                            <strong>{{ $errors->first('file.*') }}</strong>
+                        </div>
+                    @endif   
+                </div>
+                <div class="form-group">
+                    <label for="description">Description:</label>
+                    <textarea  class="form-control" rows="3" name="description" required>{{{ old('description') }}}</textarea>
+                    @error('description')
+                        <div class="alert">
+                            <strong>{{ $message }}</strong>
+                        </div>
+                    @enderror
+                </div>
+                <div class="form-group">
+                    <label for="contact">Contact of complainant: </label>
+                    <input type="text" class="form-control" placeholder="Phone/Email" name="contact" value="{{ old('contact') }}">
+                    @error('contact')
+                        <div class="alert">
+                            <strong>{{ $message }}</strong>
+                        </div>
+                    @enderror
+                </div>
+            </div>
+            <div class="col border border-muted rounded-lg p-4">
+                <div class="form-group">
+                    <label for="planNo">Area name:</label>
+                    <input type="text" class="form-control" placeholder="Enter Area name" id="planNo" name="planNo" value="{{ old('planNo') }}" required>
+                    @error('planNo')
+                        <div class="alert">
+                            <strong>{{ $message }}</strong>
+                        </div>
+                    @enderror
+                </div>
+                <div class="form-group">
+                    <span style="float:right; cursor:pointer;"><kbd><a title="How to Draw Shapes on the Map" class="text-white" data-toggle="modal" data-target="#mapHelp">How To Mark Location</a></kbd></span>
+                    <label>Select Location On Map*</label>
+                </div>
+                <div id="mapid" style="height:400px;" name="map"></div>
+                <br>
+                @error('polygon')
+                    <div class="alert">
+                        <strong>{{ $message }}</strong>
+                    </div>
+                @enderror
+            </div>
+        </div>
+        <div class="row p-4 bg-white">
+            <div class="form-check">
+            <input type="hidden" class="form-control" name="createdBy" value="{{ Auth::user()->id }}">  
+                <input id="polygon" type="hidden" name="polygon" value="{{request('polygon')}}">
+                <label class="form-check-label">
+                <input type="checkbox" class="form-check-input" name="confirm" required><strong>I confirm these information to be true</strong>
+                @error('confirm')
+                    <div class="alert">
+                        <strong>{{ $message }}</strong>
+                    </div>
+                @enderror
+                </label>
+                <button type="submit" class="btn bd-navbar text-light" >Submit</button>
+            </div>
+        </div>
     </div>
   </form>
 </div>
@@ -131,8 +134,8 @@
   });
 
 
-  // SCRIPT FOR THE MAP
-  var map = L.map('mapid', {
+ // SCRIPT FOR THE MAP
+ var map = L.map('mapid', {
         center: [7.2906, 80.6337], //if the location cannot be fetched it will be set to Kandy
         zoom: 12
     });
@@ -168,6 +171,12 @@
         } else {
             //No browser support geolocation service
             geolocationErrorOccurred(false, popup, map.getCenter());
+        }
+        //keeping the dynamic components open if checked
+        if ($("#customCheck1").is(':checked')) {
+            $("#extLandOwner").show();
+        } else {
+            $("#extLandOwner").hide()
         }
     }
 
@@ -268,7 +277,5 @@
       }
     });
   });
-
-  
 </script>
 @endsection

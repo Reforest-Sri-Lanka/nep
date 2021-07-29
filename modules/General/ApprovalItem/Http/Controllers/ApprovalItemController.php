@@ -31,7 +31,6 @@ use Illuminate\Support\Facades\Storage;
 use PDF;
 use Redirect;
 
-
 class ApprovalItemController extends Controller
 {
 
@@ -43,11 +42,12 @@ class ApprovalItemController extends Controller
             if ($Process_item->activity_user_id != null) {
                 $new_assign = '0';
             }
-
-            Process_Item::where('id', $pid)->update([
+            $Process_Item =Process_Item::find($pid);
+            $Process_Item->update([
                 'activity_user_id' => $id,
                 'status_id' => 3
             ]);
+            $Process_item = Process_Item::find($pid);
             $user = User::find($id);
             Notification::send($user, new StaffAssigned($Process_item));
             return $new_assign;
@@ -62,24 +62,17 @@ class ApprovalItemController extends Controller
     {
         DB::transaction(function () use ($id, $pid) {
             $Process_item = Process_Item::find($pid);
-            $Users = User::where([
-                ['role_id', '=', 3],
-                ['organization_id', '=', $id],
-            ])->orWhere([
-                ['role_id', '=', 4],
-                ['organization_id', '=', $id],
-            ])->get();
-            Process_Item::where('id', $pid)->update([
+            $Process_item->update([
                 'activity_organization' => $id,
                 'status_id' => 2
             ]);
-            Process_Item::where([
-                ['prerequisite_id', '=', $Process_item],
-                ['prerequisite', '=', 0],
-            ])->update([
+            $Land_process = Process_Item::where('prerequisite_id', $pid)->where('prerequisite', 0)->first();
+            $Land_process->update([
                 'activity_organization' => $id,
                 'status_id' => 2
             ]);
+            $Process_item = Process_Item::find($pid);
+            $Users=User::where('organization_id',$id)->whereBetween('role_id', [3, 4])->get();
             Notification::send($Users, new AssignOrg($Process_item));
         });
 
@@ -168,7 +161,10 @@ class ApprovalItemController extends Controller
 
     public function showRequests()
     {
-        $items = Process_Item::where('created_by_user_id', '=', Auth::user()->id)->get();
+
+        $exclude=Process_Item::select('id')->where('form_type_id',5)->whereNotNull('prerequisite_id');
+        $items = Process_Item::whereNotIn('id',$exclude)->where('created_by_user_id', '=', Auth::user()->id)->orderby('id','desc')->paginate(10);
+
         $organizations = Organization::all();
         return view('approvalItem::requests', [
             'items' => $items,
@@ -208,78 +204,6 @@ class ApprovalItemController extends Controller
             return view('approvalItem::requests', [
                 'items' => $items,
                 'organizations' => $organizations,
-            ]);
-        }
-    }
-
-    public function choose_assign_staff($id)
-    {
-        $process_item = Process_Item::find($id);
-        if ($process_item->status_id > 2) {
-            return redirect()->action(
-                [ApprovalItemController::class, 'investigate'],
-                ['id' => $id]
-            );
-        }
-        $Organizations = Organization::all();
-        $organization = Auth::user()->organization_id;
-        if (Auth::user()->role_id == '3') {
-            $Users = User::where([
-                ['role_id', '>', 3],
-                ['organization_id', '=', $organization],
-            ])->get();
-        } else {
-            $Users = User::where([
-                ['role_id', '=', 5],
-                ['organization_id', '=', $organization],
-            ])->get();
-        }
-        if ($process_item->form_type_id == '1') {
-            $item = Tree_Removal_Request::find($process_item->form_id);
-            $Photos = Json_decode($item->images);
-            $data = $item->tree_locations;
-        } else if ($process_item->form_type_id == '2') {
-            $item = Development_Project::find($process_item->form_id);
-            $Photos = null;
-            $data = null;
-        } else if ($process_item->form_type_id == '3') {
-            $item = Environment_Restoration::find($process_item->form_id);
-            $data = Environment_Restoration_Species::all()->where('environment_restoration_id', $item->id);
-        } else if ($process_item->form_type_id == '4') {
-            $item = Crime_report::find($process_item->form_id);
-            $Photos = Json_decode($item->photos);
-            $data = null;
-        }
-        if ($process_item->form_type_id != '5') {
-            $land_parcel = Land_Parcel::find($item->land_parcel_id);
-            $landProcess = Process_Item::where([
-                ['prerequisite_id', '=', $process_item->id],
-                ['prerequisite', '=', 0],
-            ])->first();
-
-            return view('approvalItem::staffAssign', [
-                'item' => $item,
-                'Organizations' => $Organizations,
-                'process_item' => $process_item,
-                'polygon' => $land_parcel->polygon,
-                'land_process' => $landProcess,
-                'Photos' => $Photos,
-                'data' => $data,
-                'Users' => $Users,
-
-            ]);
-        } else {
-            $item = Land_Parcel::find($process_item->form_id);
-            $Land_Organizations = Land_Has_Organization::where('land_parcel_id', $item->id)->get();
-            $Land_Gazzettes = Land_Has_Gazette::where('land_parcel_id', $item->id)->get();
-            return view('approvalItem::staffAssign', [
-                'item' => $item,
-                'process_item' => $process_item,
-                'Organizations' => $Organizations,
-                'polygon' => $item->polygon,
-                'LandOrganizations' => $Land_Organizations,
-                'Users' => $Users,
-                'Land_Gazzettes' =>$Land_Gazzettes,
             ]);
         }
     }
@@ -341,6 +265,79 @@ class ApprovalItemController extends Controller
         }
     }
 
+    public function choose_assign_staff($id)
+    {
+        $process_item = Process_Item::find($id);
+        if (($process_item->status_id > 2) && ($process_item->status_id !=9)) {
+            return redirect()->action(
+                [ApprovalItemController::class, 'investigate'],
+                ['id' => $id]
+            );
+        }
+        $Organizations = Organization::all();
+        $organization = Auth::user()->organization_id;
+        if (Auth::user()->role_id == '3') {
+            $Users = User::where([
+                ['role_id', '>', 3],
+                ['organization_id', '=', $organization],
+            ])->get();
+        } else {
+            $Users = User::where([
+                ['role_id', '=', 5],
+                ['organization_id', '=', $organization],
+            ])->get();
+        }
+        if ($process_item->form_type_id == '1') {
+            $item = Tree_Removal_Request::find($process_item->form_id);
+            $Photos = Json_decode($item->images);
+            $data = $item->tree_locations;
+        } else if ($process_item->form_type_id == '2') {
+            $item = Development_Project::find($process_item->form_id);
+            $Photos = null;
+            $data = null;
+        } else if ($process_item->form_type_id == '3') {
+            $item = Environment_Restoration::find($process_item->form_id);
+            $Photos = null;
+            $data = Environment_Restoration_Species::all()->where('environment_restoration_id', $item->id);
+        } else if ($process_item->form_type_id == '4') {
+            $item = Crime_report::find($process_item->form_id);
+            $Photos = Json_decode($item->photos);
+            $data = null;
+        }
+        if ($process_item->form_type_id != '5') {
+            $land_parcel = Land_Parcel::find($item->land_parcel_id);
+            $landProcess = Process_Item::where([
+                ['prerequisite_id', '=', $process_item->id],
+                ['prerequisite', '=', 0],
+            ])->first();
+
+            return view('approvalItem::staffAssign', [
+                'item' => $item,
+                'Organizations' => $Organizations,
+                'process_item' => $process_item,
+                'polygon' => $land_parcel->polygon,
+                'land_process' => $landProcess,
+                'Photos' => $Photos,
+                'data' => $data,
+                'Users' => $Users,
+
+            ]);
+        } else {
+            $item = Land_Parcel::find($process_item->form_id);
+            $Land_Organizations = Land_Has_Organization::where('land_parcel_id', $item->id)->get();
+            $Land_Gazzettes = Land_Has_Gazette::where('land_parcel_id', $item->id)->get();
+            return view('approvalItem::staffAssign', [
+                'item' => $item,
+                'process_item' => $process_item,
+                'Organizations' => $Organizations,
+                'polygon' => $item->polygon,
+                'LandOrganizations' => $Land_Organizations,
+                'Users' => $Users,
+                'Land_Gazzettes' =>$Land_Gazzettes,
+            ]);
+        }
+    }
+
     public function investigate($id)
     {
         $process_item = Process_Item::find($id);
@@ -370,6 +367,7 @@ class ApprovalItemController extends Controller
             $data = null;
         } else if ($process_item->form_type_id == '3') {
             $item = Environment_Restoration::find($process_item->form_id);
+            $Photos = null;
             $data = Environment_Restoration_Species::all()->where('environment_restoration_id', $item->id);
         } else if ($process_item->form_type_id == '4') {
             $item = Crime_report::find($process_item->form_id);
@@ -417,7 +415,6 @@ class ApprovalItemController extends Controller
     }
     public function create_prerequisite(Request $request)
     {
-
         $request->validate([
             'organization' => 'required|not_in:0',
             'request' => 'required',
@@ -459,13 +456,13 @@ class ApprovalItemController extends Controller
 
     public function progress_update(Request $request)
     {
-
         $request->validate([
             'status' => 'required|not_in:0',
             'request' => 'required',
         ]);
         $id = $request['process_id'];
-        Process_Item::where('id', $id)->update(['status_id' => 4]);
+        $process_item =Process_Item::find('id', $id);
+        $process_item->update(['status_id' => 4]);
         $Process_item_progress = new Process_item_progress;
         $Process_item_progress->created_by_user_id = $request['create_by'];
         $Process_item_progress->process_item_id = $request['process_id'];
@@ -488,21 +485,13 @@ class ApprovalItemController extends Controller
         $id = $request['process_id'];
         $title = Process_item_status::where('id', $request['status'])->first()->status_title;
         if ($request['status'] == 5) {
-            $Incomplete_prerequisites2 = Process_Item::all()->where(
-                'status_id',
-                '!=',
-                '5',
-            )->where(
-                'status_id',
-                '!=',
-                '8',
-            )->where('prerequisite_id', $id);
+            $Incomplete_prerequisites2 = Process_Item::all()->whereNotIn('status_id', [5,8])->where('prerequisite_id', $id);
             if ($Incomplete_prerequisites2->isNotEmpty()) {
                 //dd($Incomplete_prerequisites2);
                 return back()->with('warning', 'Prerequisites need to be approved first');
             } else {
-
-                Process_Item::where('id', $id)->update(['status_id' => 5]);
+                $Process_Item=Process_Item::find($id);
+                $Process_Item->update(['status_id' => 5]);
                 $Process_item_progress = new Process_item_progress;
                 $Process_item_progress->created_by_user_id = $request['create_by'];
                 $Process_item_progress->process_item_id = $request['process_id'];
@@ -511,7 +500,8 @@ class ApprovalItemController extends Controller
                 $Process_item_progress->save();
             }
         } else {
-            Process_Item::where('id', $id)->update(['status_id' => 6]);
+            $Process_Item = Process_Item::find($id);
+            $Process_Item->update(['status_id' => 6]);
             $Process_item_progress = new Process_item_progress;
             $Process_item_progress->created_by_user_id = $request['create_by'];
             $Process_item_progress->process_item_id = $request['process_id'];
@@ -519,9 +509,6 @@ class ApprovalItemController extends Controller
             $Process_item_progress->remark = 'Final Reject of application ' . $request['request'];
             $Process_item_progress->save();
         }
-
-
-
         return back()->with('message', 'Request ' . $title);
     }
 }

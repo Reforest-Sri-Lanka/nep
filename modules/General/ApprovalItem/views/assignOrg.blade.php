@@ -31,7 +31,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="col border border-muted rounded-lg mr-2 p-4">
+            <!-- <div class="col border border-muted rounded-lg mr-2 p-4">
                 <p>Non registered Organizations</p>
                 <form action="\approval-item\changeassignOrganization" method="post">
                     @csrf
@@ -58,7 +58,7 @@
                         <button type="submit" class="btn btn-primary" >Assign</button>
                     </div>
                 </form>
-            </div>
+            </div> -->
         </div>
     </div>
     @if($process_item->form_type_id ==5 && $process_item->prerequisite_id != null)

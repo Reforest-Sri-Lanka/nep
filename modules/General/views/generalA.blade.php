@@ -38,6 +38,7 @@
                 <option value="0" selected>Select</option>
                 <option value="1">Tree Cutting permission Requests</option>
                 <option value="2">Development project permission Requests</option>
+                <option value="3">Reforestration Projects</option>
                 <option value="4">Crime Reports</option>
             </select>
         </div>
@@ -65,11 +66,13 @@
                 @else
                 <th>Check Progress</th>
                 @endif
+                @if(Auth::user()->role_id < 5) 
+                    <th>Audit</th>
+                @endif
             </tr>
         </thead>
         <tbody>
             @foreach($Process_items as $process_item)<tr>
-            @if($process_item->prerequisite_id == null )
                 <td>{{$process_item->form_type->type}}</td>
                 <td>{{date('d-m-Y',strtotime($process_item->created_at))}}</td>
                 @if($process_item->request_organization==null && $process_item->other_land_owner_name==null)
@@ -80,7 +83,9 @@
                 <td>{{$process_item->requesting_organization->title}}</td>
                 @endif
                 <td>{{$process_item->remark}}</td>
-                @if(Auth::user()->role_id == 1 ||Auth::user()->role_id == 2)
+                @if($process_item->form_type_id == 3 && $process_item->status_id == 5)
+                <td><a href="/env-restoration/progressView/{{$process_item->id}}" class="text-muted">View Progress</a></td>
+                @elseif(Auth::user()->role_id == 1 ||Auth::user()->role_id == 2)
                 <td><a href="/approval-item/assignorganization/{{$process_item->id}}" class="text-muted">Assign</a></td>
                 @elseif(Auth::user()->role_id == 3 ||Auth::user()->role_id == 4)
                 <td><a href="/approval-item/assignstaff/{{$process_item->id}}" class="text-muted">Assign</a></td>
@@ -89,11 +94,16 @@
                 @elseif(Auth::user()->role_id == 6)
                 <td><a href="#" class="text-muted">View More Details</a></td>
                 @endif
-            @endif
+                @if(Auth::user()->role_id < 5)
+                <td><a href="/security/process-item/{{$process_item->id}}" class="text-muted">Audit</a></td>
+                @endif
             </tr>
             @endforeach
         </tbody>
     </table>
+    <div class="col-sm-12" style="display:flex; align-items:center; justify-content:center;">
+    {!!$Process_items->links();!!}
+    </div>
 </div>
 
 @endsection

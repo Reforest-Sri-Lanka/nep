@@ -94,5 +94,8 @@
             </tbody>
         </table>
     </div>
+    <div class="col-sm-12" style="display:flex; align-items:center; justify-content:center;">
+    {!!$items->links();!!}
+    </div>
 </div>
 @endsection

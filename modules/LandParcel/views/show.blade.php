@@ -5,6 +5,11 @@
 <kbd><a href="/approval-item/showRequests" class="text-white font-weight-bolder"><i class="fas fa-chevron-left"></i></i> BACK</a></kbd>
 <hr>
 <div class="container">
+    @if(($process->status_id < 2 || $process->status_id == 9) && (Auth::user()->id == $process->created_by_user_id)) 
+        <div class="row" style="float:right;">
+            <a href="/land/edit/{{$process->id}}" class="btn btn-info mr-4"  role="button">Edit</a>
+        </div>
+    @endif
 
     <dl class="row">
         <dt class="col-sm-3">Plan Number:</dt>
@@ -17,9 +22,10 @@
         <dt class="col-sm-3">Province:</dt>
         <dd class="col-sm-9">{{$land->province->province}}</dd>
         @endif
+        @if($land->district !=null)
         <dt class="col-sm-3">District:</dt>
         <dd class="col-sm-9">{{$land->district->district}}</dd>
-        
+        @endif
         @if($land->gs_division !=null)
         <dt class="col-sm-3">Grama Sevaka Division:</dt>
         <dd class="col-sm-9">{{$land->gs_division->gs_division}}</dd>
@@ -54,7 +60,7 @@
         </dd>
 
         <dt class="col-sm-3">Status:</dt>
-        <dd class="col-sm-9">{{$land->status->type}}</dd>
+        <dd class="col-sm-9">{{$process->status->type}}</dd>
 
         <dt class="col-sm-3 text-truncate">Created at:</dt>
         <dd class="col-sm-9">{{$land->created_at}}</dd>
