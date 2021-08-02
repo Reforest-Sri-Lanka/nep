@@ -26,7 +26,253 @@
 
   <!--greensock lib -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.2/TweenMax.min.js"></script>
+    
+   <style>
+    html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+  }
+      body {
+      font-family: 'Product Sans', sans-serif;
+      text-align: center;
+      scroll-behavior: smooth;
+ 
+  }
+  h1, h2, h3 {
+      font-family: 'Product Sans', sans-serif;
+      font-weight: bold;
+  }
+  h3 {
+      font-size: 1.5rem;
+  }
+  #title .container-fluid {
+      padding: 3% 15% 7%;
+      text-align: left;
+      height: 100vh;
+  }
+  /* Headings */
+  .big-heading {
+      font-size: 3.5rem;
+      font-weight: 900;
+      line-height: 1.5;
+  }
+  .container-fluid {
+      padding: 4% 15%;
+  }
+  .container-fluids {
+      padding: 0% 15%;
+  }
+  /* Sections */
+  .colored-section {
+      background-color: #00b894;
+      height: 768px;
+      color: #fff;
+  }
+  .white-section {
+      background-color: #fff;
+  }
+  /* navigation Bar */
+  .navbar {
+      padding: 0 0 4.5rem;
+  }
+  .navbar-brand {
+      font-family: 'Product Sans', sans-serif;
+      font-size: 1.5rem;
+      font-weight: none;
+  }
+  .nav-item {
+      padding: 0 18px;
+  }
+  .nav-link {
+      font-size: 1.2rem;
+      font-weight: 300;
+  }
+  /* Download Buttons */
+  .download-button {
+      margin: 5% 3% 5% 0;
+    
+  }
+  /* Title Section */
+  #title .container-fluid {
+      padding: 3% 15% 7%;
+      text-align: left;
+  }
+  /* Title image */
+  .title-image {
+      right: 30%;
+      /* transform: rotate(25deg); */
+      width: 80%;
+  }
 
+  #links {
+      padding: 2% 0% 2% 0%;
+  }
+  .card-title{
+    font-size: 1.3rem;
+    font-weight: bold;
+  }
+  .card-title_text{
+    color: #8f8f8f;
+  }
+
+
+  #features {
+      padding: 2% 0% 0% 0%;
+      margin: auto;
+      width: 100%;
+      height:100%;
+  }
+
+  .feature-title {
+      font-size: 1.5rem;
+  }
+ .feature-box {
+      padding: 4%;
+      text-align: center;
+  }
+  .feature-box2 {
+      padding: 4%;
+      text-align: center;
+  }
+  .feature-box p {
+      color: #8f8f8f;
+  }
+  .icon {
+      color: #00b894;
+      margin-bottom: 1rem;
+  }
+  .icon:hover {
+      color: #00b456;
+  }
+  /* Testimonials Section */
+  #testimonials {
+    padding: 7% 15%;
+    background-color: #ef8172;
+    text-align: center;
+  }
+  .testimonial-text {
+      font-size: 3.5rem;
+      line-height: 1.5;
+  }
+  .testimonial-image {
+      border-radius: 100%;
+      margin: 20px;
+      width: 10%;
+  }
+  /* Press Section */
+  #press {
+      background-color: #ef8172;
+      padding-bottom: 3%;
+  }
+  .press-logo {
+      margin: 20px 20px 50px;
+      width: 15%;
+  }
+  /* Pricing Section */
+  #pricing {
+      padding: 100px;
+  }
+  .price-text {
+      font-size: 3rem;
+      line-height: 1.6;
+  }
+  .section-heading {
+      font-size: 3.5rem;
+      line-height: 1.5;
+  }
+  .pricing-column {
+      padding: 3% 2%;
+  }
+  /* cta */
+  #cta{
+    background-color: #00b894;
+    color: #fff;
+    padding: 7% 15%;
+    text-align: center;
+  }
+  .cta-heading{
+    font-family: 'Product Sans';
+    font-size: 3.5rem;
+    line-height: 1.5;
+  }
+  /* Footer */
+  #footer {
+      font-family: 'Product Sans', sans-serif;
+  }
+  .social-icon {
+      margin: 20px 10px;
+  }
+  @media (max-width: 1028px) {
+    #title{
+      text-align: center;
+    }
+    .title-image{
+      position: static;
+      transform: rotate(0);
+      width : 40%;
+    }
+  }
+
+  @media (max-width: 785px) {
+    #title{
+      text-align: center;
+    }
+    .title-image{
+      position: static;
+      transform: rotate(0);
+      width : 40%;
+    }
+  }
+
+  @media (max-width: 500px) {
+    #title{
+      text-align: center;
+    }
+    .title-image{
+      visibility: hidden;
+    }
+  }
+
+  /**scroll bar*/
+  /* width */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey; 
+    border-radius: 0px;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: gray; 
+    border-radius: 0px;
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #515151; 
+  }
+
+  /*animations*/
+  .product-img {
+    transform: translate(-50%, -40%);
+    animation: fly 4s ease-in-out infinite;
+  }
+  @keyframes fly {
+    0% {
+      transform: translate(-50%, -46%);
+    }
+    50% {
+      transform: translate(-50%, -54%);
+    }
+    100% {
+      transform: translate(-50%, -46%);
+    }
+  }
+  </style>
  
 
 </head>
