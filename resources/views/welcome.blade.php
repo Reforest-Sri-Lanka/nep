@@ -8,7 +8,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <link rel="shortcut icon" href="https://media-exp1.licdn.com/dms/image/C4D0BAQE053LSsjwS8g/company-logo_200_200/0/1519908968942?e=2159024400&v=beta&t=ABHZvFSIaWSa5xl291Yn6a4OcRW2d66WiHH6jOlZ_rs" type="image/x-icon"> 
+  <link rel="shortcut icon" href="https://neplk.com/Logo.jpeg" type="image/x-icon"> 
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,700,900|Ubuntu:400,700" rel="stylesheet">
@@ -17,6 +17,9 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../resources/css/styles.css">
+
 
   <!-- Font Awsome -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
@@ -24,253 +27,15 @@
   <!--greensock lib -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.2/TweenMax.min.js"></script>
 
-  <style>
-    html {
-      scroll-behavior: smooth;
-    }
-        body {
-        font-family: 'Product Sans', sans-serif;
-        text-align: center;
-        scroll-behavior: smooth;
-   
-    }
-
-    h1, h2, h3 {
-        font-family: 'Product Sans', sans-serif;
-        font-weight: bold;
-    }
-
-    h3 {
-        font-size: 1.5rem;
-    }
-    #title .container-fluid {
-        padding: 3% 15% 7%;
-        text-align: left;
-    }
-
-    /* Headings */
-    .big-heading {
-        font-size: 3.5rem;
-        font-weight: 900;
-        line-height: 1.5;
-    }
-
-    .container-fluid {
-        padding: 4% 15%;
-    }
-
-    .container-fluids {
-        padding: 0% 15% 0% 15%;
-    }
-
-    /* Sections */
-
-    .colored-section {
-        background-color: #00b894;
-        height: 768px;
-        color: #fff;
-    }
-
-    .white-section {
-        background-color: #fff;
-    }
-
-    /* navigation Bar */
-
-    .navbar {
-        padding: 0 0 4.5rem;
-    }
-
-
-    .navbar-brand {
-        font-family: 'Product Sans', sans-serif;
-        font-size: 1.5rem;
-        font-weight: none;
-    }
-
-    .nav-item {
-        padding: 0 18px;
-    }
-
-    .nav-link {
-        font-size: 1.2rem;
-        font-weight: 300;
-    }
-
-    /* Download Buttons */
-    .download-button {
-        margin: 5% 3% 5% 0;
-      
-    }
-
-    /* Title Section */
-
-    #title .container-fluid {
-        padding: 3% 15% 7%;
-        text-align: left;
-    }
-
-    /* Title image */
-
-    .title-image {
-
-        right: 30%;
-        /* transform: rotate(25deg); */
-        width: 80%;
-    }
-    #features {
-        padding: 2% 0% 0% 0%;
-    }
-
-    #links {
-        padding: 0% 0% 2% 0%;
-    }
-
-    .card-title{
-      font-size: 1.3rem;
-      font-weight: bold;
-    }
-
-    .card-title_text{
-      color: #8f8f8f;
-    }
-
-    .feature-title {
-        font-size: 1.5rem;
-    }
-
-   .feature-box {
-        padding: 4%;
-        text-align: center;
-    }
-
-    .feature-box2 {
-        padding: 4%;
-        text-align: center;
-    }
-
-    .feature-box p {
-        color: #8f8f8f;
-    }
-
-    .icon {
-        color: #00b894;
-        margin-bottom: 1rem;
-    }
-
-    .icon:hover {
-        color: #00b456;
-    }
-
-
-    /* Testimonials Section */
-    #testimonials {
-      padding: 7% 15%;
-      background-color: #ef8172;
-      text-align: center;
-    }
-
-    .testimonial-text {
-        font-size: 3.5rem;
-        line-height: 1.5;
-    }
-
-    .testimonial-image {
-        border-radius: 100%;
-        margin: 20px;
-        width: 10%;
-    }
-
-    /* Press Section */
-    #press {
-        background-color: #ef8172;
-        padding-bottom: 3%;
-    }
-
-    .press-logo {
-        margin: 20px 20px 50px;
-        width: 15%;
-    }
-
-    /* Pricing Section */
-    #pricing {
-        padding: 100px;
-    }
-
-    .price-text {
-        font-size: 3rem;
-        line-height: 1.6;
-    }
-
-    .section-heading {
-        font-size: 3.5rem;
-        line-height: 1.5;
-    }
-
-    .pricing-column {
-        padding: 3% 2%;
-    }
-    /* cta */
-    #cta{
-      background-color: #00b894;
-      color: #fff;
-      padding: 7% 15%;
-      text-align: center;
-    }
-    .cta-heading{
-      font-family: 'Product Sans';
-      font-size: 3.5rem;
-      line-height: 1.5;
-    }
-
-    /* Footer */
-    #footer {
-        font-family: 'Product Sans', sans-serif;
-    }
-
-    .social-icon {
-        margin: 20px 10px;
-    }
-
-    @media (max-width: 1028px) {
-      #title{
-        text-align: center;
-      }
-      .title-image{
-        position: static;
-        transform: rotate(0);
-      }
-    }
-
-    /*animations*/
-    .product-img {
-      padding-top:350px;
-      margin-left:200px;
-      transform: translate(-50%, -40%);
-      animation: fly 4s ease-in-out infinite;
-    }
-
-
-    @keyframes fly {
-      0% {
-        transform: translate(-50%, -46%);
-      }
-      50% {
-        transform: translate(-50%, -54%);
-      }
-      100% {
-        transform: translate(-50%, -46%);
-      }
-    }
-  </style>
+ 
 
 </head>
 
     <section class="colored-section" id="title">
 
-    <div class="container-fluid">
+    <div class="container-fluid mh-100">
       <nav class="navbar navbar-expand-lg navbar-dark ">
-        <a class="navbar-brand" href="#">Nep - Beta</a>
+        <a class="navbar-brand" href="#">Nep - Beta </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -302,19 +67,19 @@
       <div class="row">
        
         <div class="col-lg-6"> <br> <br>
-          <h1 class="big-heading">The National Environment Platform (NEP)</h1>
+          <h1 class="big-heading product-title">The National Environment Platform (NEP)</h1>
 
           <a href="#features">
-          <button type="button" class="btn btn-dark btn-lg download-button"><i class="fab fa-leanpub"></i>   Learn More</button>
+          <button type="button" class="btn btn-dark btn-lg download-button product-title"><i class="fab fa-leanpub"></i>&nbsp &nbspLearn More</button>
           </a>
 
           <a href="#links">
-          <button type="button" class="btn btn-outline-light btn-lg download-button"><i class="fa fa-link"></i>   Quick Links</button>
+          <button type="button" class="btn btn-outline-light btn-lg download-button product-title"><i class="fa fa-link"></i>&nbsp &nbspQuick Links</button>
           </a>
     
         </div>
         <div class="col-lg-6 col-md-2">
-          <!-- <img class="title-image product-img" src="../resources/css/header-image.png" alt="Header Image Goes here"> -->
+          <img class="title-image product-title" src="../resources/images/header-image.png" alt="Header Image Goes here">
         </div>
       </div>
 
@@ -358,23 +123,23 @@
 
   <section  id="features">
     <div class="container-fluid">
-    <h2 class="price-text">What is the National Environment Platform (NEP)?</h2>
-    <p>A government cloud aimed for sustainable management of envrionmental resources of Sri Lanka. It automates</p>
+    <h2 class="price-text block">What is the National Environment Platform (NEP)?</h2>
+    <p class="block">A government cloud aimed for sustainable management of envrionmental resources of Sri Lanka. It automates</p>
 
       <div class="row">
-        <div class="feature-box col-lg-4 col-md-6">
+        <div class="feature-box col-lg-4 col-md-6 block" data-move-y="200px" data-move-x="-200px">
           <i class="icon fa fa-tree fa-4x"></i>
           <h3 class="feature-title">Tree removal<br> process</h3>
           <p>Trees are removed at different locations under different authorities. Effective management shoud be aware of the loss of trees, why they are removed, which species are removed etc. better manage and monitor green cover.</p>
         </div>
 
-        <div class="feature-box col-lg-4 col-md-6">
+        <div class="feature-box col-lg-4 col-md-6 block" data-move-y="200px" data-move-x="000px">
           <i class="icon fa fa-leaf fa-4x"></i>
           <h3 class="feature-title">Ecosystem restoration activities</h3>
           <p>Reforestation, Coral restoration, mangrove planting, Garbage clean ups etc. can be geographically added with the ability to log progress of sites for better monitoring and evaluation. Scientefic data analysis is a long term objective.</p>
         </div>
 
-        <div class="feature-box col-lg-4 ">
+        <div class="feature-box col-lg-4 block" data-move-y="200px" data-move-x="200px">
           <i class="icon fa fa-building fa-4x"></i>
           <h3 class="feature-title">Development project site approvals</h3>
           <p>Add relevant development projects and log its life cycle. Better understand where protected areas exist via GIS mapping and connect gazette notifications for transparent open governance.</p>
@@ -390,12 +155,12 @@
 
   <section id="links">
     <div class="container-fluids">
-    <h2 class="price-text">Quick Links</h2>
+    <h2 class="price-text block">Quick Links</h2>
     <div class="row">
 
     <div class="feature-box2 col-lg-4 col-md-6">
-      <div class="card">
-          <img src="https://dummyimage.com/450x299/ACB0B3/ACB0B3.jpg" class="card-img-top" alt="Tree Removals">
+      <div class="card block" data-move-y="200px" data-move-x="-200px">
+          <img src="https://pcrtreeservice.com/wp-content/uploads/tree-trimming.jpg" style="height:180px;" class="card-img-top" alt="Tree Removals">
           <div class="card-body">
             <h5 class="card-title">Tree Removals</h5>
             <p class="card-title_text">If any project, maintainance, road development, housing project etc. require trees to be removed, please enter their details.</p>
@@ -411,8 +176,8 @@
       </div>
 
       <div class="feature-box2 col-lg-4 col-md-6">
-        <div class="card">
-          <img src="https://dummyimage.com/450x299/ACB0B3/ACB0B3.jpg" class="card-img-top" alt="Development Projects">
+        <div class="card block" data-move-y="200px" data-move-x="000px">
+          <img src="https://lh3.googleusercontent.com/proxy/vGuBlq7rzQOCi0RrlmdvGuJtTfaIpwkBKz9l7E9w4D82iqSSKR-zhilHBki8aHgcFbjlXg8uGzf1wjx_A9YRqEw7l31rDDMdxF-NkHtDSi9d" style="height:180px;" class="card-img-top" alt="Development Projects">
           <div class="card-body">
             <h5 class="card-title">Development Projects</h5>
             <p class="card-title_text">Add details of development projects such as markets, land sales, housing, roads, public infrastructure, ports</p>
@@ -428,8 +193,8 @@
       </div>
 
       <div class="feature-box2 col-lg-4 col-md-6">
-        <div class="card">
-          <img src="https://dummyimage.com/450x299/ACB0B3/ACB0B3.jpg" class="card-img-top" alt="Restorations">
+        <div class="card block" data-move-y="200px" data-move-x="200px">
+          <img src="https://cdn.shopify.com/s/files/1/0326/7189/articles/Restoration_economy_plant_trees_2000x.png?v=1608135505"  style="height:180px;" class="card-img-top" alt="Restorations">
           <div class="card-body">
             <h5 class="card-title">Restorations</h5>
             <p class="card-title_text">Add details of any environment restoration projects such as tree planting, mangrove planting, sea grass or coral restoration.</p>
@@ -445,8 +210,8 @@
       </div>
 
       <div class="feature-box2 col-lg-4 col-md-6">
-        <div class="card">
-          <img src="https://dummyimage.com/450x299/ACB0B3/ACB0B3.jpg" class="card-img-top" alt="Crime Report">
+        <div class="card block" data-move-y="200px" data-move-x="-200px">
+          <img src="https://www.iucn.org/sites/dev/files/styles/850x500_no_menu_article/public/content/images/2018/6_.jpg?itok=kT7mWzRH" style="height:180px;" class="card-img-top" alt="Crime Report">
           <div class="card-body">
             <h5 class="card-title">Crime Report</h5>
             <p class="card-title_text">Add details of environmental crimes, poaching, trapping, dead animals, tree felling and others.</p>
@@ -462,8 +227,8 @@
       </div>
 
       <div class="feature-box2 col-lg-4 col-md-6">
-        <div class="card">
-          <img src="https://dummyimage.com/450x299/ACB0B3/ACB0B3.jpg" class="card-img-top" alt="Track Complaint">
+        <div class="card block" data-move-y="200px" data-move-x="000px">
+          <img src="https://ak.picdn.net/shutterstock/videos/17330839/thumb/1.jpg" style="height:180px;" class="card-img-top" alt="Track Complaint">
           <div class="card-body">
             <h5 class="card-title">Track Complaint</h5>
             <p class="card-title_text">Track the progress of any anonymous complaints logged using the reference ID given</p>
@@ -495,9 +260,9 @@
 
     <!-- Call to Action -->
 
-    <section id="cta">
-    <h3 class="cta-heading">The platform was made under guidance of the Ministry of Environment by volunteers. It has not been officially adopted yet and is up for beta testing.</h3><br><br>
-    <p>In addition NEP has a species database, ecosystems database and a module to manage system admin tasks.</p>
+    <section id="cta" >
+    <h3 class="cta-heading block">The platform was made under guidance of the Ministry of Environment by volunteers. It has not been officially adopted yet and is up for beta testing.</h3><br><br>
+    <p class="block">In addition NEP has a species database, ecosystems database and a module to manage system admin tasks.</p>
     </section>
 
    <!-- Footer -->
@@ -514,34 +279,36 @@
   </footer>
 
   <!--chart js -->
+  <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+  <script src="../resources/js/jquery.smoove.js"></script>
   <script src="{{ url('/vendor/chart.js/dist/Chart.min.js') }}"></script>
   <script src="{{ url('/vendor/chart.js/dist/Chart.extension.js') }}"></script>
   <script src="{{ url('/vendor/welcomepage-charts.js' ) }}"></script>
-  <script type="text/javascript">
+    
+  <script>
+      $('.block').smoove({offset: '40%'});
+  </script>
 
+  <script type="text/javascript">
           TweenMax.from(".product-img", 3, {
             delay: 2,
             opacity: 0,
             y: 80,
             ease: Expo.easeInOut
           });
-
           TweenMax.from(".product-title", 3, {
-            delay: 2.2,
+            delay: 0.2,
             opacity: 0,
             y: 50,
             ease: Expo.easeInOut
           });
-
           TweenMax.from(".product-subtitle", 3, {
-            delay: 2.4,
+            delay: 0.4,
             opacity: 0,
             y: 50,
             ease: Expo.easeInOut
           });
-
   </script>
-
 
 </body>
 
