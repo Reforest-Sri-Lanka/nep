@@ -16,14 +16,14 @@
                 <div class="row p-4 bg-white">
                     <div class="col border border-muted rounded-lg mr-2 p-4">
                         <div class="form-group">
-                            <label for="title">Title:</label>
+                            <label for="title">Title:<b>*</b></label>
                             <input type="text" class="form-control" placeholder="Enter Title" id="title" name="title">
                             @error('title')
                             <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label for="planNo">Restored Land Parcel Name:</label>
+                            <label for="planNo">Restored Land Parcel Name:<b>*</b></label>
                             <input type="text" class="form-control" placeholder="Enter Land Parcel Name" name="planNo">
                             @error('planNo')
                             <div class="alert alert-danger">{{ $message }}</div>
@@ -32,13 +32,13 @@
 
                         <div class="form-group">
                             <label for="title">Environment Restoration Activity:</label>
-                            <select name="environment_restoration_activity" class="custom-select">
+                            <select name="environment_restoration_activity_id" class="custom-select">
                                 <option selected>Select Activity</option>
                                 @foreach($restoration_activities as $restoration_activity)
                                 <option value="{{$restoration_activity->id}}">{{$restoration_activity->title}}</option>
                                 @endforeach
                             </select>
-                            @error('environment_restoration_activity')
+                            @error('environment_restoration_activity_id')
                             <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
                         </div>
@@ -102,7 +102,7 @@
                     </div>
                     <div class="col border border-muted rounded-lg p-4">
                         <div class="form-group">
-                            <label for="province">Province:</label>
+                            <label for="province">Province:<b>*</b></label>
                             <select class="custom-select @error('province') is-invalid @enderror" name="province">
                                 <option disabled selected value="">Select</option>
                                 @foreach ($provinces as $province)
@@ -115,7 +115,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="province">District:</label>
+                            <label for="province">District:<b>*</b></label>
                             <select class="custom-select @error('district') is-invalid @enderror" name="district">
                                 <option disabled selected value="">Select</option>
                                 @foreach ($districts as $district)
@@ -127,18 +127,6 @@
                             @enderror
                         </div>
 
-                        <div class="form-group">
-                            <label for="province">Grama Sevaka Division:</label>
-                            <select class="custom-select @error('gs_division') is-invalid @enderror" name="gs_division">
-                                <option disabled selected value="">Select</option>
-                                @foreach ($gs as $gs_division)
-                                <option value="{{ $gs_division->id }}" {{ Request::old()?(Request::old('gs_division')==$gs_division->id?'selected="selected"':''):'' }}>{{ $gs_division->gs_division }}</option>
-                                @endforeach
-                            </select>
-                            @error('gs_division')
-                            <div class="alert alert-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
                         <!-- ////////MAP GOES HERE -->
                         <div class="form-group">
                             <span style="float:right; cursor:pointer;"><kbd><a title="How to Draw Shapes on the Map" class="text-white" data-toggle="modal" data-target="#mapHelp">How To Mark Location</a></kbd></span>
@@ -151,12 +139,6 @@
                         <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                         <input id="polygon" type="hidden" name="polygon" class="form-control @error('polygon') is-invalid @enderror" value="{{request('polygon')}}" /> <br>
-                        <input id="size" type="text" class="form-control" name="size" value="{{request('size')}}">
-                        <input id="size_unit" type="text" class="form-control" name="size_unit" value="{{request('size_unit')}}">
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="customCheck" value="1" name="isProtected">
-                            <label class="custom-control-label" for="customCheck"><strong>Check if land is a protected area</strong></label>
-                        </div>
                     </div>
                 </div>
             </div>
