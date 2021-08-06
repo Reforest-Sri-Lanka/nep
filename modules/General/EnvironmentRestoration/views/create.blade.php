@@ -33,7 +33,7 @@
                         <div class="form-group">
                             <label for="title">Environment Restoration Activity:</label>
                             <select name="environment_restoration_activity_id" class="custom-select">
-                                <option selected value="0">Select Activity</option>
+                                <option selected value="1">Select Activity</option>
                                 @foreach($restoration_activities as $restoration_activity)
                                 <option value="{{$restoration_activity->id}}">{{$restoration_activity->title}}</option>
                                 @endforeach
