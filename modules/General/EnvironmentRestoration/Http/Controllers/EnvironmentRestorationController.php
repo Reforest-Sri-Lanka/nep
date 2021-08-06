@@ -106,9 +106,7 @@ class EnvironmentRestorationController extends Controller
             'planNo' => 'required',
             'province' => 'required',
             'district' => 'required',
-            'gs_division' => 'required',
-            'environment_restoration_activity' => 'required',
-            'environment_restoration_activity' => 'required',
+            'environment_restoration_activity_id' => 'required',
             'ecosystem' => 'required',
             'activity_org' => 'nullable|exists:organizations,title',
             'polygon' => 'required'
@@ -119,7 +117,12 @@ class EnvironmentRestorationController extends Controller
             
             $restoration = new Environment_Restoration();
             $restoration->title = request('title');
-            $restoration->environment_restoration_activity_id = request('environment_restoration_activity');
+            if(request('environment_restoration_activity_id')==NULL){
+                $restoration->environment_restoration_activity_id = 1;
+            }
+            else{
+                $restoration->environment_restoration_activity_id = request('environment_restoration_activity_id');
+            }
             $restoration->organization_id = request('organization');
             $restoration->eco_system_id = request('ecosystem');
             $restoration->land_parcel_id = $newland;
