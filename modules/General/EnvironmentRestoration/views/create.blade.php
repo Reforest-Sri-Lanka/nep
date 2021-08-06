@@ -46,7 +46,7 @@
                         <div class="form-group">
                             <label for="title">Ecosystem:</label>
                             <select name="ecosystem" class="custom-select">
-                                <option selected>Select Ecosystem</option>
+                                <option selected value="1">Select Ecosystem</option>
                                 @foreach($ecosystems as $ecosystem)
                                 <option value="{{$ecosystem->id}}">{{$ecosystem->type}}</option>
                                 @endforeach
