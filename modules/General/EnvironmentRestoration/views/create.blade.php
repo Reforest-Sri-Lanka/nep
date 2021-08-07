@@ -14,7 +14,7 @@
         <div class="tab">
             <div class="container">
                 <div class="row p-4 bg-white">
-                    <div class="col border border-muted rounded-lg mr-2 p-4">
+                    <div class="col-md-6 col-lg-4 col-xl border border-muted rounded-lg mr-2 p-4">
                         <div class="form-group">
                             <label for="title">Title:<b>*</b></label>
                             <input type="text" class="form-control" placeholder="Enter Title" id="title" name="title">
@@ -100,7 +100,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col border border-muted rounded-lg p-4">
+                    <div class="col-md-6 col-lg-4 col-xl border border-muted rounded-lg p-4">
                         <div class="form-group">
                             <label for="province">Province:<b>*</b></label>
                             <select class="custom-select @error('province') is-invalid @enderror" name="province">
@@ -132,7 +132,7 @@
                             <span style="float:right; cursor:pointer;"><kbd><a title="How to Draw Shapes on the Map" class="text-white" data-toggle="modal" data-target="#mapHelp">How To Mark Location</a></kbd></span>
                             <label>Select Location On Map*</label>
                         </div>
-                        
+
                         <div id="mapid" style="height:400px;" name="map"></div>
 
                         @error('polygon')
@@ -388,7 +388,7 @@
                 return process(objects);
             })
         },
-    }); 
+    });
 
     ///STEPPER
     var currentTab = 0; // Current tab is set to be the first tab (0)
@@ -514,7 +514,7 @@
     //we’re calling tilelayer() to create the tile layer, passing in the OSM URL first, then the second argument is an object containing the options for our new tile 
     //layer (including attribution is critical here to comply with licensing), and then the tile layer is added to the map using addTo().
 
-    
+
     var drawnItems = new L.FeatureGroup();
     map.addLayer(drawnItems);
 
