@@ -1,7 +1,7 @@
 <?php
 
 use TreeRemoval\Http\Controllers\TreeRemovalController;
-
+Route::middleware(['auth'])->group(function () {
 Route::get('/form', [TreeRemovalController::class, 'openForm'])->name("treeremoval");
 
 Route::post('/save', [TreeRemovalController::class, 'save']);
@@ -15,3 +15,5 @@ Route::get('/autocompleteDistrict', [TreeRemovalController::class, 'districtAuto
 Route::get('/autocompleteOrgs', [TreeRemovalController::class, 'organizationAutocomplete'])->name('organization');
 Route::get('/autocompleteGSdiv', [TreeRemovalController::class, 'GSAutocomplete'])->name('gramasevaka');
 Route::get('/autocompleteSpecies', [TreeRemovalController::class, 'SpeciesAutocomplete'])->name('species');
+
+});

@@ -1,7 +1,7 @@
 <?php
 
 use DevelopmentProject\Http\Controllers\DevelopmentProjectController;
-
+Route::middleware(['auth'])->group(function () {
 //can be accessed by anyone who can create a request
 Route::get('/applicationForm', [DevelopmentProjectController::class, 'form'])->name("devproject");
 //route to save the form to the db
@@ -12,3 +12,5 @@ Route::get('/show/{id}',  [DevelopmentProjectController::class, 'show']);
 Route::delete('/delete/{processid}/{devid}/{landid}', [DevelopmentProjectController::class, 'destroy']); 
 //AJAX autocomplete for gazette
 Route::get('/autocompleteGazette', [DevelopmentProjectController::class, 'gazetteAutocomplete'])->name('gazette');
+
+});
