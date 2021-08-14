@@ -263,13 +263,14 @@ class CrimeReportController extends Controller
             'reference_id' => 'required|exists:process_items,id',
         ]);
         $process_item = Process_Item::find(request('reference_id'));
-        $crime = Crime_report::find($process_item->form_id);
-        $Photos=Json_decode($crime->photos);
-        $land_parcel = Land_Parcel::find($crime->land_parcel_id);
-        
-        if($process_item->created_by_user_id != 11 && ((Auth::check())) == 0){
+        if($process_item->form_type_id != 4){
+            return back()->withErrors(['The selected reference id is invalid.']);
+        }elseif($process_item->created_by_user_id != 11 && ((Auth::check())) == 0){
             return redirect('/home/unRegistered')->with('danger', 'This application is not anonymous and is not accessible'); 
         }else{
+            $crime = Crime_report::find($process_item->form_id);
+            $Photos=Json_decode($crime->photos);
+            $land_parcel = Land_Parcel::find($crime->land_parcel_id);
             return view('crimeReport::crimeview',[
                 'crime' => $crime,
                 'process_item' => $process_item,
