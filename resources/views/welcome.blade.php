@@ -488,11 +488,9 @@
                         </span>
                     </div>
                 </form>
-                @error('reference_id')
-                  <div class="alert">                                   
-                      <strong>{{ $message }}</strong>
-                  </div>
-                @enderror
+                @if($errors->any())
+                  <h6>{{$errors->first()}}</h6>
+                @endif
           </div>
         </div>
       </div>
