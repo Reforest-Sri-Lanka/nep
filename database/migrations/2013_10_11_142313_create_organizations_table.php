@@ -20,8 +20,11 @@ class CreateOrganizationsTable extends Migration
             $table->string('country')->default('Sri Lanka');
             //$table->unsignedBigInteger('type_id')->references('id')->on('organization_types');
             $table->text('description');
-            $table->timestampsTz(); //time stamp with timezone in UTC
+            $table->timestampTz('email_verified_at')->nullable(); 
+            $table->timestampTz('created_at'); 
+            $table->timestampTz('updated_at')->nullable(); 
             $table->tinyInteger('status');
+            $table->string('related_ministry');
             $table->softDeletesTz('deleted_at', 0);
             $table->unsignedBigInteger('type_id')->nullable();  
             $table->foreign('type_id')->references('id')->on('organization_types')->onDelete('cascade');
