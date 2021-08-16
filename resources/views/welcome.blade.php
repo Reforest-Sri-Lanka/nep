@@ -423,7 +423,7 @@
 
       <div class="feature-box2 col-lg-4 col-md-6">
         <div class="card block" data-move-y="200px" data-move-x="000px">
-          <img src="https://lh3.googleusercontent.com/proxy/vGuBlq7rzQOCi0RrlmdvGuJtTfaIpwkBKz9l7E9w4D82iqSSKR-zhilHBki8aHgcFbjlXg8uGzf1wjx_A9YRqEw7l31rDDMdxF-NkHtDSi9d" style="height:180px;" class="card-img-top" alt="Development Projects">
+          <img src="https://firebasestorage.googleapis.com/v0/b/projectone-fc395.appspot.com/o/Development%20Projects.jpeg?alt=media&token=78d18a83-a735-4bef-964e-2446694974ac" style="height:180px;" class="card-img-top" alt="Development Projects">
           <div class="card-body">
             <h5 class="card-title">Development Projects</h5>
             <p class="card-title_text">Add details of development projects such as markets, land sales, housing, roads, public infrastructure, ports</p>
@@ -440,7 +440,7 @@
 
       <div class="feature-box2 col-lg-4 col-md-6">
         <div class="card block" data-move-y="200px" data-move-x="200px">
-          <img src="https://cdn.shopify.com/s/files/1/0326/7189/articles/Restoration_economy_plant_trees_2000x.png?v=1608135505"  style="height:180px;" class="card-img-top" alt="Restorations">
+          <img src="https://firebasestorage.googleapis.com/v0/b/projectone-fc395.appspot.com/o/Restorations.jpeg?alt=media&token=8647acb3-ac24-4f62-99b5-3e555e7aff41"  style="height:180px;" class="card-img-top" alt="Restorations">
           <div class="card-body">
             <h5 class="card-title">Restorations</h5>
             <p class="card-title_text">Add details of any environment restoration projects such as tree planting, mangrove planting, sea grass or coral restoration.</p>
