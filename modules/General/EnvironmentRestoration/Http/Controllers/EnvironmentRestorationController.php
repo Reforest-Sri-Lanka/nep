@@ -6,6 +6,7 @@ use App\Models\Land_Parcel;
 use App\Models\Environment_Restoration;
 use App\Models\Environment_Restoration_Activity;
 use App\Models\Environment_Restoration_Species;
+use App\Models\Species_Information;
 use App\Models\Restoration_Species_Update;
 use App\Models\Restoration_Update;
 use App\Models\Organization;
@@ -135,7 +136,7 @@ class EnvironmentRestorationController extends Controller
             
             //restoration process item
             $Process_item = new Process_Item();
-            $Process_item->form_id = $latest->id;
+            $Process_item->form_id = $newres;
             $Process_item->form_type_id = 3;
             $Process_item->created_by_user_id = request('createdBy');
             if($request->filled('activity_org')){
@@ -204,7 +205,6 @@ class EnvironmentRestorationController extends Controller
                 );
                 $insert_data[] = $data;
             }
-
             Environment_Restoration_Species::insert($insert_data);
 
             //land request process item
