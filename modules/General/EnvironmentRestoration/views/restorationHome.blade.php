@@ -3,7 +3,7 @@
 @section('general')
 <div class="row justify-content-center border-secondary rounded-lg ml-3">
     <div class="col-md-3 ">
-        <a href="{{ route('envrestoration') }}" class="btn btn-info mr-4" role="button">New Environment Restoration Project</a>
+        <a href="{{ route('create_environment_restoration') }}" class="btn btn-info mr-4" role="button">New Environment Restoration Project</a>
     </div>
 </div>
 <div class="row border-secondary rounded-lg ml-3">

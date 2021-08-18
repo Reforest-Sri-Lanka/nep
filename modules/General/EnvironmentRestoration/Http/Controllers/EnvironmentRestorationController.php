@@ -45,7 +45,7 @@ class EnvironmentRestorationController extends Controller
     //         'restorations' => $restorations,
     //     ]);
     // }
-    public function restoration_home() {
+    public function manage_environment_restorations() {
         $restorations = Process_Item::where('form_type_id',3)->orderby('id','desc')->paginate(10);
         
             return view('environmentRestoration::restorationHome', [
@@ -53,7 +53,7 @@ class EnvironmentRestorationController extends Controller
             ]);
     }
 
-    public function create()
+    public function create_environment_restoration()
     {
         $restorations = Environment_Restoration::all();         //shows all records of enviroment restoration request
         $organizations = Organization::where('type_id', '=', '1')->get(); //show all records for all government organizations

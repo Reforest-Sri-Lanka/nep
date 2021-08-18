@@ -19,7 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->timestampTz('email_verified_at')->nullable();
             $table->string('password');
-            $table->integer('created_by_user_id');
+            $table->integer('created_by_user_id')->default(1);
             $table->rememberToken();
             $table->timestampsTz(); //time stamp with timezone in UTC
             $table->tinyInteger('status');

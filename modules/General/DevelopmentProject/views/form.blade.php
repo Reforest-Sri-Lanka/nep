@@ -13,7 +13,7 @@
 
         <div class="container">
             <div class="row p-4 bg-white">
-                <div class="col border border-muted rounded-lg mr-2 p-4">
+                <div class="col-md-6 col-lg-4 col-xl border border-muted rounded-lg mr-2 p-4">
                     <div class="form-group">
                         <label for="title">Title:</label>
                         <input type="text" class="form-control" placeholder="Enter Title" id="title" name="title" value="{{ old('title') }}">
@@ -128,7 +128,7 @@
                         <button type="submit" class="btn bd-navbar text-light">Submit</button>
                     </div>
                 </div>
-                <div class="col border border-muted rounded-lg p-4">
+                <div class="col-md-6 col-lg-4 col-xl border border-muted rounded-lg p-4">
                     <div class="form-group">
                         <label for="province">Province:</label>
                         <select class="custom-select @error('province') is-invalid @enderror" name="province">

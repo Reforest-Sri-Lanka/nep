@@ -131,11 +131,19 @@ class DatabaseSeeder extends Seeder
             'created_at' => now(),
         ]);
 
+         //roles
+         \DB::table('roles')->insert([
+            ['title' => 'Admin',
+            'status' => 1,],
+            ['title' => 'Citizen',
+            'status' => 1,],
+        ]);
+
         //users
         \DB::table('users')->insert([
             'name' => 'admin',
             'email' => 'admin@admin.com',
-            'emailed_verified_at' => now(),
+            'email_verified_at' => now(),
             'created_at' => now(),
             'password' => bcrypt('password'),
             'organization_id' => 1,
@@ -158,6 +166,65 @@ class DatabaseSeeder extends Seeder
             'status' => 7,
             ],
         ]);
-        
-    }
+
+        //provinces
+        \DB::table('provinces')->insert([
+            ['province' => 'Western Province',
+            'created_at' => now(),
+            'status' => 1,
+            ],
+            ['province' => 'Central Province',
+            'created_at' => now(),
+            'status' => 1,
+            ],
+            ['province' => 'Sabaragamuwa Province',
+            'created_at' => now(),
+            'status' => 1,
+            ],
+            ['province' => 'Southern Province',
+            'created_at' => now(),
+            'status' => 1,
+            ],
+            ['province' => 'Eastern Province',
+            'created_at' => now(),
+            'status' => 1,
+            ],
+            ['province' => 'Northern Province',
+            'created_at' => now(),
+            'status' => 1,
+            ],
+        ]);
+
+    //provinces
+    \DB::table('gs_divisions')->insert([
+        ['gs_division' => 'Udunuwara',
+        'created_at' => now(),
+        'status' => 1,
+        ],
+        ['gs_division' => 'Kandana',
+        'created_at' => now(),
+        'status' => 1,
+        ],
+        ['gs_division' => 'Sabaragamuwa 1',
+        'created_at' => now(),
+        'status' => 1,
+        ],
+    ]);
+
+    //provinces
+    \DB::table('districts')->insert([
+        ['district' => 'Kandy',
+        'created_at' => now(),
+        'status' => 1,
+        ],
+        ['district' => 'Colombo',
+        'created_at' => now(),
+        'status' => 1,
+        ],
+        ['district' => 'Kegalle',
+        'created_at' => now(),
+        'status' => 1,
+        ],
+    ]);
+}
 }
