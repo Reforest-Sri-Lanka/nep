@@ -6,6 +6,7 @@ use App\Models\Land_Parcel;
 use App\Models\Environment_Restoration;
 use App\Models\Environment_Restoration_Activity;
 use App\Models\Environment_Restoration_Species;
+use App\Models\Species_Information;
 use App\Models\Restoration_Species_Update;
 use App\Models\Restoration_Update;
 use App\Models\Organization;
@@ -135,7 +136,7 @@ class EnvironmentRestorationController extends Controller
             
             //restoration process item
             $Process_item = new Process_Item();
-            $Process_item->form_id = $latest->id;
+            $Process_item->form_id = $newres;
             $Process_item->form_type_id = 3;
             $Process_item->created_by_user_id = request('createdBy');
             if($request->filled('activity_org')){
@@ -172,7 +173,7 @@ class EnvironmentRestorationController extends Controller
             //Adding to Environment Restoration Species Table using ajax
             $rules = array(
                 'statusSpecies.*'  => 'required',
-                'species_name.*'  => 'required|exists:species_information,title',
+                'species_name.*'  => 'required',
                 'quantity.*'  => 'required|integer',
                 'height.*'  => 'required|integer',
                 'dimension.*'  => 'required',
@@ -185,6 +186,7 @@ class EnvironmentRestorationController extends Controller
                 ]);
             }
             
+
             $statusSpecies = $request->statusSpecies;
             $species_names = $request->species_name;
             $quantity = $request->quantity;
@@ -193,6 +195,16 @@ class EnvironmentRestorationController extends Controller
             $remark = $request->remark;
             for ($count = 0; $count < count($species_names); $count++) {
                 $species_id = Species::where('title', $species_names[$count])->pluck('id');
+                if($species_id->isEmpty()){
+                    $newSpeciesInfo = new Species();
+                    $newSpeciesInfo->type = "Flora";
+                    $newSpeciesInfo->title = $species_names[$count];
+                    $newSpeciesInfo->scientefic_name = "Unspecified";
+                    $newSpeciesInfo->created_by_user_id = request('createdBy');
+                    $newSpeciesInfo->status_id = 1;
+                    $newSpeciesInfo->save();
+                    $species_id[0]=$newSpeciesInfo->id;
+                }
                 $data = array(
                     'environment_restoration_id' => $newres,
                     'status' => $statusSpecies[$count],
@@ -204,7 +216,6 @@ class EnvironmentRestorationController extends Controller
                 );
                 $insert_data[] = $data;
             }
-
             Environment_Restoration_Species::insert($insert_data);
 
             //land request process item
