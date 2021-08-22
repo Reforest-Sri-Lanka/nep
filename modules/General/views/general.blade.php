@@ -17,8 +17,8 @@
             <li class="nav-item {{ Route::currentRouteName() == 'devproject' ? 'active' : '' }}">
                 <a class="nav-link mr-4" href="{{ route('devproject') }}">Development Project</a>
             </li>
-            <li class="nav-item {{ Route::currentRouteName() == 'manage_environment_restorations' ? 'active' : '' }}">
-                <a class="nav-link mr-4" href="{{ route('manage_environment_restorations') }}">Environment Restoration</a>
+            <li class="nav-item {{ Route::currentRouteName() == 'manage-environment-restorations' ? 'active' : '' }}">
+                <a class="nav-link mr-4" href="{{ route('manage-environment-restorations') }}">Environment Restoration</a>
             </li>
             <li class="nav-item {{ Route::currentRouteName() == 'land' ? 'active' : '' }}">
                 <a class="nav-link mr-4" href="{{ route('land') }}">Register Land</a>

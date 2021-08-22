@@ -3,7 +3,7 @@
 @section('general')
 <div class="row justify-content-center border-secondary rounded-lg ml-3">
     <div class="col-md-3 ">
-        <a href="{{ route('create_environment_restoration') }}" class="btn btn-info mr-4" role="button">New Environment Restoration Project</a>
+        <a href="{{ route('create-environment-restoration') }}" class="btn btn-info mr-4" role="button">New Environment Restoration Project</a>
     </div>
 </div>
 <div class="row border-secondary rounded-lg ml-3">
@@ -24,7 +24,7 @@
                 @foreach($restorations as $restoration)<tr>
                     <td>{{date('d-m-Y',strtotime($restoration->created_at))}}</td>
                     <td>{{$restoration->status->type}}</td>
-                    <td><a href="/env-restoration/progressView/{{$restoration->id}}" class="text-dark"  role="button">View Progress</a></td>
+                    <td><a href="/env-restoration/view-environment-restoration-progress/{{$restoration->id}}" class="text-dark"  role="button">View Progress</a></td>
                 </tr>
                 @endforeach
             </tbody>
