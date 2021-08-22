@@ -101,7 +101,7 @@ class EnvironmentRestorationController extends Controller
     }
 
     public function store(Request $request)
-    {
+    {   
         $request->validate([
             'title' => 'required',
             'planNo' => 'required',

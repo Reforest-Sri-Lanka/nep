@@ -211,7 +211,7 @@ class DatabaseSeeder extends Seeder
         ],
     ]);
 
-    //provinces
+    //districts
     \DB::table('districts')->insert([
         ['district' => 'Kandy',
         'created_at' => now(),
@@ -224,6 +224,147 @@ class DatabaseSeeder extends Seeder
         ['district' => 'Kegalle',
         'created_at' => now(),
         'status' => 1,
+        ],
+    ]);
+
+    //ecosystem types
+    \DB::table('ecosystems_types')->insert([
+        ['type' => 'Rivering - Dry Zone',
+        'created_at' => now()
+        ],
+        ['type' => 'Rivering - Wet Zone',
+        'created_at' => now()
+        ],
+        ['type' => 'Montane - Wet Zone',
+        'created_at' => now()
+        ],
+        ['type' => 'Montane - Dry Zone',
+        'created_at' => now()
+        ],
+    ]);
+
+    //species_information
+    \DB::table('species_information')->insert([
+        [
+            'type' => 'Flora',
+            'title' => "Mee",
+            'habitats' => json_encode(array('Dry Zone', 'Intermediate Zone')),
+            'created_at' => now(),
+            'taxa' => json_encode(array('')),
+            'created_by_user_id' => 1,
+            'scientefic_name' => 'Madhuca longifolia',
+            'status' => 1,
+            'district_id' => 1,
+        ],
+        [
+            'type' => 'Flora',
+            'title' => "Kumbuk",
+            'habitats' => json_encode(array('Dry Zone', 'Intermediate Zone', 'Riverine')),
+            'taxa' => json_encode(array('')),
+            'created_at' => now(),
+            'created_by_user_id' => 1,
+            'scientefic_name' => 'Terminalia arjuna',
+            'status' => 1,
+            'district_id' => 1,
+        ],
+    ]);
+
+
+      //env restoration activities
+      \DB::table('environment_restoration_activities')->insert([
+        ['title' => 'Reforestation',
+        'created_at' => now(),
+        'status' => 1,
+        'created_by_user_id' => 1,
+        ],
+        ['title' => 'Seagrass restoration',
+        'created_at' => now(),
+        'status' => 1,
+        'created_by_user_id' => 1,
+        ],
+        ['title' => 'Coral restoration',
+        'created_at' => now(),
+        'status' => 1,
+        'created_by_user_id' => 1,
+        ],
+        ['title' => 'Roadside Tree planting',
+        'created_at' => now(),
+        'status' => 1,
+        'created_by_user_id' => 1,
+        ],
+        ['title' => 'Urban Tree planting',
+        'created_at' => now(),
+        'status' => 1,
+        'created_by_user_id' => 1,
+        ],
+        ['title' => 'Soil restoration',
+        'created_at' => now(),
+        'status' => 1,
+        'created_by_user_id' => 1,
+        ],
+    ]);
+
+    //status
+    \DB::table('status')->insert([
+        ['type' => 'Application made successfully',
+        'created_at' => now(),
+        'status' => 1
+        ],
+        ['type' => 'Forwarded to the organization',
+        'created_at' => now(),
+        'status' => 1
+        ],
+        ['type' => 'Assigned for approval',
+        'created_at' => now(),
+        'status' => 1
+        ],
+        ['type' => 'Reviewing for approval',
+        'created_at' => now(),
+        'status' => 1
+        ],
+        ['type' => 'Approved',
+        'created_at' => now(),
+        'status' => 1
+        ],
+        ['type' => 'Rejected',
+        'created_at' => now(),
+        'status' => 1
+        ],
+        ['type' => 'System Data',
+        'created_at' => now(),
+        'status' => 1
+        ],
+        ['type' => 'Cancelled by Requester',
+        'created_at' => now(),
+        'status' => 1
+        ],
+        ['type' => 'Forwarded to Organization but with admin review',
+        'created_at' => now(),
+        'status' => 1
+        ],
+    ]);
+
+    //status
+    \DB::table('form_types')->insert([
+        ['type' => 'Tree Removal',
+        'created_at' => now(),
+        'status' => 1
+        ],
+        ['type' => 'Development Project',
+        'created_at' => now(),
+        'status' => 1
+        ],
+        ['type' => 'Restoration Project',
+        'created_at' => now(),
+        'status' => 1
+        ],
+        ['type' => 'Crime Complaint',
+        'created_at' => now(),
+        'status' => 1
+        ],
+        ['type' => 'Land_Parcels',
+        'created_at' => now(),
+        'status' => 1
         ],
     ]);
 }
