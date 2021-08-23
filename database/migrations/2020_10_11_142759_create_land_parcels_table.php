@@ -18,14 +18,15 @@ class CreateLandParcelsTable extends Migration
             $table->string('title');
             $table->string('surveyor_name');
             $table->json('governing_organizations')->nullable();;
-            $table->json('logs');
-            $table->json('polygon');
+            $table->json('logs')->nullable();
+            $table->json('polygon')->nullable();
             $table->integer('created_by_user_id');
             $table->tinyInteger('protected_area');
             $table->timestampsTz(); //time stamp with timezone in UTC
             $table->softDeletesTz('deleted_at', 0);
             $table->double('size', 12,4);
             $table->string('size_unit');
+            $table->tinyInteger('status')->default(1);  //this might be a concern
 
             $table->unsignedBigInteger('status_id')->nullable();
             $table->foreign('status_id')->references('id')->on('status')->onDelete('cascade');

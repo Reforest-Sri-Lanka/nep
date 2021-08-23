@@ -169,9 +169,10 @@
                                 </tbody>
                             </table>
                             <input type="hidden" class="form-control" name="status" value="1">
+                            <input type="hidden" class="form-control" name="form_type" value="3">
                             <input type="hidden" class="form-control" name="organization" value="{{Auth::user()->organization_id}}">
                             <input type="hidden" class="form-control" name="createdBy" value="{{Auth::user()->id}}">
-                            <input type="hidden" class="form-control" name="logs" value="0">
+                           
                         </form>
                         <input type="file" id="fileUpload" name="fileUpload" accept=".xks,.xlsx" />
                         <a type="button" name="uploadExcel" id="uploadExcel" class="btn btn-info">Import as Excel</a>
