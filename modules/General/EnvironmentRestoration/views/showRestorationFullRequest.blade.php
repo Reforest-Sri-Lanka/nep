@@ -8,7 +8,7 @@
     @if(($process_item->status_id == 5) && (Auth::user()->id == $process_item->created_by_user_id)) 
         <div class="row" style="float:right;">
             <a href="/env-restoration/progressUpdate/{{$process_item->id}}" class="btn btn-info mr-4"  role="button">Update Progress</a>
-            <a href="/env-restoration/view-environment-restoration-progress/{{$process_item->id}}" class="btn btn-info mr-4"  role="button">View Progress</a>
+            <a href="/env-restoration/view_environment_restoration_progress/{{$process_item->id}}" class="btn btn-info mr-4"  role="button">View Progress</a>
         </div>
     @endif
     <dl class="row">

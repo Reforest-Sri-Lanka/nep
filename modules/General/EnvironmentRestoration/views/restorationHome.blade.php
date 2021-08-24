@@ -24,7 +24,7 @@
                 @foreach($restorations as $restoration)<tr>
                     <td>{{date('d-m-Y',strtotime($restoration->created_at))}}</td>
                     <td>{{$restoration->status->type}}</td>
-                    <td><a href="/env-restoration/view-environment-restoration-progress/{{$restoration->id}}" class="text-dark"  role="button">View Progress</a></td>
+                    <td><a href="/env-restoration/view_environment_restoration_progress/{{$restoration->id}}" class="text-dark"  role="button">View Progress</a></td>
                 </tr>
                 @endforeach
             </tbody>

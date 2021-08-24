@@ -29,22 +29,7 @@ use App\CustomClass\lanparcel_creation;
 
 class EnvironmentRestorationController extends Controller
 {
-    // public function index()
-    // {
-    //     $restorations = Environment_Restoration::all();       //show all records for index
-    //     return view('environmentRestoration::index', [
-    //         'restorations' => Environment_Restoration::paginate(10),
-    //     ]);
-    // }
 
-    // public function myIndex()
-    // {
-    //     $userID = Auth::user()->id;
-    //     $restorations = Environment_Restoration::where('created_by_user_id','=', $userID)->get();       //show all records for index
-    //     return view('environmentRestoration::myIndex', [
-    //         'restorations' => $restorations,
-    //     ]);
-    // }
     public function manage_environment_restorations() {
         $restorations = Process_Item::where('form_type_id',3)->orderby('id','desc')->paginate(10);
         
@@ -75,7 +60,7 @@ class EnvironmentRestorationController extends Controller
         ]);
     }
 
-    public function show($id)           //show one record for moreinfo button
+    public function show_full_env_restoration($id)           //show one record for moreinfo button
     {
         $process_item = Process_Item::find($id);
         $restoration = Environment_Restoration::find($process_item->form_id);
@@ -90,7 +75,7 @@ class EnvironmentRestorationController extends Controller
         $govorgs = $land->pluck('governing_organizations');
         //ddd($land->title);
         //ddd($restoration->Status);
-        return view('environmentRestoration::show', [
+        return view('environmentRestoration::showRestorationFullRequest', [
             'restoration' => $restoration,
             'species' => $species,
             'land' => $land,
@@ -243,7 +228,7 @@ class EnvironmentRestorationController extends Controller
         ]);
     }
 
-    public function progress_view($id)           //show one record for moreinfo button
+    public function view_environment_restoration_progress($id)           //show one record for moreinfo button
     {
         $process_item = Process_Item::find($id);
         $restoration = Environment_Restoration::find($process_item->form_id);
