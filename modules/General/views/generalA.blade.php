@@ -84,7 +84,7 @@
                 @endif
                 <td>{{$process_item->remark}}</td>
                 @if($process_item->form_type_id == 3 && $process_item->status_id == 5)
-                <td><a href="/env-restoration/view-environment-restoration-progress/{{$process_item->id}}" class="text-muted">View Progress</a></td>
+                <td><a href="/env-restoration/view_environment_restoration_progress/{{$process_item->id}}" class="text-muted">View Progress</a></td>
                 @elseif(Auth::user()->role_id == 1 ||Auth::user()->role_id == 2)
                 <td><a href="/approval-item/assignorganization/{{$process_item->id}}" class="text-muted">Assign</a></td>
                 @elseif(Auth::user()->role_id == 3 ||Auth::user()->role_id == 4)

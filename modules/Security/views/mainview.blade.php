@@ -36,7 +36,7 @@
                                     @elseif($process_item->form_type_id == 2)
                                     <td><a href="/dev-project/show/{{$process_item->id}}" class="text-dark">See full request</a></td>
                                     @elseif($process_item->form_type_id == 3)
-                                    <td><a href="/env-restoration/show/{{$process_item->id}}" class="text-dark">See full request</a></td>
+                                    <td><a href="/env-restoration/show_full_env_restoration/{{$process_item->id}}" class="text-dark">See full request</a></td>
                                     @elseif($process_item->form_type_id == 4)
                                     <td><a href="/crime-report/viewcrime/{{$process_item->id}}" class="text-dark">See full request</a></td>
                                     @elseif($process_item->form_type_id == 5)
