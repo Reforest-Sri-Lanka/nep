@@ -29,6 +29,7 @@ class Development_Project extends Model implements Auditable
         'logs' => 0,
         'protected_area' => 0,
         'status_id' => 1,
+        'gazette_id' => 0,
     ];
 
     protected $casts = [
@@ -36,10 +37,10 @@ class Development_Project extends Model implements Auditable
         'logs' => 'array',
     ];
 
-    public function gazette()
-    {
-        return $this->belongsTo('App\Models\Gazette');
-    }
+    // public function gazette()
+    // {
+    //     return $this->belongsTo('App\Models\Gazette');
+    // }
 
     public function land_parcel()
     {

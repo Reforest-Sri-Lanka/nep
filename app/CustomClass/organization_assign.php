@@ -64,6 +64,6 @@ class organization_assign
         Notification::send($Admins, new ApplicationMade($Process_Itemnew));
         //dd("new app");
       }
-      return $Process_Item->activity_organization;
+      return $Process_Item;
     }
 }

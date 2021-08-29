@@ -17,7 +17,7 @@ class Land_Parcel extends Model implements Auditable
 
     protected $fillable = [
         'title',    //plan number
-        'surveyor_name',
+        //'surveyor_name',
         'governing_organizations',
         'logs',
         'polygon',

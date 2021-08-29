@@ -18,7 +18,7 @@ use App\Notifications\ApplicationMade;
 use App\Models\User;
 use App\Models\Species;
 use App\CustomClass\organization_assign;
-use App\CustomClass\lanparcel_creation;
+use App\CustomClass\Landparcel;
 
 class TreeRemovalController extends Controller
 {
@@ -119,7 +119,7 @@ class TreeRemovalController extends Controller
 
 
         DB::transaction(function () use ($request) {
-            $landid = lanparcel_creation::land_save($request);
+            $landid = Landparcel::create_land_parcel($request);
 
             $tree = new Tree_Removal_Request();
 

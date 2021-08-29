@@ -429,7 +429,7 @@
             <p class="card-title_text">Add details of development projects such as markets, land sales, housing, roads, public infrastructure, ports</p>
             @if(auth()->user())
                 @if(auth()->user()->role_id)
-                <a href="{{ route('devproject') }}" >Submit a Development Request</a>
+                <a href="{{ route('manage-development-projects') }}" >Submit a Development Request</a>
                 @endif
                 @else
                 <a href="{{ route('login') }}" >Submit a Development Request</a>
@@ -446,7 +446,7 @@
             <p class="card-title_text">Add details of any environment restoration projects such as tree planting, mangrove planting, sea grass or coral restoration.</p>
             @if(auth()->user())
                 @if(auth()->user()->role_id)
-                <a href="{{ route('envrestoration') }}">Submit a Restoration Request</a>
+                <a href="{{ route('manage-environment-restorations') }}">Submit a Restoration Request</a>
                 @endif
                 @else
                 <a href="{{ route('login') }}" >Submit a Restoration Request</a>
