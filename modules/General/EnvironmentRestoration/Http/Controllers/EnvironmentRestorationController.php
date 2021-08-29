@@ -25,10 +25,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use App\CustomClass\organization_assign;
-use App\CustomClass\lanparcel_creation;
+use App\CustomClass\Landparcel;
 
 class EnvironmentRestorationController extends Controller
 {
+     //enviornment restoration form_type_id = 3
 
     public function manage_environment_restorations() {
         $restorations = Process_Item::where('form_type_id',3)->orderby('id','desc')->paginate(10);
@@ -48,7 +49,7 @@ class EnvironmentRestorationController extends Controller
         $district = District::all();
         $gazettes = Gazette::all();
         $gs = GS_Division::orderBy('gs_division')->get();
-        return view('environmentRestoration::create', [
+        return view('environmentRestoration::createEnvRestoration', [
             'restorations' => $restorations,
             'organizations' => $organizations,
             'gazettes' => $gazettes,
@@ -99,7 +100,7 @@ class EnvironmentRestorationController extends Controller
         ]);
         DB::transaction(function () use ($request) {
 
-            $newland =lanparcel_creation::land_save($request);
+            $newland =Landparcel::create_land_parcel($request);
             
             $restoration = new Environment_Restoration();
             $restoration->title = request('title');

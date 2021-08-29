@@ -11,18 +11,18 @@ use App\Models\Land_Has_Gazette;
 use App\Models\Land_Has_Organization;
 
 
-class lanparcel_creation
-{
-    public static function  land_save($request)
+class Landparcel
+{   
+    public static function  create_land_parcel($request) 
     {
         $land = new Land_Parcel();
-        $land->title = $request->planNo;
+        $land->title = $request->title;
         if (($request->surveyorName)!= null) {
             $land->surveyor_name = $request->surveyorName;
         } else {
             $land->surveyor_name = "No surveyor given";
         }
-        
+      
         $land->district_id = $request->district;
         if (request('province')) {
         $land->province_id = $request->province;
@@ -30,13 +30,15 @@ class lanparcel_creation
         if (request('gs_division')) {
         $land->gs_division_id = $request->gs_division;
         }
-
+        
         //$land->governing_organizations = request('governing_orgs');
         if (($request->governing_orgs)!= null) {
             $land->governing_organizations = request('governing_orgs');
         } else {
             $land->governing_organizations = [];
         }
+
+        
         $land->polygon = request('polygon');
         $land->created_by_user_id = request('createdBy');
         if (request('isProtected')) {
@@ -52,13 +54,13 @@ class lanparcel_creation
         }
         $land->status_id = 1;
         $land->save();
-        $landid = Land_Parcel::latest()->first()->id;
+        
         if (request('governing_orgs')) {
             $governing_organizations = request('governing_orgs');
 
             foreach ($governing_organizations as $governing_organization) {
                 $land_has_organization = new Land_Has_Organization();
-                $land_has_organization->land_parcel_id = $landid;
+                $land_has_organization->land_parcel_id = $land->id;
                 $land_has_organization->organization_id = $governing_organization;
                 $land_has_organization->status = 1;
                 $land_has_organization->save();
@@ -71,16 +73,17 @@ class lanparcel_creation
 
           foreach ($gazettes as $gazette) {
               $land_has_gazette = new Land_Has_Gazette();
-              $land_has_gazette->land_parcel_id = $landid;
+              $land_has_gazette->land_parcel_id = $land->id;
               $land_has_gazette->gazette_id = $gazette;
               $land_has_gazette->status = 1;
               $land_has_gazette->save();
         }
       }
-        return $landid;
+     
+        return $land->id;
     }
-
-    public static function  landprocesses_save($request,$landid,$pid){
+     //landprocesses_save
+    public static function  process_land_parcel_approval($request,$landid,$pid){
         if (request('governing_orgs')) {
             $governing_organizations = request('governing_orgs');
 
@@ -97,8 +100,9 @@ class lanparcel_creation
             }
         }
     }
-
-    public static function  landorg_update($request,$pid){
+    
+    //landorg_update
+    public static function  update_land_parcel_organizations($request,$pid){
         
         if (request('governing_orgs')) {
             $governing_organizations = Land_Has_Organization::where('land_parcel_id',$request->lid)->pluck('organization_id')->toArray();
@@ -147,7 +151,8 @@ class lanparcel_creation
 
     }
 
-    public static function  land_update($request)
+    //land_update
+    public static function  update_land_parcel($request)
     {
         $land =Land_Parcel::find($request->lid);
         $land->title = $request->planNo;

@@ -17,20 +17,30 @@ use Illuminate\Support\Facades\Notification;
 use App\Notifications\ApplicationMade;
 use Illuminate\Support\Facades\DB;
 use App\CustomClass\organization_assign;
-use App\CustomClass\lanparcel_creation;
+use App\CustomClass\Landparcel;
+use Carbon\Carbon;
 
 class DevelopmentProjectController extends Controller
 {
+    //development project form_type_id = 2 
+
+    public function manage_development_projects() {
+        $development_projects = Process_Item::where('form_type_id',2)->orderby('id','desc')->paginate(10);
+        
+            return view('developmentProject::developmentProjectHome', [
+                'development_projects' => $development_projects,
+            ]);
+    }
 
     //Returns the view for the application form passing in data of lands, organziations and gazettes
-    public function form()
+    public function create_development_project()
     {
         $province = Province::all();
         $district = District::all();
         $gs = GS_Division::orderBy('gs_division')->get();
         $organizations = Organization::where('type_id', '=', '1')->get();
         $gazettes = Gazette::all();
-        return view('developmentProject::form', [
+        return view('developmentProject::createDevProject', [
             'provinces' => $province,
             'districts' => $district,
             'gs' => $gs,
@@ -40,134 +50,111 @@ class DevelopmentProjectController extends Controller
     }
 
     // Saves the form to the development projects table as well as creates 1 or more entries in the process items table
-    // depenign on the number of governing organizations selected.
-    public function save(Request $request)
-    {
-        if (Auth()->user()->role_id != 6) {
-            if (request('checklandowner')) {
-                $request->validate([
-                    'title' => 'required',
-                    'planNo' => 'required',
-                    'surveyorName' => 'required',
-                    'province' => 'required',
-                    'district' => 'required',
-                    'gs_division' => 'required',
-                    'gazette' => 'required|exists:gazettes,gazette_number',
-                    'polygon' => 'required',
-                    'land_owner' => 'required',
-                    'landownertype' => 'required|in:1,2',
-                    'organization' => 'nullable|exists:organizations,title',
-                ]);
-            } else {
-                $request->validate([
-                    'title' => 'required',
-                    'planNo' => 'required',
-                    'surveyorName' => 'required',
-                    'province' => 'required',
-                    'district' => 'required',
-                    'gs_division' => 'required',
-                    'gazette' => 'required|exists:gazettes,gazette_number',
-                    'polygon' => 'required',
-                    'land_owner' => 'required|exists:organizations,title',
-                    'organization' => 'nullable|exists:organizations,title',
-                ]);
-            }
-        }
-        if (Auth()->user()->role_id = 6) {
+    // depending on the number of governing organizations selected.
+    public function store_development_project(Request $request)
+    {   
+        if ($request->filled('checklandowner')) {
             $request->validate([
                 'title' => 'required',
-                'planNo' => 'required',
-                'surveyorName' => 'required',
                 'province' => 'required',
                 'district' => 'required',
-                'gs_division' => 'required',
-                'gazette' => 'required|exists:gazettes,gazette_number',
                 'polygon' => 'required',
+                'land_owner' => 'required',
+                'landownertype' => 'required|in:1,2',
+                'organization' => 'nullable|exists:organizations,title',
+            ]);
+        } else {
+            $request->validate([
+                'title' => 'required',
+                'province' => 'required',
+                'district' => 'required',
+                'polygon' => 'required',
+                'land_owner' => 'required|exists:organizations,title',
                 'organization' => 'nullable|exists:organizations,title',
             ]);
         }
 
-
         DB::transaction(function () use ($request) {
-            $landid = lanparcel_creation::land_save($request);
+            //s1 : create land parcel for the development project
+            $land_parcel_id = Landparcel::create_land_parcel($request);
 
-            $dev = new Development_Project();
-            $dev->title = request('title');
-            //$dev->gazette_id = request('gazette');
-
+            //s2: create the development project -> use the landparcel ID from step 1
+            $development_project = new Development_Project();
+            $development_project->title = request('title');
+            
+            //s2.1: load related gazette if any - would be nice to have this as a public method from gazettes controller later
             $gazette = Gazette::where('gazette_number', request('gazette'))->pluck('id');
-            $dev->gazette_id = $gazette[0];
+            if($gazette->isNotEmpty())
+                $development_project->gazette_id = $gazette[0];
+            else
+                $development_project->gazette_id = 1; // the migration seeders create id 1 gazette as No-Gazette
 
-            $dev->governing_organizations = 1; //I've set this to defalt until we remove the column as it is redundant data
-
-            $dev->land_parcel_id = $landid;
-            $dev->created_by_user_id = request('createdBy');
-            if (request('isProtected')) {
-                $dev->protected_area = request('isProtected');
+            $development_project->governing_organizations = json_encode( request('governing_orgs') );
+            $development_project->land_parcel_id = $land_parcel_id;
+            $development_project->logs = json_encode(array(Carbon::now()->toDateTimeString(), 'Proporsal submitted'));
+            $development_project->created_by_user_id = Auth::user()->id;
+            
+            if ($request->filled('isProtected')) { //PENDING : need to create a process to alert the env governance mechanism for PA check later
+                $development_project->protected_area = request('isProtected');
             }
             //saving the coordinates in string form. when giving back to the map it needs to be converted back into JSON in the script.
-            $dev->save();
+            $development_project->save();
 
-            //process item for the development project
-            $latest = Development_Project::latest()->first();
-            $process = new Process_Item();
-            $process->form_type_id = 2;
-            $process->form_id = $latest->id;
-            $process->created_by_user_id = request('createdBy');
-            $process->request_organization = Auth::user()->organization_id;
-
-            if (Auth()->user()->role_id = 6) {
-                $process->request_organization = 6;
-            } else {
-                if (request('checklandowner')) {
-                    $process->other_land_owner_name = request('land_owner');
-                    $process->other_land_owner_type = request('landownertype');
-                } else {
-                    $land_owner = Organization::where('title', request('land_owner'))->pluck('id');
-                    $process->request_organization = $land_owner[0];
-                }
+            //s3: create process item for the development project
+            $development_project_process = new Process_Item();
+            $development_project_process->form_type_id = 2;
+            $development_project_process->form_id = $development_project->id;
+            $development_project_process->created_by_user_id = Auth::user()->id;
+            $development_project_process->request_organization = Auth::user()->organization_id;
+            
+            //s3.1: check if landowner should be checked process - PENDING : create checking process
+            if ($request->filled('checklandowner')) {
+                $development_project_process->other_land_owner_name = request('land_owner');
+                $development_project_process->other_land_owner_type = request('landownertype');
             }
-            if($request->filled('organization')){
-                $organization = Organization::where('title', $request['organization'])->pluck('id');
-                $Process_item->activity_organization = $organization[0];
+            
+            //s4: user might optionally send dev project request to a specific organization
+            if($request->filled('forward-request-to-organization')){
+                $organization = Organization::where('title', $request['forward-request-to-organization'])->pluck('id');
+                if(isset($organization[0]))
+                    $development_project_process->activity_organization = $organization[0];
             }
-            $process->save();
+            $development_project_process->save(); 
 
-            //process item for the land parcel
-            $latestDevProcess = Process_Item::latest()->first();
-            if(empty($request->input('organization'))){
-                organization_assign::auto_assign($latestDevProcess->id,request('district'),request('province'));
-                $latestDevProcess =Process_Item::latest()->first();
+            //s5: create process item for the land parcel
+            if(empty($request->input('forward-request-to-organization'))){
+                $org_assign_id = organization_assign::auto_assign($development_project_process->id,request('district'),request('province'));
+                $latestDevProcess =Process_Item::latest()->first(); //
             }
             else{
                 $Admins = User::where('organization_id',$latestDevProcess->activity_organization)->whereBetween('role_id', [1, 2])->get();
                 Notification::send($Admins, new ApplicationMade($latestDevProcess));
             }
 
-            $landProcess = new Process_Item();
-            $landProcess->form_id = $landid;
-            $landProcess->remark = "Verify these land details";
-            $landProcess->prerequisite = 0;
-            $landProcess->status_id = $latestDevProcess->status_id;
-            $landProcess->form_type_id = 5;
-            $landProcess->created_by_user_id = request('createdBy');
-            $landProcess->prerequisite_id = $latestDevProcess->id;
+            $land_process = new Process_Item();
+            $land_process->form_id = $land_parcel_id;
+            $land_process->remark = "Verify these land details";
+            $land_process->prerequisite = 0;
+            $land_process->status_id = $latestDevProcess->status_id;
+            $land_process->form_type_id = 5; //5 is the form_types table id for land parcels form
+            $land_process->created_by_user_id = request('createdBy');
+            $land_process->prerequisite_id = $latestDevProcess->id;
 
             if (Auth()->user()->role_id = 6) {
-                $landProcess->request_organization = 6;
+                $land_process->request_organization = 6;
             } else {
                 if (request('checklandowner')) {
-                    $landProcess->other_land_owner_name = request('land_owner');
-                    $landProcess->other_land_owner_type = request('landownertype');
+                    $land_process->other_land_owner_name = request('land_owner');
+                    $land_process->other_land_owner_type = request('landownertype');
                 } else {
                     $land_owner = Organization::where('title', request('land_owner'))->pluck('id');
-                    $landProcess->request_organization = $land_owner[0];
+                    $land_process->request_organization = $land_owner[0];
                 }
             }
-            $landProcess->activity_organization = $latestDevProcess->activity_organization;
-            $landProcess->save();
+            $land_process->activity_organization = $latestDevProcess->activity_organization;
+            $land_process->save();
         });
-        return redirect('/general/pending')->with('message', 'Request Created Successfully');
+        return redirect('/general/pending')->with('message', 'Development Project Created Successfully');
     }
 
     public function show($id)

@@ -14,8 +14,8 @@
             <li class="nav-item {{ Route::currentRouteName() == 'treeremoval' ? 'active' : '' }}">
                 <a class="nav-link mr-4" href="{{ route('treeremoval') }}">Tree Removal</a>
             </li>
-            <li class="nav-item {{ Route::currentRouteName() == 'devproject' ? 'active' : '' }}">
-                <a class="nav-link mr-4" href="{{ route('devproject') }}">Development Project</a>
+            <li class="nav-item {{ Route::currentRouteName() == 'manage-development-projects' ? 'active' : '' }}">
+                <a class="nav-link mr-4" href="{{ route('manage-development-projects') }}">Development Project</a>
             </li>
             <li class="nav-item {{ Route::currentRouteName() == 'manage-environment-restorations' ? 'active' : '' }}">
                 <a class="nav-link mr-4" href="{{ route('manage-environment-restorations') }}">Environment Restoration</a>

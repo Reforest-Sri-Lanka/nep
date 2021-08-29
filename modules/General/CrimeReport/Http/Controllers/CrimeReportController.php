@@ -21,7 +21,7 @@ use App\Models\Gazette;
 use App\Models\Province;
 use App\Models\Organization;
 use App\CustomClass\organization_assign;
-use App\CustomClass\lanparcel_creation;
+use App\CustomClass\Landparcel;
 use PDF;
 
 class CrimeReportController extends Controller
@@ -60,7 +60,7 @@ class CrimeReportController extends Controller
         
         $array=DB::transaction(function () use($request) {
             
-            $landid =lanparcel_creation::land_save($request);
+            $landid =Landparcel::create_land_parcel($request);
             $Crime_report = new Crime_report;
             $Crime_report->Created_by_user_id = $request['createdBy'];
             $Crime_report->crime_type_id = $request['crime_type'];
@@ -124,7 +124,7 @@ class CrimeReportController extends Controller
 
             $latestlandprocess=Process_Item::latest('id')->first();
  
-            lanparcel_creation::landprocesses_save($request,$landid,$latestcrimeProcess->id);
+            Landparcel::process_land_parcel_approval($request,$landid,$latestcrimeProcess->id);
             $id=$latestcrimeProcess->id;
            /*  $Users = User::where('role_id', '=', 2)->where('id', '!=', $request['createdBy'])->get();
             Notification::send($Users, new ApplicationMade($latestcrimeProcess)); */
