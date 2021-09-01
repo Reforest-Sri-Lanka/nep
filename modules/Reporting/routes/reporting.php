@@ -1,7 +1,7 @@
 <?php
 
 use Reporting\Http\Controllers\ReportingController;
-
+Route::middleware(['auth'])->group(function () {
 Route::get('/overview', [ReportingController::class, 'overview']); 
 Route::get('/get-processItem-chart-data',[ReportingController::class, 'getMonthlyProcessItemData']);
 Route::get('/get-processItem-formType-chart-data',[ReportingController::class, 'getProcessItemFormTypeData']);
@@ -27,3 +27,5 @@ Route::get('/complaints', [ReportingController::class, 'crimeReport']);
 Route::get('/get-crimeReport-chart-data',[ReportingController::class, 'getMonthlyCrimeReportData']);
 Route::get('/get-crimeReport-type-chart-data',[ReportingController::class, 'getCrimeReportTypeData']);
 Route::get('/get-crimeReport-actionTaken-chart-data',[ReportingController::class, 'getCrimeReportActionTakenData']);
+
+});

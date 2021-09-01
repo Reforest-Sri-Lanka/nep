@@ -4,6 +4,8 @@ use Environment\Http\Controllers\EnvController;
 use Environment\Http\Controllers\SpeciesController;
 use Environment\Http\Controllers\TypeController;
 
+Route::middleware(['auth'])->group(function () {
+
 Route::get('/home', [EnvController::class, 'home'])->name('environment.home');
 //General view of the env module
 Route::get('/generalenv', fn() => view('environment::Envmain'));
@@ -54,3 +56,5 @@ Route::get('/trackrequst',[SpeciesController::class, 'track']);
 Route::put('/environmentspe/updatestatus/{id}',[SpeciesController::class, 'statusupdate']);
 Route::get('/newspecies', fn() => view('environment::species'));
 Route::get('/morespecies/{id}', [SpeciesController::class, 'more']);
+
+});

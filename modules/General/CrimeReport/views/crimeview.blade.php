@@ -2,9 +2,17 @@
 
 @section('cont')
 
-<kbd><a href="/approval-item/showRequests" class="text-white font-weight-bolder"><i class="fas fa-chevron-left"></i></i> BACK</a></kbd>
-
+@if(Auth::user())
+    <kbd><a href="/approval-item/showRequests" class="text-white font-weight-bolder"><i class="fas fa-chevron-left"></i></i> BACK</a></kbd>
+@endif
 <div class="container border bg-light">
+    @if(Auth::user())
+        @if(($process_item->status_id < 2 || $process_item->status_id == 9) && (Auth::user()->id == $process_item->created_by_user_id)) 
+            <div class="row" style="float:right;">
+            <a href="/crime-report/crimeedit/{{$process_item->id}}" class="btn btn-info mr-4"  role="button">Edit</a>
+            </div>
+        @endif
+    @endif
     <dl class="row">
 
         <dt class="col-sm-3">Category:</dt>
@@ -13,7 +21,8 @@
         <dt class="col-sm-3">Crime Type:</dt>
         <dd class="col-sm-9">{{$crime->Crime_type->type}}</dd>
 
-
+        <dt class="col-sm-3">Description:</dt>
+        <dd class="col-sm-9">{{$crime->description}}</dd>
 
         <dt class="col-sm-3">Land Parcel Title:</dt>
         <dd class="col-sm-9">
@@ -24,6 +33,12 @@
         <dd class="col-sm-9">
             <p>{{$process_item->Activity_organization->title}}</p>
         </dd>
+        @if(Auth::user())
+            <dt class="col-sm-3">complainant's contact:</dt>
+            <dd class="col-sm-9">
+                <p>{{$process_item->requestor_email}}</p>
+            </dd>
+        @endif
 
         <dt class="col-sm-3">Status:</dt>
         <dd class="col-sm-9">{{$process_item->status->type}}</dd>
@@ -51,7 +66,6 @@
             <p>No photos included in the application</p>
         @endempty
     </div>
-
 </div>
 
 

@@ -5,11 +5,31 @@
 <kbd><a href="/approval-item/showRequests" class="text-white font-weight-bolder"><i class="fas fa-chevron-left"></i></i> BACK</a></kbd>
 <hr>
 <div class="container">
+    @if(($process->status_id < 2 || $process->status_id == 9) && (Auth::user()->id == $process->created_by_user_id)) 
+        <div class="row" style="float:right;">
+            <a href="/land/edit/{{$process->id}}" class="btn btn-info mr-4"  role="button">Edit</a>
+        </div>
+    @endif
 
     <dl class="row">
-        <dt class="col-sm-3">Title:</dt>
+        <dt class="col-sm-3">Plan Number:</dt>
         <dd class="col-sm-9">{{$land->title}}</dd>
 
+        <dt class="col-sm-3">Surveyor Name:</dt>
+        <dd class="col-sm-9">{{$land->surveyor_name}}</dd>
+
+        @if($land->province !=null)
+        <dt class="col-sm-3">Province:</dt>
+        <dd class="col-sm-9">{{$land->province->province}}</dd>
+        @endif
+        @if($land->district !=null)
+        <dt class="col-sm-3">District:</dt>
+        <dd class="col-sm-9">{{$land->district->district}}</dd>
+        @endif
+        @if($land->gs_division !=null)
+        <dt class="col-sm-3">Grama Sevaka Division:</dt>
+        <dd class="col-sm-9">{{$land->gs_division->gs_division}}</dd>
+        @endif
         <dt class="col-sm-3">Governing Organizations:</dt>
         <dd class="col-sm-9">
             <!-- if other type, then will show that instead -->
@@ -40,14 +60,31 @@
         </dd>
 
         <dt class="col-sm-3">Status:</dt>
-        <dd class="col-sm-9">{{$land->status->type}}</dd>
+        <dd class="col-sm-9">{{$process->status->type}}</dd>
 
         <dt class="col-sm-3 text-truncate">Created at:</dt>
         <dd class="col-sm-9">{{$land->created_at}}</dd>
+
+        <dt class="col-sm-3">Active User:</dt>
+        @if($process->activity_user_id == NULL)
+        <dd class="col-sm-9">No User Assigned Yet</dd>
+        @else
+        <dd class="col-sm-9">{{$process->activity_user->name}}</dd>
+        @endif
     </dl>
     <div class="container border border-dark border-rounded">
         <div id="mapid" style="height:400px;" name="map"></div>
     </div>
+    @if($process->status_id < 2) <div style="float:right;">
+        <button class="btn btn-outline-danger" onclick="if(confirm('Are you sure you wish to delete this request and all it\'s related data?')){ event.preventDefault();
+                            document.getElementById('form-delete-{{$process->id}}').submit()}">Delete</button>
+
+        <form id="{{'form-delete-'.$process->id}}" style="display:none" method="post" action="/land/delete/{{$land->id}}">
+            @csrf
+            @method('delete');
+        </form>
+</div>
+@endif
 </div>
 
 <script>

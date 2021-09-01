@@ -31,15 +31,18 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/home', [GeneralController::class, 'pending']);
+Route::get('/home', [GeneralController::class, 'pending'])->middleware('auth','verified');
 
+Route::get('/home/main',  [UserController::class, 'home'])->middleware('auth','verified');
+
+Route::get('/home/unRegistered',  [UserController::class, 'home']);
 //Route::get('/admin', 'AdministratorController@index');
 
 
 /* Route::post('/crimecreate', [Crime_reportController::class, 'create_crime_report']);
 Route::get('/crimehome', [Crime_reportController::class, 'crime_module_access_controller']);
 
-Route::get('/newcrime', fn() => view('general.logComplaint'));
+Route::get('/reportcrime', fn() => view('general.logComplaint'));
 Route::get('/general', [Crime_reportController::class, 'general_view_display']);
 
 Route::get('/trackcrime', [Crime_reportController::class, 'track_user_crime_reports']);
@@ -74,5 +77,6 @@ Route::get('/markAsRead', function(){
 Route::post('/ajax_upload/action', [UserController::class, 'action'])->name('ajaxupload.action');
 
 // Chart Routes
-Route::get('/get-user-chart-data',[ReportingController::class, 'getMonthlyUserData']);
+Route::get('/get-treeRemoval-chart-data',[ReportingController::class, 'getMonthlyTreeRemovalData']);
+Route::get('/get-restoration-chart-data',[ReportingController::class, 'getMonthlyRestorationData']);
 Route::get('/get-processItem-formType-chart-data',[ReportingController::class, 'getProcessItemFormTypeData']);
