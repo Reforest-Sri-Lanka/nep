@@ -8,14 +8,14 @@
         <span><a title="FAQ" style="font-size:24px;cursor:pointer;" data-toggle="modal" data-target="#devHelp"><i class="fa fa-info-circle" aria-hidden="true"></i></a></span>
     </div>
     @include('faq')
-    <form action="/dev-project/saveForm" method="post">
+    <form action="/dev-project/store-development-project" method="post">
         @csrf
 
         <div class="container">
             <div class="row p-4 bg-white">
                 <div class="col-md-6 col-lg-4 col-xl border border-muted rounded-lg mr-2 p-4">
                     <div class="form-group">
-                        <label for="title">Title:</label>
+                        <label for="title">Title: <span style="warning">*</span></label>
                         <input type="text" class="form-control" placeholder="Enter Title" id="title" name="title" value="{{ old('title') }}">
                         @error('title')
                         <div class="alert alert-danger">{{ $message }}</div>
@@ -30,7 +30,7 @@
                     </div>
 
                     <div class="form-group">
-                        Forward to Organization (this will override auto assign):<input type="text" class="form-control typeahead3" placeholder="Search" name="organization" value="{{ old('organization') }}" />
+                        Forward to Organization (this will override auto assign):<input type="text" class="form-control typeahead3" placeholder="Search" name="forward-request-to-organization" value="{{ old('forward-request-to-organization') }}" />
                         @error('organization')
                         <div class="alert alert-danger">{{ $message }}</div>
                         @enderror

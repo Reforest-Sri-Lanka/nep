@@ -19,7 +19,7 @@ use Validator;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use App\CustomClass\organization_assign;
-use App\CustomClass\lanparcel_creation;
+use App\CustomClass\Landparcel;
 use Illuminate\Support\Facades\Notification;
 Use App\Notifications\ApplicationMade;
 
@@ -59,7 +59,7 @@ class LandController extends Controller
         ]);
         
         DB::transaction(function () use($request) {
-            $landid =lanparcel_creation::land_save($request);
+            $landid =Landparcel::create_land_parcel($request);
             $process = new Process_Item();
             $process->form_type_id = 5;
             $process->form_id = $landid;
@@ -79,7 +79,7 @@ class LandController extends Controller
                 $Admins = User::where('organization_id',$land_process->activity_organization)->whereBetween('role_id', [1, 2])->get();
                 Notification::send($Admins, new ApplicationMade($land_process));
             }
-            lanparcel_creation::landprocesses_save($request,$landid,$land_process->id);
+            Landparcel::process_land_parcel_approval($request,$landid,$land_process->id);
         });
         return redirect('/general/pending')->with('message', 'Request Created Successfully');
     }
@@ -194,9 +194,9 @@ class LandController extends Controller
                 $request->polygon = $land_parcel->polygon;
             }
             $process=Process_Item::where('form_id',$request->lid)->where('form_type_id',5)->where('prerequisite',0)->first();
-            lanparcel_creation::land_update($request);
-            lanparcel_creation::landorg_update($request,$process->id);
+            Landparcel::update_land_parcel($request);
+            Landparcel::update_land_parcel_organizations($request,$process->id);
         });
-        return back()->with('message', 'Land details Updated Successfully');
+        return back()->with('message', 'Land details updated successfully');
     }
 }

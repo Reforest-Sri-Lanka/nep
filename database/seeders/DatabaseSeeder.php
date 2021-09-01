@@ -63,11 +63,6 @@ class DatabaseSeeder extends Seeder
             'status' => 1,
         ]);
 
-        \DB::table('organization_types')->insert([
-            'title' => 'Government',
-            'created_at' => now(),
-            'status' => 1,
-        ]);
 
         \DB::table('organization_types')->insert([
             'title' => 'Semi-Government',
@@ -133,7 +128,15 @@ class DatabaseSeeder extends Seeder
 
          //roles
          \DB::table('roles')->insert([
-            ['title' => 'Admin',
+            ['title' => 'Super Admin',
+            'status' => 1,],
+            ['title' => 'Organization-Admin',
+            'status' => 1,],
+            ['title' => 'Organization-Head',
+            'status' => 1,],
+            ['title' => 'Organization-Manager',
+            'status' => 1,],
+            ['title' => 'Organization-Staff',
             'status' => 1,],
             ['title' => 'Citizen',
             'status' => 1,],
@@ -164,6 +167,19 @@ class DatabaseSeeder extends Seeder
             ['access' => 'Report Module',
             'created_at' => now(),
             'status' => 7,
+            ],
+        ]);
+
+        //gazettes
+        \DB::table('gazettes')->insert([
+            ['title' => 'No Gazette',
+            'created_at' => now(),
+            'gazette_no' => 0,
+            'gazzetted_date' => now(),
+            'organizations' => 1,
+            'content' => '-',
+            'created_by_user_id' => 1,
+            'status' => 1,
             ],
         ]);
 
