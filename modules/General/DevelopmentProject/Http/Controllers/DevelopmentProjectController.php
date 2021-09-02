@@ -140,9 +140,11 @@ class DevelopmentProjectController extends Controller
             if(isset($latestDevProcess)){ //s6.1: if auto-assigned to organization 
                 $land_process->status_id = $latestDevProcess->status_id;
                 $land_process->prerequisite_id = $latestDevProcess->id;
+                $land_process->activity_organization = $latestDevProcess->activity_organization;
             }else{
                 $land_process->status_id = $development_project_process->status_id;
                 $land_process->prerequisite_id = $development_project_process->id;
+                $land_process->activity_organization = $development_project_process->activity_organization;
             }
             
             $land_process->form_type_id = 5; //5 is the form_types table id for land parcels form
@@ -161,8 +163,7 @@ class DevelopmentProjectController extends Controller
                     $land_process->request_organization = $land_owner[0];
                 }
             }
-            
-            $land_process->activity_organization = $latestDevProcess->activity_organization;
+
             $land_process->save();
         });
         return redirect('/general/pending')->with('message', 'Development Project Created Successfully');

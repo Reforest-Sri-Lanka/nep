@@ -13,6 +13,9 @@ Route::post('/store-development-project', [DevelopmentProjectController::class, 
 Route::get('/show/{id}',  [DevelopmentProjectController::class, 'show']); 
 //route to delete a created request
 Route::delete('/delete/{processid}/{devid}/{landid}', [DevelopmentProjectController::class, 'destroy']); 
+
+Route::get('/view_development_project_progress/{pid}', [DevelopmentProjectController::class, 'view-development-project-progress']);
+
 //AJAX autocomplete for gazette
 Route::get('/autocompleteGazette', [DevelopmentProjectController::class, 'gazetteAutocomplete'])->name('gazette');
 

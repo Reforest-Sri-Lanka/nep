@@ -21,10 +21,10 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($development_projects as $projects)<tr>
-                    <td>{{date('d-m-Y',strtotime($projects->created_at))}}</td>
-                    <td>{{$projects->status->type}}</td>
-                    <td><a href="/env-restoration/view_environment_restoration_progress/{{$restoration->id}}" class="text-dark"  role="button">View Progress</a></td>
+                @foreach($development_projects as $project)<tr>
+                    <td>{{date('d-m-Y',strtotime($project->created_at))}}</td>
+                    <td>{{$project->status->type}}</td>
+                    <td><a href="/development-projects/view-development-project-progress/{{$project->id}}" class="text-dark"  role="button">View Progress</a></td>
                 </tr>
                 @endforeach
             </tbody>
