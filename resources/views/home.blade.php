@@ -53,7 +53,7 @@
                         <a class="nav-link text-light" href="/general/pending"><i class="fa fa-fw fa-home mr-3" aria-hidden="true"></i> General</a>
                     </li>
                     <li class="nav-item mt-3 pl-4">
-                        <a class="nav-link text-light" href="/user/index"><i class="fa fa-fw fa-user mr-3" aria-hidden="true"></i> Users</a>
+                        <a class="nav-link text-light" href="{{ route('manage-documents') }}"><i class="fa fa-fw fa-arrow-down mr-3" aria-hidden="true"></i>Documents</a>
                     </li>
                     <li class="nav-item mt-3 pl-4">
                         <a class="nav-link text-light" href="/environment/updatedata"><i class="fa fa-fw fa-tree mr-3" aria-hidden="true"></i> Environment</a>
@@ -62,8 +62,12 @@
                         <a class="nav-link text-light" href="/glad"><i class="fa fa-fw fa-globe mr-3" aria-hidden="true"></i> Tracking</a>
                     </li>
                     <li class="nav-item mt-3 pl-4">
+                        <a class="nav-link text-light" href="/user/index"><i class="fa fa-fw fa-user mr-3" aria-hidden="true"></i> Users</a>
+                    </li>
+                    <li class="nav-item mt-3 pl-4">
                         <a class="nav-link text-light" href="/approval-item/showRequests"><i class="fa fa-fw fa-arrow-down mr-3" aria-hidden="true"></i> Requests</a>
                     </li>
+
                     @if(Auth::user()->role_id < 3) <li class="nav-item mt-3 pl-4">
                         @else
                         <li class="nav-item mt-3 pl-4">

@@ -121,37 +121,49 @@ class DevelopmentProjectController extends Controller
             }
             $development_project_process->save(); 
 
-            //s5: create process item for the land parcel
+            //s5: send assign organization to oversee processing of dev project or notify the admins of the org forwarded to in s4 
             if(empty($request->input('forward-request-to-organization'))){
                 $org_assign_id = organization_assign::auto_assign($development_project_process->id,request('district'),request('province'));
-                $latestDevProcess =Process_Item::latest()->first(); //
+                $latestDevProcess =Process_Item::latest()->first(); //refractor
             }
             else{
-                $Admins = User::where('organization_id',$latestDevProcess->activity_organization)->whereBetween('role_id', [1, 2])->get();
-                Notification::send($Admins, new ApplicationMade($latestDevProcess));
+                $Admins = User::where('organization_id',$development_project_process->activity_organization)->whereBetween('role_id', [1, 2])->get();
+                Notification::send($Admins, new ApplicationMade($development_project_process));
             }
 
+            //s6: create a process item for land parcel for the devproject 
             $land_process = new Process_Item();
             $land_process->form_id = $land_parcel_id;
-            $land_process->remark = "Verify these land details";
+            $land_process->remark = "Please verify these land details";
             $land_process->prerequisite = 0;
-            $land_process->status_id = $latestDevProcess->status_id;
+            
+            if(isset($latestDevProcess)){ //s6.1: if auto-assigned to organization 
+                $land_process->status_id = $latestDevProcess->status_id;
+                $land_process->prerequisite_id = $latestDevProcess->id;
+                $land_process->activity_organization = $latestDevProcess->activity_organization;
+            }else{
+                $land_process->status_id = $development_project_process->status_id;
+                $land_process->prerequisite_id = $development_project_process->id;
+                $land_process->activity_organization = $development_project_process->activity_organization;
+            }
+            
             $land_process->form_type_id = 5; //5 is the form_types table id for land parcels form
             $land_process->created_by_user_id = request('createdBy');
-            $land_process->prerequisite_id = $latestDevProcess->id;
-
-            if (Auth()->user()->role_id = 6) {
-                $land_process->request_organization = 6;
+           
+            //s6.2: assign land process request organization 
+            if (Auth()->user()->role_id = 6) { //role id 6 = citizen
+                $land_process->request_organization = 1; //1 is no-organization and usually means a citizen request. can add another check here to see if platform allows citizen requests
             } else {
                 if (request('checklandowner')) {
                     $land_process->other_land_owner_name = request('land_owner');
                     $land_process->other_land_owner_type = request('landownertype');
                 } else {
                     $land_owner = Organization::where('title', request('land_owner'))->pluck('id');
+                    if(isset($land_owner[0]))
                     $land_process->request_organization = $land_owner[0];
                 }
             }
-            $land_process->activity_organization = $latestDevProcess->activity_organization;
+
             $land_process->save();
         });
         return redirect('/general/pending')->with('message', 'Development Project Created Successfully');

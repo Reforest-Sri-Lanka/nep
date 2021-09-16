@@ -52,6 +52,7 @@
             "EnvironmentRestoration\\": "modules/General/EnvironmentRestoration",
             "ApprovalItem\\": "modules/General/ApprovalItem",
             "CrimeReport\\": "modules/General/CrimeReport",
+            "Document\\": "modules/General/Document",
             "General\\": "modules/General",
             "Environment\\": "modules/Environment",
             "LandParcel\\": "modules/LandParcel",

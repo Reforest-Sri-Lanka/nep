@@ -187,6 +187,10 @@ return [
         General\Providers\GeneralServiceProvider::class,
         TreeRemoval\Providers\RouteServiceProvider::class,
         TreeRemoval\Providers\TreeRemovalServiceProvider::class,
+        
+        Document\Providers\RouteServiceProvider::class,
+        Document\Providers\DocumentServiceProvider::class,
+        
         DevelopmentProject\Providers\RouteServiceProvider::class,
         DevelopmentProject\Providers\DevelopmentProjectServiceProvider::class,
         EnvironmentRestoration\Providers\RouteServiceProvider::class,

@@ -131,7 +131,7 @@ class CrimeReportController extends Controller
             return $id;
             
         });
-        $message ='Crime report logged Successfully the ID of the application is '.$array;
+        $message ='Crime report logged Successfully - Please keep this report no. with you '.$array;
         if(Auth::user()){
             return redirect('/general/pending')->with('message', $message); 
         }else{
