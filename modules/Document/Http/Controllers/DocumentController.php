@@ -54,6 +54,42 @@ class DocumentController extends Controller
         ]);
     }
 
+    function documentupload(Request $request)
+    {   
+        $request->validate([
+            'file_upload.*' => 'required|select_file|mimes:pdf,xls,doc,docx,pptx,pps,jpeg,bmp,png,jpg,gif,svg|max:2048'
+        ]);
+
+        if ($request->hasFile('file_upload')) {
+            $imageNameArr = [];
+            foreach ($request->get('file_upload') as $file) {
+                $fileName = time().'-'.$file->getClientOriginalName();
+                $imageNameArr[] = $fileName;
+                
+                $file->move(public_path('documents/'), $fileName); // Upload file to public path in images directory
+               
+                // return response()->json([
+                //     'message'   => "Error Uploading File. Check File Type.",
+                //     'file_path' => '',
+                //     'class_name'  => 'alert-danger'
+                // ]);
+             }
+
+             return response()->json([
+                'message'   => 'File Upload Successfull',
+                'file_path' => $imageNameArr,
+                'class_name'  => 'alert-success'
+            ]);
+         }else{
+            return response()->json([
+                    'message'   => "Please select a file to upload",
+                    'file_path' => '',
+                    'class_name'  => 'alert-warning'
+                ]);
+         }
+    }
+
+
     public function show_full_env_restoration($id)           //show one record for moreinfo button
     {
         $process_item = Process_Item::find($id);
@@ -93,8 +129,7 @@ class DocumentController extends Controller
         ]);
         DB::transaction(function () use ($request) {
 
-            $newland =Landparcel::create_land_parcel($request);
-            
+           
             $restoration = new Environment_Restoration();
             $restoration->title = request('title');
             if(request('environment_restoration_activity_id')==NULL){
@@ -129,25 +164,7 @@ class DocumentController extends Controller
             $Process_item->save();
             //+
             $latestprocess = Process_Item::latest()->first();
-            if(empty($request->input('activity_org'))){
-                organization_assign::auto_assign($latestprocess->id,request('district'),request('province'));
-                $latestprocess =Process_Item::latest()->first();
-            }
-            else{
-                $Admins = User::where('organization_id',$latestprocess->activity_organization)->whereBetween('role_id', [1, 2])->get();
-                Notification::send($Admins, new ApplicationMade($latestprocess));
-            }
-            $process = new Process_Item();
-            $process->form_type_id = 5;
-            $process->form_id = $newland;
-            $process->created_by_user_id = request('createdBy');
-            $process->request_organization = Auth::user()->organization_id;
-            $process->activity_organization = $latestprocess->activity_organization;
-            $process->status_id = $latestprocess->status_id;
-            $process->prerequisite_id = $latestprocess->id;
-            $process->prerequisite = 0;
-            $process->save();
-
+           
             
             //Adding to Environment Restoration Species Table using ajax
             $rules = array(
@@ -165,39 +182,6 @@ class DocumentController extends Controller
                 ]);
             }
             
-
-            $statusSpecies = $request->statusSpecies;
-            $species_names = $request->species_name;
-            $quantity = $request->quantity;
-            $height = $request->height;
-            $dimension = $request->dimension;
-            $remark = $request->remark;
-            for ($count = 0; $count < count($species_names); $count++) {
-                $species_id = Species::where('title', $species_names[$count])->pluck('id');
-                if($species_id->isEmpty()){
-                    $newSpeciesInfo = new Species();
-                    $newSpeciesInfo->type = "Flora";
-                    $newSpeciesInfo->title = $species_names[$count];
-                    $newSpeciesInfo->scientefic_name = "Unspecified";
-                    $newSpeciesInfo->created_by_user_id = request('createdBy');
-                    $newSpeciesInfo->status_id = 1;
-                    $newSpeciesInfo->save();
-                    $species_id[0]=$newSpeciesInfo->id;
-                }
-                $data = array(
-                    'environment_restoration_id' => $newres,
-                    'status' => $statusSpecies[$count],
-                    'species_id'  => $species_id[0],
-                    'quantity'  => $quantity[$count],
-                    'height'  => $height[$count],
-                    'dimensions'  => $dimension[$count],
-                    'remarks'  => $remark[$count],
-                );
-                $insert_data[] = $data;
-            }
-            Environment_Restoration_Species::insert($insert_data);
-
-            //land request process item
             
             
         });
@@ -222,7 +206,7 @@ class DocumentController extends Controller
         ]);
     }
 
-    public function view_environment_restoration_progress($id)           //show one record for moreinfo button
+    public function view_document_progress($id)           //show one record for moreinfo button
     {
         $process_item = Process_Item::find($id);
         $restoration = Environment_Restoration::find($process_item->form_id);

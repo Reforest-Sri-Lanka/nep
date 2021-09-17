@@ -20,6 +20,8 @@ class CreateDocuments extends Migration
             $table->json('tags');
             $table->json('tasks');
             $table->json('to_users');
+            $table->json('to_users');
+            $table->softDeletes($column = 'deleted_at', $precision = 0);
             $table->timestamps();
         });
     }

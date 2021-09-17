@@ -16,6 +16,7 @@
         "laravel/fortify": "^1.6",
         "laravel/framework": "^8.0",
         "laravel/tinker": "^2.0",
+        "laravel/ui": "^3.3",
         "livewire/livewire": "^2.3",
         "owen-it/laravel-auditing": "^12.0"
     },
@@ -52,7 +53,7 @@
             "EnvironmentRestoration\\": "modules/General/EnvironmentRestoration",
             "ApprovalItem\\": "modules/General/ApprovalItem",
             "CrimeReport\\": "modules/General/CrimeReport",
-            "Document\\": "modules/General/Document",
+            "Document\\": "modules/Document",
             "General\\": "modules/General",
             "Environment\\": "modules/Environment",
             "LandParcel\\": "modules/LandParcel",
