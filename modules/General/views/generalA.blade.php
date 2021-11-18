@@ -61,6 +61,7 @@
                 <th>Requested_by</th>
                 @endif
                 <th>Remark</th>
+                <th>Status</th>
                 @if(Auth::user()->role_id !== 6)
                 <th>Check and Assign</th>
                 @else
@@ -83,6 +84,7 @@
                 <td>{{$process_item->requesting_organization->title}}</td>
                 @endif
                 <td>{{$process_item->remark}}</td>
+                <td>{{$process_item->status->type}}
                 @if($process_item->form_type_id == 3 && $process_item->status_id == 5)
                 <td><a href="/env-restoration/view_environment_restoration_progress/{{$process_item->id}}" class="text-muted">View Progress</a></td>
                 @elseif(Auth::user()->role_id == 1 ||Auth::user()->role_id == 2)
