@@ -117,6 +117,19 @@ class OrganizationController extends Controller {
         ]);
     }
 
+    // Return the staff more details window for organization.
+    public function stafflist($id){ 
+        $users = User::where('organization_id', $id)->orderby('role_id')->get();
+  //dd($Users);
+        
+        //dd($contact);   
+        //direct back to the index page.   
+        return view('organization::stafflist', [
+            'users' => $users,
+        ]);                
+        
+    }
+
     
     // When the admin clicks the submit button in the edit view, the following data will be
     // patched for the relavant organization who is being edited and saved in the db.

@@ -14,7 +14,11 @@ Route::get('/create1', [OrganizationController::class, 'create']);
 Route::post('/store', [OrganizationController::class, 'store']);       
 
 // Open edit view.
-Route::get('/edit/{id}', [OrganizationController::class, 'edit']);         
+Route::get('/edit/{id}', [OrganizationController::class, 'edit']); 
+
+//Open staff list view
+Route::get('/staff/{id}', [OrganizationController::class, 'stafflist'])->name('userOrgIndex'); 
+
 
 // Store changes in the db.
 Route::patch('/update/{id}', [OrganizationController::class, 'update']);   

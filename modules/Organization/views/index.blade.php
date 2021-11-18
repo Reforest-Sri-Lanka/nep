@@ -24,6 +24,7 @@
             <th scope="col">Status</th>
             <th scope="col">More Details</th>
             <th scope="col">Edit Organization</th>
+            <th scope="col">Staff</th>
             <th scope="col">Disable</th>
             </tr>
         </thead>
@@ -54,9 +55,11 @@
 
                  <!-- opens the more view -->
                  <td class="text-center"><a href="/organization/more/{{$organization->id}}" class="btn btn-outline-info mr-4" role="button">...</a></td>
-                <!-- opent he edit view -->
+                <!-- opent the edit view -->
                 <td><a href="/organization/edit/{{$organization->id}}" class="btn btn-outline-warning" role="button">Edit</a></td>
-           
+                <!-- opent the org staff view -->
+                <td><a href="/organization/staff/{{$organization->id}}" class="btn btn-outline-warning" role="button">View</a></td>
+                
                 <td>
                     <button class="btn btn-outline-danger" onclick="event.preventDefault();
                             document.getElementById('form-delete-{{$organization->id}}').submit()">Delete</button>
