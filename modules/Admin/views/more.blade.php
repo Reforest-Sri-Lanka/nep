@@ -49,6 +49,19 @@
                     <input type="text" class="form-control" placeholder="{{$user->organization->title}}" readonly>
                     @endif
                 </div>
+                @if($user->organization != NULL) 
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Branch</span>
+                    </div>
+                    @if($user->organization->branch_type_id == NULL)
+                    <input type="text" class="form-control" placeholder="Unassigned" readonly>
+                    
+                    @else            
+                    <input type="text" class="form-control" placeholder="{{$user->organization->branch_type->title}}" readonly>
+                    @endif
+                </div>
+                @endif
 
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
