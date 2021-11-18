@@ -463,7 +463,7 @@ class ApprovalItemController extends Controller
             'request' => 'required',
         ]);
         $id = $request['process_id'];
-        $process_item =Process_Item::find('id', $id);
+        $process_item =Process_Item::find($id);
         $process_item->update(['status_id' => 4]);
         $Process_item_progress = new Process_item_progress;
         $Process_item_progress->created_by_user_id = $request['create_by'];
@@ -479,7 +479,6 @@ class ApprovalItemController extends Controller
 
     public function final_approval(Request $request)
     {
-
         $request->validate([
             'status' => 'required|not_in:0',
             'request' => 'required',
