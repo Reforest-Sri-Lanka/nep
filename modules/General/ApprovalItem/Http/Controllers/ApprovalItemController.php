@@ -66,11 +66,13 @@ class ApprovalItemController extends Controller
                 'activity_organization' => $id,
                 'status_id' => 2
             ]);
-            $Land_process = Process_Item::where('prerequisite_id', $pid)->where('prerequisite', 0)->first();
-            $Land_process->update([
+            if($Process_item->form_type_id != 5){
+                $Land_process = Process_Item::where('prerequisite_id', $pid)->where('prerequisite', 0)->first();
+                $Land_process->update([
                 'activity_organization' => $id,
                 'status_id' => 2
             ]);
+            }
             $Process_item = Process_Item::find($pid);
             $Users=User::where('organization_id',$id)->whereBetween('role_id', [3, 4])->get();
             Notification::send($Users, new AssignOrg($Process_item));
@@ -440,7 +442,7 @@ class ApprovalItemController extends Controller
     {
         $Process_Item = Process_Item::find($id);
         $User = User::find($userid);
-        $remark = $Process_Item->remark . ' cancelled by ' . $User->name . ' (userId: ' . $User->id . ')';
+        $remark = $Process_Item->remark . ' cancelled by ' . $User->name;
         $Process_Item->update([
             'status_id' => 8,
             'remark' => $remark,
