@@ -38,7 +38,7 @@
                     <select name="organization" class="custom-select" required>
                         <option selected value="">Select</option>
                         @foreach($organizations as $organization)
-                        <option value="{{$organization->id}}">{{$organization->title}}</option>
+                        <option value="{{$organization->id}}">{{$organization->title}} -> {{$organization->branch_type->title}}</option>
                         @endforeach
                     </select>
                 </div>
