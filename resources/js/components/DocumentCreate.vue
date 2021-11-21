@@ -1,39 +1,21 @@
-@extends('general')
+<template>
 
-@section('general')
-
-<div class="container">
-    <div class="d-flex mb-2 justify-content-start">
-        <h1>Add new document</h1>
-    </div>
-
-    <!-- FAQ button -->
-    <div class="d-flex mb-2 justify-content-end">
-        <span><a title="FAQ" style="font-size:24px;cursor:pointer;" data-toggle="modal" data-target="#restorationHelp"><i class="fa fa-info-circle" aria-hidden="true"></i></a></span>
-    </div>
-    @include('faq')
-    <form action="/env-restoration/store" id="envForm" method="post" autocomplete="off">
-        @csrf
-        <!-- One "tab" for each step in the form: -->
-        
-            <div class="container">
+ <div class="container">
+            <form action="" enctype="multipart/form-data" id="documentForm" method="post" autocomplete="off">
+            
                 <div class="row p-4 bg-white">
                     <div class="col-md-6 col-lg-4 col-xl border border-muted rounded-lg mr-2 p-4">
                         
                         <div class="form-group">
                             <label for="title">Title:<b>*</b></label>
                             <input type="text" class="form-control" placeholder="Enter Title" id="document_title" name="title">
-                            @error('document_title')
-                            <div class="alert alert-danger">{{ $message }}</div>
-                            @enderror
+                           
                         </div>
                         
                         <div class="form-group">
-                            <label for="planNo">Tags:<b>*</b></label>
-                            <input type="text" class="form-control" placeholder="Separate tags using a ','" name="planNo">
-                            @error('tags')
-                            <div class="alert alert-danger">{{ $tags }}</div>
-                            @enderror
+                            <label for="tags">Tags:<b>*</b></label>
+                            <input type="text" class="form-control" placeholder="Separate tags using a ','" id="tags" name="tags">
+                           
                         </div>
 
 
@@ -77,31 +59,28 @@
                             </div>
                         </div>
                     </div>
-
                 <div class="row p-4 bg-white">
+                <input type="hidden" name="file_path[]" id="file_path" />
+                </form>
+
+                <form action="{{ route('store-document') }}" enctype="multipart/form-data" id="documentForm2" method="post">
                  <div class="col-md-6 col-lg-4 col-xl border border-muted rounded-lg p-4">
                     <div class="form-group">
                     <label for="province">Files:<b>*</b></label>
-                        <input type="file" id="fileUpload" name="fileUpload" accept=".xks,.xlsx" />
-                        <a type="button" name="uploadExcel" id="uploadExcel" class="btn btn-info">Import as Excel</a>
-                        <a type="button" name="clear" id="clear" class="btn btn-danger">Clear All</a>
-                        <p id="error" class="text-danger"></p>
+                    <input type="file"  name="select_file" id="select_file" />
+                    <input type="button" name="upload" id="upload" class="btn btn-primary" value="Upload">
+                        <div class="alert mt-3" id="message" style="display: none"></div>
                     </div>
                     </div>
+                    <div class="row">
                 </div>
-            
-            </div>
-                           
-                        </form>
 
-</div>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.15.3/xlsx.full.min.js"></script>
-<script type="text/javascript">
-    //Species Excel Sheet Import
-    $(document).ready(function() {
+                </form>
 
+    </div>
 
-    });
+</template>
+
+<script>
+    export default {}
 </script>
-
-@endsection
