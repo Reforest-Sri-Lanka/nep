@@ -15,8 +15,18 @@ class Landparcel
 {   
     public static function  create_land_parcel($request) 
     {
+        
         $land = new Land_Parcel();
-        $land->title = $request->title;
+        if (($request->title)!= null) {
+            $land->title = $request->title;
+        }
+        else if (($request->planNo)!= null){
+            $land->title = $request->planNo;
+        }
+        else {
+            $land->title = "No land title given";
+        }
+        //$land->title = $request->title;
         if (($request->surveyorName)!= null) {
             $land->surveyor_name = $request->surveyorName;
         } else {
@@ -47,7 +57,7 @@ class Landparcel
             $land->protected_area = 0;
         }
         if (request('land_extent')) {
-            $land->size = request('size');
+            $land->size = request('land_extent');
         }
         if (request('land_extent_unit')) {
             $land->size_unit = request('size_unit');
