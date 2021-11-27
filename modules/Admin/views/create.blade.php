@@ -30,15 +30,16 @@
                 <div class="alert alert-danger">{{ $message }}</div>
                 @enderror -->
 
-                @if(Auth::user()->role_id == 1 ||Auth::user()->role_id == 2)
+                @if(Auth::user()->role_id == 1 || Auth::user()->role_id == 2)
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text">Organization</span>
                     </div>
+                      
                     <select name="organization" class="custom-select" required>
                         <option selected value="">Select</option>
-                        @foreach($organizations as $organization)
-                        <option value="{{$organization->id}}">{{$organization->title}} -> {{$organization->branch_type->title}}</option>
+                        @foreach($organizations as $org)
+                        <option value="{{$org->id}}">{{$org->title}} -> {{$org->branch_type->title}}</option>
                         @endforeach
                     </select>
                 </div>

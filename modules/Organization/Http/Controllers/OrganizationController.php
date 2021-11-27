@@ -57,6 +57,7 @@ class OrganizationController extends Controller {
         $organization = new Organization();
         $organization->title = $request->title;
         $organization->city = $request->city;
+        $organization->related_ministry = '-';
         $organization->type_id = $request->organization_type;
         $organization->branch_type_id = $request->branch_type;
         $organization->description = $request->description;

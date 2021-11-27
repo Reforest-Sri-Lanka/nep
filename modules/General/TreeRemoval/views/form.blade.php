@@ -18,7 +18,7 @@
 
 
             <div class="form-group">
-              <label for="title">Plan Number:</label>
+              <label for="title">Plan Number: *</label>
               <input type="text" class="form-control @error('planNo') is-invalid @enderror" value="{{ old('planNo') }}" placeholder="Enter Plan Number" id="planNo" name="planNo">
               @error('planNo')
               <div class="alert alert-danger">{{ $message }}</div>
@@ -26,7 +26,7 @@
             </div>
 
             <div class="form-group">
-              <label for="title">Surveyor Name:</label>
+              <label for="title">Surveyor Name: *</label>
               <input type="text" class="form-control @error('surveyorName') is-invalid @enderror" value="{{ old('surveyorName') }}" placeholder="Enter Surveyor Name" id="surveyorName" name="surveyorName">
               @error('surveyorName')
               <div class="alert alert-danger">{{ $message }}</div>
@@ -38,7 +38,7 @@
 
 
                 <div class="form-group">
-                  <label for="province">Province:</label>
+                  <label for="province">Province: *</label>
                   <select class="custom-select @error('province') is-invalid @enderror" name="province">
                     <option disabled selected value="">Select</option>
                     @foreach ($provinces as $province)
@@ -67,7 +67,7 @@
               <div class="col p-2">
 
                 <div class="form-group">
-                  <label for="district">District:</label>
+                  <label for="district">District: *</label>
                   <select class="custom-select @error('district') is-invalid @enderror" name="district">
                     <option disabled selected value="">Select</option>
                     @foreach ($districts as $district)
@@ -80,8 +80,8 @@
                 </div>
 
                 <div class="form-group">
-                  <label for="land_extent">Land Extent (In Acres)</label>
-                  <input type="text" class="form-control typeahead3 @error('removal_requestor') is-invalid @enderror" value="{{ old('land_extent') }}" id="land_extent" name="land_extent">
+                  <label for="land_extent">Land Extent (In Acres): *</label>
+                  <input type="text" class="form-control typeahead3 @error('land_extent') is-invalid @enderror" value="{{ old('land_extent') }}" id="land_extent" name="land_extent">
                   @error('land_extent')
                   <div class="alert alert-danger">{{ $message }}</div>
                   @enderror
@@ -317,7 +317,7 @@
               <th>Age</th>
             </tr>
             <tr>
-              <td><input type="text" id="species_name" name="location[0][tree_species_id]" placeholder="Enter ID" class="form-control typeahead5" /></td>
+              <td><input type="text" id="species_name" name="location[0][tree_species_id]" placeholder="Enter Species" class="form-control typeahead5" /></td>
               <td><input type="text" id="tree_id" name="location[0][tree_id]" placeholder="Enter ID" class="form-control" /></td>
               <td><input type="text" id="diameter_at_breast_height" name="location[0][diameter_at_breast_height]" placeholder="Enter Diameter" class="form-control" /></td>
               <td><input type="text" id="diameter_at_stump" name="location[0][diameter_at_stump]" placeholder="Enter Diameter" class="form-control" /></td>

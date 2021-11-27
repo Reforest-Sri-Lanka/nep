@@ -55,11 +55,12 @@ class SecurityController extends Controller
     {
         $process_item = Process_Item::find($id);
         $Audits = $process_item->audits()->get();
+        //dd($process_item->form_type_id);
         switch($process_item->form_type_id){
             case 1:
                 $item = Tree_Removal_Request::find($process_item->form_id);
                 break;
-            case 1:
+            case 2:
                 $item = Development_Project::find($process_item->form_id);
                 break;
             case 3:
@@ -72,12 +73,16 @@ class SecurityController extends Controller
                 $item = Land_Parcel::find($process_item->form_id);
                 break;
         }
+        if(isset($item)){
         $Form_Audits = $item->audits()->get();
         return view('Security::mainview', [
             'Audits' => $Audits,
             'process_item' => $process_item,
             'Form_Audits' =>$Form_Audits,
         ]);
+
+        }
+        return false; // return a data not found page
     }
 
     public function usermoredetails($id,$uid)
