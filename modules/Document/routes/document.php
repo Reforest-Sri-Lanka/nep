@@ -12,4 +12,6 @@ Route::get('/progressUpdate/{pid}', [DocumentController::class, 'progress_update
 Route::get('/view_document_progress/{pid}', [DocumentController::class, 'view_environment_restoration_progress']);
 Route::post('/progressSave', [DocumentController::class, 'progress_save'])->name('update.species');
 
+Route::post('/ajax_upload/documentupload', [DocumentController::class, 'documentupload'])->name('ajaxmap.documentupload');
+
 });

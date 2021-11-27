@@ -24,7 +24,7 @@ class CreateOrganizationsTable extends Migration
             $table->timestampTz('created_at'); 
             $table->timestampTz('updated_at')->nullable(); 
             $table->tinyInteger('status');
-            $table->string('related_ministry');
+            $table->string('related_ministry')->nullable();
             $table->softDeletesTz('deleted_at', 0);
             $table->unsignedBigInteger('type_id')->nullable();  
             $table->foreign('type_id')->references('id')->on('organization_types')->onDelete('cascade');

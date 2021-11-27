@@ -23,6 +23,6 @@ class DocumentServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->loadViewsFrom(base_path('modules/General/Document/views'), 'Document');
+        $this->loadViewsFrom(base_path('modules/Document/views'), 'Document');
     }
 }

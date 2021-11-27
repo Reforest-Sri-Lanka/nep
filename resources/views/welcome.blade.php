@@ -325,7 +325,7 @@
     
         </div>
         <div class="col-lg-6 col-md-2">
-          <img class="title-image product-title" src="../resources/images/header-image.png" alt="Header Image Goes here">
+          <img class="title-image product-title" src="/images/header-image.png" alt="Header Image Goes here">
         </div>
       </div>
 
