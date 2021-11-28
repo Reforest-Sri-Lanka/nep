@@ -16,26 +16,88 @@
         <div class="row border rounded-lg p-4 bg-white">
           <div class="col border border-muted rounded-lg mr-2 p-2">
 
+          <div class="form-group">
+            <label for="title">Tree removal title: *</label>
+            <input type="text" class="form-control @error('title') is-invalid @enderror" value="{{ old('title') }}" placeholder="Enter Tree Removal Title" id="title" name="title">
+            @error('title')
+            <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
+          </div>
 
-            <div class="form-group">
-              <label for="title">Plan Number: *</label>
-              <input type="text" class="form-control @error('planNo') is-invalid @enderror" value="{{ old('planNo') }}" placeholder="Enter Plan Number" id="planNo" name="planNo">
-              @error('planNo')
-              <div class="alert alert-danger">{{ $message }}</div>
-              @enderror
-            </div>
+          <div class="form-group">
+            <label for="description">Reason Description: *</label>
+            <textarea class="form-control @error('description') is-invalid @enderror" rows="2" id="description" placeholder="Why are these trees removed" name="description">{{{ old('description') }}}</textarea>
+            @error('description')
+            <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
+          </div>
 
-            <div class="form-group">
-              <label for="title">Surveyor Name: *</label>
-              <input type="text" class="form-control @error('surveyorName') is-invalid @enderror" value="{{ old('surveyorName') }}" placeholder="Enter Surveyor Name" id="surveyorName" name="surveyorName">
-              @error('surveyorName')
-              <div class="alert alert-danger">{{ $message }}</div>
-              @enderror
-            </div>
+          <!-- Intro section ends -->
 
-            <div class="row p-2">
+          <div class="row p-2 mt-2">
               <div class="col p-2">
+                <div class="form-group">
+                  <label for="number_of_trees">Number of Trees</label>
+                  <input type="text" class="form-control @error('number_of_trees') is-invalid @enderror" value="{{ old('number_of_trees') }}" id="number_of_trees" name="number_of_trees">
+                  @error('number_of_trees')
+                  <div class="alert alert-danger">{{ $message }}</div>
+                  @enderror
+                </div>
 
+                <div class="form-group">
+                  <label for="number_of_tree_species">Number of Trees to Remove</label>
+                  <input type="text" class="form-control" id="number_of_tree_species" name="number_of_tree_species">
+                </div>
+
+                <div class="form-group">
+                  <label for="number_of_tree_species">Number of Tree Species</label>
+                  <input type="text" class="form-control" id="number_of_tree_species" name="number_of_tree_species">
+                </div>
+
+                <div class="form-group">
+                  <label for="number_of_flora_species">Number of Flora Species</label>
+                  <input type="text" class="form-control" id="number_of_flora_species" name="number_of_flora_species">
+                </div>
+                <div class="form-group">
+                  <label for="number_of_reptile_species">Number of Reptile Species</label>
+                  <input type="text" class="form-control" id="number_of_reptile_species" name="number_of_reptile_species">
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-group">
+                  <label for="number_of_mammal_species">Number of Mammal Species</label>
+                  <input type="text" class="form-control" id="number_of_mammal_species" name="number_of_mammal_species">
+                </div>
+
+                <div class="form-group">
+                  <label for="number_of_amphibian_species">Number of Ambhibian Species</label>
+                  <input type="text" class="form-control" id="number_of_amphibian_species" name="number_of_amphibian_species">
+                </div>
+
+                <div class="form-group">
+                  <label for="number_of_fish_species">Number of Fish Species</label>
+                  <input type="text" class="form-control" id="number_of_fish_species" name="number_of_fish_species">
+                </div>
+
+                <div class="form-group">
+                  <label for="number_of_avian_species">Number of Avian Species</label>
+                  <input type="text" class="form-control" id="number_of_avian_species" name="number_of_avian_species">
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="species_special_notes">Species Special Notes</label>
+              <textarea class="form-control" rows="1" id="species_special_notes" name="species_special_notes"></textarea>
+            </div>
+        </div> </div>
+          <!-- Species section ends -->
+
+
+          <div class="row border rounded-lg p-4 bg-white">
+          <div class="col border border-muted rounded-lg mr-2 p-2">
+
+          <div class="row p-2 mt-2">
+              <div class="col p-2">
 
                 <div class="form-group">
                   <label for="province">Province: *</label>
@@ -89,6 +151,24 @@
 
               </div>
             </div>
+
+            <div class="form-group">
+            <label for="title">Plan Number: *</label>
+            <input type="text" class="form-control @error('planNo') is-invalid @enderror" value="{{ old('planNo') }}" placeholder="Enter Plan Number" id="planNo" name="planNo">
+            @error('planNo')
+            <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
+          </div>
+
+            <div class="form-group">
+              <label for="title">Surveyor Name: *</label>
+              <input type="text" class="form-control @error('surveyorName') is-invalid @enderror" value="{{ old('surveyorName') }}" placeholder="Enter Surveyor Name" id="surveyorName" name="surveyorName">
+              @error('surveyorName')
+              <div class="alert alert-danger">{{ $message }}</div>
+              @enderror
+            </div>
+
+
             <div class="form-group">
                 Forward to Organization (this will override auto assign):<input type="text" class="form-control typeahead3" placeholder="Search" name="organization" value="{{ old('organization') }}" />
                 @error('organization')
@@ -96,8 +176,8 @@
                 @enderror
             </div>
 
-            <!-- ////////MAP GOES HERE -->
-            <div class="form-group">
+               <!-- ////////MAP GOES HERE -->
+               <div class="form-group">
               <span style="float:right; cursor:pointer;"><kbd><a title="How to Draw Shapes on the Map" class="text-white" data-toggle="modal" data-target="#mapHelp">How To Mark Location</a></kbd></span>
               <label>Select Location On Map*</label>
             </div>
@@ -109,16 +189,25 @@
             <input id="polygon" type="hidden" name="polygon" class="form-control @error('polygon') is-invalid @enderror" value="{{request('polygon')}}" />
             <div class="custom-control custom-checkbox">
               <input type="checkbox" class="custom-control-input" id="customCheck" value="1" name="isProtected">
-              <label class="custom-control-label" for="customCheck"><strong>Is Land a Protected Area?</strong></label>
+              <label class="custom-control-label" for="customCheck"><strong>Check if Land is a Protected Area?</strong></label>
             </div>
-
-
             <br>
             <hr><br>
-            <div class="row p-2">
+
+        </div> </div>
+        </div> </div>
+
+        <!-- Location detail section ends -->
+
+       
+     
+        <div class="row border rounded-lg p-4 bg-white">
+          <div class="col border border-muted rounded-lg mr-2 p-2">
+          <div class="row p-2 mt-2">
+          <div class="col p-2">
+     
               <!-- Citizens arent allowed to fill in organization. It will be auto assigned -->
               @if(Auth()->user()->role_id != 6 )
-                <div class="col p-2">
                   <div class="form-group">
                     Land Owner:<input type="text" class="form-control typeahead3 @error('land_owner') is-invalid @enderror" value="{{ old('land_owner') }}" placeholder="Search" name="land_owner" />
                     @error('land_owner')
@@ -128,7 +217,6 @@
                       <input type="checkbox" class="custom-control-input" id="customCheck1" value="1" name="checklandowner" {{ old('checklandowner') == "1" ? 'checked' : ''}}>
                       <label class="custom-control-label" for="customCheck1"><strong>Is Unregistered</strong></label>
                     </div>
-                  </div>
                   <div class="extLandOwner" id="extLandOwner">
                     <div class="form-group">
                       <label>Land Owner Type:</label>
@@ -145,73 +233,13 @@
                         </label>
                       </div>
                       @error('landownertype')
-                      <div class="alert alert-danger">Please Select the Type</div>
+                      <div class="alert alert-danger">Please Select the Land Owner Type</div>
                       @enderror
                     </div>
                   </div>
                 </div>
               @endif
-            </div>
-          </div>
-          <div class="col border border-muted rounded-lg">
-            <div class="row p-2 mt-2">
-              <div class="col">
-                <div class="form-group">
-                  <label for="number_of_trees">Number of Trees</label>
-                  <input type="text" class="form-control @error('number_of_trees') is-invalid @enderror" value="{{ old('number_of_trees') }}" id="number_of_trees" name="number_of_trees">
-                  @error('number_of_trees')
-                  <div class="alert alert-danger">{{ $message }}</div>
-                  @enderror
-                </div>
-
-                <div class="form-group">
-                  <label for="number_of_tree_species">Number of Tree Species</label>
-                  <input type="text" class="form-control" id="number_of_tree_species" name="number_of_tree_species">
-                </div>
-
-                <div class="form-group">
-                  <label for="number_of_flora_species">Number of Flora Species</label>
-                  <input type="text" class="form-control" id="number_of_flora_species" name="number_of_flora_species">
-                </div>
-                <div class="form-group">
-                  <label for="number_of_reptile_species">Number of Reptile Species</label>
-                  <input type="text" class="form-control" id="number_of_reptile_species" name="number_of_reptile_species">
-                </div>
-              </div>
-              <div class="col">
-                <div class="form-group">
-                  <label for="number_of_mammal_species">Number of Mammal Species</label>
-                  <input type="text" class="form-control" id="number_of_mammal_species" name="number_of_mammal_species">
-                </div>
-
-                <div class="form-group">
-                  <label for="number_of_amphibian_species">Number of Ambhibian Species</label>
-                  <input type="text" class="form-control" id="number_of_amphibian_species" name="number_of_amphibian_species">
-                </div>
-
-                <div class="form-group">
-                  <label for="number_of_fish_species">Number of Fish Species</label>
-                  <input type="text" class="form-control" id="number_of_fish_species" name="number_of_fish_species">
-                </div>
-
-                <div class="form-group">
-                  <label for="number_of_avian_species">Number of Avian Species</label>
-                  <input type="text" class="form-control" id="number_of_avian_species" name="number_of_avian_species">
-                </div>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="species_special_notes">Species Special Notes</label>
-              <textarea class="form-control" rows="1" id="species_special_notes" name="species_special_notes"></textarea>
-            </div>
-
-            <div class="form-group">
-              <label for="description">Description</label>
-              <textarea class="form-control @error('description') is-invalid @enderror" rows="2" id="description" name="description">{{{ old('description') }}}</textarea>
-              @error('description')
-              <div class="alert alert-danger">{{ $message }}</div>
-              @enderror
-            </div>
+            
 
             <div class="form-group" id="dynamicAddRemove">
               <label for="images">Photos: (Optional)</label>
@@ -222,6 +250,7 @@
               </div>
               @endif
             </div>
+
             <div id="accordion" class="mb-3">
                 <div class="card mb-3">
                     <div class="card-header bg-white">
@@ -240,7 +269,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card">
+                  <div class="card">
                     <div class="card-header bg-white">
                         <a class="collapsed card-link text-dark" data-toggle="collapse" href="#collapsetwo">
                             Gazettes Relavant to Land (Optional)
@@ -256,12 +285,13 @@
                             </fieldset>
                         </div>
                     </div>
-                </div>
-            </div>
-          </div>
+                  </div>       
+        </div>
+        </div>
         </div>
       </div>
-    </div>
+
+
     <div class="tab">
       <div class="container">
         <div class="row border rounded-lg p-4 bg-white">
