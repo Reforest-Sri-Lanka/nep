@@ -251,6 +251,7 @@ class ApprovalItemController extends Controller
                 'land_process' => $landProcess,
                 'data' => $data,
                 'Photos' => $Photos,
+                'land' =>$land_parcel,
             ]);
         } else {
             $item = Land_Parcel::find($process_item->form_id);

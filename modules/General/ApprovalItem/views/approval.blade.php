@@ -36,15 +36,15 @@
                         <table class="table table-light table-striped border-secondary rounded-lg mr-4">
                             <thead>
                                 <tr>
-                                    <th>District</th>
+                                    <th>District</th> 
                                     <th>Grama Niladari Division</th>
                                     <th>Description</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>{{$land_process->district->district}}</td>
-                                    <td>{{$land_process->gs_division_id}}</td>
+                                    <td>{{$land->district->district}}</td>
+                                    <td>{{$land->gs_division_id}}</td>
                                     <td>{{$item->description}}</td>
                                 </tr>
                             </tbody>
@@ -246,7 +246,7 @@
                                 <tr>
                                     <td>{{$data[$x]['tree_species_id']}}</td>
                                     <td>{{$data[$x]['tree_id']}}</td>
-                                    <td>{{$data[$x]['width_at_breast_height']}}</td>
+                                    <td>{{$data[$x]['diameter_at_breast_height']}}</td>
                                     <td>{{$data[$x]['height']}}</td>
                                     <td>{{$data[$x]['timber_volume']}}</td>
                                     <td>{{$data[$x]['timber_cubic']}}</td>
