@@ -59,9 +59,9 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>{{$item->land_size}}</td>
-                                    <td>{{$item->no_of_trees}}</td>
-                                    <td>{{$item->no_of_tree_species}}<td>
+                                    <td>{{$land_process->land_size}}</td>
+                                    <td>{{$land_process->no_of_trees}}</td>
+                                    <td>{{$land_process->no_of_tree_species}}<td>
                                 </tr>
                             </tbody>
                         </table>
