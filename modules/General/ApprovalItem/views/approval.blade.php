@@ -43,8 +43,8 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>{{$item->district->district}}</td>
-                                    <td>{{$item->gs_division_id}}</td>
+                                    <td>{{$land_process->district->district}}</td>
+                                    <td>{{$land_process->gs_division_id}}</td>
                                     <td>{{$item->description}}</td>
                                 </tr>
                             </tbody>
@@ -59,9 +59,9 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>{{$land_process->land_size}}</td>
-                                    <td>{{$land_process->no_of_trees}}</td>
-                                    <td>{{$land_process->no_of_tree_species}}<td>
+                                    <td>{{$item->land_size}}</td>
+                                    <td>{{$item->no_of_trees}}</td>
+                                    <td>{{$item->no_of_tree_species}}<td>
                                 </tr>
                             </tbody>
                         </table>
