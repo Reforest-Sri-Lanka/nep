@@ -3,7 +3,7 @@
 use EnvironmentRestoration\Http\Controllers\EnvironmentRestorationController;
 
 Route::middleware(['auth'])->group(function () {
-Route::get('/manage_environment_restorations', [EnvironmentRestorationController::class, 'manage_environment_restorations'])->name('manage-environment-restorations');
+Route::get('/manage-environment-restorations', [EnvironmentRestorationController::class, 'manage_environment_restorations'])->name('manage-environment-restorations');
 Route::get('/index', [EnvironmentRestorationController::class, 'index']);
 Route::get('/myIndex', [EnvironmentRestorationController::class, 'myIndex']);
 Route::get('/show_full_env_restoration/{id}', [EnvironmentRestorationController::class, 'show_full_env_restoration']);

@@ -22,6 +22,14 @@ use App\CustomClass\Landparcel;
 
 class TreeRemovalController extends Controller
 {
+    public function manageTreeRemoval() 
+    {
+        $tree_removals = Process_Item::where('form_type_id',1)->orderby('id','desc')->paginate(10);
+            return view('treeRemoval::treeRemovalHome', [
+                'tree_removals' => $tree_removals,
+            ]);
+    }
+
     public function openForm()
     {
         $province = Province::all();
