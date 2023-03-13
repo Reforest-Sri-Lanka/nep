@@ -11,8 +11,8 @@
             <li class="nav-item {{ Route::currentRouteName() == 'pending' ? 'active' : '' }}">
                 <a class="nav-link mr-4" href="{{ route('pending') }}">Pending Request<span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item {{ Route::currentRouteName() == 'treeremoval' ? 'active' : '' }}">
-                <a class="nav-link mr-4" href="{{ route('treeremoval') }}">Tree Removal</a>
+            <li class="nav-item {{ Route::currentRouteName() == 'manage-tree-removals' ? 'active' : '' }}">
+                <a class="nav-link mr-4" href="{{ route('manage-tree-removals') }}">Tree Removal</a>
             </li>
             <li class="nav-item {{ Route::currentRouteName() == 'manage-development-projects' ? 'active' : '' }}">
                 <a class="nav-link mr-4" href="{{ route('manage-development-projects') }}">Development Project</a>
@@ -20,8 +20,8 @@
             <li class="nav-item {{ Route::currentRouteName() == 'manage-environment-restorations' ? 'active' : '' }}">
                 <a class="nav-link mr-4" href="{{ route('manage-environment-restorations') }}">Environment Restoration</a>
             </li>
-            <li class="nav-item {{ Route::currentRouteName() == 'land' ? 'active' : '' }}">
-                <a class="nav-link mr-4" href="{{ route('land') }}">Register Land</a>
+            <li class="nav-item {{ Route::currentRouteName() == 'manage-land-parcels' ? 'active' : '' }}">
+                <a class="nav-link mr-4" href="{{ route('manage-land-parcels') }}">Land Parcel</a>
             </li>
 
             <li class="nav-item {{ Route::currentRouteName() == 'crimeMain' ? 'active' : '' }}">
