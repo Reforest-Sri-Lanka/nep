@@ -2,7 +2,9 @@
 
 use TreeRemoval\Http\Controllers\TreeRemovalController;
 Route::middleware(['auth'])->group(function () {
-Route::get('/form', [TreeRemovalController::class, 'openForm'])->name("treeremoval");
+
+Route::get('/manage-tree-removals', [TreeRemovalController::class, 'manageTreeRemoval'])->name('manage-tree-removals');
+Route::get('/form', [TreeRemovalController::class, 'openForm'])->name("tree-removal");
 
 Route::post('/save', [TreeRemovalController::class, 'save']);
 

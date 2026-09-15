@@ -3,18 +3,20 @@
 use LandParcel\Http\Controllers\LandController;
 
 Route::middleware(['auth'])->group(function () {
-Route::get('/form', [LandController::class, 'form'])->name("land");
+    Route::get('/manage-land-parcels', [LandController::class, 'manage_land_parcels'])->name('manage-land-parcels');
 
-Route::post('/save', [LandController::class, 'save']);
+    Route::get('/form', [LandController::class, 'form'])->name("land");
 
-Route::patch('/update', [LandController::class, 'update']);
+    Route::post('/save', [LandController::class, 'save']);
 
-Route::get('/show/{id}', [LandController::class, 'show']);
+    Route::patch('/update', [LandController::class, 'update']);
 
-Route::get('/edit/{id}', [LandController::class, 'edit']);
+    Route::get('/show/{id}', [LandController::class, 'show']);
 
-Route::delete('/delete/{landid}', [LandController::class, 'destroy']);
+    Route::get('/edit/{id}', [LandController::class, 'edit']);
 
-Route::post('/ajax_upload/action', [LandController::class, 'action'])->name('ajaxmap.action');
+    Route::delete('/delete/{landid}', [LandController::class, 'destroy']);
+
+    Route::post('/ajax_upload/action', [LandController::class, 'action'])->name('ajaxmap.action');
 
 });

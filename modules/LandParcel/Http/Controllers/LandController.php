@@ -25,6 +25,13 @@ Use App\Notifications\ApplicationMade;
 
 class LandController extends Controller
 {
+    public function manage_land_parcels() {
+        $land_parcels = Process_Item::where('form_type_id',5)->orderby('id','desc')->paginate(10);
+            return view('land::landHome', [
+                'land_parcels' => $land_parcels,
+            ]);
+    }
+
     public function form()
     {
         $gazettes = Gazette::all();
